@@ -88,6 +88,13 @@ public class GroundItemsOverlay extends Overlay
 	private static final int NIGHTMARE_REGION = 15515;
 	private static final int TEMPOROSS_REGION = 12078;
 
+	public static void main(String...args) {
+		int regionId = NEX_REGION;
+		int x = (regionId >> 8) << 6;
+		int y = (regionId & 0xFF) << 6;
+		System.out.print(x + " : "+y);
+	}
+
 	private final Client client;
 	private final GroundItemsPlugin plugin;
 	private final GroundItemsConfig config;

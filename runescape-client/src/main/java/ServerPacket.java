@@ -11,7 +11,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3013;
+	public static final ServerPacket VARP_LARGE;
 	@ObfuscatedName("b")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -21,7 +21,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2983;
+	public static final ServerPacket IF_OPEN_SUB;
 	@ObfuscatedName("m")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -56,7 +56,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3003;
+	public static final ServerPacket MIDI_JINGLE;
 	@ObfuscatedName("o")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -76,7 +76,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3006;
+	public static final ServerPacket IF_CLOSE_SUB;
 	@ObfuscatedName("g")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -86,7 +86,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2945;
+	public static final ServerPacket UPDATE_REBOOT_TIMER;
 	@ObfuscatedName("a")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -111,7 +111,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2950;
+	public static final ServerPacket SEND_LOGOUT_TYPE;
 	@ObfuscatedName("q")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -161,7 +161,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3029;
+	public static final ServerPacket IF_MOVE_SUB;
 	@ObfuscatedName("am")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -171,7 +171,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2962;
+	public static final ServerPacket UPDATE_PUBLIC_CHAT_MODE;
 	@ObfuscatedName("au")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -181,17 +181,17 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2964;
+	public static final ServerPacket UPDATE_SKILLS;
 	@ObfuscatedName("ap")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2965;
+	public static final ServerPacket CAM_RESET;
 	@ObfuscatedName("ac")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3014;
+	public static final ServerPacket MINI_MAP_TOGGLE;
 	@ObfuscatedName("aj")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -211,12 +211,12 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2997;
+	public static final ServerPacket NPC_INFO_EXTENDED_VIEWPORT;
 	@ObfuscatedName("al")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2971;
+	public static final ServerPacket SET_PLAYER_OP;
 	@ObfuscatedName("aa")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -226,7 +226,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2932;
+	public static final ServerPacket HINT_ARROW;
 	@ObfuscatedName("at")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -251,7 +251,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2947;
+	public static final ServerPacket SEND_OPEN_URL;
 	@ObfuscatedName("ae")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -261,7 +261,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2980;
+	public static final ServerPacket UPDATE_WEIGHT;
 	@ObfuscatedName("ad")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -296,7 +296,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3017;
+	public static final ServerPacket IF_SET_HIDDEN;
 	@ObfuscatedName("bi")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -306,7 +306,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2989;
+	public static final ServerPacket UPDATE_RUN_ENERGY;
 	@ObfuscatedName("bw")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -321,7 +321,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2992;
+	public static final ServerPacket IF_SET_COLOR;
 	@ObfuscatedName("bu")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -356,7 +356,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2999;
+	public static final ServerPacket MESSAGE_GAME;
 	@ObfuscatedName("bh")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -366,7 +366,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3001;
+	public static final ServerPacket RUN_CLIENTSCRIPT;
 	@ObfuscatedName("bj")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -391,7 +391,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2988;
+	public static final ServerPacket IF_SET_EVENT;
 	@ObfuscatedName("be")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -401,7 +401,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2967;
+	public static final ServerPacket NPC_INFO_NORMAL;
 	@ObfuscatedName("cl")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -416,7 +416,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3011;
+	public static final ServerPacket SOUND_EFFECT;
 	@ObfuscatedName("ck")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -431,12 +431,12 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2970;
+	public static final ServerPacket UPDATE_CONTAINER_PARTIAL;
 	@ObfuscatedName("cn")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3015;
+	public static final ServerPacket UPDATE_PRIVATE_CHAT_STATUS;
 	@ObfuscatedName("cv")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -446,12 +446,12 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3025;
+	public static final ServerPacket LOG_OUT;
 	@ObfuscatedName("cc")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3018;
+	public static final ServerPacket UPDATE_CONTAINER_FULL;
 	@ObfuscatedName("cs")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -461,7 +461,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3020;
+	public static final ServerPacket NPC_INFO_EXTENDED_VIEWPORT_NEW;
 	@ObfuscatedName("cb")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -476,17 +476,17 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3023;
+	public static final ServerPacket SET_MAP_FLAG;
 	@ObfuscatedName("cz")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3024;
+	public static final ServerPacket VARP_SMALL;
 	@ObfuscatedName("cw")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field2973;
+	public static final ServerPacket SEND_DYNAMIC_MAP;
 	@ObfuscatedName("ct")
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
@@ -496,7 +496,7 @@ public class ServerPacket {
 	@ObfuscatedSignature(
 		descriptor = "Lix;"
 	)
-	public static final ServerPacket field3027;
+	public static final ServerPacket CAM_SHAKE;
 	@ObfuscatedName("ch")
 	@ObfuscatedGetter(
 		intValue = -836596687
@@ -511,27 +511,27 @@ public class ServerPacket {
 	public final int length;
 
 	static {
-		field3013 = new ServerPacket(0, 6);
+		VARP_LARGE = new ServerPacket(0, 6);
 		field2931 = new ServerPacket(1, -1);
-		field2983 = new ServerPacket(2, 7);
+		IF_OPEN_SUB = new ServerPacket(2, 7);
 		field2933 = new ServerPacket(3, -2);
 		field2934 = new ServerPacket(4, -2);
 		field2930 = new ServerPacket(5, 8);
 		field2936 = new ServerPacket(6, 0);
 		field2937 = new ServerPacket(7, 7);
 		field3000 = new ServerPacket(8, 6);
-		field3003 = new ServerPacket(9, 5);
+		MIDI_JINGLE = new ServerPacket(9, 5);
 		field2940 = new ServerPacket(10, -2);
 		field2941 = new ServerPacket(11, 2);
 		field2942 = new ServerPacket(12, 6);
-		field3006 = new ServerPacket(13, 4);
+		IF_CLOSE_SUB = new ServerPacket(13, 4);
 		field2944 = new ServerPacket(14, 1);
-		field2945 = new ServerPacket(15, 2);
+		UPDATE_REBOOT_TIMER = new ServerPacket(15, 2);
 		field2946 = new ServerPacket(16, 2);
 		field3008 = new ServerPacket(17, -2);
 		field2948 = new ServerPacket(18, 4);
 		field2949 = new ServerPacket(19, -1);
-		field2950 = new ServerPacket(20, 1);
+		SEND_LOGOUT_TYPE = new ServerPacket(20, 1);
 		field2951 = new ServerPacket(21, -2);
 		field2961 = new ServerPacket(22, 0);
 		field2982 = new ServerPacket(23, 14);
@@ -541,74 +541,74 @@ public class ServerPacket {
 		field2978 = new ServerPacket(27, 10);
 		field2958 = new ServerPacket(28, 0);
 		field2959 = new ServerPacket(29, 6);
-		field3029 = new ServerPacket(30, 8);
+		IF_MOVE_SUB = new ServerPacket(30, 8);
 		field2938 = new ServerPacket(31, 2);
-		field2962 = new ServerPacket(32, 2);
+		UPDATE_PUBLIC_CHAT_MODE = new ServerPacket(32, 2);
 		field2963 = new ServerPacket(33, 4);
-		field2964 = new ServerPacket(34, 6);
-		field2965 = new ServerPacket(35, 0);
-		field3014 = new ServerPacket(36, 1);
+		UPDATE_SKILLS = new ServerPacket(34, 6);
+		CAM_RESET = new ServerPacket(35, 0);
+		MINI_MAP_TOGGLE = new ServerPacket(36, 1);
 		field2986 = new ServerPacket(37, 0);
 		field2968 = new ServerPacket(38, -2);
 		field3005 = new ServerPacket(39, -1);
-		field2997 = new ServerPacket(40, -2);
-		field2971 = new ServerPacket(41, -1);
+		NPC_INFO_EXTENDED_VIEWPORT = new ServerPacket(40, -2);
+		SET_PLAYER_OP = new ServerPacket(41, -1);
 		field2972 = new ServerPacket(42, 5);
-		field2932 = new ServerPacket(43, 6);
+		HINT_ARROW = new ServerPacket(43, 6);
 		field2974 = new ServerPacket(44, 4);
 		field2975 = new ServerPacket(45, 2);
 		field2976 = new ServerPacket(46, 4);
 		field2987 = new ServerPacket(47, 6);
-		field2947 = new ServerPacket(48, -2);
+		SEND_OPEN_URL = new ServerPacket(48, -2);
 		field2979 = new ServerPacket(49, -1);
-		field2980 = new ServerPacket(50, 2);
+		UPDATE_WEIGHT = new ServerPacket(50, 2);
 		field2981 = new ServerPacket(51, 0);
 		field2957 = new ServerPacket(52, 6);
 		field2939 = new ServerPacket(53, 2);
 		field2984 = new ServerPacket(54, -2);
 		field2985 = new ServerPacket(55, 4);
 		field3016 = new ServerPacket(56, -2);
-		field3017 = new ServerPacket(57, 5);
+		IF_SET_HIDDEN = new ServerPacket(57, 5);
 		field2943 = new ServerPacket(58, 0);
-		field2989 = new ServerPacket(59, 1);
+		UPDATE_RUN_ENERGY = new ServerPacket(59, 1);
 		field2990 = new ServerPacket(60, 20);
 		field2991 = new ServerPacket(61, 5);
-		field2992 = new ServerPacket(62, 6);
+		IF_SET_COLOR = new ServerPacket(62, 6);
 		field2993 = new ServerPacket(63, -2);
 		field2994 = new ServerPacket(64, 15);
 		field2995 = new ServerPacket(65, 28);
 		field2996 = new ServerPacket(66, 2);
 		field2952 = new ServerPacket(67, 6);
 		field2998 = new ServerPacket(68, 0);
-		field2999 = new ServerPacket(69, -1);
+		MESSAGE_GAME = new ServerPacket(69, -1);
 		field2953 = new ServerPacket(70, 8);
-		field3001 = new ServerPacket(71, -2);
+		RUN_CLIENTSCRIPT = new ServerPacket(71, -2);
 		field3002 = new ServerPacket(72, -1);
 		field2960 = new ServerPacket(73, 8);
 		field3004 = new ServerPacket(74, -2);
 		field2966 = new ServerPacket(75, -2);
-		field2988 = new ServerPacket(76, 12);
+		IF_SET_EVENT = new ServerPacket(76, 12);
 		field3007 = new ServerPacket(77, 6);
-		field2967 = new ServerPacket(78, -2);
+		NPC_INFO_NORMAL = new ServerPacket(78, -2);
 		field3009 = new ServerPacket(79, 1);
 		field3010 = new ServerPacket(80, -2);
-		field3011 = new ServerPacket(81, 5);
+		SOUND_EFFECT = new ServerPacket(81, 5);
 		field3012 = new ServerPacket(82, -2);
 		field2969 = new ServerPacket(83, -1);
-		field2970 = new ServerPacket(84, -2);
-		field3015 = new ServerPacket(85, 1);
+		UPDATE_CONTAINER_PARTIAL = new ServerPacket(84, -2);
+		UPDATE_PRIVATE_CHAT_STATUS = new ServerPacket(85, 1);
 		field2935 = new ServerPacket(86, 10);
-		field3025 = new ServerPacket(87, 0);
-		field3018 = new ServerPacket(88, -2);
+		LOG_OUT = new ServerPacket(87, 0);
+		UPDATE_CONTAINER_FULL = new ServerPacket(88, -2);
 		field3019 = new ServerPacket(89, 4);
-		field3020 = new ServerPacket(90, -2);
+		NPC_INFO_EXTENDED_VIEWPORT_NEW = new ServerPacket(90, -2);
 		field3021 = new ServerPacket(91, -2);
 		field3022 = new ServerPacket(92, -2);
-		field3023 = new ServerPacket(93, 2);
-		field3024 = new ServerPacket(94, 3);
-		field2973 = new ServerPacket(95, -2);
+		SET_MAP_FLAG = new ServerPacket(93, 2);
+		VARP_SMALL = new ServerPacket(94, 3);
+		SEND_DYNAMIC_MAP = new ServerPacket(95, -2);
 		field3026 = new ServerPacket(96, -2);
-		field3027 = new ServerPacket(97, 4);
+		CAM_SHAKE = new ServerPacket(97, 4);
 	}
 
 	ServerPacket(int var1, int var2) {

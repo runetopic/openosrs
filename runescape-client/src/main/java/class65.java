@@ -26,7 +26,7 @@ public class class65 {
 		int var8;
 		int var9;
 		int var12;
-		if ((var3 & 4) != 0) {
+		if ((var3 & 4) != 0) { // 1 HitDamageBlock
 			var5 = var0.readUnsignedByte();
 			int var7;
 			int var10;
@@ -70,11 +70,11 @@ public class class65 {
 			}
 		}
 
-		if ((var3 & 8192) != 0) {
+		if ((var3 & 8192) != 0) { // 2 Temp Walk type
 			var4 = var0.readByte();
 		}
 
-		if ((var3 & 16384) != 0) {
+		if ((var3 & 16384) != 0) { // 3 Force movement
 			var2.field1132 = var0.method7396();
 			var2.field1134 = var0.method7396();
 			var2.field1133 = var0.method7397();
@@ -99,14 +99,14 @@ public class class65 {
 			var2.field1098 = 0;
 		}
 
-		if ((var3 & 128) != 0) {
+		if ((var3 & 128) != 0) { // 4 Face Actor
 			var2.targetIndex = var0.method7403();
 			if (var2.targetIndex == 65535) {
 				var2.targetIndex = -1;
 			}
 		}
 
-		if ((var3 & 1) != 0) {
+		if ((var3 & 1) != 0) { // 5 Appearance
 			var5 = var0.readUnsignedByte();
 			byte[] var13 = new byte[var5];
 			Buffer var14 = new Buffer(var13);
@@ -115,13 +115,13 @@ public class class65 {
 			var2.read(var14);
 		}
 
-		if ((var3 & 256) != 0) {
+		if ((var3 & 256) != 0) { // 6 Custom menu actions
 			for (var5 = 0; var5 < 3; ++var5) {
 				var2.actions[var5] = var0.readStringCp1252NullTerminated();
 			}
 		}
 
-		if ((var3 & 32) != 0) {
+		if ((var3 & 32) != 0) { // 7 Public chat
 			var5 = var0.readUnsignedShort();
 			PlayerType var19 = (PlayerType)class130.findEnumerated(SpotAnimationDefinition.PlayerType_values(), var0.method7520());
 			boolean var17 = var0.method7394() == 1;
@@ -161,7 +161,7 @@ public class class65 {
 			var0.offset = var9 + var8;
 		}
 
-		if ((var3 & 2) != 0) {
+		if ((var3 & 2) != 0) { // 8 Sequence
 			var5 = var0.method7499();
 			if (var5 == 65535) {
 				var5 = -1;
@@ -171,13 +171,13 @@ public class class65 {
 			class125.performPlayerAnimation(var2, var5, var6);
 		}
 
-		if ((var3 & 1024) != 0) {
+		if ((var3 & 1024) != 0) { // 9 Temp? Movement type
 			class185[] var15 = Players.field1246;
 			class185[] var21 = new class185[]{class185.field2120, class185.field2123, class185.field2122, class185.field2119};
 			var15[var1] = (class185)class130.findEnumerated(var21, var0.method7465());
 		}
 
-		if ((var3 & 2048) != 0) {
+		if ((var3 & 2048) != 0) { // 10 Spot animation
 			var2.spotAnimation = var0.method7499();
 			var5 = var0.method7412();
 			var2.field1131 = var5 >> 16;
@@ -193,7 +193,7 @@ public class class65 {
 			}
 		}
 
-		if ((var3 & 512) != 0) {
+		if ((var3 & 512) != 0) { // 11 Recolor
 			var2.field1141 = Client.cycle + var0.method7403();
 			var2.field1140 = Client.cycle + var0.method7499();
 			var2.field1143 = var0.readByte();
@@ -202,7 +202,7 @@ public class class65 {
 			var2.field1146 = (byte)var0.readUnsignedByte();
 		}
 
-		if ((var3 & 64) != 0) {
+		if ((var3 & 64) != 0) { // 12 Face dir
 			var2.field1122 = var0.method7401();
 			if (var2.pathLength == 0) {
 				var2.orientation = var2.field1122;
@@ -210,7 +210,7 @@ public class class65 {
 			}
 		}
 
-		if ((var3 & 8) != 0) {
+		if ((var3 & 8) != 0) { // 13 Overhead chat
 			var2.overheadText = var0.readStringCp1252NullTerminated();
 			if (var2.overheadText.charAt(0) == '~') {
 				var2.overheadText = var2.overheadText.substring(1);

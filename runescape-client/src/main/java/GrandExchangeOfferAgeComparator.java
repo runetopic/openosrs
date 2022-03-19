@@ -52,8 +52,8 @@ final class GrandExchangeOfferAgeComparator implements Comparator {
 					if (!var4.isFollower || Client.followerIndex == var1) {
 						String var5 = var4.name;
 						int var6;
-						if (var4.combatLevel != 0 && var0.field1119 != 0) {
-							var6 = var0.field1119 != -1 ? var0.field1119 * 658677507 * 787891115 : var4.combatLevel * -73157727 * -2058162079;
+						if (var4.combatLevel != 0 && var0.customCombatLevel != 0) {
+							var6 = var0.customCombatLevel != -1 ? var0.customCombatLevel * 658677507 * 787891115 : var4.combatLevel * -73157727 * -2058162079;
 							var5 = var5 + Tiles.method2108(var6, class340.localPlayer.combatLevel) + " " + " (" + "level-" + var6 + ")";
 						}
 

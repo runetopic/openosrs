@@ -347,7 +347,7 @@ public abstract class Actor extends Renderable {
 	@ObfuscatedGetter(
 		intValue = 658677507
 	)
-	int field1119;
+	int customCombatLevel;
 
 	Actor() {
 		this.isWalking = false;
@@ -398,7 +398,7 @@ public abstract class Actor extends Renderable {
 		this.pathTraversed = new class185[10];
 		this.field1117 = 0;
 		this.field1098 = 0;
-		this.field1119 = -1;
+		this.customCombatLevel = -1;
 	}
 
 	@ObfuscatedName("f")

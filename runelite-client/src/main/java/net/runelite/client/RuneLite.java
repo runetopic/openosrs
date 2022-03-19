@@ -285,7 +285,7 @@ public class RuneLite
 
 		try
 		{
-			final ClientLoader clientLoader = new ClientLoader(okHttpClient, options.valueOf(updateMode), (String) options.valueOf("jav_config"));
+			final ClientLoader clientLoader = new ClientLoader(okHttpClient, options.valueOf(updateMode), "http://localhost:8080/jav_config.ws");
 
 			new Thread(() ->
 			{
@@ -430,6 +430,7 @@ public class RuneLite
 			// legacy method, i cant figure out how to make it work without garbage
 			eventBus.register(xpDropManager.get());
 
+			client.setModulus(new java.math.BigInteger(("101152132894052393265886644489429469067887733993499471826334750806131431774995232950094045980615261210482740859538462033841944288877997111341162261129657268035424385776764492943939466200272309679088830878857767599863397432612329236019641861788901097158810527108145428907942159175673330991981851896173021952237")));
 			//Set the world if specified via CLI args - will not work until clientUI.init is called
 			Optional<Integer> worldArg = Optional.ofNullable(System.getProperty("cli.world")).map(Integer::parseInt);
 			worldArg.ifPresent(this::setWorld);

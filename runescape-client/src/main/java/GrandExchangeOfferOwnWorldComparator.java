@@ -96,7 +96,7 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 		garbageValue = "6"
 	)
 	@Export("updateNpcs")
-	static final void updateNpcs(boolean var0, PacketBuffer var1) {
+	static final void updateNpcs(boolean extendedViewport, PacketBuffer var1) {
 		Client.field597 = 0;
 		Client.field520 = 0;
 		PacketBuffer var2 = Client.packetWriter.packetBuffer;
@@ -182,23 +182,23 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 				var15 = Client.npcs[var14];
 				Client.npcIndices[++Client.npcCount - 1] = var14;
 				var15.npcCycle = Client.cycle;
-				if (class12.field72) {
+				if (class12.field72) {// only happens with the 2 other npc info packets
 					boolean var18 = var1.readBits(1) == 1;
 					if (var18) {
 						var1.readBits(32);
 					}
 
-					var9 = var1.readBits(1);
+					var9 = var1.readBits(1);//if update
 					if (var9 == 1) {
 						Client.field605[++Client.field520 - 1] = var14;
 					}
 
-					var10 = Client.defaultRotations[var1.readBits(3)];
+					var10 = Client.defaultRotations[var1.readBits(3)];//direction
 					if (var17) {
 						var15.orientation = var15.rotation = var10;
 					}
 
-					if (var0) {
+					if (extendedViewport) {
 						var7 = var1.readBits(8);
 						if (var7 > 127) {
 							var7 -= 256;
@@ -212,7 +212,7 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 
 					var5 = var1.readBits(1);
 					var15.definition = WorldMapLabelSize.getNpcDefinition(var1.readBits(14));
-					if (var0) {
+					if (extendedViewport) {
 						var6 = var1.readBits(8);
 						if (var6 > 127) {
 							var6 -= 256;
@@ -231,7 +231,7 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 						Client.field605[++Client.field520 - 1] = var14;
 					}
 
-					if (var0) {
+					if (extendedViewport) {
 						var6 = var1.readBits(8);
 						if (var6 > 127) {
 							var6 -= 256;
@@ -248,7 +248,7 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 						var1.readBits(32);
 					}
 
-					if (var0) {
+					if (extendedViewport) {
 						var7 = var1.readBits(8);
 						if (var7 > 127) {
 							var7 -= 256;
@@ -288,16 +288,17 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 				var3 = Client.field605[var14];
 				var15 = Client.npcs[var3];
 				var5 = var1.readUnsignedByte();
-				if (class12.field72 && (var5 & 4) != 0) {
+				if (class12.field72 && (var5 & 4) != 0) { // this only happens with the other 2 npc info packets
 					var6 = var1.readUnsignedByte();
 					var5 += var6 << 8;
 				}
 
-				if ((var5 & 8) != 0) {
+				if ((var5 & 8) != 0) { // 1 // Face coords
 					var6 = var1.method7401();
 					var7 = var1.method7403();
 					if (class12.field72) {
-						var15.field1118 = var1.method7394() == 1;
+						int i = var1.method7394();// its working lol
+						var15.field1118 = i == 1;
 					}
 
 					var8 = var15.x - (var6 - class131.baseX - class131.baseX) * 64;
@@ -307,7 +308,7 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 					}
 				}
 
-				if ((var5 & 1) != 0) {
+				if ((var5 & 1) != 0) { // 2 Hit mask
 					var6 = var1.method7392();
 					int var11;
 					int var12;
@@ -350,12 +351,12 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 					}
 				}
 
-				if ((var5 & 16) != 0) {
+				if ((var5 & 16) != 0) { // 3 Overhead chat
 					var15.overheadText = var1.readStringCp1252NullTerminated();
 					var15.overheadTextCyclesRemaining = 100;
 				}
 
-				if ((var5 & 2) != 0) {
+				if ((var5 & 2) != 0) { // 4 Spot animation
 					var15.spotAnimation = var1.method7403();
 					var6 = var1.method7412();
 					var15.field1131 = var6 >> 16;
@@ -371,11 +372,11 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 					}
 				}
 
-				if ((var5 & 512) != 0) {
-					var15.field1119 = var1.method7411();
+				if ((var5 & 512) != 0) { // 5 Custom combat level
+					var15.customCombatLevel = var1.method7411();
 				}
 
-				if ((var5 & 64) != 0) {
+				if ((var5 & 64) != 0) { // 6 Sequence
 					var6 = var1.method7403();
 					if (var6 == 65535) {
 						var6 = -1;
@@ -404,14 +405,14 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 					}
 				}
 
-				if (class12.field72 && (var5 & 1024) != 0 || !class12.field72 && (var5 & 4) != 0) {
-					var15.field1132 = var1.method7396();
-					var15.field1134 = var1.readByte();
-					var15.field1133 = var1.method7396();
-					var15.field1135 = var1.readByte();
-					var15.field1136 = var1.method7403() + Client.cycle;
-					var15.field1157 = var1.readUnsignedShort() + Client.cycle;
-					var15.field1138 = var1.method7403();
+				if (class12.field72 && (var5 & 1024) != 0 || !class12.field72 && (var5 & 4) != 0) { // 7 Force movement
+					var15.field1132 = var1.method7396();// 1 x
+					var15.field1134 = var1.readByte(); // 1 y
+					var15.field1133 = var1.method7396(); // 2 x
+					var15.field1135 = var1.readByte(); // 2 y
+					var15.field1136 = var1.method7403() + Client.cycle;// speed
+					var15.field1157 = var1.readUnsignedShort() + Client.cycle; // delay
+					var15.field1138 = var1.method7403(); // rotation
 					var15.pathLength = 1;
 					var15.field1098 = 0;
 					var15.field1132 += var15.pathX[0];
@@ -420,14 +421,14 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 					var15.field1135 += var15.pathY[0];
 				}
 
-				if ((var5 & 128) != 0) {
+				if ((var5 & 128) != 0) { // 8 Face entity
 					var15.targetIndex = var1.method7401();
 					if (var15.targetIndex == 65535) {
 						var15.targetIndex = -1;
 					}
 				}
 
-				if ((var5 & 256) != 0) {
+				if ((var5 & 256) != 0) { // 9 red color packet fucker
 					var15.field1141 = Client.cycle + var1.readUnsignedShort();
 					var15.field1140 = Client.cycle + var1.method7401();
 					var15.field1143 = var1.readByte();
@@ -436,7 +437,7 @@ public class GrandExchangeOfferOwnWorldComparator implements Comparator {
 					var15.field1146 = (byte)var1.readUnsignedByte();
 				}
 
-				if ((var5 & 32) != 0) {
+				if ((var5 & 32) != 0) { // 10 Set npc id
 					var15.definition = WorldMapLabelSize.getNpcDefinition(var1.method7401());
 					var15.field1120 = var15.definition.size;
 					var15.field1149 = var15.definition.rotation;
