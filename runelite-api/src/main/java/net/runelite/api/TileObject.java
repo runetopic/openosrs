@@ -72,6 +72,7 @@ public interface TileObject extends Locatable
 	/**
 	 * Calculates the position of the center of this tile on the canvas
 	 */
+	@Nullable
 	Point getCanvasLocation();
 
 	/**
@@ -79,11 +80,13 @@ public interface TileObject extends Locatable
 	 *
 	 * @param zOffset Vertical offset to apply before projection
 	 */
+	@Nullable
 	Point getCanvasLocation(int zOffset);
 
 	/**
 	 * Creates a polygon outlining the tile this object is on
 	 */
+	@Nullable
 	Polygon getCanvasTilePoly();
 
 	/**
@@ -93,6 +96,7 @@ public interface TileObject extends Locatable
 	 * @param zOffset Vertical offset to apply before projection
 	 * @return the canvas point to draw the text at
 	 */
+	@Nullable
 	Point getCanvasTextLocation(Graphics2D graphics, String text, int zOffset);
 
 	/**
@@ -101,6 +105,7 @@ public interface TileObject extends Locatable
 	 *
 	 * @return mini-map location on canvas
 	 */
+	@Nullable
 	Point getMinimapLocation();
 
 	/**

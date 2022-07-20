@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Adam <Adam@sigterm.info>
+ * Copyright (c) 2022, Joshua Filby <joshua@filby.me>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,28 +22,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api.events;
+package net.runelite.cache.definitions;
 
+import java.util.List;
+import java.util.Map;
 import lombok.Data;
-import net.runelite.api.Tile;
-import net.runelite.api.WallObject;
+import net.runelite.cache.util.BaseVarType;
 
-/**
- * An event where the {@link WallObject} of a {@link Tile} has been changed.
- */
 @Data
-public class WallObjectChanged
+public class DBTableIndex
 {
-	/**
-	 * The affected tile.
-	 */
-	private Tile tile;
-	/**
-	 * The wall object that has been replaced.
-	 */
-	private WallObject previous;
-	/**
-	 * The new wall object on the tile.
-	 */
-	private WallObject wallObject;
+	private final int tableId;
+	private final int columnId;
+	private BaseVarType[] tupleTypes;
+	private List<Map<Object, List<Integer>>> tupleIndexes;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Jonathan Rousseau <https://github.com/JoRouss>
+ * Copyright (c) 2022, Joshua Filby <joshua@filby.me>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,13 +22,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.party.messages;
+package net.runelite.cache.definitions;
 
 import lombok.Data;
-import net.runelite.client.party.messages.PartyMemberMessage;
+import net.runelite.cache.util.ScriptVarType;
 
 @Data
-public class CharacterNameUpdate extends PartyMemberMessage
+public class DBRowDefinition
 {
-	private final String characterName;
+	private final int id;
+	private int tableId;
+	private ScriptVarType[][] columnTypes;
+	private Object[][] columnValues;
 }

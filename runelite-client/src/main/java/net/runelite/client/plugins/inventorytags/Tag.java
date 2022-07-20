@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Adam <Adam@sigterm.info>
+ * Copyright (c) 2022, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,29 +22,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api.events;
+package net.runelite.client.plugins.inventorytags;
 
+import java.awt.Color;
 import lombok.Data;
-import net.runelite.api.DecorativeObject;
-import net.runelite.api.Tile;
 
-/**
- * An event where the {@link DecorativeObject} attached to a {@link Tile}
- * has been modified.
- */
 @Data
-public class DecorativeObjectChanged
+class Tag
 {
-	/**
-	 * The affected tile.
-	 */
-	private Tile tile;
-	/**
-	 * The decorative object that has been replaced.
-	 */
-	private DecorativeObject previous;
-	/**
-	 * The new decoration for the tile.
-	 */
-	private DecorativeObject decorativeObject;
+	Color color;
 }
