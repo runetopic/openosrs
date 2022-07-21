@@ -105,4 +105,74 @@ public interface World
 	 * @param address the address
 	 */
 	void setAddress(String address);
+
+	/**
+	 * Is world type members?
+	 *
+	 * @return true if world type is members, false otherwise
+	 */
+	default boolean isMembers()
+	{
+		return getTypes().contains(WorldType.MEMBERS);
+	}
+
+	/**
+	 * Is world type all pk world?
+	 *
+	 * @return true if world type is all pk world, false otherwise
+	 */
+	default boolean isAllPkWorld()
+	{
+		return WorldType.isAllPKWorld(getTypes());
+	}
+
+	/**
+	 * Is world type skill total?
+	 *
+	 * @return true if world type is skill total, false otherwise
+	 */
+	default boolean isSkillTotal()
+	{
+		return getTypes().contains(WorldType.SKILL_TOTAL);
+	}
+
+	/**
+	 * Is world type tournament?
+	 *
+	 * @return true if world type is tournament, false otherwise
+	 */
+	default boolean isTournament()
+	{
+		return getTypes().contains(WorldType.NOSAVE_MODE) || getTypes().contains(WorldType.TOURNAMENT_WORLD);
+	}
+
+	/**
+	 * Is world type league?
+	 *
+	 * @return true if world type is league, false otherwise
+	 */
+	default boolean isLeague()
+	{
+		return getTypes().contains(WorldType.SEASONAL);
+	}
+
+	/**
+	 * Is world type normal?
+	 *
+	 * @return true if world type is normal, false otherwise
+	 */
+	default boolean isNormal()
+	{
+		return !isAllPkWorld() && !isSkillTotal() && !isTournament() && !isLeague() && !isPvpArena();
+	}
+
+	/**
+	 * Is world type pvp arena?
+	 *
+	 * @return true if world type is pvp arena, false otherwise
+	 */
+	default boolean isPvpArena()
+	{
+		return getTypes().contains(WorldType.PVP_ARENA);
+	}
 }
