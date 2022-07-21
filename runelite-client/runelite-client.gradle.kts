@@ -31,6 +31,8 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("com.openosrs.scriptassembler")
     java
+    kotlin("jvm") version "1.6.21"
+    id("org.jetbrains.kotlin.plugin.lombok") version "1.6.21"
 }
 
 repositories {
@@ -90,6 +92,23 @@ dependencies {
     implementation(group = "net.runelite.jogl", name = "jogl-rl", version = "2.4.0-rc-20220318")
     implementation(group = "net.runelite.jogl", name = "jogl-gldesktop-dbg", version = "2.4.0-rc-20220318")
     implementation(group = "net.runelite.jocl", name = "jocl", version = "1.0")
+
+    implementation(group = "net.runelite", name = "rlawt", version = "1.3")
+
+    implementation(group = "org.lwjgl", name = "lwjgl", version = "3.3.1")
+    implementation(group = "org.lwjgl", name = "lwjgl", version = "3.3.1", classifier = "natives-linux")
+    implementation(group = "org.lwjgl", name = "lwjgl", version = "3.3.1", classifier = "natives-macos")
+    implementation(group = "org.lwjgl", name = "lwjgl", version = "3.3.1", classifier = "natives-macos-arm64")
+    implementation(group = "org.lwjgl", name = "lwjgl", version = "3.3.1", classifier = "natives-windows-x86")
+    implementation(group = "org.lwjgl", name = "lwjgl", version = "3.3.1", classifier = "natives-windows")
+
+    implementation(group = "org.lwjgl", name = "lwjgl-opengl", version = "3.3.1")
+    implementation(group = "org.lwjgl", name = "lwjgl-opengl", version = "3.3.1", classifier = "natives-linux")
+    implementation(group = "org.lwjgl", name = "lwjgl-opengl", version = "3.3.1", classifier = "natives-macos")
+    implementation(group = "org.lwjgl", name = "lwjgl-opengl", version = "3.3.1", classifier = "natives-macos-arm64")
+    implementation(group = "org.lwjgl", name = "lwjgl-opengl", version = "3.3.1", classifier = "natives-windows-x86")
+    implementation(group = "org.lwjgl", name = "lwjgl-opengl", version = "3.3.1", classifier = "natives-windows")
+
 
     runtimeOnly(project(":runescape-api"))
     runtimeOnly(group = "net.runelite.pushingpixels", name = "trident", version = "1.5.00")
@@ -153,7 +172,7 @@ tasks {
 
     jar {
         manifest {
-            attributes(mutableMapOf("Main-Class" to "net.runelite.client.RuneLite"))
+            attributes(mutableMapOf("Main-Class" to "net.unethicalite.client.Unethicalite"))
         }
     }
 

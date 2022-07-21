@@ -89,4 +89,6 @@ public interface PlayerComposition
 	 */
 	@Nullable
 	ColorTextureOverride[] getColorTextureOverrides();
+
+	long getHash();
 }

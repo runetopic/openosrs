@@ -24,51 +24,53 @@
  */
 package net.runelite.client.plugins.devtools;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Multimap;
-import com.google.inject.Inject;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import javax.swing.border.CompoundBorder;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
-import net.runelite.api.IndexDataBase;
 import net.runelite.api.VarClientInt;
 import net.runelite.api.VarClientStr;
 import net.runelite.api.VarPlayer;
-import net.runelite.api.VarbitComposition;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.VarClientIntChanged;
 import net.runelite.api.events.VarClientStrChanged;
 import net.runelite.api.events.VarbitChanged;
-import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.DynamicGridLayout;
 import net.runelite.client.ui.FontManager;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import javax.swing.border.CompoundBorder;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+@Singleton
 @Slf4j
-class VarInspector extends DevToolsFrame
+public class VarInspector extends DevToolsFrame
 {
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private enum VarType
 	{
 		VARBIT("Varbit"),
@@ -125,81 +127,28 @@ class VarInspector extends DevToolsFrame
 		VARCSTR_NAMES = varcstr.build();
 	}
 
-	private final Client client;
-	private final ClientThread clientThread;
-	private final EventBus eventBus;
+	@Inject
+	private Client client;
 
-	private final JPanel tracker = new JPanel();
+	@Inject
+	private EventBus eventBus;
+
+	private JPanel tracker;
 
 	private int lastTick = 0;
 
 	private int[] oldVarps = null;
 	private int[] oldVarps2 = null;
+	private int numVarbits = 10000;
 
-	private Multimap<Integer, Integer> varbits;
 	private Map<Integer, Object> varcs = null;
 
+	private JFrame frame;
+
 	@Inject
-	VarInspector(Client client, ClientThread clientThread, EventBus eventBus)
+	private VarInspector()
 	{
-		this.client = client;
-		this.clientThread = clientThread;
-		this.eventBus = eventBus;
 
-		setTitle("OpenOSRS Var Inspector");
-
-		setLayout(new BorderLayout());
-
-		tracker.setLayout(new DynamicGridLayout(0, 1, 0, 3));
-
-		final JPanel trackerWrapper = new JPanel();
-		trackerWrapper.setLayout(new BorderLayout());
-		trackerWrapper.add(tracker, BorderLayout.NORTH);
-
-		final JScrollPane trackerScroller = new JScrollPane(trackerWrapper);
-		trackerScroller.setPreferredSize(new Dimension(400, 400));
-
-		final JScrollBar vertical = trackerScroller.getVerticalScrollBar();
-		vertical.addAdjustmentListener(new AdjustmentListener()
-		{
-			int lastMaximum = actualMax();
-
-			private int actualMax()
-			{
-				return vertical.getMaximum() - vertical.getModel().getExtent();
-			}
-
-			@Override
-			public void adjustmentValueChanged(AdjustmentEvent e)
-			{
-				if (vertical.getValue() >= lastMaximum)
-				{
-					vertical.setValue(actualMax());
-				}
-				lastMaximum = actualMax();
-			}
-		});
-
-		add(trackerScroller, BorderLayout.CENTER);
-
-		final JPanel trackerOpts = new JPanel();
-		trackerOpts.setLayout(new FlowLayout());
-		for (VarType cb : VarType.values())
-		{
-			trackerOpts.add(cb.getCheckBox());
-		}
-
-		final JButton clearBtn = new JButton("Clear");
-		clearBtn.addActionListener(e ->
-		{
-			tracker.removeAll();
-			tracker.revalidate();
-		});
-		trackerOpts.add(clearBtn);
-
-		add(trackerOpts, BorderLayout.SOUTH);
-
-		pack();
 	}
 
 	private void addVarLog(VarType type, String name, int old, int neew)
@@ -223,15 +172,15 @@ class VarInspector extends DevToolsFrame
 				JLabel header = new JLabel("Tick " + tick);
 				header.setFont(FontManager.getRunescapeSmallFont());
 				header.setBorder(new CompoundBorder(
-					BorderFactory.createMatteBorder(0, 0, 1, 0, ColorScheme.LIGHT_GRAY_COLOR),
-					BorderFactory.createEmptyBorder(3, 6, 0, 0)
+						BorderFactory.createMatteBorder(0, 0, 1, 0, ColorScheme.LIGHT_GRAY_COLOR),
+						BorderFactory.createEmptyBorder(3, 6, 0, 0)
 				));
 				tracker.add(header);
 			}
 			tracker.add(new JLabel(String.format("%s %s changed: %s -> %s", type.getName(), name, old, neew)));
 
 			// Cull very old stuff
-			while (tracker.getComponentCount() > MAX_LOG_ENTRIES)
+			for (; tracker.getComponentCount() > MAX_LOG_ENTRIES; )
 			{
 				tracker.remove(0);
 			}
@@ -241,43 +190,55 @@ class VarInspector extends DevToolsFrame
 	}
 
 	@Subscribe
-	public void onVarbitChanged(VarbitChanged varbitChanged)
+	private void onVarbitChanged(VarbitChanged ev)
 	{
-		int index = varbitChanged.getIndex();
 		int[] varps = client.getVarps();
 
 		// Check varbits
-		for (int i : varbits.get(index))
+		for (int i = 0; i < numVarbits; i++)
 		{
-			int old = client.getVarbitValue(oldVarps, i);
-			int neew = client.getVarbitValue(varps, i);
-			if (old != neew)
+			try
 			{
-				// Set the varbit so it doesn't show in the varp changes
-				// However, some varbits share common bits, so we only do it in oldVarps2
-				// Example: 4101 collides with 4104-4129
-				client.setVarbitValue(oldVarps2, i, neew);
+				int old = client.getVarbitValue(oldVarps, i);
+				int neew = client.getVarbitValue(varps, i);
+				if (old != neew)
+				{
+					// Set the varbit so it doesn't show in the varp changes
+					// However, some varbits share common bits, so we only do it in oldVarps2
+					// Example: 4101 collides with 4104-4129
+					client.setVarbitValue(oldVarps2, i, neew);
 
-				final String name = VARBIT_NAMES.getOrDefault(i, Integer.toString(i));
-				addVarLog(VarType.VARBIT, name, old, neew);
+					final String name = VARBIT_NAMES.getOrDefault(i, Integer.toString(i));
+					addVarLog(VarType.VARBIT, name, old, neew);
+				}
+			}
+			catch (IndexOutOfBoundsException e)
+			{
+				// We don't know what the last varbit is, so we just hit the end, then set it for future iterations
+				log.debug("Hit OOB at varbit {}", i);
+				numVarbits = i;
+				break;
 			}
 		}
 
 		// Check varps
-		int old = oldVarps2[index];
-		int neew = varps[index];
-		if (old != neew)
+		for (int i = 0; i < varps.length; i++)
 		{
-			String name = Integer.toString(index);
-			for (VarPlayer varp : VarPlayer.values())
+			int old = oldVarps2[i];
+			int neew = varps[i];
+			if (old != neew)
 			{
-				if (varp.getId() == index)
+				String name = String.format("%d", i);
+				for (VarPlayer varp : VarPlayer.values())
 				{
-					name = String.format("%s(%d)", varp.name(), index);
-					break;
+					if (varp.getId() == i)
+					{
+						name = String.format("%s(%d)", varp.name(), i);
+						break;
+					}
 				}
+				addVarLog(VarType.VARP, name, old, neew);
 			}
-			addVarLog(VarType.VARP, name, old, neew);
 		}
 
 		System.arraycopy(client.getVarps(), 0, oldVarps, 0, oldVarps.length);
@@ -285,7 +246,7 @@ class VarInspector extends DevToolsFrame
 	}
 
 	@Subscribe
-	public void onVarClientIntChanged(VarClientIntChanged e)
+	private void onVarClientIntChanged(VarClientIntChanged e)
 	{
 		int idx = e.getIndex();
 		int neew = (Integer) client.getVarcMap().getOrDefault(idx, 0);
@@ -300,7 +261,7 @@ class VarInspector extends DevToolsFrame
 	}
 
 	@Subscribe
-	public void onVarClientStrChanged(VarClientStrChanged e)
+	private void onVarClientStrChanged(VarClientStrChanged e)
 	{
 		int idx = e.getIndex();
 		String neew = (String) client.getVarcMap().getOrDefault(idx, "");
@@ -330,9 +291,90 @@ class VarInspector extends DevToolsFrame
 		}
 	}
 
-	@Override
 	public void open()
 	{
+		if (tracker == null)
+		{
+			tracker = new JPanel();
+		}
+
+		if (frame != null && frame.isVisible())
+		{
+			close();
+			return;
+		}
+
+		if (frame == null)
+		{
+			frame = new JFrame();
+			frame.setAlwaysOnTop(true);
+			frame.setTitle("Var Inspector");
+
+			frame.setLayout(new BorderLayout());
+
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+			frame.addWindowListener(new WindowAdapter()
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					close();
+				}
+			});
+
+			tracker.setLayout(new DynamicGridLayout(0, 1, 0, 3));
+
+			final JPanel trackerWrapper = new JPanel();
+			trackerWrapper.setLayout(new BorderLayout());
+			trackerWrapper.add(tracker, BorderLayout.NORTH);
+
+			final JScrollPane trackerScroller = new JScrollPane(trackerWrapper);
+			trackerScroller.setPreferredSize(new Dimension(400, 400));
+
+			final JScrollBar vertical = trackerScroller.getVerticalScrollBar();
+			vertical.addAdjustmentListener(new AdjustmentListener()
+			{
+				int lastMaximum = actualMax();
+
+				private int actualMax()
+				{
+					return vertical.getMaximum() - vertical.getModel().getExtent();
+				}
+
+				@Override
+				public void adjustmentValueChanged(AdjustmentEvent e)
+				{
+					if (vertical.getValue() >= lastMaximum)
+					{
+						vertical.setValue(actualMax());
+					}
+					lastMaximum = actualMax();
+				}
+			});
+
+			frame.add(trackerScroller, BorderLayout.CENTER);
+
+			final JPanel trackerOpts = new JPanel();
+			trackerOpts.setLayout(new FlowLayout());
+			for (VarType cb : VarType.values())
+			{
+				trackerOpts.add(cb.getCheckBox());
+			}
+
+			final JButton clearBtn = new JButton("Clear");
+			clearBtn.addActionListener(e ->
+			{
+				tracker.removeAll();
+				tracker.revalidate();
+			});
+			trackerOpts.add(clearBtn);
+
+			frame.add(trackerOpts, BorderLayout.SOUTH);
+			frame.setLocationRelativeTo(client.getCanvas());
+			frame.pack();
+		}
+
 		if (oldVarps == null)
 		{
 			oldVarps = new int[client.getVarps().length];
@@ -342,34 +384,18 @@ class VarInspector extends DevToolsFrame
 		System.arraycopy(client.getVarps(), 0, oldVarps, 0, oldVarps.length);
 		System.arraycopy(client.getVarps(), 0, oldVarps2, 0, oldVarps2.length);
 		varcs = new HashMap<>(client.getVarcMap());
-		varbits = HashMultimap.create();
-
-		clientThread.invoke(() ->
-		{
-			// Build varp index -> varbit id map
-			IndexDataBase indexVarbits = client.getIndexConfig();
-			final int[] varbitIds = indexVarbits.getFileIds(VARBITS_ARCHIVE_ID);
-			for (int id : varbitIds)
-			{
-				VarbitComposition varbit = client.getVarbit(id);
-				if (varbit != null)
-				{
-					varbits.put(varbit.getIndex(), id);
-				}
-			}
-		});
 
 		eventBus.register(this);
-		super.open();
+
+		frame.setVisible(true);
+		frame.toFront();
+		frame.repaint();
 	}
 
-	@Override
 	public void close()
 	{
-		super.close();
 		tracker.removeAll();
 		eventBus.unregister(this);
-		varcs = null;
-		varbits = null;
+		frame.setVisible(false);
 	}
 }

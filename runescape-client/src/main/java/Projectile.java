@@ -307,8 +307,8 @@ public final class Projectile extends Renderable {
 		Client.Widget_cachedFonts.clear(); // L: 2983
 		class14.method148(); // L: 2984
 		Widget.Widget_cachedSprites.clear(); // L: 2986
-		Widget.Widget_cachedModels.clear(); // L: 2987
-		Widget.Widget_cachedFonts.clear(); // L: 2988
+		Widget.DBTableIndex_cache.clear(); // L: 2987
+		Widget.DBTableMasterIndex_cache.clear(); // L: 2988
 		Widget.Widget_cachedSpriteMasks.clear(); // L: 2989
 		((TextureProvider)Rasterizer3D.Rasterizer3D_textureLoader).clear(); // L: 2991
 		Script.Script_cached.clear(); // L: 2992

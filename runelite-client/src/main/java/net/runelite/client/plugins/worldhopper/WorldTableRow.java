@@ -266,7 +266,7 @@ class WorldTableRow extends JPanel
 		{
 			activityField.setForeground(TOURNAMENT_WORLD);
 		}
-		else if (types.contains(WorldType.PVP_ARENA))
+		else if (types.contains(WorldType.PVP))
 		{
 			activityField.setForeground(PVP_ARENA_WORLD);
 		}
