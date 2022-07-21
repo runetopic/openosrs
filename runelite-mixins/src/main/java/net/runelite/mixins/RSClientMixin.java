@@ -141,43 +141,8 @@ import net.runelite.api.widgets.WidgetType;
 import static net.runelite.mixins.CameraMixin.NEW_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MIN;
-import net.runelite.rs.api.RSAbstractArchive;
-import net.runelite.rs.api.RSArchive;
-import net.runelite.rs.api.RSBuffer;
-import net.runelite.rs.api.RSChatChannel;
-import net.runelite.rs.api.RSClanChannel;
-import net.runelite.rs.api.RSClient;
-import net.runelite.rs.api.RSCollisionMap;
-import net.runelite.rs.api.RSDualNode;
-import net.runelite.rs.api.RSEnumComposition;
-import net.runelite.rs.api.RSEvictingDualNodeHashTable;
-import net.runelite.rs.api.RSFloorOverlayDefinition;
-import net.runelite.rs.api.RSFont;
-import net.runelite.rs.api.RSFriendSystem;
-import net.runelite.rs.api.RSGameEngine;
-import net.runelite.rs.api.RSIndexedSprite;
-import net.runelite.rs.api.RSInterfaceParent;
-import net.runelite.rs.api.RSItemComposition;
-import net.runelite.rs.api.RSItemContainer;
-import net.runelite.rs.api.RSModelData;
-import net.runelite.rs.api.RSNPC;
-import net.runelite.rs.api.RSNode;
-import net.runelite.rs.api.RSNodeDeque;
-import net.runelite.rs.api.RSNodeHashTable;
-import net.runelite.rs.api.RSPacketBuffer;
-import net.runelite.rs.api.RSPlayer;
-import net.runelite.rs.api.RSProjectile;
-import net.runelite.rs.api.RSRuneLiteClanMember;
-import net.runelite.rs.api.RSRuneLiteMenuEntry;
-import net.runelite.rs.api.RSScene;
-import net.runelite.rs.api.RSScriptEvent;
-import net.runelite.rs.api.RSSpritePixels;
-import net.runelite.rs.api.RSStructComposition;
-import net.runelite.rs.api.RSTile;
-import net.runelite.rs.api.RSTileItem;
-import net.runelite.rs.api.RSUsername;
-import net.runelite.rs.api.RSWidget;
-import net.runelite.rs.api.RSWorld;
+
+import net.runelite.rs.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -3130,6 +3095,42 @@ public abstract class RSClientMixin implements RSClient
 		BeforeMenuRender event = new BeforeMenuRender();
 		client.getCallbacks().post(event);
 		return event.isConsumed();
+	}
+
+	@Inject
+	@Override
+	public Object getDBTableField(int rowID, int column, int tupleIndex, int fieldIndex)
+	{
+		RSDbRowType dbRowType = client.getDbRowType(rowID);
+		RSDbTableType dbTableType = client.getDbTableType(dbRowType.getTableId());
+
+		Object[] columnType = dbRowType.getColumnType(column);
+		int[] type = dbTableType.getTypes()[column];
+
+		if (columnType == null)
+		{
+			columnType = dbTableType.getDefaultValues()[column];
+		}
+
+		if (columnType == null)
+		{
+			return null;
+		}
+		else if (tupleIndex >= type.length)
+		{
+			throw new IllegalArgumentException("tuple index too large");
+		}
+		else
+		{
+			if (fieldIndex > columnType.length / type.length)
+			{
+				throw new IllegalArgumentException("field index too large");
+			}
+			else
+			{
+				return columnType[tupleIndex * type.length + fieldIndex];
+			}
+		}
 	}
 }
 

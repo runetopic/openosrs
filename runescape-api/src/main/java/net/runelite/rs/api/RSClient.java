@@ -1637,6 +1637,18 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("WorldMapElement_cachedSprites")
 	RSEvictingDualNodeHashTable getSpritesCache();
 
+	@Import("DBRowType_cache")
+	RSEvictingDualNodeHashTable getDbRowTypeCache();
+
+	@Import("DBTableType_cache")
+	RSEvictingDualNodeHashTable getDbTableTypeCache();
+
+	@Import("DBTableIndex_cache")
+	RSEvictingDualNodeHashTable getDbTableIndexCache();
+
+	@Import("DBTableMasterIndex_cache")
+	RSEvictingDualNodeHashTable getDbTableMasterIndexCache();
+
 	@Construct
 	RSIterableNodeHashTable createIterableNodeHashTable(int size);
 
@@ -1651,4 +1663,10 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Construct
 	RSEvictingDualNodeHashTable newEvictingDualNodeHashTable(int var1);
+
+	@Import("getDbTableType")
+	RSDbTableType getDbTableType(int var0);
+
+	@Import("getDbRowType")
+	RSDbRowType getDbRowType(int var0);
 }

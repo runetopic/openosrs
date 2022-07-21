@@ -1625,7 +1625,7 @@ public class Widget extends Node {
 				} else {
 					var1.replaceAll(var4, var3.vmethod3320());
 				}
-			}
+			} 
 			return var1;
 		} else {
 			return null;
@@ -1650,7 +1650,7 @@ public class Widget extends Node {
 						return null;
 					}
 				}
-			}
+			} 
 			return var1;
 		} else {
 			return null;

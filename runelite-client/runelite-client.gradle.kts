@@ -172,7 +172,7 @@ tasks {
 
     jar {
         manifest {
-            attributes(mutableMapOf("Main-Class" to "net.unethicalite.client.Unethicalite"))
+            attributes(mutableMapOf("Main-Class" to "net.runelite.client.RuneLite"))
         }
     }
 
