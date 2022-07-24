@@ -53,6 +53,12 @@ public class Groups implements Receiver
 
 	public boolean init()
 	{
+		if (openOSRSConfig.disableGroups())
+		{
+			log.info("JGroups are currently disabled.");
+			return false;
+		}
+
 		try (final InputStream is = RuneLite.class.getResourceAsStream("/udp-openosrs.xml"))
 		{
 			channel = new JChannel(is)

@@ -234,4 +234,23 @@ public interface OpenOSRSConfig extends Config
 	{
 		return true;
 	}
+
+	@ConfigSection(
+			name = "Other settings",
+			position = 13,
+			description = ""
+	)
+	String otherSettings = "Other settings";
+
+	@ConfigItem(
+			position = 14,
+			keyName = "disableGroups",
+			name = "Disable Groups/Party",
+			description = "Disables the Party functionality (needs a restart).",
+			section = otherSettings
+	)
+	default boolean disableGroups()
+	{
+		return false;
+	}
 }
