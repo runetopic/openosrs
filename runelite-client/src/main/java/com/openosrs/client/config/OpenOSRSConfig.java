@@ -253,4 +253,16 @@ public interface OpenOSRSConfig extends Config
 	{
 		return false;
 	}
+
+	@ConfigItem(
+			position = 15,
+			keyName = "disableDiscord",
+			name = "Disable Discord",
+			description = "Disables the Discord functionality (needs a restart).",
+			section = otherSettings
+	)
+	default boolean disableDiscord()
+	{
+		return false;
+	}
 }

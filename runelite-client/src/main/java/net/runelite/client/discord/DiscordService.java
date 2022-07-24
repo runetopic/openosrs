@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import com.openosrs.client.config.OpenOSRSConfig;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.discord.events.DiscordDisconnected;
@@ -51,6 +52,7 @@ public class DiscordService implements AutoCloseable
 	private final EventBus eventBus;
 	private final ScheduledExecutorService executorService;
 	private final String discordAppId;
+	private final OpenOSRSConfig openOSRSConfig;
 	private final DiscordRPC discordRPC;
 
 	// Hold a reference to the event handlers to prevent the garbage collector from deleting them
@@ -63,13 +65,15 @@ public class DiscordService implements AutoCloseable
 	private DiscordService(
 		final EventBus eventBus,
 		final ScheduledExecutorService executorService,
-		@Named("runelite.discord.appid") final String discordAppId
+		@Named("runelite.discord.appid") final String discordAppId,
+		final OpenOSRSConfig openOSRSConfig
 	)
 	{
 
 		this.eventBus = eventBus;
 		this.executorService = executorService;
 		this.discordAppId = discordAppId;
+		this.openOSRSConfig = openOSRSConfig;
 
 		DiscordRPC discordRPC = null;
 		DiscordEventHandlers discordEventHandlers = null;
@@ -95,6 +99,12 @@ public class DiscordService implements AutoCloseable
 	 */
 	public void init()
 	{
+		if (openOSRSConfig.disableDiscord())
+		{
+			log.info("Discord services are currently disabled.");
+			return;
+		}
+
 		if (discordEventHandlers == null)
 		{
 			return;
