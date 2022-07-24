@@ -2896,6 +2896,10 @@ public abstract class RSClientMixin implements RSClient
 		check("Widget_cachedFonts", client.getFontsCache());
 		check("Widget_cachedSpriteMasks", client.getSpriteMasksCache());
 		check("WorldMapElement_cachedSprites", client.getSpritesCache());
+		check("DBRowType_cache", client.getDbRowTypeCache());
+		check("DBTableType_cache", client.getDbTableTypeCache());
+		check("DBTableIndex_cache", client.getDbTableIndexCache());
+		check("DBTableMasterIndex_cache", client.getDbTableMasterIndexCache());
 	}
 
 	@Inject
