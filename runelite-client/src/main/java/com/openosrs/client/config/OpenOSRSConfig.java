@@ -31,6 +31,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
+import net.runelite.client.config.ConfigSection;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigTitle;
 import net.runelite.client.config.Range;
@@ -211,6 +212,25 @@ public interface OpenOSRSConfig extends Config
 		hidden = true
 	)
 	default boolean warning()
+	{
+		return true;
+	}
+
+	@ConfigSection(
+			name = "Data collection",
+			position = 11,
+			description = ""
+	)
+	String dataCollection = "Data collection";
+
+	@ConfigItem(
+			position = 12,
+			keyName = "session",
+			name = "Send session (online users)",
+			description = "Sends your online status & your client mode to the backend.",
+			section = dataCollection
+	)
+	default boolean session()
 	{
 		return true;
 	}

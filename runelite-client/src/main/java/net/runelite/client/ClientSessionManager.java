@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import com.openosrs.client.config.OpenOSRSConfig;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -46,6 +47,7 @@ public class ClientSessionManager
 	private final ScheduledExecutorService executorService;
 	private final Client client;
 	private final SessionClient sessionClient;
+	private final OpenOSRSConfig openOSRSConfig;
 
 	private ScheduledFuture<?> scheduledFuture;
 	private UUID sessionId;
@@ -53,15 +55,23 @@ public class ClientSessionManager
 	@Inject
 	ClientSessionManager(ScheduledExecutorService executorService,
 		@Nullable Client client,
-		SessionClient sessionClient)
+		SessionClient sessionClient,
+		OpenOSRSConfig openOSRSConfig)
 	{
 		this.executorService = executorService;
 		this.client = client;
 		this.sessionClient = sessionClient;
+		this.openOSRSConfig = openOSRSConfig;
 	}
 
 	public void start()
 	{
+		if (!openOSRSConfig.session())
+		{
+			log.info("Sessions are currently disabled.");
+			return;
+		}
+
 		executorService.execute(() ->
 		{
 			try
@@ -81,7 +91,10 @@ public class ClientSessionManager
 	@Subscribe
 	private void onClientShutdown(ClientShutdown e)
 	{
-		scheduledFuture.cancel(true);
+		if (scheduledFuture != null)
+		{
+			scheduledFuture.cancel(true);
+		}
 
 		e.waitFor(executorService.submit(() ->
 		{
