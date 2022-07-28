@@ -24,6 +24,8 @@
  */
 package net.runelite.api;
 
+import java.math.BigInteger;
+
 /**
  * Represents a byte buffer
  */
@@ -33,18 +35,149 @@ public interface Buffer extends Node
 
 	int getOffset();
 
-	/**
-	 * Use this api to write to byte buffers
-	 */
+	void setOffset(int offset);
+
+	boolean checkCrc();
+
+	void encryptRsa(BigInteger var1, BigInteger var2);
+
+	int packBytesToInt();
+
+	boolean readBoolean();
+
+	byte readByte();
+
+	byte readByteAdd();
+
+	byte readByteNeg();
+
+	byte readByteSub();
+
+	void readBytes(byte[] var1, int var2, int var3);
+
+	void readBytesLE(byte[] var1, int var2, int var3);
+
+	String readCESU8();
+
+	int readIncrSmallSmart();
+
+	int readInt();
+
+	int readLargeSmart();
+
+	long readLong();
+
+	int readMedium();
+
+	int readNullableLargeSmart();
+
+	int readShort();
+
+	int readShortAdd();
+
+	int readShortAddLE();
+
+	int readShortLE();
+
+	int readShortSmartSub();
+
+	int readShortSmartSub64();
+
+	String readStringCp1252NullCircumfixed();
+
+	String readStringCp1252NullTerminated();
+
+	String readStringCp1252NullTerminatedOrNull();
+
+	int readUShortSmart();
+
+	int readUnsignedByte();
+
+	int readUnsignedByteAdd();
+
+	int readUnsignedByteNeg();
+
+	int readUnsignedByteSub();
+
+	int readUnsignedIntIME();
+
+	int readUnsignedIntLE();
+
+	int readUnsignedIntME();
+
+	int readUnsignedMediumLME();
+
+	int readUnsignedMediumRME();
+
+	int readUnsignedShort();
+
+	int readUnsignedShortAdd();
+
+	int readUnsignedShortAddLE();
+
+	int readUnsignedShortLE();
+
+	int readVarInt();
+
+	void releaseArray();
+
+	void writeBoolean(boolean var1);
+
+	void writeBuffer(Buffer var1);
+
 	void writeByte(int var1);
 
-	void writeShort(int var1);
+	void writeByteAdd(int var1);
 
-	void writeMedium(int var1);
+	void writeByteNeg(int var1);
+
+	void writeByteSub(int var1);
+
+	void writeBytes(byte[] var1, int var2, int var3);
+
+	void writeCESU8(CharSequence var1);
+
+	int writeCrc(int var1);
 
 	void writeInt(int var1);
 
+	void writeIntIME(int var1);
+
+	void writeIntLE(int var1);
+
+	void writeIntME(int var1);
+
+	void writeLengthByte(int var1);
+
+	void writeLengthInt(int var1);
+
+	void writeLengthShort(int var1);
+
 	void writeLong(long var1);
 
-	void writeStringCp1252NullTerminated(String string);
+	void writeLongMedium(long var1);
+
+	void writeMedium(int var1);
+
+	void writeShort(int var1);
+
+	void writeShortAdd(int var1);
+
+	void writeShortAddLE(int var1);
+
+	void writeShortLE(int var1);
+
+	void writeSmartByteShort(int var1);
+
+	void writeStringCp1252NullCircumfixed(String var1);
+
+	void writeStringCp1252NullTerminated(String var1);
+
+	void writeVarInt(int var1);
+
+	void xteaDecrypt(int[] var1, int var2, int var3);
+
+	void xteaDecryptAll(int[] var1);
+
+	void xteaEncrypt(int[] var1, int var2, int var3);
 }
