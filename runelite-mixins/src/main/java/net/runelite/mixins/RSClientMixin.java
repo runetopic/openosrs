@@ -138,6 +138,7 @@ import net.runelite.api.widgets.WidgetConfig;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
 import net.runelite.api.widgets.WidgetType;
+import net.runelite.api.widgets.WidgetID;
 import static net.runelite.mixins.CameraMixin.NEW_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MIN;
@@ -1800,7 +1801,7 @@ public abstract class RSClientMixin implements RSClient
 
 		copy$menuAction(event.getParam0(), event.getParam1(),
 			event.getMenuAction() == UNKNOWN ? opcode : event.getMenuAction().getId(),
-			event.getId(), itemId, event.getMenuOption(), event.getMenuTarget(),
+			event.getId(), event.getItemId(), event.getMenuOption(), event.getMenuTarget(),
 			canvasX, canvasY);
 	}
 
@@ -1811,6 +1812,69 @@ public abstract class RSClientMixin implements RSClient
 		assert isClientThread() : "invokeMenuAction must be called on client thread";
 
 		client.sendMenuAction(param0, param1, opcode, identifier, itemId, option, target, x, y);
+	}
+
+	@Inject
+	@Override
+	public void invokeMenuAction(String option, String target, int identifier, int opcode, int param0, int param1, int screenX, int screenY)
+	{
+		int itemId = -1;
+		switch (opcode)
+		{
+			case 1006:
+				itemId = 0;
+				break;
+			case 25:
+			case 31:
+			case 32:
+			case 33:
+			case 34:
+			case 35:
+			case 36:
+			case 37:
+			case 38:
+			case 39:
+			case 40:
+			case 41:
+			case 42:
+			case 43:
+			case 58:
+			case 1005:
+				itemId = getItemId(param0, param1);
+				break;
+			case 57:
+			case 1007:
+				if (identifier >= 1 && identifier <= 10)
+				{
+					itemId = getItemId(param0, param1);
+				}
+				break;
+		}
+
+		invokeMenuAction(option, target, identifier, opcode, param0, param1, itemId, screenX, screenY);
+	}
+
+	@Inject
+	private int getItemId(int param0, int param1)
+	{
+		Widget widget = client.getWidget(param1);
+		if (widget != null)
+		{
+			int group = param1 >>> 16;
+			Widget[] children = widget.getChildren();
+			if (children != null && children.length >= 2 && group == WidgetID.EQUIPMENT_GROUP_ID)
+			{
+				param0 = 1;
+			}
+
+			Widget child = widget.getChild(param0);
+			if (child != null)
+			{
+				return child.getItemId();
+			}
+		}
+
+		return -1;
 	}
 
 	@FieldHook("Login_username")
