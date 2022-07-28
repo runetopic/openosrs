@@ -418,7 +418,7 @@ public final class WidgetID
 	{
 		static final int EMOTE_WINDOW = 0;
 		static final int EMOTE_SCROLL_CONTAINER = 1;
-		static final int EMOTE_CONTAINER = 2;
+		static final int EMOTE_CONTAINER = 1;
 		static final int EMOTE_SCROLLBAR = 4;
 	}
 
@@ -430,20 +430,20 @@ public final class WidgetID
 
 	static class Minimap
 	{
-		static final int XP_ORB = 1;
-		static final int HEALTH_ORB = 2;
-		static final int PRAYER_ORB = 13;
-		static final int QUICK_PRAYER_ORB = 15; // Has the "Quick-prayers" name
-		static final int PRAYER_ORB_TEXT = 16;
-		static final int RUN_ORB = 21;
-		static final int TOGGLE_RUN_ORB = 23; // Has the "Toggle run" name
-		static final int RUN_ORB_TEXT = 24;
-		static final int SPEC_ORB = 29;
-		static final int SPEC_CLICKBOX = 31;
-		static final int WORLDMAP_ORB = 43;
-		static final int WIKI_BANNER_PARENT = 44;
-		static final int WIKI_BANNER = 45;
-		static final int WORLDMAP_OPTIONS = 48;
+		static final int XP_ORB = 5;
+		static final int HEALTH_ORB = 6;
+		static final int PRAYER_ORB = 17;
+		static final int QUICK_PRAYER_ORB = 19; // Has the "Quick-prayers" name
+		static final int PRAYER_ORB_TEXT = 20;
+		static final int RUN_ORB = 25;
+		static final int TOGGLE_RUN_ORB = 27; // Has the "Toggle run" name
+		static final int RUN_ORB_TEXT = 28;
+		static final int SPEC_ORB = 33;
+		static final int SPEC_CLICKBOX = 35;
+		static final int WORLDMAP_ORB = 48;
+		static final int WIKI_BANNER_PARENT = 49;
+		static final int WIKI_BANNER = 50;
+		static final int WORLDMAP_OPTIONS = 53;
 	}
 
 	static class LoginClickToPlayScreen
@@ -915,7 +915,7 @@ public final class WidgetID
 	{
 		static final int CONTAINER = 0;
 		static final int SCROLL_CONTAINER = 3;
-		static final int LIST = 5;
+		static final int LIST = 3;
 		static final int SCROLLBAR = 6;
 	}
 
