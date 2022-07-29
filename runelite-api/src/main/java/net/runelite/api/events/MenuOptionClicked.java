@@ -182,6 +182,11 @@ public class MenuOptionClicked
 		return menuEntry.getItemId();
 	}
 
+	public void setItemId(int itemId)
+	{
+		menuEntry.setItemId(itemId);
+	}
+
 	/**
 	 * Get the widget this menu entry is on, if this is a menu entry
 	 * with an associated widget. Such as eg, CC_OP.
@@ -239,5 +244,6 @@ public class MenuOptionClicked
 		this.setMenuAction(entry.getType());
 		this.setParam0(entry.getParam0());
 		this.setParam1(entry.getParam1());
+		this.setItemId(entry.getItemId());
 	}
 }

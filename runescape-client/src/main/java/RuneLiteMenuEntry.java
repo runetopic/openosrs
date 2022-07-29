@@ -5,7 +5,6 @@ import net.runelite.api.Player;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.NPC;
 import net.runelite.api.MenuAction;
-import net.runelite.api.widgets.WidgetID;
 import net.runelite.rs.api.RSClient;
 public class RuneLiteMenuEntry implements MenuEntry {
 	private static RSClient client;
@@ -214,6 +213,8 @@ public class RuneLiteMenuEntry implements MenuEntry {
 				return false;
 			} else if (this.getParam1() != menuEntry.getParam1()) {
 				return false;
+			} else if (this.getItemId() != menuEntry.getItemId()) {
+				return false;
 			} else if (this.isForceLeftClick() != menuEntry.isForceLeftClick()) {
 				return false;
 			} else if (this.isDeprioritized() != menuEntry.isDeprioritized()) {
@@ -228,15 +229,20 @@ public class RuneLiteMenuEntry implements MenuEntry {
 				} else if (!option.equals(menuEntryOption)) {
 					return false;
 				}
-				String target = this.getTarget();
-				String menuEntryTarget = menuEntry.getTarget();
-				if (target == null) {
-					if (menuEntryTarget != null) {
-						return false;
+				label55: {
+					String target = this.getTarget();
+					String menuEntryTarget = menuEntry.getTarget();
+					if (target == null) {
+						if (menuEntryTarget != null) {
+							return false;
+						}
+					} else if (!target.equals(menuEntryTarget)) {
+						break label55;
 					}
-				} else if (!target.equals(menuEntryTarget)) {
+
 					return false;
 				}
+
 				MenuAction type = this.getType();
 				MenuAction menuEntryType = menuEntry.getType();
 				if (type == null) {
@@ -313,28 +319,13 @@ public class RuneLiteMenuEntry implements MenuEntry {
 		return -1;
 	}
 
+	public void setItemId(int itemId) {
+		Client.menuItemIds[this.idx] = itemId;
+	}
+
 	@Override
 	public int getItemId() {
-		int param1 = this.getParam1();
-		int param0 = this.getParam0();
-		Widget widget = client.getWidget(param1);
-		if (widget != null)
-		{
-			int group = param1 >>> 16;
-			Widget[] children = widget.getChildren();
-			if (children != null && children.length >= 2 && group == WidgetID.EQUIPMENT_GROUP_ID)
-			{
-				param0 = 1;
-			}
-
-			Widget child = widget.getChild(param0);
-			if (child != null)
-			{
-				return child.getItemId();
-			}
-		}
-
-		return -1;
+		return Client.menuItemIds[this.idx];
 	}
 
 	@Override
@@ -401,6 +392,7 @@ public class RuneLiteMenuEntry implements MenuEntry {
 		int hash = b * 59 + this.getIdentifier();
 		hash = hash * 59 + this.getParam0();
 		hash = hash * 59 + this.getParam1();
+		hash = hash * 59 + this.getItemId();
 		hash = hash * 59 + (this.isForceLeftClick() ? 79 : 97);
 		hash = hash * 59 + (this.isDeprioritized() ? 79 : 97);
 		String option = this.getOption();
