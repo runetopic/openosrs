@@ -1702,7 +1702,7 @@ public abstract class RSClientMixin implements RSClient
 	{
 		RSRuneLiteMenuEntry menuEntry = null;
 
-		for (int i = client.getMenuOptionCount() - 1; i >= 0; --i)
+		for (int i = 499; i >= 0; --i)
 		{
 			if (client.getMenuOpcodes()[i] == opcode
 				&& client.getMenuIdentifiers()[i] == id
@@ -1762,8 +1762,11 @@ public abstract class RSClientMixin implements RSClient
 		{
 			client.getLogger().trace("Menu click op {} targ {} action {} id {} p0 {} p1 {}", option, target, opcode, id, param0, param1);
 			event = new MenuOptionClicked(menuEntry);
-
 			client.getCallbacks().post(event);
+
+			// Set new item id here in case event is modified
+			int newItemId = getItemId(event.getId(), event.getMenuAction().getId(), event.getParam0(), event.getParam1(), event.getItemId());
+			event.setItemId(newItemId);
 
 			if (menuEntry.getConsumer() != null)
 			{
@@ -1812,17 +1815,6 @@ public abstract class RSClientMixin implements RSClient
 			}
 		}
 
-		// Catch invalid MenuOptionClicked modifications
-		if (event.getItemId() == -1)
-		{
-			event.setItemId(getItemId(
-					event.getId(),
-					event.getMenuAction().getId(),
-					event.getParam0(),
-					event.getParam1()
-			));
-		}
-
 		copy$menuAction(event.getParam0(), event.getParam1(),
 			event.getMenuAction() == UNKNOWN ? opcode : event.getMenuAction().getId(),
 			event.getId(), event.getItemId(), event.getMenuOption(), event.getMenuTarget(),
@@ -1841,19 +1833,17 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public void invokeMenuAction(String option, String target, int identifier, int opcode, int param0, int param1, int screenX, int screenY)
 	{
-		invokeMenuAction(option, target, identifier, opcode, param0, param1, getItemId(identifier, opcode, param0, param1), screenX, screenY);
+		invokeMenuAction(option, target, identifier, opcode, param0, param1, getItemId(identifier, opcode, param0, param1, -1), screenX, screenY);
 	}
 
 	@Inject
-	private static int getItemId(int identifier, int opcode, int param0, int param1)
+	private static int getItemId(int identifier, int opcode, int param0, int param1, int currentItemId)
 	{
-		int itemId = -1;
 		switch (opcode)
 		{
 			case 1006:
-				itemId = 0;
+				currentItemId = 0;
 				break;
-
 			case 25:
 			case 31:
 			case 32:
@@ -1870,23 +1860,24 @@ public abstract class RSClientMixin implements RSClient
 			case 43:
 			case 58:
 			case 1005:
-				itemId = getItemId(param0, param1);
+				currentItemId = getItemId(param0, param1, currentItemId);
 				break;
 
 			case 57:
 			case 1007:
 				if (identifier >= 1 && identifier <= 10)
 				{
-					itemId = getItemId(param0, param1);
+					currentItemId = getItemId(param0, param1, currentItemId);
 				}
+
 				break;
 		}
 
-		return itemId;
+		return currentItemId;
 	}
 
 	@Inject
-	private static int getItemId(int param0, int param1)
+	private static int getItemId(int param0, int param1, int currentItemId)
 	{
 		Widget widget = client.getWidget(param1);
 		if (widget != null)
@@ -1901,11 +1892,14 @@ public abstract class RSClientMixin implements RSClient
 			Widget child = widget.getChild(param0);
 			if (child != null)
 			{
-				return child.getItemId();
+				if (currentItemId != child.getItemId())
+				{
+					return child.getItemId();
+				}
 			}
 		}
 
-		return -1;
+		return currentItemId;
 	}
 
 	@FieldHook("Login_username")
