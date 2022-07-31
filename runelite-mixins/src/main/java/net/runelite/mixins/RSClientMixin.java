@@ -1702,15 +1702,15 @@ public abstract class RSClientMixin implements RSClient
 	{
 		RSRuneLiteMenuEntry menuEntry = null;
 
-		for (int i = 499; i >= 0; --i)
+		for (int i = client.getMenuOptionCount() - 1; i >= 0; --i)
 		{
 			if (client.getMenuOpcodes()[i] == opcode
-				&& client.getMenuIdentifiers()[i] == id
-				&& client.getMenuArguments1()[i] == param0
-				&& client.getMenuArguments2()[i] == param1
-				&& client.getMenuItemIds()[i] == itemId
-				&& option.equals(client.getMenuOptions()[i])
-				&& (option.equals(target) || target.equals(client.getMenuTargets()[i]))
+					&& client.getMenuIdentifiers()[i] == id
+					&& client.getMenuArguments1()[i] == param0
+					&& client.getMenuArguments2()[i] == param1
+					&& client.getMenuItemIds()[i] == itemId
+					&& option.equals(client.getMenuOptions()[i])
+					&& target.equals(client.getMenuTargets()[i])
 			)
 			{
 				menuEntry = rl$menuEntries[i];
@@ -1718,7 +1718,19 @@ public abstract class RSClientMixin implements RSClient
 			}
 		}
 
-		if (menuEntry == null && option.equals(target))
+		boolean isTemp = false;
+		if (client.getTempMenuAction() != null)
+		{
+			isTemp = client.getTempMenuAction().getOpcode() == opcode &&
+					client.getTempMenuAction().getIdentifier() == id &&
+					client.getTempMenuAction().getOption().equals(option) &&
+					client.getTempMenuAction().getTarget().equals(target) &&
+					client.getTempMenuAction().getParam0() == param0 &&
+					client.getTempMenuAction().getParam1() == param1 &&
+					client.getTempMenuAction().getItemId() == itemId;
+		}
+
+		if (menuEntry == null && isTemp)
 		{
 			int i;
 			if (client.getMenuOptionCount() < 500)
