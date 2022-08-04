@@ -33,7 +33,6 @@ import net.runelite.api.AnimationID;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.Hitsplat;
-import net.runelite.api.HitsplatID;
 import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
 import net.runelite.api.Player;
@@ -250,7 +249,7 @@ public class IdleNotifierPluginTest
 		// But player is being damaged (is in combat)
 		final HitsplatApplied hitsplatApplied = new HitsplatApplied();
 		hitsplatApplied.setActor(player);
-		hitsplatApplied.setHitsplat(new Hitsplat(HitsplatID.DAMAGE_ME, 0, 0));
+		hitsplatApplied.setHitsplat(new Hitsplat(Hitsplat.HitsplatType.DAMAGE_ME, 0, 0));
 		plugin.onHitsplatApplied(hitsplatApplied);
 		plugin.onGameTick(new GameTick());
 		verify(notifier, times(0)).notify(any());
