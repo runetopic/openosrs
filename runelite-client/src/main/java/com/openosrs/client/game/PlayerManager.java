@@ -1,5 +1,6 @@
 package com.openosrs.client.game;
 
+import com.google.gson.Gson;
 import com.openosrs.client.events.AttackStyleChanged;
 import java.io.IOException;
 import java.util.Collection;
@@ -29,13 +30,16 @@ import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.PlayerCompositionChanged;
 import net.runelite.api.events.PlayerDespawned;
 import net.runelite.api.kit.KitType;
+import net.runelite.client.RuntimeConfig;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.ItemMapping;
 import net.runelite.client.hiscore.HiscoreClient;
 import net.runelite.client.hiscore.HiscoreResult;
+import net.runelite.client.hiscore.HiscoreSkill;
 import net.runelite.client.util.PvPUtil;
+import net.runelite.http.api.RuneLiteAPI;
 import net.runelite.http.api.item.ItemEquipmentStats;
 import net.runelite.http.api.item.ItemStats;
 import okhttp3.OkHttpClient;
@@ -53,18 +57,20 @@ public class PlayerManager
 	private final Map<String, HiscoreResult> resultCache = new ConcurrentHashMap<>();
 	private final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
+	private RuntimeConfig runtimeConfig;
 	@Inject
 	PlayerManager(
 		final Client client,
 		final EventBus eventBus,
 		final ItemManager itemManager,
-		final OkHttpClient okHttpClient
+		final OkHttpClient okHttpClient,
+		final RuntimeConfig runtimeConfig
 	)
 	{
 		this.client = client;
 		this.itemManager = itemManager;
 		this.eventBus = eventBus;
-		this.hiscoreClient = new HiscoreClient(okHttpClient);
+		this.hiscoreClient = new HiscoreClient(okHttpClient, RuneLiteAPI.GSON, runtimeConfig);
 
 		eventBus.register(this);
 	}
@@ -157,8 +163,8 @@ public class PlayerManager
 		if (resultCache.containsKey(player.getName()))
 		{
 			player.setSkills(resultCache.get(player.getName()));
-			player.setPrayerLevel(player.getSkills().getPrayer().getLevel());
-			player.setHpLevel(player.getSkills().getHitpoints().getLevel());
+			player.setPrayerLevel(player.getSkills().getSkill(HiscoreSkill.PRAYER).getLevel());
+			player.setHpLevel(player.getSkills().getSkill(HiscoreSkill.HITPOINTS).getLevel());
 			return;
 		}
 
@@ -202,8 +208,8 @@ public class PlayerManager
 
 			resultCache.put(player.getName(), result);
 			player.setSkills(result);
-			player.setPrayerLevel(player.getSkills().getPrayer().getLevel());
-			player.setHpLevel(player.getSkills().getHitpoints().getLevel());
+			player.setPrayerLevel(player.getSkills().getSkill(HiscoreSkill.PRAYER).getLevel());
+			player.setHpLevel(player.getSkills().getSkill(HiscoreSkill.HITPOINTS).getLevel());
 			player.setHttpRetry(false);
 			player.setHiscoresRequested(false);
 		});

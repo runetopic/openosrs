@@ -650,8 +650,8 @@ public final class Varbits
 	/**
 	 * Whether the Special Attack orb is disabled due to being in a PvP area
 	 * <p>
-	 * 0 = Enabled =player is not in PvP)
-	 * 1 = Disabled =player in in PvP)
+	 * 0 = Enabled (player is not in PvP)
+	 * 1 = Disabled (player is in PvP)
 	 *
 	 * @see <a href="https://oldschool.runescape.wiki/w/Minimap#Special_attack_orb">The OSRS Wiki's Minimap page</a>
 	 */
@@ -689,4 +689,13 @@ public final class Varbits
 	 * 1 = Enabled
 	 */
 	public static final int SHOW_PVP_KDR_STATS = 4143;
+
+	/**
+	 * State of Teleblock spell effects on the player
+	 * <p>
+	 * 0 = Teleblock inactive, no immunity
+	 * 1 &lt;= X &lt;= 100 = Teleblock inactive, remaining ticks of immunity from reapplication of spell effect
+	 * 101 &lt;= Teleblock active, remaining ticks of blocking effect
+	 */
+	public static final int TELEBLOCK = 4163;
 }
