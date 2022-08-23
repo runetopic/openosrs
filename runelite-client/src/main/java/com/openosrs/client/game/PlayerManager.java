@@ -1,6 +1,5 @@
 package com.openosrs.client.game;
 
-import com.google.gson.Gson;
 import com.openosrs.client.events.AttackStyleChanged;
 import java.io.IOException;
 import java.util.Collection;
