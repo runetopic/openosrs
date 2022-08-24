@@ -1,5 +1,5 @@
-import java.util.function.Consumer;
 import net.runelite.api.MenuEntry;
+import java.util.function.Consumer;
 import net.runelite.api.Actor;
 import net.runelite.api.Player;
 import net.runelite.api.widgets.Widget;
@@ -229,7 +229,7 @@ public class RuneLiteMenuEntry implements MenuEntry {
 				} else if (!option.equals(menuEntryOption)) {
 					return false;
 				}
-				label55: {
+				label55 : {
 					String target = this.getTarget();
 					String menuEntryTarget = menuEntry.getTarget();
 					if (target == null) {
@@ -239,10 +239,8 @@ public class RuneLiteMenuEntry implements MenuEntry {
 					} else if (!target.equals(menuEntryTarget)) {
 						break label55;
 					}
-
 					return false;
 				}
-
 				MenuAction type = this.getType();
 				MenuAction menuEntryType = menuEntry.getType();
 				if (type == null) {
