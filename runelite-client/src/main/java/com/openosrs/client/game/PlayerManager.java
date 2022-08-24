@@ -1,6 +1,33 @@
 package com.openosrs.client.game;
 
 import com.openosrs.client.events.AttackStyleChanged;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Actor;
+import net.runelite.api.Client;
+import net.runelite.api.ItemComposition;
+import net.runelite.api.ItemID;
+import net.runelite.api.NPC;
+import net.runelite.api.Player;
+import net.runelite.api.WorldType;
+import net.runelite.api.events.AnimationChanged;
+import net.runelite.api.events.PlayerCompositionChanged;
+import net.runelite.api.events.PlayerDespawned;
+import net.runelite.api.kit.KitType;
+import net.runelite.client.eventbus.EventBus;
+import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.game.ItemManager;
+import net.runelite.client.game.ItemMapping;
+import net.runelite.client.hiscore.HiscoreClient;
+import net.runelite.client.hiscore.HiscoreResult;
+import net.runelite.client.hiscore.HiscoreSkill;
+import net.runelite.client.util.PvPUtil;
+import net.runelite.http.api.item.ItemEquipmentStats;
+import net.runelite.http.api.item.ItemStats;
+import okhttp3.OkHttpClient;
+
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,34 +41,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.Actor;
-import net.runelite.api.Client;
-import net.runelite.api.ItemComposition;
-import net.runelite.api.ItemID;
-import net.runelite.api.NPC;
-import net.runelite.api.Player;
-import net.runelite.api.WorldType;
-import net.runelite.api.events.AnimationChanged;
-import net.runelite.api.events.PlayerCompositionChanged;
-import net.runelite.api.events.PlayerDespawned;
-import net.runelite.api.kit.KitType;
-import net.runelite.client.RuntimeConfig;
-import net.runelite.client.eventbus.EventBus;
-import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.game.ItemManager;
-import net.runelite.client.game.ItemMapping;
-import net.runelite.client.hiscore.HiscoreClient;
-import net.runelite.client.hiscore.HiscoreResult;
-import net.runelite.client.hiscore.HiscoreSkill;
-import net.runelite.client.util.PvPUtil;
-import net.runelite.http.api.RuneLiteAPI;
-import net.runelite.http.api.item.ItemEquipmentStats;
-import net.runelite.http.api.item.ItemStats;
-import okhttp3.OkHttpClient;
 
 @Singleton
 @Slf4j
@@ -56,20 +55,19 @@ public class PlayerManager
 	private final Map<String, HiscoreResult> resultCache = new ConcurrentHashMap<>();
 	private final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-	private RuntimeConfig runtimeConfig;
 	@Inject
 	PlayerManager(
 		final Client client,
 		final EventBus eventBus,
 		final ItemManager itemManager,
 		final OkHttpClient okHttpClient,
-		final RuntimeConfig runtimeConfig
+		final HiscoreClient hiscoreClient
 	)
 	{
 		this.client = client;
 		this.itemManager = itemManager;
 		this.eventBus = eventBus;
-		this.hiscoreClient = new HiscoreClient(okHttpClient, RuneLiteAPI.GSON, runtimeConfig);
+		this.hiscoreClient = hiscoreClient;
 
 		eventBus.register(this);
 	}

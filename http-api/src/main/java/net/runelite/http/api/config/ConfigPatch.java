@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2022, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,47 +22,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.deob.deobfuscators;
+package net.runelite.http.api.config;
 
-import java.io.File;
-import java.io.IOException;
-import net.runelite.asm.ClassGroup;
-import net.runelite.deob.DeobTestProperties;
-import net.runelite.deob.TemporyFolderLocation;
-import net.runelite.deob.util.JarUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import lombok.Data;
 
-public class EnumDeobfuscatorTest
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+@Data
+public class ConfigPatch
 {
-	@Rule
-	public DeobTestProperties properties = new DeobTestProperties();
-
-	@Rule
-	public TemporaryFolder folder = TemporyFolderLocation.getTemporaryFolder();
-
-	private ClassGroup group;
-
-	@Before
-	public void before() throws IOException
-	{
-		group = JarUtil.load(new File(properties.getRsClient()));
-	}
-
-	@After
-	public void after() throws IOException
-	{
-		JarUtil.save(group, folder.newFile());
-	}
-
-	@Test
-	@Ignore
-	public void testRun() throws Exception
-	{
-		new EnumDeobfuscator().run(group);
-	}
+	Map<String, String> edit = new HashMap<>();
+	Set<String> unset = new HashSet<>();
 }
