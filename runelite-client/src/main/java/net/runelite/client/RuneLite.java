@@ -27,6 +27,7 @@ package net.runelite.client;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.MoreObjects;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -88,6 +89,7 @@ import net.runelite.client.ui.overlay.WidgetOverlay;
 import net.runelite.client.ui.overlay.tooltip.TooltipOverlay;
 import net.runelite.client.ui.overlay.worldmap.WorldMapOverlay;
 import net.runelite.client.util.WorldUtil;
+import net.runelite.client.util.ReflectUtil;
 import net.runelite.http.api.RuneLiteAPI;
 import net.runelite.http.api.worlds.World;
 import net.runelite.http.api.worlds.WorldResult;
@@ -303,9 +305,14 @@ public class RuneLite
 
 			PROFILES_DIR.mkdirs();
 
-			log.info("OpenOSRS {} (RuneLite version {}, launcher version {}) starting up, args: {}",
-				OpenOSRS.SYSTEM_VERSION, RuneLiteProperties.getVersion() == null ? "unknown" : RuneLiteProperties.getVersion(),
-				RuneLiteProperties.getLauncherVersion(), args.length == 0 ? "none" : String.join(" ", args));
+			log.info("OpenOSRS {} (launcher version {}) starting up, args: {}",
+				RuneLiteProperties.getVersion(), MoreObjects.firstNonNull(RuneLiteProperties.getLauncherVersion(), "unknown"),
+				args.length == 0 ? "none" : String.join(" ", args));
+
+			final RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
+			// This includes arguments from _JAVA_OPTIONS, which are parsed after command line flags and applied to
+			// the global VM args
+			log.info("Java VM arguments: {}", String.join(" ", runtime.getInputArguments()));
 
 			final long start = System.currentTimeMillis();
 
@@ -321,8 +328,7 @@ public class RuneLite
 			injector.getInstance(RuneLite.class).start();
 
 			final long end = System.currentTimeMillis();
-			final RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
-			final long uptime = rb.getUptime();
+			final long uptime = runtime.getUptime();
 			log.info("Client initialization took {}ms. Uptime: {}ms", end - start, uptime);
 		}
 		catch (Exception e)
@@ -453,6 +459,9 @@ public class RuneLite
 		SplashScreen.stop();
 
 		clientUI.show();
+
+		ReflectUtil.queueInjectorAnnotationCacheInvalidation(injector);
+		ReflectUtil.invalidateAnnotationCaches();
 	}
 
 	@VisibleForTesting
