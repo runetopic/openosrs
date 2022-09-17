@@ -180,6 +180,15 @@ public abstract class ScriptVMMixin implements RSClient
 		}
 		else
 		{
+			if (arguments[0] instanceof Integer)
+			{
+				int scriptId = (int) arguments[0];
+				if (scriptId == 6493)
+				{
+					client.getLogger().warn("Invalid script id: {}", scriptId);
+					return;
+				}
+			}
 			try
 			{
 				rootScriptEvent = event;
