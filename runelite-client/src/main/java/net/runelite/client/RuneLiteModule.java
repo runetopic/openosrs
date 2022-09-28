@@ -75,6 +75,7 @@ public class RuneLiteModule extends AbstractModule
 	private final Supplier<RuntimeConfig> configSupplier;
 	private final boolean developerMode;
 	private final boolean safeMode;
+	private final boolean enableTelemetry;
 	private final File sessionfile;
 	private final File config;
 
@@ -117,6 +118,7 @@ public class RuneLiteModule extends AbstractModule
 
 		bindConstant().annotatedWith(Names.named("developerMode")).to(developerMode);
 		bindConstant().annotatedWith(Names.named("safeMode")).to(safeMode);
+		bindConstant().annotatedWith(Names.named("enableTelemetry")).to(enableTelemetry);
 		bind(File.class).annotatedWith(Names.named("sessionfile")).toInstance(sessionfile);
 		bind(File.class).annotatedWith(Names.named("config")).toInstance(config);
 		bind(ScheduledExecutorService.class).toInstance(new ExecutorServiceExceptionLogger(Executors.newSingleThreadScheduledExecutor()));
@@ -229,5 +231,15 @@ public class RuneLiteModule extends AbstractModule
 		executor.allowCoreThreadTimeOut(true);
 
 		return new NonScheduledExecutorServiceExceptionLogger(executor);
+	}
+
+	@Provides
+	@Singleton
+	TelemetryClient provideTelemetry(
+		OkHttpClient okHttpClient,
+		Gson gson,
+		@Named("runelite.api.base") HttpUrl apiBase)
+	{
+		return enableTelemetry ? new TelemetryClient(okHttpClient, gson, apiBase) : null;
 	}
 }

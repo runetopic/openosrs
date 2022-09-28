@@ -176,6 +176,10 @@ public class RuneLite
 	@Nullable
 	private RuntimeConfig runtimeConfig;
 
+	@Inject
+	@Nullable
+	private TelemetryClient telemetryClient;
+
 	public static void main(String[] args) throws Exception
 	{
 		Locale.setDefault(Locale.ENGLISH);
@@ -323,6 +327,7 @@ public class RuneLite
 				runtimeConfigLoader,
 				developerMode,
 				options.has("safe-mode"),
+				options.has("enable-telemetry"),
 				options.valueOf(sessionfile),
 				options.valueOf(configfile)));
 
@@ -461,9 +466,9 @@ public class RuneLite
 
 		clientUI.show();
 
-		if (options.has("enable-telemetry"))
+		if (telemetryClient != null)
 		{
-			injector.getInstance(TelemetryClient.class).submitTelemetry();
+			telemetryClient.submitTelemetry();
 		}
 
 		ReflectUtil.queueInjectorAnnotationCacheInvalidation(injector);
