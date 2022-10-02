@@ -87,6 +87,7 @@ import net.runelite.api.SpritePixels;
 import net.runelite.api.StructComposition;
 import net.runelite.api.Tile;
 import net.runelite.api.VarPlayer;
+import net.runelite.api.VarbitComposition;
 import net.runelite.api.Varbits;
 import net.runelite.api.WorldType;
 import net.runelite.api.clan.ClanChannel;
@@ -1417,8 +1418,45 @@ public abstract class RSClientMixin implements RSClient
 				}
 			}
 		}
+		else if (gameState == GameState.LOGIN_SCREEN)
+		{
+			loadVarbits();
+		}
 	}
 
+	@Inject
+	private static Map<Integer, ArrayList<Integer>> varbitsMap;
+
+	@Inject
+	public static void loadVarbits()
+	{
+		// Load varbits into map<index, varbitIds>
+		if (varbitsMap == null)
+		{
+			varbitsMap = new HashMap<>();
+			RSArchive archive = client.getIndexConfig();
+			int[] fileIds = archive.getFileIds(14);
+
+			for (int i = 0; i < fileIds.length; i++)
+			{
+				VarbitComposition varbitComposition = client.getVarbit(i);
+				if (varbitComposition != null)
+				{
+					int idx = varbitComposition.getIndex();
+					if (varbitsMap.containsKey(idx))
+					{
+						varbitsMap.get(idx).add(i);
+					}
+					else
+					{
+						ArrayList<Integer> varbitIds = new ArrayList<>();
+						varbitIds.add(i);
+						varbitsMap.put(idx, varbitIds);
+					}
+				}
+			}
+		}
+	}
 
 	@FieldHook("npcs")
 	@Inject
@@ -1497,13 +1535,48 @@ public abstract class RSClientMixin implements RSClient
 		client.getCallbacks().post(offerChangedEvent);
 	}
 
+	@Inject
+	private static int[] oldVarps;
+
 	@FieldHook("Varps_main")
 	@Inject
 	public static void settingsChanged(int idx)
 	{
+		// Varp changed
 		VarbitChanged varbitChanged = new VarbitChanged();
 		varbitChanged.setVarpId(idx);
+		varbitChanged.setValue(client.getVarpValue(idx));
 		client.getCallbacks().post(varbitChanged);
+
+		// Varbit changed
+		if (oldVarps == null)
+		{
+			oldVarps = new int[client.getVarps().length];
+		}
+
+		if (!Arrays.equals(oldVarps, client.getVarps()))
+		{
+			ArrayList<Integer> varbitIds = varbitsMap.get(idx);
+
+			if (varbitIds == null || varbitIds.isEmpty())
+			{
+				return;
+			}
+
+			for (int varbitId : varbitIds)
+			{
+				int oldValue = client.getVarbitValue(oldVarps, varbitId);
+				int newValue = client.getVarbitValue(client.getVarps(), varbitId);
+				if (oldValue != newValue)
+				{
+					varbitChanged.setVarpId(-1);
+					varbitChanged.setVarbitId(varbitId);
+					varbitChanged.setValue(newValue);
+					client.getCallbacks().post(varbitChanged);
+				}
+			}
+			System.arraycopy(client.getVarps(), 0, oldVarps, 0, oldVarps.length);
+		}
 	}
 
 	@FieldHook("isResizable")
