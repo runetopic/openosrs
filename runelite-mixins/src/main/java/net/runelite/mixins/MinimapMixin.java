@@ -123,4 +123,38 @@ public abstract class MinimapMixin implements RSClient
 
 		return ourSprite;
 	}
+
+	@Inject
+	private static boolean rl$minimapZoom;
+
+	@Inject
+	private static double rl$minimapZoomValue = 4.0;
+
+	@Inject
+	@Override
+	public boolean isMinimapZoom()
+	{
+		return rl$minimapZoom;
+	}
+
+	@Inject
+	@Override
+	public void setMinimapZoom(boolean minimapZoom)
+	{
+		rl$minimapZoom = minimapZoom;
+	}
+
+	@Inject
+	@Override
+	public double getMinimapZoom()
+	{
+		return rl$minimapZoomValue;
+	}
+
+	@Inject
+	@Override
+	public void setMinimapZoom(double minimapZoom)
+	{
+		rl$minimapZoomValue = minimapZoom;
+	}
 }
