@@ -666,6 +666,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	long getMouseLastPressedMillis();
 
+	@Import("keyHandler")
+	RSKeyHandler getKeyHandler();
+
 	@Import("KeyHandler_idleCycles")
 	@Override
 	void setKeyboardIdleTicks(int cycles);
@@ -1525,10 +1528,10 @@ public interface RSClient extends RSGameEngine, Client
 	int getRndHue();
 
 	@Import("Tiles_underlays")
-	byte[][][] getTileUnderlays();
+	short[][][] getTileUnderlays();
 
 	@Import("Tiles_overlays")
-	byte[][][] getTileOverlays();
+	short[][][] getTileOverlays();
 
 	@Import("Tiles_shapes")
 	byte[][][] getTileShapes();
