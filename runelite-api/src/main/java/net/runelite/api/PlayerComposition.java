@@ -36,8 +36,17 @@ public interface PlayerComposition
 	 * Checks if the player is female.
 	 *
 	 * @return true if the player is female
+	 * @deprecated use getGender
 	 */
+	@Deprecated
 	boolean isFemale();
+
+	/**
+	 * Get the player gender
+	 *
+	 * @return 0 for male, 1 for female
+	 */
+	int getGender();
 
 	/**
 	 * Get the body part colors for this player composition.
