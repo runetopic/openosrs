@@ -35,4 +35,36 @@ public class RuneLiteObject extends GraphicsObject {
 	public void setModel(Model var1) {
 		this.model = var1;
 	}
+
+	public void setOrientation(int orientation)
+	{
+		/**@TODO fix implementation*/
+	}
+
+	public int getOrientation()
+	{
+		/**@TODO fix implementation*/
+		return -1;
+	}
+
+	public void setRadius(int radius)
+	{
+		this.model.radius = radius;
+	}
+
+	public int getRadius()
+	{
+		return model.radius;
+	}
+
+	public void setDrawFrontTilesFirst(boolean drawFrontTilesFirst)
+	{
+		/**@TODO fix implementation*/
+	}
+
+	public boolean drawFrontTilesFirst()
+	{
+		/**@TODO fix implementation*/
+		return false;
+	}
 }
