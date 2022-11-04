@@ -484,7 +484,7 @@ class WidgetInspector extends DevToolsFrame
 		}
 
 		onPickerDeselect();
-		client.setWidgetSelected(false);
+		client.setSpellSelected(false);
 		ev.consume();
 
 		Object target = getWidgetOrWidgetItemForMenuOption(ev.getMenuAction(), ev.getParam0(), ev.getParam1());
