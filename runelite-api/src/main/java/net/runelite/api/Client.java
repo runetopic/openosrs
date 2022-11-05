@@ -1996,9 +1996,14 @@ public interface Client extends OAuthApi, GameEngine
 	int getIf1DraggedItemIndex();
 
 	/**
+	 * Is a widget is in target mode?
+	 */
+	boolean isWidgetSelected();
+
+	/**
 	 * Sets if a widget is in target mode
 	 */
-	void setSpellSelected(boolean selected);
+	void setWidgetSelected(boolean selected);
 
 	/**
 	 * @deprecated use {@link #getSelectedWidget()} instead.
