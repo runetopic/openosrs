@@ -25,6 +25,7 @@
  */
 package net.runelite.client.game;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import lombok.Getter;
@@ -347,11 +348,12 @@ public enum ItemMapping
 	ITEM_SNAIL_SHELL(COINS_995, true, 600L, SNAIL_SHELL),
 	ITEM_TORTOISE_SHELL(COINS_995, true, 250L, TORTOISE_SHELL);
 
-	private static final Multimap<Integer, ItemMapping> MAPPINGS = HashMultimap.create();
+	@VisibleForTesting
+	static final Multimap<Integer, ItemMapping> MAPPINGS = HashMultimap.create();
 	private final int tradeableItem;
 	private final int[] untradableItems;
 	private final long quantity;
-	private final boolean untradeable;
+	private final boolean includeVariations;
 
 	static
 	{
@@ -359,9 +361,9 @@ public enum ItemMapping
 		{
 			for (int itemId : item.untradableItems)
 			{
-				if (item.untradeable)
+				if (item.includeVariations)
 				{
-					for (final Integer variation : ItemVariationMapping.getVariations(itemId))
+					for (final Integer variation : ItemVariationMapping.getVariations(ItemVariationMapping.map(itemId)))
 					{
 						if (variation != item.tradeableItem)
 						{
@@ -369,18 +371,20 @@ public enum ItemMapping
 						}
 					}
 				}
-
-				MAPPINGS.put(itemId, item);
+				else
+				{
+					MAPPINGS.put(itemId, item);
+				}
 			}
 		}
 	}
 
-	ItemMapping(int tradeableItem, boolean untradeable, long quantity, int... untradableItems)
+	ItemMapping(int tradeableItem, boolean includeVariations, long quantity, int... untradableItems)
 	{
 		this.tradeableItem = tradeableItem;
 		this.untradableItems = untradableItems;
 		this.quantity = quantity;
-		this.untradeable = untradeable;
+		this.includeVariations = includeVariations;
 	}
 
 	ItemMapping(int tradeableItem, long quantity, int... untradableItems)
