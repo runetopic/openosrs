@@ -3,6 +3,10 @@ public class RuneLiteObject extends GraphicsObject {
 
 	public boolean loop;
 
+	private int orientation;
+	private int radius = 60;
+	private boolean drawFrontTilesFirst;
+
 	public RuneLiteObject() {
 		super.isFinished = true;
 	}
@@ -36,35 +40,27 @@ public class RuneLiteObject extends GraphicsObject {
 		this.model = var1;
 	}
 
-	public void setOrientation(int orientation)
-	{
-		/**@TODO fix implementation*/
+	public void setOrientation(int orientation) {
+		this.orientation = orientation;
 	}
 
-	public int getOrientation()
-	{
-		/**@TODO fix implementation*/
-		return -1;
+	public int getOrientation() {
+		return orientation;
 	}
 
-	public void setRadius(int radius)
-	{
-		this.model.radius = radius;
+	public void setRadius(int radius) {
+		this.radius = radius;
 	}
 
-	public int getRadius()
-	{
-		return model.radius;
+	public int getRadius() {
+		return radius;
 	}
 
-	public void setDrawFrontTilesFirst(boolean drawFrontTilesFirst)
-	{
-		/**@TODO fix implementation*/
+	public void setDrawFrontTilesFirst(boolean drawFrontTilesFirst) {
+		this.drawFrontTilesFirst = drawFrontTilesFirst;
 	}
 
-	public boolean drawFrontTilesFirst()
-	{
-		/**@TODO fix implementation*/
-		return false;
+	public boolean drawFrontTilesFirst() {
+		return drawFrontTilesFirst;
 	}
 }

@@ -1681,4 +1681,7 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("getDbRowType")
 	RSDbRowType getDbRowType(int var0);
+
+	@Import("graphicsCycle")
+	int getGraphicsCycle();
 }
