@@ -52,6 +52,7 @@ import net.runelite.api.events.BeforeRender;
 import net.runelite.api.events.FakeXpDrop;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.events.PostClientTick;
 import net.runelite.api.events.ScriptCallbackEvent;
 import net.runelite.api.hooks.Callbacks;
 import net.runelite.api.widgets.Widget;
@@ -238,6 +239,13 @@ public class Hooks implements Callbacks
 		{
 			log.error("error during main loop tasks", ex);
 		}
+	}
+
+	@Override
+	public void tickEnd()
+	{
+		clientThread.invokeTickEnd();
+		eventBus.post(new PostClientTick());
 	}
 
 	@Override
@@ -443,6 +451,32 @@ public class Hooks implements Callbacks
 		graphics.drawImage(src, 0, 0, width, height, null);
 		graphics.dispose();
 		return image;
+	}
+
+	@Override
+	public void tickLayer(Widget layer)
+	{
+		try
+		{
+			renderer.tickOverlayLayer(layer);
+		}
+		catch (Exception ex)
+		{
+			log.warn("Error during overlay ticking", ex);
+		}
+	}
+
+	@Override
+	public void tickInterface(int interfaceId)
+	{
+		try
+		{
+			renderer.tickOverlayInterface(interfaceId);
+		}
+		catch (Exception ex)
+		{
+			log.warn("Error during overlay ticking", ex);
+		}
 	}
 
 	@Override

@@ -58,9 +58,9 @@ import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.ParamID;
-import net.runelite.api.events.ClientTick;
 import net.runelite.api.events.MenuOpened;
 import net.runelite.api.events.PostItemComposition;
+import net.runelite.api.events.PostMenuSort;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
@@ -115,8 +115,8 @@ public class MenuEntrySwapperPlugin extends Plugin
 		MenuAction.GAME_OBJECT_FIRST_OPTION,
 		MenuAction.GAME_OBJECT_SECOND_OPTION,
 		MenuAction.GAME_OBJECT_THIRD_OPTION,
-		MenuAction.GAME_OBJECT_FOURTH_OPTION
-		// GAME_OBJECT_FIFTH_OPTION gets sorted underneath Walk here after we swap, so it doesn't work
+		MenuAction.GAME_OBJECT_FOURTH_OPTION,
+		MenuAction.GAME_OBJECT_FIFTH_OPTION
 	);
 
 	private static final Set<String> ESSENCE_MINE_NPCS = ImmutableSet.of(
@@ -518,6 +518,13 @@ public class MenuEntrySwapperPlugin extends Plugin
 				{
 					if (Strings.isNullOrEmpty(actions[actionIdx]))
 					{
+						continue;
+					}
+
+					if ("Build".equals(actions[actionIdx])
+						|| "Remove".equals(actions[actionIdx]))
+					{
+						// https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1
 						continue;
 					}
 
@@ -1048,7 +1055,10 @@ public class MenuEntrySwapperPlugin extends Plugin
 		}
 
 		final MenuEntry[] entries = event.getMenuEntries();
-		int shiftOff = 0;
+
+		List<MenuEntry> leftClickMenus = new ArrayList<>();
+		List<MenuEntry> shiftClickMenus = new ArrayList<>();
+
 		for (int idx = entries.length - 1; idx >= 0; --idx)
 		{
 			final MenuEntry entry = entries[idx];
@@ -1089,53 +1099,98 @@ public class MenuEntrySwapperPlugin extends Plugin
 
 					// find highest op from the current menu, post any existing swaps, for inserting Reset
 					int highestOp = 10;
-					for (int i = idx; i >= 0 && entries[i].getWidget() == w; --i)
+					for (int i = idx; i >= 0; --i)
 					{
-						highestOp = entries[i].getIdentifier();
+						final MenuEntry opEntry = entries[i];
+						if (opEntry.getWidget() != w)
+						{
+							continue;
+						}
+
+						highestOp = opEntry.getIdentifier();
 					}
 
 					if (identifier != lowestOp && (leftClick == null || leftClick != identifier))
 					{
-						client.createMenuEntry(1 + shiftOff)
-							.setOption("Swap left click " + entry.getOption())
-							.setTarget(entry.getTarget())
+						leftClickMenus.add(client.createMenuEntry(1)
+							.setOption(entry.getOption())
 							.setType(MenuAction.RUNELITE)
-							.onClick(uiConsumer(entry.getOption(), entry.getTarget(), false, componentId, itemId, identifier));
+							.onClick(uiConsumer(entry.getOption(), entry.getTarget(), false, componentId, itemId, identifier)));
 					}
 
 					if (identifier != lowestOp && (shiftClick == null || shiftClick != identifier))
 					{
-						client.createMenuEntry(1)
-							.setOption("Swap shift click " + entry.getOption())
-							.setTarget(entry.getTarget())
+						shiftClickMenus.add(client.createMenuEntry(1)
+							.setOption(entry.getOption())
 							.setType(MenuAction.RUNELITE)
-							.onClick(uiConsumer(entry.getOption(), entry.getTarget(), true, componentId, itemId, identifier));
-						++shiftOff;
+							.onClick(uiConsumer(entry.getOption(), entry.getTarget(), true, componentId, itemId, identifier)));
 					}
 
-					if (identifier == highestOp && (leftClick != null || shiftClick != null))
+					if (identifier == highestOp)
 					{
-						client.createMenuEntry(1)
-							.setOption("Reset swap")
-							.setTarget(entry.getTarget())
-							.setType(MenuAction.RUNELITE)
-							.onClick(menuEntry ->
-							{
-								final String message = new ChatMessageBuilder()
-									.append("The default left and shift click options for '").append(Text.removeTags(menuEntry.getTarget())).append("' ")
-									.append("have been reset.")
-									.build();
+						if (leftClick != null)
+						{
+							leftClickMenus.add(client.createMenuEntry(1)
+								.setOption("Reset")
+								.setType(MenuAction.RUNELITE)
+								.onClick(menuEntry ->
+								{
+									final String message = new ChatMessageBuilder()
+										.append("The default left click option for '").append(Text.removeTags(entry.getTarget())).append("' ")
+										.append("has been reset.")
+										.build();
 
-								chatMessageManager.queue(QueuedMessage.builder()
-									.type(ChatMessageType.CONSOLE)
-									.runeLiteFormattedMessage(message)
-									.build());
+									chatMessageManager.queue(QueuedMessage.builder()
+										.type(ChatMessageType.CONSOLE)
+										.runeLiteFormattedMessage(message)
+										.build());
 
-								log.debug("Unset ui swap for {}/{}", componentId, menuEntry.getTarget());
+									log.debug("Unset ui left swap for {}/{}", componentId, menuEntry.getTarget());
 
-								unsetUiSwapConfig(false, componentId, itemId);
-								unsetUiSwapConfig(true, componentId, itemId);
-							});
+									unsetUiSwapConfig(false, componentId, itemId);
+								}));
+						}
+
+						if (shiftClick != null)
+						{
+							shiftClickMenus.add(client.createMenuEntry(1)
+								.setOption("Reset")
+								.setType(MenuAction.RUNELITE)
+								.onClick(menuEntry ->
+								{
+									final String message = new ChatMessageBuilder()
+										.append("The default shift click option for '").append(Text.removeTags(entry.getTarget())).append("' ")
+										.append("has been reset.")
+										.build();
+
+									chatMessageManager.queue(QueuedMessage.builder()
+										.type(ChatMessageType.CONSOLE)
+										.runeLiteFormattedMessage(message)
+										.build());
+
+									log.debug("Unset ui shift swap for {}/{}", componentId, menuEntry.getTarget());
+
+									unsetUiSwapConfig(true, componentId, itemId);
+								}));
+						}
+
+						if (!leftClickMenus.isEmpty())
+						{
+							MenuEntry sub = client.createMenuEntry(2)
+								.setOption("Swap left click")
+								.setTarget(entry.getTarget())
+								.setType(MenuAction.RUNELITE_SUBMENU);
+							leftClickMenus.forEach(menu -> menu.setParent(sub));
+						}
+
+						if (!shiftClickMenus.isEmpty())
+						{
+							MenuEntry sub = client.createMenuEntry(1)
+								.setOption("Swap shift click")
+								.setTarget(entry.getTarget())
+								.setType(MenuAction.RUNELITE_SUBMENU);
+							shiftClickMenus.forEach(menu -> menu.setParent(sub));
+						}
 					}
 				}
 			}
@@ -1147,7 +1202,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 		return e ->
 		{
 			final String message = new ChatMessageBuilder()
-				.append("The default  ").append(shift ? "shift" : "left").append(" click option for '").append(Text.removeTags(target)).append("' ")
+				.append("The default ").append(shift ? "shift" : "left").append(" click option for '").append(Text.removeTags(target)).append("' ")
 				.append("has been set to '").append(option).append("'.")
 				.build();
 
@@ -1449,7 +1504,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 	}
 
 	@Subscribe
-	public void onClientTick(ClientTick clientTick)
+	public void onPostMenuSort(PostMenuSort postMenuSort)
 	{
 		// The menu is not rebuilt when it is open, so don't swap or else it will
 		// repeatedly swap entries
@@ -1586,8 +1641,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 		entries[index2] = entry1;
 
 		// Item op4 and op5 are CC_OP_LOW_PRIORITY so they get added underneath Use,
-		// but this also causes them to get sorted after client tick. Change them to
-		// CC_OP to avoid this.
+		// but this also makes them right-click only. Change them to CC_OP to avoid this.
 		if (entry1.getType() == MenuAction.CC_OP_LOW_PRIORITY)
 		{
 			entry1.setType(MenuAction.CC_OP);
@@ -1649,7 +1703,9 @@ public class MenuEntrySwapperPlugin extends Plugin
 	private static MenuAction defaultAction(ObjectComposition objectComposition)
 	{
 		String[] actions = objectComposition.getActions();
-		for (int i = 0; i < OBJECT_MENU_TYPES.size(); ++i)
+		// GAME_OBJECT_FIFTH_OPTION is never the default, even if it is the only option, because it
+		// gets depriotizied below Walk here
+		for (int i = 0; i < OBJECT_MENU_TYPES.size() - 1; ++i)
 		{
 			if (!Strings.isNullOrEmpty(actions[i]))
 			{

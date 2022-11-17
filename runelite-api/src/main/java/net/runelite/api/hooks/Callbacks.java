@@ -54,9 +54,14 @@ public interface Callbacks
 	void postDeferred(Object event);
 
 	/**
-	 * Called each tick
+	 * Called at the beginning of each tick
 	 */
 	void tick();
+
+	/**
+	 * Called at the end of each tick
+	 */
+	void tickEnd();
 
 	/**
 	 * Called each frame
@@ -67,6 +72,18 @@ public interface Callbacks
 	 * Called after receiving update NPCs packet from server.
 	 */
 	void updateNpcs();
+
+	/**
+	 * Called before a widget layer is ticked
+	 * @param layer
+	 */
+	void tickLayer(Widget layer);
+
+	/**
+	 * Called before an interface is ticked
+	 * @param interfaceId
+	 */
+	void tickInterface(int interfaceId);
 
 	/**
 	 * Called after the scene is drawn.
