@@ -114,6 +114,7 @@ import net.runelite.api.events.NpcSpawned;
 import net.runelite.api.events.PlayerDespawned;
 import net.runelite.api.events.PlayerMenuOptionsChanged;
 import net.runelite.api.events.PlayerSpawned;
+import net.runelite.api.events.PostMenuSort;
 import net.runelite.api.events.PostStructComposition;
 import net.runelite.api.events.ResizeableChanged;
 import net.runelite.api.events.StatChanged;
@@ -1116,6 +1117,7 @@ public abstract class RSClientMixin implements RSClient
 				client.getMenuItemIds()[tmpOptionsCount] = menuEntryAdded.getItemId();
 			}
 		}
+		client.getCallbacks().post(new PostMenuSort());
 	}
 
 	@Inject
