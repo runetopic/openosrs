@@ -2206,7 +2206,6 @@ public abstract class RSClientMixin implements RSClient
 			Widget[] children = widget.getChildren();
 			if (children == null || children == widgets)
 			{
-				callbacks.tickLayer(widget);
 				callbacks.drawLayer(widget, subList);
 			}
 		}
@@ -2227,7 +2226,6 @@ public abstract class RSClientMixin implements RSClient
 				return;
 			}
 
-			callbacks.tickInterface(group);
 			callbacks.drawInterface(group, widgetItems);
 			widgetItems.clear();
 			for (int i = hiddenWidgets.size() - 1; i >= 0; i--)
