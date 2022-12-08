@@ -22,66 +22,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.rs.api;
 
-import java.util.HashMap;
+import net.runelite.api.AABB;
+import net.runelite.mapping.Import;
 
-/**
- * Represents the model of an object.
- */
-public interface Model extends Mesh, Renderable
+public interface RSAABB extends AABB
 {
-	int[] getFaceColors1();
+	@Import("xMid")
+	int getCenterX();
 
-	int[] getFaceColors2();
+	@Import("yMid")
+	int getCenterY();
 
-	int[] getFaceColors3();
+	@Import("zMid")
+	int getCenterZ();
 
-	int getSceneId();
-	void setSceneId(int sceneId);
+	@Import("xMidOffset")
+	int getExtremeX();
 
-	int getBufferOffset();
-	void setBufferOffset(int bufferOffset);
+	@Import("yMidOffset")
+	int getExtremeY();
 
-	int getUvBufferOffset();
-	void setUvBufferOffset(int bufferOffset);
-
-	int getBottomY();
-
-	void calculateBoundsCylinder();
-
-	byte[] getFaceRenderPriorities();
-
-	int getRadius();
-	int getDiameter();
-
-	float[] getFaceTextureUVCoordinates();
-
-	/**
-	 * @see #getAABB(int)
-	 */
-	@Deprecated
-	void calculateExtreme(int orientation);
-
-	int getXYZMag();
-	boolean isClickable();
-	
-	void drawFace(int face);
-
-	int[] getVertexNormalsX();
-	int[] getVertexNormalsY();
-	int[] getVertexNormalsZ();
-
-	byte getOverrideAmount();
-	byte getOverrideHue();
-	byte getOverrideSaturation();
-	byte getOverrideLuminance();
-
-	HashMap<Integer, AABB> getAABBMap();
-
-	AABB getAABB(int orientation);
-
-	void calculateBoundingBox(int orientation);
-
-	int getLastOrientation();
+	@Import("zMidOffset")
+	int getExtremeZ();
 }

@@ -65,9 +65,9 @@ public abstract class RSGraphicsObjectMixin implements RSGraphicsObject
 		}
 	}
 
-	@Copy("drawGraphicsObjectEntity")
-	@Replace("drawGraphicsObjectEntity")
-	static final void copy$drawGraphicsObjectEntity()
+	@Copy("drawEntities")
+	@Replace("drawEntities")
+	static final void copy$drawEntities(int var0, int var1, int var2, int var3)
 	{
 		RSNodeDeque rSNodeDeque = client.getGraphicsObjectDeque();
 		for (RSGraphicsObject rSGraphicsObject = (RSGraphicsObject)rSNodeDeque.last(); rSGraphicsObject != null; rSGraphicsObject = (RSGraphicsObject)rSNodeDeque.previous())
@@ -106,5 +106,6 @@ public abstract class RSGraphicsObjectMixin implements RSGraphicsObject
 				rSGraphicsObject.unlink();
 			}
 		}
+		copy$drawEntities(var0, var1, var2, var3);
 	}
 }

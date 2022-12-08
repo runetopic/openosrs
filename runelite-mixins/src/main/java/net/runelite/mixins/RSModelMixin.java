@@ -27,6 +27,7 @@ package net.runelite.mixins;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
+import net.runelite.api.AABB;
 import net.runelite.api.Model;
 import net.runelite.api.Perspective;
 import net.runelite.api.hooks.DrawCallbacks;
@@ -548,5 +549,23 @@ public abstract class RSModelMixin implements RSModel
 	public void setVertexNormalsZ(int[] vertexNormalsZ)
 	{
 		rl$vertexNormalsZ = vertexNormalsZ;
+	}
+
+	@Inject
+	public int lastOrientation = -1;
+
+	@Inject
+	@Override
+	public int getLastOrientation()
+	{
+		return lastOrientation;
+	}
+	@Inject
+	@Override
+	public AABB getAABB(int orientation)
+	{
+		calculateExtreme(orientation);
+		lastOrientation = orientation;
+		return getAABBMap().get(lastOrientation);
 	}
 }
