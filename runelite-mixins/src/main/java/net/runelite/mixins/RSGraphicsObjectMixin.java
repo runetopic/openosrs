@@ -72,38 +72,37 @@ public abstract class RSGraphicsObjectMixin implements RSGraphicsObject
 		RSNodeDeque rSNodeDeque = client.getGraphicsObjectDeque();
 		for (RSGraphicsObject rSGraphicsObject = (RSGraphicsObject)rSNodeDeque.last(); rSGraphicsObject != null; rSGraphicsObject = (RSGraphicsObject)rSNodeDeque.previous())
 		{
-			if (rSGraphicsObject.getLevel() == client.getPlane() && !rSGraphicsObject.finished())
+			if (rSGraphicsObject instanceof RSRuneLiteObject)
 			{
-				if (client.getGameCycle() >= rSGraphicsObject.getStartCycle())
+				if (rSGraphicsObject.getLevel() == client.getPlane() && !rSGraphicsObject.finished())
 				{
-					rSGraphicsObject.advance(client.getGraphicsCycle());
-					if (rSGraphicsObject.finished())
+					if (client.getGameCycle() >= rSGraphicsObject.getStartCycle())
 					{
-						rSGraphicsObject.unlink();
-					}
-					else
-					{
-						int radius = 60;
-						int orientation = 0;
-						boolean drawFrontTilesFirst = false;
-						if (rSGraphicsObject instanceof RSRuneLiteObject)
+						rSGraphicsObject.advance(client.getGraphicsCycle());
+						if (rSGraphicsObject.finished())
 						{
-							RSRuneLiteObject rSRuneLiteObject = (RSRuneLiteObject)rSGraphicsObject;
-							radius = rSRuneLiteObject.getRadius();
-							orientation = rSRuneLiteObject.getOrientation();
-							drawFrontTilesFirst = rSRuneLiteObject.drawFrontTilesFirst();
+							rSGraphicsObject.unlink();
 						}
-						client.getScene().drawEntity(rSGraphicsObject
+						else
+						{
+							final RSRuneLiteObject rSRuneLiteObject = (RSRuneLiteObject)rSGraphicsObject;
+							final int radius = rSRuneLiteObject.getRadius();
+							final int orientation = rSRuneLiteObject.getOrientation();
+							final boolean drawFrontTilesFirst = rSRuneLiteObject.drawFrontTilesFirst();
+
+							client.getScene().drawEntity(rSGraphicsObject
 								.getLevel(), rSGraphicsObject
 								.getX(), rSGraphicsObject
 								.getY(), rSGraphicsObject
-								.getZ(), radius, (RSRenderable)rSGraphicsObject, orientation, -1L, drawFrontTilesFirst);
+								.getZ(), radius, rSGraphicsObject, orientation, -1L, drawFrontTilesFirst);
+						}
 					}
 				}
-			}
-			else
-			{
-				rSGraphicsObject.unlink();
+				else
+				{
+					rSGraphicsObject.unlink();
+				}
+				return;
 			}
 		}
 		copy$drawEntities(var0, var1, var2, var3);
