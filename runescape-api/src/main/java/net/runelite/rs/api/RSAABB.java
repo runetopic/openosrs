@@ -22,33 +22,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.rs.api;
 
-import javax.annotation.Nonnull;
-import java.util.HashMap;
+import net.runelite.api.AABB;
+import net.runelite.mapping.Import;
 
-/**
- * Represents an object that can be rendered.
- */
-public interface Renderable extends Node
+public interface RSAABB extends AABB
 {
-	/**
-	 * Gets the model of the object.
-	 */
-	Model getModel();
+	@Import("xMid")
+	int getCenterX();
 
-	/**
-	 * Gets the height of the model.
-	 */
-	int getModelHeight();
+	@Import("yMid")
+	int getCenterY();
 
-	void setModelHeight(int modelHeight);
+	@Import("zMid")
+	int getCenterZ();
 
-	void draw(int orientation, int pitchSin, int pitchCos, int yawSin, int yawCos, int x, int y, int z, long hash);
+	@Import("xMidOffset")
+	int getExtremeX();
 
-	void setHidden(boolean hidden);
-	boolean isHidden();
+	@Import("yMidOffset")
+	int getExtremeY();
 
-	@Nonnull
-	HashMap<Integer, AABB> getAABBMap();
+	@Import("zMidOffset")
+	int getExtremeZ();
 }
