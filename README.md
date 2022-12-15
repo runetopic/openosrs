@@ -20,7 +20,7 @@ This branch uses upstreams PlayerManager/OverlayManager etc so keep that in mind
 Contributions are welcome, but there should be no changes made to runelite-client unless necessary/minor. Mould the api around the client.
 ## Discord  
 
-[![Discord](https://img.shields.io/discord/373382904769675265.svg)](https://discord.gg/openosrs)
+[![Discord](https://img.shields.io/discord/212385463418355713.svg)](https://discord.gg/m6bkPQ72DB)
 
 ## Project Layout  
 
