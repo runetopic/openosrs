@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Shaun Dreclin <https://github.com/ShaunDreclin>
+ * Copyright (c) 2022 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,46 +25,49 @@
 package net.runelite.api;
 
 /**
- * Utility class used for mapping enum IDs.
- * <p>
- * Note: This class is not complete and may be missing mapped IDs.
+ * Jagex 2D and 3D drawing utilities.
+ * Similar to AWT's {@link java.awt.Graphics2D}
+ *
+ * @see JagexColor
  */
-public final class EnumID
+public interface Rasterizer
 {
-	public static final int MUSIC_TRACK_NAMES = 812;
-	public static final int MUSIC_TRACK_IDS = 819;
 	/**
-	 * key: int 1-n+1
-	 * val: namedobj
+	 * Gets the back buffer of the rasterizer
+	 *
+	 * ARGB or RGB depending on {@link Client#isGpu()}
 	 */
-	public static final int RUNEPOUCH_RUNE = 982;
-	public static final int XPDROP_COLORS = 1169;
+	int[] getPixels();
 
 	/**
-	 * Translates spellbook varbit into enum ID
+	 * Width of {@link #getPixels()}
 	 */
-	public static final int SPELLBOOKS = 1981;
+	int getWidth();
 
 	/**
-	 * key: index in spellbook, value: NullItemID corresponding to spell
+	 * Height of {@link #getPixels()}
 	 */
-	public static final int STANDARD_SPELLBOOK = 1982;
-	public static final int ANCIENT_SPELLBOOK = 1983;
-	public static final int LUNAR_SPELLBOOK = 1984;
-	public static final int ARCEUUS_SPELLBOOK = 1985;
+	int getHeight();
 
-	public static final int FRIENDS_CHAT_RANK_ICONS = 1543;
-	/**
-	 * key: int 0-n
-	 * val: namedobj
-	 */
-	public static final int PETS = 2158;
-	public static final int CLAN_RANK_NAME = 3797;
-	public static final int CLAN_RANK_GRAPHIC = 3798;
 
 	/**
-	 * key: mapelement
-	 * val: dbrow
+	 * Draws a filled rectangle onto the rasterizer buffer at full opacity
 	 */
-	public static final int MAPELEMENT_TO_QUEST = 4385;
+	void fillRectangle(int x, int y, int w, int h, int rgb);
+
+	/**
+	 * Draws a filled triangle onto the rasterizer buffer at rasterizer opacity
+	 */
+	void rasterFlat(int y0, int y1, int y2, int x0, int x1, int x2, int rgb);
+
+
+	/**
+	 * Sets if {@link #rasterGouraud} uses a faster shading algorithm
+	 */
+	void setRasterGouraudLowRes(boolean lowRes);
+
+	/**
+	 * Draws a gouraud shaded filled triangle onto the rasterizer buffer at rasterizer opacity
+	 */
+	void rasterGouraud(int y0, int y1, int y2, int x0, int x1, int x2, int hsl0, int hsl1, int hsl2);
 }

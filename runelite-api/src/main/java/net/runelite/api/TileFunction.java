@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Shaun Dreclin <https://github.com/ShaunDreclin>
+ * Copyright (c) 2022 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,47 +24,7 @@
  */
 package net.runelite.api;
 
-/**
- * Utility class used for mapping enum IDs.
- * <p>
- * Note: This class is not complete and may be missing mapped IDs.
- */
-public final class EnumID
+public interface TileFunction
 {
-	public static final int MUSIC_TRACK_NAMES = 812;
-	public static final int MUSIC_TRACK_IDS = 819;
-	/**
-	 * key: int 1-n+1
-	 * val: namedobj
-	 */
-	public static final int RUNEPOUCH_RUNE = 982;
-	public static final int XPDROP_COLORS = 1169;
-
-	/**
-	 * Translates spellbook varbit into enum ID
-	 */
-	public static final int SPELLBOOKS = 1981;
-
-	/**
-	 * key: index in spellbook, value: NullItemID corresponding to spell
-	 */
-	public static final int STANDARD_SPELLBOOK = 1982;
-	public static final int ANCIENT_SPELLBOOK = 1983;
-	public static final int LUNAR_SPELLBOOK = 1984;
-	public static final int ARCEUUS_SPELLBOOK = 1985;
-
-	public static final int FRIENDS_CHAT_RANK_ICONS = 1543;
-	/**
-	 * key: int 0-n
-	 * val: namedobj
-	 */
-	public static final int PETS = 2158;
-	public static final int CLAN_RANK_NAME = 3797;
-	public static final int CLAN_RANK_GRAPHIC = 3798;
-
-	/**
-	 * key: mapelement
-	 * val: dbrow
-	 */
-	public static final int MAPELEMENT_TO_QUEST = 4385;
+	void drawTile(Tile tile, int tileX, int tileY, int px0, int py0, int px1, int py1);
 }
