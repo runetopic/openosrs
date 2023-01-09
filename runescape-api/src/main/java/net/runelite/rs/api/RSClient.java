@@ -582,6 +582,10 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	RSWorldMapElement[] getMapElementConfigs();
 
+	@Import("WorldMapElement_get")
+	@Override
+	RSWorldMapElement getMapElementConfig(int id);
+
 	@Import("mapSceneSprites")
 	@Override
 	RSIndexedSprite[] getMapScene();
@@ -800,7 +804,8 @@ public interface RSClient extends RSGameEngine, Client
 	int getCenterY();
 
 	@Import("getWorldMap")
-	RSWorldMap getRenderOverview();
+	@Override
+	RSWorldMap getWorldMap();
 
 	@Import("changeWorld")
 	@Override
