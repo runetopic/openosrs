@@ -2510,12 +2510,4 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param zoom
 	 */
 	void setMinimapZoom(double zoom);
-
-	/**
-	 * Sets a callback to override the drawing of tiles on the minimap.
-	 * Will be called per tile per frame.
-	 */
-	void setMinimapTileDrawer(TileFunction drawTile);
-
-	Rasterizer getRasterizer();
 }
