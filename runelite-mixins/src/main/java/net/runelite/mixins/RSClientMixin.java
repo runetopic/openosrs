@@ -2932,7 +2932,7 @@ public abstract class RSClientMixin implements RSClient
 
 		if (unlocked)
 		{
-			posToCameraAngle(client.getMapAngle(), client.getCameraPitch());
+			posToCameraAngle(client.getCameraYawTarget(), client.getCameraPitch());
 		}
 		else
 		{
