@@ -560,6 +560,7 @@ public abstract class RSModelMixin implements RSModel
 	{
 		return lastOrientation;
 	}
+
 	@Inject
 	@Override
 	public AABB getAABB(int orientation)

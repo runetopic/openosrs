@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,68 +22,55 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.api.worldmap;
 
-import java.util.HashMap;
-import javax.annotation.Nonnull;
+import net.runelite.api.Point;
+import net.runelite.api.coords.WorldPoint;
 
 /**
- * Represents the model of an object.
+ * Represents the World Map
  */
-public interface Model extends Mesh, Renderable
+public interface WorldMap
 {
-	int[] getFaceColors1();
-
-	int[] getFaceColors2();
-
-	int[] getFaceColors3();
-
-	int getSceneId();
-	void setSceneId(int sceneId);
-
-	int getBufferOffset();
-	void setBufferOffset(int bufferOffset);
-
-	int getUvBufferOffset();
-	void setUvBufferOffset(int bufferOffset);
-
-	int getBottomY();
-
-	void calculateBoundsCylinder();
-
-	byte[] getFaceRenderPriorities();
-
-	int getRadius();
-	int getDiameter();
-
-	float[] getFaceTextureUVCoordinates();
+	/**
+	 * Gets the current position of the local player on the world map.
+	 *
+	 * @return the world map position
+	 */
+	Point getWorldMapPosition();
 
 	/**
-	 * @see #getAABB(int)
+	 * Gets the current zoom level of the world map.
+	 *
+	 * @return the world map zoon
 	 */
-	@Deprecated
-	void calculateExtreme(int orientation);
+	float getWorldMapZoom();
 
-	@Nonnull
-	AABB getAABB(int orientation);
+	/**
+	 * Sets the target position of the world map.
+	 *
+	 * @param worldPoint the new target position
+	 */
+	void setWorldMapPositionTarget(WorldPoint worldPoint);
 
-	HashMap<Integer, AABB> getAABBMap();
+	/**
+	 * Gets the world map renderer.
+	 *
+	 * @return the world map renderer
+	 */
+	WorldMapRenderer getWorldMapRenderer();
 
-	void calculateBoundingBox(int orientation);
+	/**
+	 * Initializes the world map with the provided data.
+	 *
+	 * @param worldMapData the new map data
+	 */
+	void initializeWorldMap(WorldMapData worldMapData);
 
-	int getLastOrientation();
-
-	int getXYZMag();
-	boolean isClickable();
-
-	void drawFace(int face);
-
-	int[] getVertexNormalsX();
-	int[] getVertexNormalsY();
-	int[] getVertexNormalsZ();
-
-	byte getOverrideAmount();
-	byte getOverrideHue();
-	byte getOverrideSaturation();
-	byte getOverrideLuminance();
+	/**
+	 * The data represented by the render.
+	 *
+	 * @return the map data
+	 */
+	WorldMapData getWorldMapData();
 }

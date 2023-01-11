@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.math.BigInteger;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.nio.file.Files;
@@ -431,6 +432,8 @@ public class RuneLite
 		// Initialize UI
 		clientUI.init();
 
+
+
 		// Initialize Discord service
 		discordService.init();
 
@@ -448,7 +451,6 @@ public class RuneLite
 			WidgetOverlay.createOverlays(overlayManager, client).forEach(overlayManager::add);
 			overlayManager.add(worldMapOverlay.get());
 			overlayManager.add(tooltipOverlay.get());
-
 			playerManager.get();
 
 			// legacy method, i cant figure out how to make it work without garbage

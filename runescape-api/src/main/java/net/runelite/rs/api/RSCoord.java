@@ -1,3 +1,15 @@
 package net.runelite.rs.api;
 
-public interface RSCoord {}
+import net.runelite.mapping.Import;
+
+public interface RSCoord
+{
+	@Import("x")
+	int getX();
+
+	@Import("y")
+	int getY();
+
+	@Import("plane")
+	int getPlane();
+}

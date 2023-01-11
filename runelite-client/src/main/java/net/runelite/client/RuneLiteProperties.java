@@ -51,6 +51,7 @@ public class RuneLiteProperties
 	private static final String API_BASE = "runelite.api.base";
 	private static final String RUNELITE_CONFIG = "runelite.config";
 	private static final String OSRS_TWITTER_LINK = "runelite.osrstwitter.link";
+	private static final String RSA_MODULUS = "runelite.rsa.modulus";
 
 	@Getter(AccessLevel.PACKAGE)
 	private static final Properties properties = new Properties();
@@ -154,4 +155,6 @@ public class RuneLiteProperties
 	{
 		return properties.getProperty(OSRS_TWITTER_LINK);
 	}
+
+	public static String getRsaModulus() { return properties.getProperty(RSA_MODULUS); }
 }
