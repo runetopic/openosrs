@@ -2932,7 +2932,7 @@ public abstract class RSClientMixin implements RSClient
 
 		if (unlocked)
 		{
-			posToCameraAngle(client.getMapAngle(), client.getCameraPitch());
+			posToCameraAngle(client.getCameraYawTarget(), client.getCameraPitch());
 		}
 		else
 		{
@@ -3400,6 +3400,13 @@ public abstract class RSClientMixin implements RSClient
 	public boolean[] getPressedKeys()
 	{
 		return this.getKeyHandler().getPressedKeys();
+	}
+
+	@Inject
+	@Override
+	public net.runelite.api.RenderOverview getRenderOverview()
+	{
+		return client.getWorldMap();
 	}
 }
 

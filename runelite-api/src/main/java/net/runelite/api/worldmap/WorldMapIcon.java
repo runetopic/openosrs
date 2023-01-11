@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2022, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,68 +22,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.api.worldmap;
 
-import java.util.HashMap;
-import javax.annotation.Nonnull;
+import net.runelite.api.coords.WorldPoint;
 
-/**
- * Represents the model of an object.
- */
-public interface Model extends Mesh, Renderable
+public interface WorldMapIcon
 {
-	int[] getFaceColors1();
-
-	int[] getFaceColors2();
-
-	int[] getFaceColors3();
-
-	int getSceneId();
-	void setSceneId(int sceneId);
-
-	int getBufferOffset();
-	void setBufferOffset(int bufferOffset);
-
-	int getUvBufferOffset();
-	void setUvBufferOffset(int bufferOffset);
-
-	int getBottomY();
-
-	void calculateBoundsCylinder();
-
-	byte[] getFaceRenderPriorities();
-
-	int getRadius();
-	int getDiameter();
-
-	float[] getFaceTextureUVCoordinates();
+	/**
+	 * Get the mapelement config id of this icon
+	 * @return
+	 */
+	int getType();
 
 	/**
-	 * @see #getAABB(int)
+	 * Get the coordinate of the map icon
+	 * @return
 	 */
-	@Deprecated
-	void calculateExtreme(int orientation);
-
-	@Nonnull
-	AABB getAABB(int orientation);
-
-	HashMap<Integer, AABB> getAABBMap();
-
-	void calculateBoundingBox(int orientation);
-
-	int getLastOrientation();
-
-	int getXYZMag();
-	boolean isClickable();
-
-	void drawFace(int face);
-
-	int[] getVertexNormalsX();
-	int[] getVertexNormalsY();
-	int[] getVertexNormalsZ();
-
-	byte getOverrideAmount();
-	byte getOverrideHue();
-	byte getOverrideSaturation();
-	byte getOverrideLuminance();
+	WorldPoint getCoordinate();
 }

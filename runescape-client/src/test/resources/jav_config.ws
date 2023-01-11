@@ -1,9 +1,9 @@
 title=Old School RuneScape
 adverturl=http://www.runescape.com/g=oldscape/bare_advert.ws
-codebase=http://127.0.0.1
+codebase=http://oldschool1.runescape.com/
 cachedir=oldschool
 storebase=0
-initial_jar=gamepack.jar
+initial_jar=gamepack_3728390.jar
 initial_class=client.class
 termsurl=http://www.jagex.com/g=oldscape/terms/terms.ws
 privacyurl=http://www.jagex.com/g=oldscape/privacy/privacy.ws

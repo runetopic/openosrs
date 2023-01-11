@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,68 +22,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
-
-import java.util.HashMap;
-import javax.annotation.Nonnull;
+package net.runelite.api.worldmap;
 
 /**
- * Represents the model of an object.
+ * Renderer for the current worldmap map. Whenever the map is changed (eg between overworld and ancient cavern)
+ * the renderer is recreated and reloaded with data from the new map.
  */
-public interface Model extends Mesh, Renderable
+public interface WorldMapRenderer
 {
-	int[] getFaceColors1();
-
-	int[] getFaceColors2();
-
-	int[] getFaceColors3();
-
-	int getSceneId();
-	void setSceneId(int sceneId);
-
-	int getBufferOffset();
-	void setBufferOffset(int bufferOffset);
-
-	int getUvBufferOffset();
-	void setUvBufferOffset(int bufferOffset);
-
-	int getBottomY();
-
-	void calculateBoundsCylinder();
-
-	byte[] getFaceRenderPriorities();
-
-	int getRadius();
-	int getDiameter();
-
-	float[] getFaceTextureUVCoordinates();
+	/**
+	 * Checks whether the world map is currently loaded.
+	 *
+	 * @return true if the map is loaded, false otherwise
+	 */
+	boolean isLoaded();
 
 	/**
-	 * @see #getAABB(int)
+	 * Get the map regions in this map. Each map region is 64x64 tiles.
+	 * @return
 	 */
-	@Deprecated
-	void calculateExtreme(int orientation);
-
-	@Nonnull
-	AABB getAABB(int orientation);
-
-	HashMap<Integer, AABB> getAABBMap();
-
-	void calculateBoundingBox(int orientation);
-
-	int getLastOrientation();
-
-	int getXYZMag();
-	boolean isClickable();
-
-	void drawFace(int face);
-
-	int[] getVertexNormalsX();
-	int[] getVertexNormalsY();
-	int[] getVertexNormalsZ();
-
-	byte getOverrideAmount();
-	byte getOverrideHue();
-	byte getOverrideSaturation();
-	byte getOverrideLuminance();
+	WorldMapRegion[][] getMapRegions();
 }
