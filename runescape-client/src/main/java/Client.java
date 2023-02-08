@@ -401,11 +401,13 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi {
    @ObfuscatedGetter(
       intValue = -704083648
    )
+   @Export("hintArrowSubX")
    static int hintArrowSubX = 0;
    @ObfuscatedName("dq")
    @ObfuscatedGetter(
       intValue = 382549312
    )
+   @Export("hintArrowSubY")
    static int hintArrowSubY = 0;
    @ObfuscatedName("dt")
    @ObfuscatedSignature(
@@ -622,11 +624,13 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi {
    @ObfuscatedGetter(
       intValue = -110318655
    )
+   @Export("camAngleDY")
    static int camAngleDY;
    @ObfuscatedName("jh")
    @ObfuscatedGetter(
       intValue = 1894306029
    )
+   @Export("camAngleDX")
    static int camAngleDX;
    @ObfuscatedName("jo")
    @ObfuscatedGetter(
@@ -637,6 +641,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi {
    @ObfuscatedGetter(
       intValue = -606441225
    )
+   @Export("mouseCamClickedY")
    static int mouseCamClickedY;
    @ObfuscatedName("jc")
    @ObfuscatedGetter(
@@ -878,6 +883,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi {
    @Export("playerOptionsPriorities")
    static boolean[] playerOptionsPriorities;
    @ObfuscatedName("md")
+   @Export("defaultRotations")
    static int[] defaultRotations;
    @ObfuscatedName("mq")
    @ObfuscatedGetter(
@@ -1151,13 +1157,16 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi {
    @Export("cycleCntr")
    static int cycleCntr;
    @ObfuscatedName("pl")
+   @Export("changedVarps")
    static int[] changedVarps;
    @ObfuscatedName("pq")
    @ObfuscatedGetter(
       intValue = -535441981
    )
+   @Export("changedVarpCount")
    static int changedVarpCount;
    @ObfuscatedName("pk")
+   @Export("changedItemContainers")
    static int[] changedItemContainers;
    @ObfuscatedName("pd")
    @ObfuscatedGetter(
@@ -1165,11 +1174,13 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi {
    )
    static int field709;
    @ObfuscatedName("pc")
+   @Export("changedSkills")
    static int[] changedSkills;
    @ObfuscatedName("pb")
    @ObfuscatedGetter(
       intValue = 2040914153
    )
+   @Export("changedSkillsCount")
    static int changedSkillsCount;
    @ObfuscatedName("pz")
    static int[] field712;
@@ -1317,11 +1328,13 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi {
    @ObfuscatedName("rg")
    static String field744;
    @ObfuscatedName("rt")
+   @Export("crossWorldMessageIds")
    static long[] crossWorldMessageIds;
    @ObfuscatedName("rr")
    @ObfuscatedGetter(
       intValue = 1059950709
    )
+   @Export("crossWorldMessageIdsIndex")
    static int crossWorldMessageIdsIndex;
    @ObfuscatedName("rc")
    @ObfuscatedSignature(
