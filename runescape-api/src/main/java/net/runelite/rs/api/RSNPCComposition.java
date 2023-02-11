@@ -65,9 +65,6 @@ public interface RSNPCComposition extends NPCComposition
 	@Import("headIconSpriteIndex")
 	short[] getHeadIconSpriteIndexes();
 
-	@Import("defaultHeadIconArchive")
-	int getDefaultHeadIconArchive();
-
 	@Import("params")
 	RSIterableNodeHashTable getParams();
 
