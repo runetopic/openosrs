@@ -998,6 +998,32 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
+	@Copy("menuSort")
+	@Replace("menuSort")
+	public static void onMenuSort()
+	{
+		if (!client.isMenuOpen())
+		{
+			while (true)
+			{
+				boolean postMenuSort = true;
+				for (int i = 0; i < client.getMenuOptionCount() - 1; i++)
+				{
+					if (client.getMenuOpcodes()[i] < 1000 && client.getMenuOpcodes()[i + 1] > 1000)
+					{
+						sortMenuEntries(i, i + 1);
+						postMenuSort = false;
+					}
+				}
+				if (postMenuSort)
+				{
+					client.getCallbacks().post(new PostMenuSort());
+					break;
+				}
+			}
+		}
+	}
+
 	@Inject
 	public static void sortMenuEntries(int left, int right)
 	{
@@ -1117,7 +1143,6 @@ public abstract class RSClientMixin implements RSClient
 				client.getMenuItemIds()[tmpOptionsCount] = menuEntryAdded.getItemId();
 			}
 		}
-		client.getCallbacks().post(new PostMenuSort());
 	}
 
 	@Inject
