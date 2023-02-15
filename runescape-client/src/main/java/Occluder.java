@@ -12,7 +12,8 @@ public final class Occluder {
    @ObfuscatedGetter(
       intValue = 959648640
    )
-   static int field2636;
+   @Export("cameraMoveToX")
+   static int cameraMoveToX;
    @ObfuscatedName("f")
    @ObfuscatedGetter(
       intValue = -1892245081

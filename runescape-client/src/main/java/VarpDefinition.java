@@ -140,8 +140,8 @@ public class VarpDefinition extends DualNode {
          var4 = Client.field598 / 256;
       }
 
-      if (Client.field569[4] && Client.field525[4] + 128 > var4) {
-         var4 = Client.field525[4] + 128;
+      if (Client.cameraShaking[4] && Client.cameraMoveIntensity[4] + 128 > var4) {
+         var4 = Client.cameraMoveIntensity[4] + 128;
       }
 
       int var21 = Client.camAngleY & 2047;
@@ -333,8 +333,8 @@ public class VarpDefinition extends DualNode {
       var15 = class285.cameraYaw;
 
       for(var16 = 0; var16 < 5; ++var16) {
-         if (Client.field569[var16]) {
-            var17 = (int)(Math.random() * (double)(Client.field769[var16] * 2 + 1) - (double)Client.field769[var16] + Math.sin((double)Client.field771[var16] / 100.0 * (double)Client.field772[var16]) * (double)Client.field525[var16]);
+         if (Client.cameraShaking[var16]) {
+            var17 = (int)(Math.random() * (double)(Client.cameraShakeIntensity[var16] * 2 + 1) - (double)Client.cameraShakeIntensity[var16] + Math.sin((double)Client.cameraShakeSpeed[var16] / 100.0 * (double)Client.cameraShakeCycle[var16]) * (double)Client.cameraMoveIntensity[var16]);
             if (var16 == 0) {
                ClanSettings.cameraX += var17;
             }

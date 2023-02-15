@@ -855,7 +855,7 @@ public class OverlayRenderer extends MouseAdapter
 	{
 		if (client.isResized())
 		{
-			if (client.getVarbitValue(Varbits.SIDE_PANELS) == 1)
+			if (client.getVar(Varbits.SIDE_PANELS) == 1)
 			{
 				return client.getWidget(WidgetInfo.RESIZABLE_VIEWPORT_BOTTOM_LINE);
 			}

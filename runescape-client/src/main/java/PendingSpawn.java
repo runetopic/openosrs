@@ -58,12 +58,12 @@ public final class PendingSpawn extends Node {
    @ObfuscatedGetter(
       intValue = 1534871701
    )
-   int field1150;
+   int id;
    @ObfuscatedName("l")
    @ObfuscatedGetter(
       intValue = 518048967
    )
-   int field1151;
+   int orientation;
    @ObfuscatedName("k")
    @ObfuscatedGetter(
       intValue = -354364767

@@ -154,7 +154,21 @@ public class class27 {
       garbageValue = "-94"
    )
    public static class280[] method424() {
-      return new class280[]{class280.field3179, class280.field3172, class280.field3173, class280.field3174, class280.field3175, class280.field3178, class280.field3176, class280.field3171, class280.field3183, class280.field3180, class280.field3181, class280.field3182, class280.field3177};
+      return new class280[]{
+           class280.field3179,
+           class280.field3172,
+           class280.field3173,
+           class280.field3174,
+           class280.field3175,
+           class280.field3178,
+           class280.field3176,
+           class280.field3171,
+           class280.field3183,
+           class280.field3180,
+           class280.field3181,
+           class280.field3182,
+           class280.field3177
+      };
    }
 
    @ObfuscatedName("jc")

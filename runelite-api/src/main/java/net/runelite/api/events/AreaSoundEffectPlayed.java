@@ -38,6 +38,7 @@ public class AreaSoundEffectPlayed
 	private int sceneY;
 	private int range;
 	private int delay;
+	private int loops;
 
 	private boolean consumed;
 
@@ -46,3 +47,4 @@ public class AreaSoundEffectPlayed
 		consumed = true;
 	}
 }
+

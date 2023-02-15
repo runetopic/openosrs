@@ -27,6 +27,7 @@ package net.runelite.mixins;
 import java.awt.Shape;
 import net.runelite.api.Perspective;
 import net.runelite.api.Point;
+import net.runelite.api.coords.Angle;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.mixins.Inject;
 import net.runelite.api.mixins.Mixin;
@@ -122,6 +123,15 @@ public abstract class RSGameObjectMixin implements RSGameObject
 		int orientation = getModelOrientation();
 		int rotation = (getConfig() >> 6) & 3;
 		return rotation * 512 + orientation;
+	}
+
+	@Override
+	@Inject
+	public Angle getAngle()
+	{
+		int orientation = getModelOrientation();
+		int rotation = (getFlags() >> 6) & 3;
+		return new Angle(rotation * 512 + orientation);
 	}
 
 	@Override

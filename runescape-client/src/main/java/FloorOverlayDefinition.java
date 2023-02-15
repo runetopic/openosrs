@@ -11,7 +11,8 @@ public class FloorOverlayDefinition extends DualNode {
    @ObfuscatedGetter(
       intValue = -1461054387
    )
-   static int field2266;
+   @Export("cameraLookAtHeight")
+   static int cameraLookAtHeight;
    @ObfuscatedName("f")
    @ObfuscatedSignature(
       descriptor = "Lln;"
@@ -218,14 +219,14 @@ public class FloorOverlayDefinition extends DualNode {
       }
 
       if (class103.cameraPitch < var0) {
-         class103.cameraPitch = (var0 - class103.cameraPitch) * AttackOption.field1320 / 1000 + class103.cameraPitch + Message.field485;
+         class103.cameraPitch = (var0 - class103.cameraPitch) * AttackOption.cameraLookAtAcceleration / 1000 + class103.cameraPitch + Message.cameraLookAtSpeed;
          if (class103.cameraPitch > var0) {
             class103.cameraPitch = var0;
          }
       }
 
       if (class103.cameraPitch > var0) {
-         class103.cameraPitch -= (class103.cameraPitch - var0) * AttackOption.field1320 / 1000 + Message.field485;
+         class103.cameraPitch -= (class103.cameraPitch - var0) * AttackOption.cameraLookAtAcceleration / 1000 + Message.cameraLookAtSpeed;
          if (class103.cameraPitch < var0) {
             class103.cameraPitch = var0;
          }
@@ -241,12 +242,12 @@ public class FloorOverlayDefinition extends DualNode {
       }
 
       if (var2 > 0) {
-         class285.cameraYaw = var2 * AttackOption.field1320 / 1000 + class285.cameraYaw + Message.field485;
+         class285.cameraYaw = var2 * AttackOption.cameraLookAtAcceleration / 1000 + class285.cameraYaw + Message.cameraLookAtSpeed;
          class285.cameraYaw &= 2047;
       }
 
       if (var2 < 0) {
-         class285.cameraYaw -= -var2 * AttackOption.field1320 / 1000 + Message.field485;
+         class285.cameraYaw -= -var2 * AttackOption.cameraLookAtAcceleration / 1000 + Message.cameraLookAtSpeed;
          class285.cameraYaw &= 2047;
       }
 

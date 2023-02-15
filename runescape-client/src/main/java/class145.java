@@ -119,7 +119,7 @@ public class class145 extends class155 {
       if (var5 != null) {
          return var5;
       } else {
-         int var4 = class208.method4221(var2, var0);
+         int var4 = MoveSpeed.method4221(var2, var0);
          Script var12 = (Script)Script.Script_cached.get((long)(var4 << 16));
          Script var13;
          if (var12 != null) {

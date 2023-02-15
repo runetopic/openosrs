@@ -61,7 +61,7 @@ public class class374 {
          int[] var7 = Players.Players_indices;
          boolean var8 = var1 < var75;
          int var9 = -2;
-         if (var0.overheadText != null && (!var8 || !var0.field1166 && (Client.publicChatMode == 4 || !var0.field1181 && (Client.publicChatMode == 0 || Client.publicChatMode == 3 || Client.publicChatMode == 1 && ((Player)var0).isFriend())))) {
+         if (var0.overheadText != null && (!var8 || !var0.field1166 && (Client.publicChatMode == 4 || !var0.showPublicPlayerChat && (Client.publicChatMode == 0 || Client.publicChatMode == 3 || Client.publicChatMode == 1 && ((Player)var0).isFriend())))) {
             class31.method468(var0, var0.defaultHeight);
             if (Client.viewportTempX > -1 && Client.overheadTextCount < Client.overheadTextLimit) {
                Client.overheadTextXOffsets[Client.overheadTextCount] = class19.fontBold12.stringWidth(var0.overheadText) / 2;

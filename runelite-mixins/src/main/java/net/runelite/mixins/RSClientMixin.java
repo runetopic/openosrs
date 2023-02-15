@@ -95,35 +95,7 @@ import net.runelite.api.clan.ClanRank;
 import net.runelite.api.clan.ClanSettings;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.BeforeMenuRender;
-import net.runelite.api.events.CanvasSizeChanged;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.ClanChannelChanged;
-import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.DraggingWidgetChanged;
-import net.runelite.api.events.FriendsChatChanged;
-import net.runelite.api.events.GameStateChanged;
-import net.runelite.api.events.GrandExchangeOfferChanged;
-import net.runelite.api.events.GrandExchangeSearched;
-import net.runelite.api.events.ItemSpawned;
-import net.runelite.api.events.MenuEntryAdded;
-import net.runelite.api.events.MenuOpened;
-import net.runelite.api.events.MenuOptionClicked;
-import net.runelite.api.events.MenuShouldLeftClick;
-import net.runelite.api.events.NpcSpawned;
-import net.runelite.api.events.PlayerDespawned;
-import net.runelite.api.events.PlayerMenuOptionsChanged;
-import net.runelite.api.events.PlayerSpawned;
-import net.runelite.api.events.PostMenuSort;
-import net.runelite.api.events.PostStructComposition;
-import net.runelite.api.events.ResizeableChanged;
-import net.runelite.api.events.StatChanged;
-import net.runelite.api.events.UsernameChanged;
-import net.runelite.api.events.VarbitChanged;
-import net.runelite.api.events.VolumeChanged;
-import net.runelite.api.events.WidgetClosed;
-import net.runelite.api.events.WidgetLoaded;
-import net.runelite.api.events.WorldChanged;
+import net.runelite.api.events.*;
 import net.runelite.api.hooks.Callbacks;
 import net.runelite.api.hooks.DrawCallbacks;
 import net.runelite.api.mixins.Copy;
@@ -728,7 +700,7 @@ public abstract class RSClientMixin implements RSClient
 
 	@Inject
 	@Override
-	public int getVarpValue(VarPlayer varPlayer)
+	public int getServerVar(VarPlayer varPlayer)
 	{
 		int[] varps = getServerVarps();
 		return varps[varPlayer.getId()];
@@ -998,6 +970,32 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
+	@MethodHook("menuSort")
+	@Inject
+	public static void onMenuSort()
+	{
+		if (!client.isMenuOpen())
+		{
+			while (true)
+			{
+				boolean sort = true;
+				for (int i = 0; i < client.getMenuOptionCount() - 1; i++)
+				{
+					if (client.getMenuOpcodes()[i] < 1000 && client.getMenuOpcodes()[i + 1] > 1000)
+					{
+						sortMenuEntries(i, i + 1);
+						sort = false;
+					}
+				}
+				if (sort)
+				{
+					client.getCallbacks().post(new PostMenuSort());
+					break;
+				}
+			}
+		}
+	}
+
 	@Inject
 	public static void sortMenuEntries(int left, int right)
 	{
@@ -1117,7 +1115,6 @@ public abstract class RSClientMixin implements RSClient
 				client.getMenuItemIds()[tmpOptionsCount] = menuEntryAdded.getItemId();
 			}
 		}
-		client.getCallbacks().post(new PostMenuSort());
 	}
 
 	@Inject
@@ -1245,6 +1242,39 @@ public abstract class RSClientMixin implements RSClient
 		DraggingWidgetChanged draggingWidgetChanged = new DraggingWidgetChanged();
 		draggingWidgetChanged.setDraggingWidget(client.isDraggingWidget());
 		client.getCallbacks().post(draggingWidgetChanged);
+	}
+
+	@FieldHook("cameraShakeSpeed")
+	@Inject
+	public static void cameraShakeSpeedChange(int idx) {
+		client.getCallbacks().post(new CameraShakeEvent(idx, client.cameraShakeIntensity()[idx], client.cameraMoveIntensity()[idx],
+				client.cameraShakeSpeed()[idx]));
+	}
+
+	@FieldHook("cameraShaking")
+	@Inject
+	public static void cameraShakingChange(int idx) {
+		client.getCallbacks().post(new CameraResetEvent(idx));
+	}
+
+	@FieldHook("cameraMoveToAcceleration")
+	@Inject
+	public static void cameraMoveTo(int idx) {
+		client.getCallbacks().post(new CameraMoveToEvent(client.cameraMoveToX(), client.cameraMoveToY(), client.cameraMoveToHeight(),
+				client.cameraMoveToSpeed(), client.cameraMoveToAcceleration()));
+	}
+
+	@FieldHook("cameraLookAtAcceleration")
+	@Inject
+	public static void cameraLookAt(int idx) {
+		client.getCallbacks().post(new CameraLookAtEvent(client.cameraLookAtX(), client.cameraLookAtY(), client.cameraLookAtHeight(),
+				client.cameraLookAtSpeed(), client.cameraLookAtAcceleration()));
+	}
+
+	@FieldHook("minimapState")
+	@Inject
+	public static void changeMinimapState(int idx) {
+		client.getCallbacks().post(new MinimapStateChange(client.getMinimapState()));
 	}
 
 	@Inject
@@ -1479,6 +1509,26 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
+	@Inject
+	@MethodHook("playJingle")
+	public static void playJingle(int jingleId, int unused) {
+		client.getCallbacks().post(new JinglePlayed(jingleId));
+	}
+
+	@Inject
+	@MethodHook(value = "performPlayerAnimation", end = true)
+	public static void performPlayerAnimation(Player var0, int var1, int var2) {
+		client.getCallbacks().post(new PlayerAnimationPlayed(var0, var1, var2));
+	}
+
+	@Copy("updatePendingSpawn")
+	@Replace("updatePendingSpawn")
+	@SuppressWarnings("InfiniteRecursion")
+	public static void copy$updatePendingSpawn(int plane, int x, int y, int type, int id, int var5, int orientation, int var7, int delay, int hitpoints) {
+		copy$updatePendingSpawn(plane, x, y, type, id, var5, orientation, var7, delay, hitpoints);
+		client.getCallbacks().post(new PendingSpawnUpdated(plane, x, y, type, id, var5, orientation, var7, delay, hitpoints));
+	}
+
 	@FieldHook("players")
 	@Inject
 	public static void cachedPlayersChanged(int idx)
@@ -1611,6 +1661,39 @@ public abstract class RSClientMixin implements RSClient
 		client.getCallbacks().post(new FriendsChatChanged(client.getFriendsChatManager() != null));
 	}
 
+	@FieldHook("hintArrowPlayerIndex")
+	@Inject
+	public static void hintPlayerChanged(int idx)
+	{
+		client.getCallbacks().post(new HintArrowEvent(client.getHintArrowPlayerTargetIdx(), -1, -1, -1, -1));
+		// Setting the localInteractingIndex (aka player target index, it only applies to players)
+		// causes that player to get priority over others when rendering/menus are added
+		if (client.getVar(VarPlayer.ATTACKING_PLAYER) == -1)
+		{
+			client.setLocalInteractingIndex(client.getHintArrowPlayerTargetIdx() & 2047);
+		}
+	}
+
+	@FieldHook("hintArrowHeight")
+	@Inject
+	public static void tileHintArrowChanged(int idx) {
+		client.getCallbacks().post(new HintArrowEvent(-1, -1, client.getHintArrowX(), client.getHintArrowY(), client.getHintArrowHeight()));
+	}
+
+	@FieldHook("hintArrowNpcIndex")
+	@Inject
+	public static void hintNpcChanged(int idx) {
+		client.getCallbacks().post(new HintArrowEvent(-1, client.getHintArrowNpcTargetIdx(), -1, -1, -1));
+	}
+
+	@Copy("itemContainerSetItem")
+	@Replace("itemContainerSetItem")
+	@SuppressWarnings("InfiniteRecursion")
+	static void copy$itemContainerSetItem(int invId, int slotId, int itemId, int quantity) {
+		copy$itemContainerSetItem(invId, slotId, itemId, quantity);
+		client.getCallbacks().post(new ContainerItemChange(invId, slotId, itemId, quantity));
+	}
+
 	@FieldHook("canvasWidth")
 	@Inject
 	public static void canvasWidthChanged(int idx)
@@ -1623,18 +1706,6 @@ public abstract class RSClientMixin implements RSClient
 	public static void canvasHeightChanged(int idx)
 	{
 		client.getCallbacks().post(CanvasSizeChanged.INSTANCE);
-	}
-
-	@FieldHook("hintArrowPlayerIndex")
-	@Inject
-	public static void hintPlayerChanged(int ignored)
-	{
-		// Setting the localInteractingIndex (aka player target index, it only applies to players)
-		// causes that player to get priority over others when rendering/menus are added
-		if (client.getVar(VarPlayer.ATTACKING_PLAYER) == -1)
-		{
-			client.setLocalInteractingIndex(client.getHintArrowPlayerTargetIdx() & 2047);
-		}
 	}
 
 	@FieldHook("combatTargetPlayerIndex")
@@ -1655,25 +1726,25 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public boolean hasHintArrow()
 	{
-		return client.getHintArrowTargetType() != HintArrowType.NONE;
+		return client.getHintArrowTargetType() != HintArrowType.NONE.getValue();
 	}
 
 	@Inject
 	@Override
-	public int getHintArrowType()
+	public HintArrowType getHintArrowType()
 	{
 		int type = client.getHintArrowTargetType();
-		if (type == HintArrowType.NPC)
+		if (type == HintArrowType.NPC.getValue())
 		{
 			return HintArrowType.NPC;
 		}
-		else if (type == HintArrowType.PLAYER)
+		else if (type == HintArrowType.PLAYER.getValue())
 		{
 			return HintArrowType.PLAYER;
 		}
-		else if (type == HintArrowType.COORDINATE)
+		else if (type == HintArrowType.WORLD_POSITION.getValue())
 		{
-			return HintArrowType.COORDINATE;
+			return HintArrowType.WORLD_POSITION;
 		}
 		else
 		{
@@ -1685,14 +1756,14 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public void clearHintArrow()
 	{
-		client.setHintArrowTargetType(HintArrowType.NONE);
+		client.setHintArrowTargetType(HintArrowType.NONE.getValue());
 	}
 
 	@Inject
 	@Override
 	public void setHintArrow(NPC npc)
 	{
-		client.setHintArrowTargetType(HintArrowType.NPC);
+		client.setHintArrowTargetType(HintArrowType.NPC.getValue());
 		client.setHintArrowNpcTargetIdx(npc.getIndex());
 	}
 
@@ -1700,8 +1771,8 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public void setHintArrow(Player player)
 	{
-		client.setHintArrowTargetType(HintArrowType.PLAYER);
-		client.setHintArrowPlayerTargetIdx(((RSPlayer) player).getId());
+		client.setHintArrowTargetType(HintArrowType.PLAYER.getValue());
+		client.setHintArrowPlayerTargetIdx(player.getPlayerId());
 		hintPlayerChanged(-1);
 	}
 
@@ -1709,7 +1780,7 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public void setHintArrow(WorldPoint point)
 	{
-		client.setHintArrowTargetType(HintArrowType.COORDINATE);
+		client.setHintArrowTargetType(HintArrowType.WORLD_POSITION.getValue());
 		client.setHintArrowX(point.getX());
 		client.setHintArrowY(point.getY());
 		// position the arrow in center of the tile
@@ -1721,7 +1792,7 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public void setHintArrow(LocalPoint point)
 	{
-		client.setHintArrowTargetType(HintArrowType.COORDINATE);
+		client.setHintArrowTargetType(HintArrowType.WORLD_POSITION.getValue());
 		client.setHintArrowX(point.getX());
 		client.setHintArrowY(point.getY());
 		// position the arrow in center of the tile
@@ -1733,7 +1804,7 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public WorldPoint getHintArrowPoint()
 	{
-		if (getHintArrowType() == HintArrowType.COORDINATE)
+		if (getHintArrowType() == HintArrowType.WORLD_POSITION)
 		{
 			int x = client.getHintArrowX();
 			int y = client.getHintArrowY();
@@ -2854,6 +2925,12 @@ public abstract class RSClientMixin implements RSClient
 	}
 
 	@Inject
+	@FieldHook("playerOptionsPriorities")
+	public static void onPlayerMenuOptionChanged(int idx) {
+		client.getCallbacks().post(new PlayerMenuOptionChanged(idx, client.getPlayerOptions()[idx], !client.getPlayerOptionsPriorities()[idx]));
+	}
+
+	@Inject
 	@FieldHook("currentClanChannels")
 	public static void onCurrentClanChannelsChanged(int idx)
 	{
@@ -2866,6 +2943,17 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
+	@Inject
+	@FieldHook("rootInterface")
+	public static void onRootInterfaceChange(int idx) {
+		client.getCallbacks().post(new IfOpenTopEvent(client.getTopLevelInterfaceId()));
+	}
+
+	@Inject
+	@MethodHook(value = "ifOpenSub", end = true)
+	public static void onSubInterfaceChange(int targetComponent, int interfaceId, int walkType) {
+		client.getCallbacks().post(new IfOpenSubEvent(targetComponent, interfaceId, walkType));
+	}
 
 	@Inject
 	public static RSArchive[] archives = new RSArchive[21];

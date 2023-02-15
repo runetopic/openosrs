@@ -13,7 +13,8 @@ public class class108 extends UrlRequester {
    @ObfuscatedGetter(
       intValue = 1467085952
    )
-   static int field1416;
+   @Export("cameraMoveToY")
+   static int cameraMoveToY;
    @ObfuscatedName("z")
    final boolean field1414;
 

@@ -104,7 +104,8 @@ public class ScriptEvent extends Node {
       descriptor = "(IIB)V",
       garbageValue = "-48"
    )
-   static void method2321(int var0, int var1) {
+   @Export("playJingle")
+   static void playJingle(int var0, int var1) {
       if (PacketWriter.clientPreferences.method2495() != 0 && var0 != -1) {
          class148.method3216(MusicPatchNode.field3448, var0, 0, PacketWriter.clientPreferences.method2495(), false);
          Client.playingJingle = true;

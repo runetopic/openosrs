@@ -275,7 +275,7 @@ public class MiningPlugin extends Plugin
 
 	private void clearHintArrowAt(WorldPoint worldPoint)
 	{
-		if (client.getHintArrowType() == HintArrowType.COORDINATE && client.getHintArrowPoint().equals(worldPoint))
+		if (client.getHintArrowType() == HintArrowType.WORLD_POSITION && client.getHintArrowPoint().equals(worldPoint))
 		{
 			client.clearHintArrow();
 		}

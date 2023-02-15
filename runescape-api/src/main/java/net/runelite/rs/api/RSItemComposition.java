@@ -80,6 +80,9 @@ public interface RSItemComposition extends ItemComposition
 	@Import("unnotedId")
 	int getInventoryModel();
 
+	@Import("zoom2d")
+	int getZoom2d();
+
 	@Import("recolorTo")
 	short[] getColorToReplaceWith();
 

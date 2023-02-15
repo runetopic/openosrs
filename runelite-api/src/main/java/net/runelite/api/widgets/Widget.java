@@ -357,6 +357,8 @@ public interface Widget
 	 */
 	int getModelZoom();
 
+	int getModelRotation();
+
 	/**
 	 * Sets the amount zoomed in on the model displayed in the widget.
 	 *

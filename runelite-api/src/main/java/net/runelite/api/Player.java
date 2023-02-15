@@ -66,6 +66,8 @@ public interface Player extends Actor
 	 */
 	int getTeam();
 
+	boolean getIsHidden();
+
 	/**
 	 * Checks whether this player is a member of the same friends chat
 	 * the local player.
@@ -111,4 +113,16 @@ public interface Player extends Actor
 	int getRSSkillLevel();
 
 	String[] getActions();
+
+	int minX();
+	int maxX();
+	int minY();
+	int maxY();
+	int animationCycleStart();
+	int animationCycleEnd();
+	Model attachedModel();
+	void move(int x, int y, MoveSpeed type);
+	void resetPath(int x, int y);
+
+	int getPlane();
 }

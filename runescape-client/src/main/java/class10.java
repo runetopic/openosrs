@@ -16,7 +16,8 @@ public class class10 {
    @ObfuscatedGetter(
       intValue = -427670217
    )
-   static int field55;
+   @Export("cameraMoveToHeight")
+   static int cameraMoveToHeight;
    @ObfuscatedName("x")
    @ObfuscatedSignature(
       descriptor = "Lrd;"

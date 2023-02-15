@@ -24,6 +24,8 @@
  */
 package net.runelite.api;
 
+import net.runelite.api.coords.Angle;
+
 import java.awt.Shape;
 
 /**
@@ -79,6 +81,13 @@ public interface GameObject extends TileObject
 	 * @return
 	 */
 	int getOrientation();
+
+	/**
+	 * Gets the orientation of the object.
+	 *
+	 * @return the orientation
+	 */
+	Angle getAngle();
 
 	Renderable getRenderable();
 

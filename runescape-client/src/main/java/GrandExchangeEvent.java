@@ -87,7 +87,7 @@ public class GrandExchangeEvent {
       descriptor = "(Lcl;IILhz;I)V",
       garbageValue = "-992361699"
    )
-   static final void method6704(Player var0, int var1, int var2, class208 var3) {
+   static final void method6704(Player var0, int var1, int var2, MoveSpeed var3) {
       int var4 = var0.pathX[0];
       int var5 = var0.pathY[0];
       int var6 = var0.transformedSize();
@@ -538,7 +538,7 @@ public class GrandExchangeEvent {
             var13 = var7;
             if (var7 >= 1) {
                for(var14 = 0; var14 < var13 - 1; ++var14) {
-                  var0.method2390(Client.field802[var14], Client.field785[var14], var3);
+                  var0.move(Client.field802[var14], Client.field785[var14], var3);
                }
 
             }

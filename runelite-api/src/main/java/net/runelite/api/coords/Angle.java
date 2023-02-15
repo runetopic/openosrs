@@ -48,7 +48,7 @@ public class Angle
 	/**
 	 * The raw angle value.
 	 */
-	private final int angle;
+	private final int value;
 
 	/**
 	 * Converts the angle value to the nearest cardinal direction.
@@ -61,8 +61,8 @@ public class Angle
 	 */
 	public Direction getNearestDirection()
 	{
-		int round = angle >>> 9;
-		int up = angle & 256;
+		int round = value >>> 9;
+		int up = value & 256;
 		if (up != 0)
 		{
 			// round up

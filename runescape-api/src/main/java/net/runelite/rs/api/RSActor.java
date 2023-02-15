@@ -44,6 +44,9 @@ public interface RSActor extends RSRenderable, Actor
 	@Override
 	void setOverheadText(String overheadText);
 
+	@Import("showPublicPlayerChat")
+	@Override
+	boolean showPublicPlayerChat();
 	// Coord stuff
 
 	@Import("x")

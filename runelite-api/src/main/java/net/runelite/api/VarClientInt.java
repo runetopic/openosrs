@@ -52,11 +52,6 @@ public final class VarClientInt
 	 */
 	public static final int CAMERA_ZOOM_FIXED_VIEWPORT = 73;
 	public static final int CAMERA_ZOOM_RESIZABLE_VIEWPORT = 74;
-
-	/**
-	 * 0 = deadman/attackable
-	 * 1 = guarded/safe
-	 */
 	public static final int DMM_SAFEZONE = 78;
 
 	public static final int MEMBERSHIP_STATUS = 103;

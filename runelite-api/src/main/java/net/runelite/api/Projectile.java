@@ -47,6 +47,8 @@ public interface Projectile extends Renderable
 	 */
 	Actor getInteracting();
 
+	int getRsInteracting();
+
 	/**
 	 * Get the target point of the projectile. For projectiles with an actor target,
 	 * this is updated each frame to the actor position.

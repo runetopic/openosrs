@@ -151,6 +151,8 @@ public interface ItemComposition extends ParamHolder
 	 */
 	int getInventoryModel();
 
+	int getZoom2d();
+
 	/**
 	 * Set the model ID of the inventory item. You will also need to flush the item model cache and the item
 	 * sprite cache to have the changes fully propagated after changing this value.

@@ -951,7 +951,7 @@ public class TimersPlugin extends Plugin
 				return;
 		}
 
-		int lastTeleport = client.getVarpValue(varPlayer);
+		int lastTeleport = client.getVar(varPlayer);
 		long lastTeleportSeconds = (long) lastTeleport * 60;
 		Instant teleportExpireInstant = Instant.ofEpochSecond(lastTeleportSeconds).plus(teleport.getDuration());
 		Duration remainingTime = Duration.between(Instant.now(), teleportExpireInstant);

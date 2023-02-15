@@ -849,6 +849,58 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("runScript")
 	void runScript(RSScriptEvent ev, int ex, int var2);
 
+	@Import("cameraShaking")
+	@Override
+	boolean[] cameraShaking();
+	@Import("cameraShakeIntensity")
+	@Override
+	int[] cameraShakeIntensity();
+	@Import("cameraMoveIntensity")
+	@Override
+	int[] cameraMoveIntensity();
+	@Import("cameraShakeSpeed")
+	@Override
+	int[] cameraShakeSpeed();
+	@Import("cameraShakeCycle")
+	@Override
+	int[] cameraShakeCycle();
+
+	@Import("cameraLookAtX")
+	@Override
+	int cameraLookAtX();
+	@Import("cameraLookAtY")
+	@Override
+	int cameraLookAtY();
+	@Import("cameraLookAtHeight")
+	@Override
+	int cameraLookAtHeight();
+	@Import("cameraLookAtSpeed")
+	@Override
+	int cameraLookAtSpeed();
+	@Import("cameraLookAtAcceleration")
+	@Override
+	int cameraLookAtAcceleration();
+
+	@Import("cameraMoveToX")
+	@Override
+	int cameraMoveToX();
+	@Import("cameraMoveToY")
+	@Override
+	int cameraMoveToY();
+	@Import("cameraMoveToHeight")
+	@Override
+	int cameraMoveToHeight();
+	@Import("cameraMoveToSpeed")
+	@Override
+	int cameraMoveToSpeed();
+	@Import("cameraMoveToAcceleration")
+	@Override
+	int cameraMoveToAcceleration();
+
+	@Import("minimapState")
+	@Override
+	int getMinimapState();
+
 	@Import("hintArrowType")
 	void setHintArrowTargetType(int value);
 
@@ -866,6 +918,9 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("hintArrowY")
 	int getHintArrowY();
+
+	@Import("hintArrowHeight")
+	int getHintArrowHeight();
 
 	@Import("hintArrowSubX")
 	void setHintArrowOffsetX(int value);
@@ -1686,6 +1741,10 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Construct
 	RSEvictingDualNodeHashTable newEvictingDualNodeHashTable(int var1);
+
+	@Import("userRegistrationId")
+	@Override
+	long getUserRegistrationId();
 
 	@Import("getDbTableType")
 	RSDbTableType getDbTableType(int var0);

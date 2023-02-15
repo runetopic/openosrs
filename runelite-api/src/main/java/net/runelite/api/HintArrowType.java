@@ -24,25 +24,35 @@
  */
 package net.runelite.api;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
- * Hint arrow types.
+ * An enumeration of hint arrow types.
  */
-public final class HintArrowType
+@AllArgsConstructor
+public enum HintArrowType
 {
 	/**
 	 * No hint arrow present.
 	 */
-	public static final int NONE = 0;
+	NONE(0),
 	/**
 	 * Hint arrow is pointing to a player.
 	 */
-	public static final int PLAYER = 10;
+	PLAYER(10),
 	/**
 	 * Hint arrow is pointing to an NPC.
 	 */
-	public static final int NPC = 1;
+	NPC(1),
 	/**
 	 * Hint arrow is pointing at a position in the world.
 	 */
-	public static final int COORDINATE = 2;
+	WORLD_POSITION(2);
+
+	/**
+	 * The raw type value.
+	 */
+	@Getter
+	private final int value;
 }

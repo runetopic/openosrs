@@ -13,4 +13,6 @@ public class DynamicObjectAnimationChanged
 	 * The id of the animation animation.
 	 */
 	private int animation;
+	private int x;
+	private int y;
 }

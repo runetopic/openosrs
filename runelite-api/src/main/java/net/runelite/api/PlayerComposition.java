@@ -90,6 +90,10 @@ public interface PlayerComposition
 
 	void setTransformedNpcId(int id);
 
+	int getTransformedNpcId();
+
+	PlayerEquipmentItem[] getPlayerEquipmentItems();
+
 	/**
 	 * Get the overrides for this player composition, indexed by kit id. The overrides
 	 * replace the target color/textures for the item instead of using the target colors/textures

@@ -106,7 +106,7 @@ public class ChatMessageManager
 		final String channel = stringStack[size - 4];
 		final ChatMessageType chatMessageType = messageNode.getType();
 
-		final boolean isChatboxTransparent = client.isResized() && client.getVarbitValue(Varbits.TRANSPARENT_CHATBOX) == 1;
+		final boolean isChatboxTransparent = client.isResized() && client.getVar(Varbits.TRANSPARENT_CHATBOX) == 1;
 		Color usernameColor = null;
 		Color channelColor = null;
 
@@ -217,7 +217,7 @@ public class ChatMessageManager
 				return;
 		}
 
-		boolean isChatboxTransparent = client.isResized() && client.getVarbitValue(Varbits.TRANSPARENT_CHATBOX) == 1;
+		boolean isChatboxTransparent = client.isResized() && client.getVar(Varbits.TRANSPARENT_CHATBOX) == 1;
 		Color usernameColor = isChatboxTransparent ? chatColorConfig.transparentPrivateUsernames() : chatColorConfig.opaquePrivateUsernames();
 		if (usernameColor == null)
 		{
@@ -226,7 +226,7 @@ public class ChatMessageManager
 
 		final String[] stringStack = client.getStringStack();
 		final int stringStackSize = client.getStringStackSize();
-		
+
 		String fromToUsername = stringStack[stringStackSize - 1];
 		if (wrap)
 		{
@@ -821,7 +821,7 @@ public class ChatMessageManager
 
 		// Update the message with RuneLite additions
 		line.setRuneLiteFormatMessage(message.getRuneLiteFormattedMessage());
-		
+
 		if (message.getTimestamp() != 0)
 		{
 			line.setTimestamp(message.getTimestamp());
@@ -842,7 +842,7 @@ public class ChatMessageManager
 	@VisibleForTesting
 	String formatRuneLiteMessage(String runeLiteFormatMessage, ChatMessageType type, boolean pmbox)
 	{
-		final boolean transparentChatbox = client.getVarbitValue(Varbits.TRANSPARENT_CHATBOX) != 0;
+		final boolean transparentChatbox = client.getVar(Varbits.TRANSPARENT_CHATBOX) != 0;
 		final boolean transparent = client.isResized() && transparentChatbox;
 		final Collection<ChatColor> chatColors = colorCache.get(type);
 		for (ChatColor chatColor : chatColors)
@@ -870,7 +870,7 @@ public class ChatMessageManager
 					{
 						// Apply configured color from game settings, if set
 						assert chatColor.isDefault();
-						int v = client.getVarpValue(varp);
+						int v = client.getVar(varp);
 						if (v != 0)
 						{
 							color = new Color(v - 1);

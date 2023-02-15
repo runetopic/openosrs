@@ -525,7 +525,7 @@ public class IdleNotifierPlugin extends Plugin
 
 	private boolean checkFullSpecEnergy()
 	{
-		int currentSpecEnergy = client.getVarpValue(VarPlayer.SPECIAL_ATTACK_PERCENT);
+		int currentSpecEnergy = client.getVar(VarPlayer.SPECIAL_ATTACK_PERCENT);
 
 		int threshold = config.getSpecEnergyThreshold() * 10;
 		if (threshold == 0)

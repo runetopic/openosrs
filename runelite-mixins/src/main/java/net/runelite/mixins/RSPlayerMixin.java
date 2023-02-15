@@ -39,10 +39,7 @@ import static net.runelite.api.SkullIcon.DEAD_MAN_TWO;
 import static net.runelite.api.SkullIcon.SKULL;
 import static net.runelite.api.SkullIcon.SKULL_FIGHT_PIT;
 import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.events.OverheadPrayerChanged;
-import net.runelite.api.events.PlayerChanged;
-import net.runelite.api.events.PlayerCompositionChanged;
-import net.runelite.api.events.PlayerSkullChanged;
+import net.runelite.api.events.*;
 import net.runelite.api.mixins.Copy;
 import net.runelite.api.mixins.FieldHook;
 import net.runelite.api.mixins.Inject;
@@ -50,11 +47,7 @@ import net.runelite.api.mixins.MethodHook;
 import net.runelite.api.mixins.Mixin;
 import net.runelite.api.mixins.Replace;
 import net.runelite.api.mixins.Shadow;
-import net.runelite.rs.api.RSBuffer;
-import net.runelite.rs.api.RSClient;
-import net.runelite.rs.api.RSModel;
-import net.runelite.rs.api.RSPlayer;
-import net.runelite.rs.api.RSUsername;
+import net.runelite.rs.api.*;
 
 @Mixin(RSPlayer.class)
 public abstract class RSPlayerMixin implements RSPlayer
@@ -130,6 +123,24 @@ public abstract class RSPlayerMixin implements RSPlayer
 	public SkullIcon getSkullIcon()
 	{
 		return skullFromInt(getRsSkullIcon());
+	}
+
+	@Inject
+	@MethodHook("move")
+	public void onPlayerMovement(int x, int y, RSMoveSpeed type) {
+		client.getCallbacks().post(new PlayerMoved(this, x, y, type.speed()));
+	}
+
+	@Inject
+	@MethodHook("resetPath")
+	public void onPlayerPathReset(int x, int y) {
+		client.getCallbacks().post(new PlayerMoved(this, x, y, 127));
+	}
+
+	@Inject
+	@FieldHook("maxY")
+	public void attachedModel(int idx) {
+		client.getCallbacks().post(new AttachedModelEvent(this, minX(), minY(), maxX(), maxY(), animationCycleStart(), animationCycleEnd(), attachedModel()));
 	}
 
 	@Inject

@@ -468,9 +468,9 @@ class class390 implements Comparator {
                   }
                }
 
-               if (var3.field3585 != 0 && !var3.isIf3) {
-                  int var9 = var3.field3585 >> 16;
-                  var5 = var3.field3585 << 16 >> 16;
+               if (var3.modelRotation != 0 && !var3.isIf3) {
+                  int var9 = var3.modelRotation >> 16;
+                  var5 = var3.modelRotation << 16 >> 16;
                   var9 *= Client.graphicsCycle;
                   var5 *= Client.graphicsCycle;
                   var3.modelAngleX = var9 + var3.modelAngleX & 2047;

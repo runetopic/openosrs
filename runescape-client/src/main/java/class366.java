@@ -265,7 +265,7 @@ public final class class366 {
                   DevicePcmPlayerProvider.method324(class372.archive2);
                   ObjectComposition.method3949(class372.archive2);
                   class491.HitSplatDefinition_cachedSprites = new class458(class134.field1606, 54, class36.clientLanguage, class372.archive2);
-                  class208.HitSplatDefinition_cached = new class458(class134.field1606, 47, class36.clientLanguage, class372.archive2);
+                  MoveSpeed.HitSplatDefinition_cached = new class458(class134.field1606, 47, class36.clientLanguage, class372.archive2);
                   class9.varcs = new Varcs();
                   Archive var19 = class372.archive2;
                   Archive var20 = WorldMapEvent.archive8;

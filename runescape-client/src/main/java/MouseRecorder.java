@@ -130,7 +130,7 @@ public class MouseRecorder implements Runnable {
                   PendingSpawn var20 = null;
 
                   for(PendingSpawn var21 = (PendingSpawn)Client.pendingSpawns.last(); var21 != null; var21 = (PendingSpawn)Client.pendingSpawns.previous()) {
-                     if (var21.plane == class103.Client_plane && var13 == var21.x && var14 == var21.y && var18 == var21.field1150) {
+                     if (var21.plane == class103.Client_plane && var13 == var21.x && var14 == var21.y && var18 == var21.id) {
                         var20 = var21;
                         break;
                      }

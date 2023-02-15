@@ -79,7 +79,8 @@ public enum ModeWhere implements MouseWheel {
    @ObfuscatedGetter(
       intValue = -1632213005
    )
-   static int field4340;
+   @Export("cameraMoveToSpeed")
+   static int cameraMoveToSpeed;
    @ObfuscatedName("nf")
    @ObfuscatedGetter(
       intValue = 794865233
@@ -150,7 +151,8 @@ public enum ModeWhere implements MouseWheel {
       descriptor = "(IIII)Lcq;",
       garbageValue = "-837606466"
    )
-   static final InterfaceParent method6788(int var0, int var1, int var2) {
+   @Export("ifOpenSub")
+   static final InterfaceParent ifOpenSub(int var0, int var1, int var2) {
       InterfaceParent var3 = new InterfaceParent();
       var3.group = var1;
       var3.type = var2;

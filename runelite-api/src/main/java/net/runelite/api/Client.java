@@ -34,10 +34,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import net.runelite.api.annotations.VarCInt;
-import net.runelite.api.annotations.VarCStr;
-import net.runelite.api.annotations.Varbit;
-import net.runelite.api.annotations.VisibleForDevtools;
+
+import net.runelite.api.annotations.*;
 import net.runelite.api.clan.ClanChannel;
 import net.runelite.api.clan.ClanID;
 import net.runelite.api.clan.ClanSettings;
@@ -258,6 +256,10 @@ public interface Client extends OAuthApi, GameEngine
 
 	@Override
 	Canvas getCanvas();
+
+	int getLatestWidgetCall();
+
+	void setLatestWidgetCall(int value);
 
 	/**
 	 * Gets the current FPS (frames per second).
@@ -873,18 +875,19 @@ public interface Client extends OAuthApi, GameEngine
 	 *
 	 * @param varPlayer the player variable
 	 * @return the value
-	 * @see Client#getVarpValue(VarPlayer)
 	 */
-	@Deprecated
 	int getVar(VarPlayer varPlayer);
 
 	/**
 	 * Gets the value corresponding to the passed player variable.
+	 * This returns the server's idea of the value, not the client's. This is
+	 * specifically the last value set by the server regardless of changes to
+	 * the var by the client.
 	 *
 	 * @param varPlayer the player variable
 	 * @return the value
 	 */
-	int getVarpValue(VarPlayer varPlayer);
+	int getServerVar(VarPlayer varPlayer);
 
 	/**
 	 * Gets a value corresponding to the passed varbit.
@@ -920,6 +923,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param varpId the VarPlayer id
 	 * @return the value
 	 */
+	@VisibleForExternalPlugins
 	int getVarpValue(int varpId);
 
 	/**
@@ -931,6 +935,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param varpId the VarPlayer id
 	 * @return the value
 	 */
+	@VisibleForExternalPlugins
 	int getServerVarpValue(int varpId);
 
 	/**
@@ -990,7 +995,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @return the value
 	 * @see Varbits
 	 */
-	int getVarbitValue(int[] varps, @Varbit int varbitId);
+	int getVarbitValue(int[] varps, int varbitId);
 
 	/**
 	 * Gets the value of a given VarPlayer.
@@ -1717,12 +1722,43 @@ public interface Client extends OAuthApi, GameEngine
 	 */
 	boolean hasHintArrow();
 
+	int getHintArrowTargetType();
+
+	int getHintArrowNpcTargetIdx();
+
+	int getHintArrowPlayerTargetIdx();
+
+	int getHintArrowX();
+
+	int getHintArrowY();
+
+	boolean isCameraLocked();
+	boolean[] cameraShaking();
+	int[] cameraShakeIntensity();
+	int[] cameraMoveIntensity();
+	int[] cameraShakeSpeed();
+	int[] cameraShakeCycle();
+
+	int cameraLookAtX();
+	int cameraLookAtY();
+	int cameraLookAtHeight();
+	int cameraLookAtSpeed();
+	int cameraLookAtAcceleration();
+
+	int cameraMoveToX();
+	int cameraMoveToY();
+	int cameraMoveToHeight();
+	int cameraMoveToSpeed();
+	int cameraMoveToAcceleration();
+
+	int getMinimapState();
+
 	/**
 	 * Gets the type of hint arrow currently displayed.
 	 *
 	 * @return the hint arrow type
 	 */
-	@MagicConstant(valuesFromClass = HintArrowType.class) int getHintArrowType();
+	HintArrowType getHintArrowType();
 
 	/**
 	 * Clears the current hint arrow.
@@ -2517,4 +2553,6 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param zoom
 	 */
 	void setMinimapZoom(double zoom);
+
+	long getUserRegistrationId();
 }

@@ -11,7 +11,8 @@ public class Message extends DualNode {
    @ObfuscatedGetter(
       intValue = -2024309333
    )
-   static int field485;
+   @Export("cameraLookAtSpeed")
+   static int cameraLookAtSpeed;
    @ObfuscatedName("bt")
    @ObfuscatedGetter(
       intValue = 1273905497

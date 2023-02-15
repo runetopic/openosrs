@@ -78,16 +78,16 @@ public final class BoundaryObject {
       if (ClanSettings.cameraX == WorldMapRegion.field2874 && UserComparator10.cameraY == PacketWriter.field1404 && WorldMapDecoration.field2970 == class366.cameraZ && class135.field1629 == class103.cameraPitch && class16.field88 == class285.cameraYaw) {
          Client.field767 = false;
          Client.isCameraLocked = false;
-         WorldMapData_0.field2806 = 0;
-         Players.field1352 = 0;
-         FloorOverlayDefinition.field2266 = 0;
-         Message.field485 = 0;
-         AttackOption.field1320 = 0;
-         UserComparator7.field1444 = 0;
-         ModeWhere.field4340 = 0;
-         Occluder.field2636 = 0;
-         class108.field1416 = 0;
-         class10.field55 = 0;
+         WorldMapData_0.cameraLookAtX = 0;
+         Players.cameraLookAtY = 0;
+         FloorOverlayDefinition.cameraLookAtHeight = 0;
+         Message.cameraLookAtSpeed = 0;
+         AttackOption.cameraLookAtAcceleration = 0;
+         UserComparator7.cameraMoveToAcceleration = 0;
+         ModeWhere.cameraMoveToSpeed = 0;
+         Occluder.cameraMoveToX = 0;
+         class108.cameraMoveToY = 0;
+         class10.cameraMoveToHeight = 0;
       }
 
    }

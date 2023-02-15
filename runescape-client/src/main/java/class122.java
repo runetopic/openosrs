@@ -292,7 +292,7 @@ public class class122 {
          return 1;
       } else if (var0 == ScriptOpcodes.SOUND_JINGLE) {
          class302.Interpreter_intStackSize -= 2;
-         ScriptEvent.method2321(Interpreter.Interpreter_intStack[class302.Interpreter_intStackSize], Interpreter.Interpreter_intStack[class302.Interpreter_intStackSize + 1]);
+         ScriptEvent.playJingle(Interpreter.Interpreter_intStack[class302.Interpreter_intStackSize], Interpreter.Interpreter_intStack[class302.Interpreter_intStackSize + 1]);
          return 1;
       } else {
          class86 var3;

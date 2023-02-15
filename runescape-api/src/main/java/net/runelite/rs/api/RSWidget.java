@@ -45,6 +45,10 @@ public interface RSWidget extends Widget
 	@Override
 	int getId();
 
+	@Import("modelRotation")
+	@Override
+	int getModelRotation();
+
 	void setRenderParentId(int parentId);
 
 	void setRenderX(int x);

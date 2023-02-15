@@ -370,7 +370,7 @@ public class HitSplatDefinition extends DualNode {
       garbageValue = "-77"
    )
    static final void method3902(PacketBuffer var0, int var1, Player var2, int var3) {
-      byte var4 = class208.field2363.field2359;
+      byte var4 = MoveSpeed.field2363.speed;
       if ((var3 & 1024) != 0) {
          var2.field1176 = Client.cycle + var0.readUnsignedShortLE();
          var2.field1221 = Client.cycle + var0.readUnsignedShortAdd();
@@ -414,7 +414,7 @@ public class HitSplatDefinition extends DualNode {
                var2.field1161 = var5 >> 8;
                var2.field1185 = var5 & 255;
                var2.overheadTextCyclesRemaining = 150;
-               var2.field1181 = var13;
+               var2.showPublicPlayerChat = var13;
                var2.field1166 = var2 != class387.localPlayer && var17.isUser && "" != Client.field738 && var11.toLowerCase().indexOf(Client.field738) == -1;
                if (var17.isPrivileged) {
                   var12 = var13 ? 91 : 1;
@@ -434,9 +434,9 @@ public class HitSplatDefinition extends DualNode {
       }
 
       if ((var3 & 16384) != 0) {
-         class208[] var14 = Players.field1340;
-         class208[] var19 = new class208[]{class208.field2360, class208.field2363, class208.field2362, class208.field2366};
-         var14[var1] = (class208)class4.findEnumerated(var19, var0.readByteAdd());
+         MoveSpeed[] var14 = Players.field1340;
+         MoveSpeed[] var19 = new MoveSpeed[]{MoveSpeed.field2360, MoveSpeed.field2363, MoveSpeed.field2362, MoveSpeed.field2366};
+         var14[var1] = (MoveSpeed)class4.findEnumerated(var19, var0.readByteAdd());
       }
 
       if ((var3 & 4096) != 0) {
@@ -478,7 +478,7 @@ public class HitSplatDefinition extends DualNode {
             class280.addGameMessage(2, var2.username.getName(), var2.overheadText);
          }
 
-         var2.field1181 = false;
+         var2.showPublicPlayerChat = false;
          var2.field1161 = 0;
          var2.field1185 = 0;
          var2.overheadTextCyclesRemaining = 150;
@@ -586,10 +586,10 @@ public class HitSplatDefinition extends DualNode {
          if (var4 == 127) {
             var2.resetPath(var2.tileX, var2.tileY);
          } else {
-            class208 var22;
-            if (var4 != class208.field2363.field2359) {
-               class208[] var18 = new class208[]{class208.field2360, class208.field2363, class208.field2362, class208.field2366};
-               var22 = (class208)class4.findEnumerated(var18, var4);
+            MoveSpeed var22;
+            if (var4 != MoveSpeed.field2363.speed) {
+               MoveSpeed[] var18 = new MoveSpeed[]{MoveSpeed.field2360, MoveSpeed.field2363, MoveSpeed.field2362, MoveSpeed.field2366};
+               var22 = (MoveSpeed)class4.findEnumerated(var18, var4);
             } else {
                var22 = Players.field1340[var1];
             }

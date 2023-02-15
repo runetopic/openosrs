@@ -523,7 +523,7 @@ public final class Player extends Actor {
       descriptor = "(IILhz;I)V",
       garbageValue = "-1093803417"
    )
-   final void method2361(int var1, int var2, class208 var3) {
+   final void method2361(int var1, int var2, MoveSpeed var3) {
       if (super.sequence != -1 && class85.SequenceDefinition_get(super.sequence).field2301 == 1) {
          super.sequence = -1;
       }
@@ -531,11 +531,11 @@ public final class Player extends Actor {
       super.field1195 = -1;
       if (var1 >= 0 && var1 < 104 && var2 >= 0 && var2 < 104) {
          if (super.pathX[0] >= 0 && super.pathX[0] < 104 && super.pathY[0] >= 0 && super.pathY[0] < 104) {
-            if (var3 == class208.field2362) {
-               GrandExchangeEvent.method6704(this, var1, var2, class208.field2362);
+            if (var3 == MoveSpeed.field2362) {
+               GrandExchangeEvent.method6704(this, var1, var2, MoveSpeed.field2362);
             }
 
-            this.method2390(var1, var2, var3);
+            this.move(var1, var2, var3);
          } else {
             this.resetPath(var1, var2);
          }
@@ -567,7 +567,8 @@ public final class Player extends Actor {
       descriptor = "(IILhz;I)V",
       garbageValue = "-25109221"
    )
-   final void method2390(int var1, int var2, class208 var3) {
+   @Export("move")
+   final void move(int var1, int var2, MoveSpeed var3) {
       if (super.pathLength < 9) {
          ++super.pathLength;
       }

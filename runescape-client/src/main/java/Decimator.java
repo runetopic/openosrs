@@ -401,7 +401,7 @@ public class Decimator {
                var7 = var5 & 3;
                var8 = Client.field573[var6];
                if (var3 >= 0 && var4 >= 0 && var3 < 104 && var4 < 104) {
-                  PlayerCompositionColorTextureOverride.method3571(class103.Client_plane, var3, var4, var8, -1, var6, var7, 31, 0, -1);
+                  PlayerCompositionColorTextureOverride.updatePendingSpawn(class103.Client_plane, var3, var4, var8, -1, var6, var7, 31, 0, -1);
                }
 
             } else if (class280.field3176 == var0) {
@@ -415,7 +415,7 @@ public class Decimator {
                var9 = var7 & 3;
                var10 = Client.field573[var8];
                if (var5 >= 0 && var6 >= 0 && var5 < 104 && var6 < 104) {
-                  PlayerCompositionColorTextureOverride.method3571(class103.Client_plane, var5, var6, var10, var3, var8, var9, var2, 0, -1);
+                  PlayerCompositionColorTextureOverride.updatePendingSpawn(class103.Client_plane, var5, var6, var10, var3, var8, var9, var2, 0, -1);
                }
 
             } else {
@@ -510,7 +510,7 @@ public class Decimator {
                         int var28 = (var14 << 7) + (var20 << 6);
                         Model var29 = var18.getModel(var7, var8, var25, var27, var26, var28);
                         if (var29 != null) {
-                           PlayerCompositionColorTextureOverride.method3571(class103.Client_plane, var13, var14, var9, -1, 0, 0, 31, var5 + 1, var11 + 1);
+                           PlayerCompositionColorTextureOverride.updatePendingSpawn(class103.Client_plane, var13, var14, var9, -1, 0, 0, 31, var5 + 1, var11 + 1);
                            var17.animationCycleStart = var5 + Client.cycle;
                            var17.animationCycleEnd = var11 + Client.cycle;
                            var17.model0 = var29;

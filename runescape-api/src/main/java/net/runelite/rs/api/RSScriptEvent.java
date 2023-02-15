@@ -59,10 +59,11 @@ public interface RSScriptEvent extends ScriptEvent
 	int getMouseY();
 
 	@Import("keyTyped")
-		// shit name
 	int getTypedKeyCode();
 
 	@Import("keyPressed")
-		// also a shit name
 	int getTypedKeyChar();
+
+	@Import("type")
+	int type();
 }

@@ -41,13 +41,7 @@ import net.runelite.api.SpritePixels;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.ActorDeath;
-import net.runelite.api.events.AnimationChanged;
-import net.runelite.api.events.GraphicChanged;
-import net.runelite.api.events.HealthBarUpdated;
-import net.runelite.api.events.HitsplatApplied;
-import net.runelite.api.events.InteractingChanged;
-import net.runelite.api.events.OverheadTextChanged;
+import net.runelite.api.events.*;
 import net.runelite.api.mixins.FieldHook;
 import net.runelite.api.mixins.Inject;
 import net.runelite.api.mixins.MethodHook;
@@ -247,6 +241,12 @@ public abstract class RSActorMixin implements RSActor
 			OverheadTextChanged overheadTextChanged = new OverheadTextChanged(this, overheadText);
 			client.getCallbacks().post(overheadTextChanged);
 		}
+	}
+
+	@FieldHook("showPublicPlayerChat")
+	@Inject
+	public void showPublicPlayerChatChanged(int idx) {
+		client.getCallbacks().post(new ShowPublicPlayerChatChanged());
 	}
 
 	@Inject

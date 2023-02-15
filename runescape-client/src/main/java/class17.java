@@ -160,7 +160,7 @@ class class17 implements SSLSession {
       garbageValue = "2130757009"
    )
    static long method246() {
-      return Client.field631;
+      return Client.userRegistrationId;
    }
 
    @ObfuscatedName("id")
@@ -203,7 +203,7 @@ class class17 implements SSLSession {
                      Client.npcIndices[++Client.npcCount - 1] = var3;
                      var4.npcCycle = Client.cycle;
                      var7 = var0.readBits(3);
-                     var4.method2624(var7, class208.field2360);
+                     var4.method2624(var7, MoveSpeed.field2360);
                      var8 = var0.readBits(1);
                      if (var8 == 1) {
                         Client.field558[++Client.field557 - 1] = var3;
@@ -213,12 +213,12 @@ class class17 implements SSLSession {
                      var4.npcCycle = Client.cycle;
                      if (var0.readBits(1) == 1) {
                         var7 = var0.readBits(3);
-                        var4.method2624(var7, class208.field2362);
+                        var4.method2624(var7, MoveSpeed.field2362);
                         var8 = var0.readBits(3);
-                        var4.method2624(var8, class208.field2362);
+                        var4.method2624(var8, MoveSpeed.field2362);
                      } else {
                         var7 = var0.readBits(3);
-                        var4.method2624(var7, class208.field2366);
+                        var4.method2624(var7, MoveSpeed.field2366);
                      }
 
                      var7 = var0.readBits(1);

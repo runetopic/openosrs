@@ -126,7 +126,8 @@ public abstract class Actor extends Renderable {
    @Export("overheadText")
    String overheadText = null;
    @ObfuscatedName("bj")
-   boolean field1181;
+   @Export("showPublicPlayerChat")
+   boolean showPublicPlayerChat;
    @ObfuscatedName("bf")
    boolean field1166 = false;
    @ObfuscatedName("bz")
@@ -364,7 +365,7 @@ public abstract class Actor extends Renderable {
       descriptor = "[Lhz;"
    )
    @Export("pathTraversed")
-   class208[] pathTraversed = new class208[10];
+   MoveSpeed[] pathTraversed = new MoveSpeed[10];
    @ObfuscatedName("dz")
    @ObfuscatedGetter(
       intValue = -1163077103

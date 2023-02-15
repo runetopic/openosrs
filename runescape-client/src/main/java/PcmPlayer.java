@@ -593,7 +593,7 @@ public class PcmPlayer {
                      var0.orientation = 0;
                   }
 
-                  class208 var6 = var0.pathTraversed[var0.pathLength - 1];
+                  MoveSpeed var6 = var0.pathTraversed[var0.pathLength - 1];
                   if (var4 - var11 <= 256 && var4 - var11 >= -256 && var5 - var3 <= 256 && var5 - var3 >= -256) {
                      var7 = var0.orientation - var0.rotation & 2047;
                      if (var7 > 1024) {
@@ -652,9 +652,9 @@ public class PcmPlayer {
                         }
                      }
 
-                     if (var6 == class208.field2362) {
+                     if (var6 == MoveSpeed.field2362) {
                         var9 <<= 1;
-                     } else if (var6 == class208.field2366) {
+                     } else if (var6 == MoveSpeed.field2366) {
                         var9 >>= 1;
                      }
 

@@ -150,7 +150,7 @@ public class RegenMeterPlugin extends Plugin
 	{
 		final int ticksPerSpecRegen = wearingLightbearer ? SPEC_REGEN_TICKS / 2 : SPEC_REGEN_TICKS;
 
-		if (client.getVarpValue(VarPlayer.SPECIAL_ATTACK_PERCENT) == 1000)
+		if (client.getVar(VarPlayer.SPECIAL_ATTACK_PERCENT) == 1000)
 		{
 			// The recharge doesn't tick when at 100%
 			ticksSinceSpecRegen = 0;

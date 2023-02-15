@@ -36,42 +36,42 @@ public class class275 {
    )
    static final void method5532(int var0, int var1, int var2) {
       if (ClanSettings.cameraX < var0) {
-         ClanSettings.cameraX = (var0 - ClanSettings.cameraX) * UserComparator7.field1444 / 1000 + ClanSettings.cameraX + ModeWhere.field4340;
+         ClanSettings.cameraX = (var0 - ClanSettings.cameraX) * UserComparator7.cameraMoveToAcceleration / 1000 + ClanSettings.cameraX + ModeWhere.cameraMoveToSpeed;
          if (ClanSettings.cameraX > var0) {
             ClanSettings.cameraX = var0;
          }
       }
 
       if (ClanSettings.cameraX > var0) {
-         ClanSettings.cameraX -= (ClanSettings.cameraX - var0) * UserComparator7.field1444 / 1000 + ModeWhere.field4340;
+         ClanSettings.cameraX -= (ClanSettings.cameraX - var0) * UserComparator7.cameraMoveToAcceleration / 1000 + ModeWhere.cameraMoveToSpeed;
          if (ClanSettings.cameraX < var0) {
             ClanSettings.cameraX = var0;
          }
       }
 
       if (UserComparator10.cameraY < var1) {
-         UserComparator10.cameraY = (var1 - UserComparator10.cameraY) * UserComparator7.field1444 / 1000 + UserComparator10.cameraY + ModeWhere.field4340;
+         UserComparator10.cameraY = (var1 - UserComparator10.cameraY) * UserComparator7.cameraMoveToAcceleration / 1000 + UserComparator10.cameraY + ModeWhere.cameraMoveToSpeed;
          if (UserComparator10.cameraY > var1) {
             UserComparator10.cameraY = var1;
          }
       }
 
       if (UserComparator10.cameraY > var1) {
-         UserComparator10.cameraY -= (UserComparator10.cameraY - var1) * UserComparator7.field1444 / 1000 + ModeWhere.field4340;
+         UserComparator10.cameraY -= (UserComparator10.cameraY - var1) * UserComparator7.cameraMoveToAcceleration / 1000 + ModeWhere.cameraMoveToSpeed;
          if (UserComparator10.cameraY < var1) {
             UserComparator10.cameraY = var1;
          }
       }
 
       if (class366.cameraZ < var2) {
-         class366.cameraZ = (var2 - class366.cameraZ) * UserComparator7.field1444 / 1000 + class366.cameraZ + ModeWhere.field4340;
+         class366.cameraZ = (var2 - class366.cameraZ) * UserComparator7.cameraMoveToAcceleration / 1000 + class366.cameraZ + ModeWhere.cameraMoveToSpeed;
          if (class366.cameraZ > var2) {
             class366.cameraZ = var2;
          }
       }
 
       if (class366.cameraZ > var2) {
-         class366.cameraZ -= (class366.cameraZ - var2) * UserComparator7.field1444 / 1000 + ModeWhere.field4340;
+         class366.cameraZ -= (class366.cameraZ - var2) * UserComparator7.cameraMoveToAcceleration / 1000 + ModeWhere.cameraMoveToSpeed;
          if (class366.cameraZ < var2) {
             class366.cameraZ = var2;
          }

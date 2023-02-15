@@ -43,7 +43,8 @@ public enum AttackOption implements MouseWheel {
    @ObfuscatedGetter(
       intValue = -620769605
    )
-   static int field1320;
+   @Export("cameraLookAtAcceleration")
+   static int cameraLookAtAcceleration;
    @ObfuscatedName("j")
    @ObfuscatedGetter(
       intValue = 1823309479

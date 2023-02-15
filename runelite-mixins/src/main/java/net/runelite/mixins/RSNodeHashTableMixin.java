@@ -4,13 +4,19 @@ import net.runelite.api.Node;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import net.runelite.api.mixins.Inject;
-import net.runelite.api.mixins.Mixin;
+
+import net.runelite.api.events.HashTableNodeGetCall;
+import net.runelite.api.events.HashTableNodePut;
+import net.runelite.api.mixins.*;
+import net.runelite.rs.api.RSClient;
 import net.runelite.rs.api.RSNodeHashTable;
 
 @Mixin(RSNodeHashTable.class)
 public abstract class RSNodeHashTableMixin implements RSNodeHashTable
 {
+	@Shadow("client")
+	private static RSClient client;
+
 	@Inject
 	@Override
 	public Collection<Node> getNodes()
@@ -34,5 +40,19 @@ public abstract class RSNodeHashTableMixin implements RSNodeHashTable
 		}
 
 		return nodes;
+	}
+
+	@Copy("put")
+	@Replace("put")
+	@SuppressWarnings({"InfiniteRecursion", "unchecked"})
+	public void copy$put(Node node, long value) {
+		copy$put(node, value);
+		client.getCallbacks().post(new HashTableNodePut(this, node, value));
+	}
+
+	@Inject
+	@MethodHook("get")
+	public void hashTableGetCall(long value) {
+		client.getCallbacks().post(new HashTableNodeGetCall(value));
 	}
 }

@@ -35,6 +35,7 @@ public class SoundEffectPlayed
 	private final Actor source;
 	private int soundId;
 	private int delay;
+	private int loops;
 
 	private boolean consumed;
 

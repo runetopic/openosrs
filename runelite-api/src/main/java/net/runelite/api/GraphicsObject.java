@@ -58,7 +58,14 @@ public interface GraphicsObject extends Renderable
 	 *
 	 * @return
 	 */
-	int getLevel();
+	int getPlane();
+
+	/**
+	 * Gets the height of the graphic.
+	 *
+	 * @return the height
+	 */
+	int getHeight();
 
 	/**
 	 * Gets the z coordinate

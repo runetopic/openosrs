@@ -98,6 +98,8 @@ public interface ScriptEvent
 	 */
 	int getTypedKeyChar();
 
+	int type();
+
 	/**
 	 * Executes a cs2 script specified by this event
 	 *

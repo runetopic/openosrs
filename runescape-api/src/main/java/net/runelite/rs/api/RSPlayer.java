@@ -79,4 +79,8 @@ public interface RSPlayer extends RSActor, Player
 
 	@Import("actions")
 	String[] getActions();
+
+	@Import("plane")
+	@Override
+	int getPlane();
 }

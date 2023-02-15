@@ -140,6 +140,9 @@ public interface Actor extends Renderable, Locatable
 	 */
 	int getAnimation();
 
+	int getAnimationDelay();
+
+	int getAnimationFrameIndex();
 	/**
 	 * Gets the secondary animation the actor is performing. Usually an idle animation, or one of the walking ones.
 	 *
@@ -302,6 +305,8 @@ public interface Actor extends Renderable, Locatable
 	 */
 	int getGraphicHeight();
 
+	int getGraphicStartCycle();
+
 	/**
 	 * Set the height of the graphic/spotanim on the actor
 	 * @param height
@@ -401,6 +406,8 @@ public interface Actor extends Renderable, Locatable
 	 * @return the overhead text
 	 */
 	String getOverheadText();
+
+	boolean showPublicPlayerChat();
 
 	/**
 	 * Sets the overhead text that is displayed above the actor

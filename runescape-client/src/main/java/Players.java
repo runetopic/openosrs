@@ -11,14 +11,15 @@ public class Players {
    @ObfuscatedGetter(
       intValue = 994098816
    )
-   static int field1352;
+   @Export("cameraLookAtY")
+   static int cameraLookAtY;
    @ObfuscatedName("v")
    static byte[] field1353 = new byte[2048];
    @ObfuscatedName("s")
    @ObfuscatedSignature(
       descriptor = "[Lhz;"
    )
-   static class208[] field1340 = new class208[2048];
+   static MoveSpeed[] field1340 = new MoveSpeed[2048];
    @ObfuscatedName("z")
    @ObfuscatedSignature(
       descriptor = "[Lrd;"

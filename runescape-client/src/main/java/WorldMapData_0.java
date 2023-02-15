@@ -11,7 +11,8 @@ public class WorldMapData_0 extends AbstractWorldMapData {
    @ObfuscatedGetter(
       intValue = 1048100864
    )
-   static int field2806;
+   @Export("cameraLookAtX")
+   static int cameraLookAtX;
 
    WorldMapData_0() {
    }

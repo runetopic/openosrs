@@ -205,7 +205,7 @@ public class HealthBarDefinition extends DualNode {
       WorldMapDecorationType.method6425();
       FaceNormal.method4641();
       class491.HitSplatDefinition_cachedSprites.method8463();
-      class208.HitSplatDefinition_cached.method8463();
+      MoveSpeed.HitSplatDefinition_cached.method8463();
       HitSplatDefinition.HitSplatDefinition_cached.clear();
       HitSplatDefinition.HitSplatDefinition_cachedSprites.clear();
       HitSplatDefinition.HitSplatDefinition_cachedFonts.clear();
