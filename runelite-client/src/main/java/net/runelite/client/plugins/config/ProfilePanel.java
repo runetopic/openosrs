@@ -98,7 +98,7 @@ class ProfilePanel extends PluginPanel
 	private final JButton addButton;
 	private final JButton importButton;
 
-	private Map<Long, ProfileCard> cards = new HashMap<>();
+	private final Map<Long, ProfileCard> cards = new HashMap<>();
 
 	private File lastFileChooserDirectory = RuneLite.RUNELITE_DIR;
 
@@ -269,9 +269,7 @@ class ProfilePanel extends PluginPanel
 		SwingUtilities.invokeLater(() ->
 		{
 			SwingUtil.fastRemoveAll(profilesList);
-
-			Map<Long, ProfileCard> prevCards = cards;
-			cards = new HashMap<>();
+			cards.clear();
 
 			long activePanel = configManager.getProfile().getId();
 			boolean limited = profiles.stream().filter(v -> !v.isInternal()).count() >= MAX_PROFILES;
@@ -283,8 +281,7 @@ class ProfilePanel extends PluginPanel
 					continue;
 				}
 
-				ProfileCard prev = prevCards.get(profile.getId());
-				ProfileCard pc = new ProfileCard(profile, activePanel == profile.getId(), limited, prev);
+				ProfileCard pc = new ProfileCard(profile, activePanel == profile.getId(), limited);
 				cards.put(profile.getId(), pc);
 				profilesList.add(pc);
 			}
@@ -308,7 +305,7 @@ class ProfilePanel extends PluginPanel
 		private boolean expanded;
 		private boolean active;
 
-		private ProfileCard(ConfigProfile profile, boolean isActive, boolean limited, ProfileCard prev)
+		private ProfileCard(ConfigProfile profile, boolean isActive, boolean limited)
 		{
 			this.profile = profile;
 
@@ -501,7 +498,7 @@ class ProfilePanel extends PluginPanel
 			activate.addMouseListener(expandListener);
 
 			setActive(isActive);
-			setExpanded(prev != null && prev.expanded);
+			setExpanded(false);
 		}
 
 		void setActive(boolean active)
