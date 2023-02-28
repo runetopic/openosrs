@@ -52,7 +52,6 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
-import net.runelite.client.events.ProfileChanged;
 import net.runelite.client.game.chatbox.ChatboxPanelManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -206,12 +205,6 @@ public class GroundMarkerPlugin extends Plugin
 		overlayManager.remove(minimapOverlay);
 		sharingManager.removeMenuOptions();
 		points.clear();
-	}
-
-	@Subscribe
-	public void onProfileChanged(ProfileChanged profileChanged)
-	{
-		loadPoints();
 	}
 
 	@Subscribe
