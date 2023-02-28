@@ -57,9 +57,6 @@ public class ConfigPlugin extends Plugin
 	private Provider<PluginListPanel> pluginListPanelProvider;
 
 	@Inject
-	private Provider<TopLevelConfigPanel> topLevelConfigPanelProvider;
-
-	@Inject
 	private ConfigManager configManager;
 
 	@Inject
@@ -71,14 +68,14 @@ public class ConfigPlugin extends Plugin
 	@Inject
 	private ChatColorConfig chatColorConfig;
 
-	private TopLevelConfigPanel topLevelConfigPanel;
+	private PluginListPanel pluginListPanel;
 
 	private NavigationButton navButton;
 
 	@Override
 	protected void startUp() throws Exception
 	{
-		PluginListPanel pluginListPanel = pluginListPanelProvider.get();
+		pluginListPanel = pluginListPanelProvider.get();
 		pluginListPanel.addFakePlugin(new PluginConfigurationDescriptor(
 				"RuneLite", "RuneLite client settings",
 				new String[]{"client", "notification", "size", "position", "window", "chrome", "focus", "font", "overlay", "tooltip", "infobox"},
@@ -95,15 +92,13 @@ public class ConfigPlugin extends Plugin
 			));
 		pluginListPanel.rebuildPluginList();
 
-		topLevelConfigPanel = topLevelConfigPanelProvider.get();
-
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "config_icon.png");
 
 		navButton = NavigationButton.builder()
 			.tooltip("Configuration")
 			.icon(icon)
 			.priority(0)
-			.panel(topLevelConfigPanel)
+			.panel(pluginListPanel.getMuxer())
 			.build();
 
 		clientToolbar.addNavigation(navButton);
@@ -135,7 +130,7 @@ public class ConfigPlugin extends Plugin
 				{
 					navButton.getOnSelect().run();
 				}
-				topLevelConfigPanel.openConfigurationPanel(plugin.getName());
+				pluginListPanel.openConfigurationPanel(plugin.getName());
 			});
 		}
 	}
