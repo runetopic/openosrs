@@ -60,7 +60,6 @@ import net.runelite.client.config.RuneLiteConfig;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ExternalPluginsChanged;
-import net.runelite.client.events.ProfileChanged;
 import net.runelite.client.events.SessionClose;
 import net.runelite.client.events.SessionOpen;
 import net.runelite.client.plugins.Plugin;
@@ -133,12 +132,6 @@ public class ExternalPluginManager
 
 	@Subscribe
 	public void onSessionClose(SessionClose event)
-	{
-		executor.submit(this::refreshPlugins);
-	}
-
-	@Subscribe
-	public void onProfileChanged(ProfileChanged profileChanged)
 	{
 		executor.submit(this::refreshPlugins);
 	}
