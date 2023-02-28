@@ -543,7 +543,7 @@ class ProfilePanel extends PluginPanel
 				name = "New Profile (" + (number++) + ")";
 			}
 
-			log.info("Creating new profile: {}", name);
+			log.debug("selected new profile name: {}", name);
 			lock.createProfile(name);
 
 			reload(lock.getProfiles());
@@ -552,8 +552,6 @@ class ProfilePanel extends PluginPanel
 
 	private void deleteProfile(ConfigProfile profile)
 	{
-		log.info("Deleting profile {}", profile.getName());
-
 		// disabling sync causes the profile to be deleted
 		configManager.toggleSync(profile, false);
 
@@ -578,7 +576,7 @@ class ProfilePanel extends PluginPanel
 				return;
 			}
 
-			log.info("Renaming profile {} to {}", profile, name);
+			log.debug("renaming profile {} to {}", profile, name);
 
 			lock.renameProfile(profile, name);
 			// the panel updates the name label so it isn't necessary to rebuild
@@ -714,7 +712,7 @@ class ProfilePanel extends PluginPanel
 
 	private void toggleSync(ActionEvent event, ConfigProfile profile, boolean sync)
 	{
-		log.info("{} sync for: {}", sync ? "Enabling" : "Disabling", profile.getName());
+		log.debug("Setting sync for {}: {}", profile.getName(), sync);
 		configManager.toggleSync(profile, sync);
 		((JToggleButton) event.getSource()).setToolTipText(sync ? "Disable cloud sync" : "Enable cloud sync");
 	}
