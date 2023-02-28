@@ -33,7 +33,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -118,10 +117,6 @@ public class GrandExchangePluginTest
 	@Mock
 	@Bind
 	private RuneLiteConfig runeLiteConfig;
-
-	@Mock
-	@Bind
-	private ScheduledExecutorService scheduledExecutorService;
 
 	@Inject
 	private Gson gson;
