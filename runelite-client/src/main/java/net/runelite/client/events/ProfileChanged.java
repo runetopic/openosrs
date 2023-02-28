@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Abex
+ * Copyright (c) 2023, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,26 +22,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.config;
-
-import lombok.Data;
+package net.runelite.client.events;
 
 /**
- * A profile/save of a OSRS account. Each account can 1 profile per {@link RuneScapeProfileType}
- * (ie Standard/League/DMM}.
+ * Fired when the active {@link net.runelite.client.config.ConfigProfile} is changed
  */
-@Data
-public class RuneScapeProfile
+public class ProfileChanged
 {
-	public static final int ACCOUNT_HASH_INVALID = -1;
-
-	private final String displayName;
-	private final RuneScapeProfileType type;
-	private final long accountHash;
-
-	/**
-	 * Profile key used to save configs for this profile to the config store. This will
-	 * always start with {@link ConfigManager#RSPROFILE_GROUP}
-	 */
-	private final String key;
 }

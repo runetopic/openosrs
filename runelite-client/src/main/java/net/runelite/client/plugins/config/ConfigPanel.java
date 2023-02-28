@@ -115,6 +115,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.ExternalPluginsChanged;
 import net.runelite.client.events.PluginChanged;
+import net.runelite.client.events.ProfileChanged;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 import net.runelite.client.externalplugins.ExternalPluginManifest;
 import net.runelite.client.plugins.OPRSExternalPluginManager;
@@ -1181,9 +1182,7 @@ class ConfigPanel extends PluginPanel
 		if (event.getPlugin() == this.pluginConfig.getPlugin())
 		{
 			SwingUtilities.invokeLater(() ->
-			{
-				pluginToggle.setSelected(event.isLoaded());
-			});
+				pluginToggle.setSelected(event.isLoaded()));
 		}
 	}
 
@@ -1212,6 +1211,12 @@ class ConfigPanel extends PluginPanel
 		}
 
 		skipRebuild = false;
+	}
+
+	@Subscribe
+	private void onProfileChanged(ProfileChanged profileChanged)
+	{
+		SwingUtilities.invokeLater(this::rebuild);
 	}
 
 	private JMenuItem createResetMenuItem(PluginConfigurationDescriptor pluginConfig, ConfigItemDescriptor configItemDescriptor)

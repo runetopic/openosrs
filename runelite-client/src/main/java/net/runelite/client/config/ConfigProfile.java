@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Abex
+ * Copyright (c) 2023, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,24 +24,33 @@
  */
 package net.runelite.client.config;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-/**
- * A profile/save of a OSRS account. Each account can 1 profile per {@link RuneScapeProfileType}
- * (ie Standard/League/DMM}.
- */
-@Data
-public class RuneScapeProfile
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@ToString
+public class ConfigProfile
 {
-	public static final int ACCOUNT_HASH_INVALID = -1;
+	@Getter
+	private final long id;
+	@Getter
+	@Setter(AccessLevel.PACKAGE)
+	private String name;
+	@Getter
+	@Setter
+	private boolean sync;
+	@Getter
+	@Setter
+	private boolean active;
+	@Getter(AccessLevel.PACKAGE)
+	@Setter(AccessLevel.PACKAGE)
+	private long rev;
 
-	private final String displayName;
-	private final RuneScapeProfileType type;
-	private final long accountHash;
-
-	/**
-	 * Profile key used to save configs for this profile to the config store. This will
-	 * always start with {@link ConfigManager#RSPROFILE_GROUP}
-	 */
-	private final String key;
+	public boolean isInternal()
+	{
+		return name.startsWith("$");
+	}
 }
