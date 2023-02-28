@@ -24,6 +24,7 @@
  */
 package net.runelite.client.plugins.playerindicators;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.inject.Inject;
@@ -54,11 +55,11 @@ public class PlayerIndicatorsMinimapOverlay extends Overlay
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
-		playerIndicatorsService.forEachPlayer((player, decorations) -> renderPlayerOverlay(graphics, player, decorations));
+		playerIndicatorsService.forEachPlayer((player, color) -> renderPlayerOverlay(graphics, player, color));
 		return null;
 	}
 
-	private void renderPlayerOverlay(Graphics2D graphics, Player actor, PlayerIndicatorsService.Decorations decorations)
+	private void renderPlayerOverlay(Graphics2D graphics, Player actor, Color color)
 	{
 		final String name = actor.getName().replace('\u00A0', ' ');
 
@@ -68,7 +69,7 @@ public class PlayerIndicatorsMinimapOverlay extends Overlay
 
 			if (minimapLocation != null)
 			{
-				OverlayUtil.renderTextLocation(graphics, minimapLocation, name, decorations.getColor());
+				OverlayUtil.renderTextLocation(graphics, minimapLocation, name, color);
 			}
 		}
 	}
