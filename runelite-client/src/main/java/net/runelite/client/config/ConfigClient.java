@@ -32,7 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import javax.inject.Inject;
@@ -41,9 +41,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.http.api.RuneLiteAPI;
 import net.runelite.http.api.config.ConfigPatch;
-import net.runelite.http.api.config.ConfigPatchResult;
-import net.runelite.http.api.config.Configuration;
-import net.runelite.http.api.config.Profile;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -70,12 +67,11 @@ public class ConfigClient
 		this.gson = gson;
 	}
 
-	public List<Profile> profiles() throws IOException
+	public Map<String, String> get() throws IOException
 	{
 		HttpUrl url = apiBase.newBuilder()
 			.addPathSegment("config")
-			.addPathSegment("v3")
-			.addPathSegment("list")
+			.addPathSegment("v2")
 			.build();
 
 		log.debug("Built URI: {}", url);
@@ -89,7 +85,7 @@ public class ConfigClient
 		{
 			InputStream in = response.body().byteStream();
 			// CHECKSTYLE:OFF
-			final Type type = new TypeToken<List<Profile>>() {}.getType();
+			final Type type = new TypeToken<Map<String, String>>(){}.getType();
 			// CHECKSTYLE:ON
 			return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), type);
 		}
@@ -99,38 +95,13 @@ public class ConfigClient
 		}
 	}
 
-	public Configuration get(long profile) throws IOException
+	public CompletableFuture<Void> patch(ConfigPatch patch)
 	{
+		CompletableFuture<Void> future = new CompletableFuture<>();
+
 		HttpUrl url = apiBase.newBuilder()
 			.addPathSegment("config")
-			.addPathSegment("v3")
-			.addPathSegment(Long.toString(profile))
-			.build();
-
-		log.debug("Built URI: {}", url);
-
-		Request request = new Request.Builder()
-			.header(RuneLiteAPI.RUNELITE_AUTH, uuid.toString())
-			.url(url)
-			.build();
-
-		try (Response response = client.newCall(request).execute())
-		{
-			InputStream in = response.body().byteStream();
-			return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), Configuration.class);
-		}
-		catch (JsonParseException ex)
-		{
-			throw new IOException(ex);
-		}
-	}
-
-	public CompletableFuture<ConfigPatchResult> patch(ConfigPatch patch, long profile)
-	{
-		HttpUrl url = apiBase.newBuilder()
-			.addPathSegment("config")
-			.addPathSegment("v3")
-			.addPathSegment(Long.toString(profile))
+			.addPathSegment("v2")
 			.build();
 
 		log.debug("Built URI: {}", url);
@@ -141,7 +112,6 @@ public class ConfigClient
 			.url(url)
 			.build();
 
-		CompletableFuture<ConfigPatchResult> future = new CompletableFuture<>();
 		client.newCall(request).enqueue(new Callback()
 		{
 			@Override
@@ -154,115 +124,30 @@ public class ConfigClient
 			@Override
 			public void onResponse(Call call, Response response)
 			{
-				try // NOPMD: UseTryWithResources
+				if (response.code() != 200)
 				{
-					if (response.code() != 200)
+					String body = "bad response";
+					try
 					{
-						String body = "bad response";
-						try
-						{
-							body = response.body().string();
-						}
-						catch (IOException ignored)
-						{
-						}
+						body = response.body().string();
+					}
+					catch (IOException ignored)
+					{
+					}
 
-						log.warn("failed to synchronize some of {}/{} configuration values: {}",
-							patch.getEdit().size(), patch.getUnset().size(), body);
-						future.complete(null);
-					}
-					else
-					{
-						log.debug("Synchronized {}/{} configuration values",
-							patch.getEdit().size(), patch.getUnset().size());
-						future.complete(gson.fromJson(new InputStreamReader(response.body().byteStream(), StandardCharsets.UTF_8), ConfigPatchResult.class));
-					}
+					log.warn("failed to synchronize some of {}/{} configuration values: {}",
+						patch.getEdit().size(), patch.getUnset().size(), body);
 				}
-				catch (Exception ex)
+				else
 				{
-					future.completeExceptionally(ex);
+					log.debug("Synchronized {}/{} configuration values",
+						patch.getEdit().size(), patch.getUnset().size());
 				}
-				finally
-				{
-					response.close();
-				}
+				response.close();
+				future.complete(null);
 			}
 		});
 
 		return future;
-	}
-
-	public void delete(long profile)
-	{
-		HttpUrl url = apiBase.newBuilder()
-			.addPathSegment("config")
-			.addPathSegment("v3")
-			.addPathSegment(Long.toString(profile))
-			.build();
-
-		log.debug("Built URI: {}", url);
-
-		Request request = new Request.Builder()
-			.delete()
-			.header(RuneLiteAPI.RUNELITE_AUTH, uuid.toString())
-			.url(url)
-			.build();
-
-		client.newCall(request).enqueue(new Callback()
-		{
-			@Override
-			public void onFailure(Call call, IOException e)
-			{
-				log.warn("error deleting profile {}", profile, e);
-			}
-
-			@Override
-			public void onResponse(Call call, Response response)
-			{
-				log.debug("deleted profile {}", profile);
-				response.close();
-			}
-		});
-	}
-
-	public void rename(long profile, String name)
-	{
-		HttpUrl url = apiBase.newBuilder()
-			.addPathSegment("config")
-			.addPathSegment("v3")
-			.addPathSegment(Long.toString(profile))
-			.addPathSegment("name")
-			.build();
-
-		log.debug("Built URI: {}", url);
-
-		Request request = new Request.Builder()
-			.post(RequestBody.create(null, name))
-			.header(RuneLiteAPI.RUNELITE_AUTH, uuid.toString())
-			.url(url)
-			.build();
-
-		client.newCall(request).enqueue(new Callback()
-		{
-			@Override
-			public void onFailure(Call call, IOException e)
-			{
-				log.warn("error renaming profile {}", profile, e);
-			}
-
-			@Override
-			public void onResponse(Call call, Response response)
-			{
-				if (!response.isSuccessful())
-				{
-					log.debug("unable to rename profile {} to {}", profile, name);
-				}
-				else
-				{
-					log.debug("renamed profile {} to {}", profile, name);
-				}
-				response.close();
-			}
-		});
 	}
 }
