@@ -90,10 +90,7 @@ class PlayerIndicatorsService
 		Color color = null;
 		if (player == client.getLocalPlayer())
 		{
-			if (isEnabled.test(config.highlightOwnPlayer()))
-			{
-				color = config.getOwnPlayerColor();
-			}
+			color = config.getOwnPlayerColor();
 		}
 		else if (partyService.isInParty() && isEnabled.test(config.highlightPartyMembers()) && partyService.getMemberByDisplayName(player.getName()) != null)
 		{
