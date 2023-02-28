@@ -33,7 +33,6 @@ import javax.inject.Singleton;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.PluginPanel;
 import net.runelite.client.ui.components.materialtabs.MaterialTab;
@@ -47,7 +46,6 @@ class TopLevelConfigPanel extends PluginPanel
 	private final CardLayout layout;
 	private final JPanel content;
 
-	private final EventBus eventBus;
 	private final PluginListPanel pluginListPanel;
 	private final MaterialTab pluginListPanelTab;
 
@@ -57,15 +55,12 @@ class TopLevelConfigPanel extends PluginPanel
 
 	@Inject
 	TopLevelConfigPanel(
-		EventBus eventBus,
 		PluginListPanel pluginListPanel,
 		ProfilePanel profilePanel,
 		Provider<PluginHubPanel> pluginHubPanelProvider
 	)
 	{
 		super(false);
-
-		this.eventBus = eventBus;
 
 		tabGroup = new MaterialTabGroup();
 		tabGroup.setLayout(new GridLayout(1, 0, 7, 7));
@@ -98,7 +93,6 @@ class TopLevelConfigPanel extends PluginPanel
 		tabGroup.addTab(mt);
 
 		content.add(image, panel.getWrappedPanel());
-		eventBus.register(panel);
 
 		mt.setOnSelectEvent(() ->
 		{
@@ -120,7 +114,6 @@ class TopLevelConfigPanel extends PluginPanel
 		{
 			PluginPanel panel = panelProvider.get();
 			content.add(image, panel.getWrappedPanel());
-			eventBus.register(panel);
 			switchTo(image, panel, true);
 			return true;
 		});
@@ -145,7 +138,6 @@ class TopLevelConfigPanel extends PluginPanel
 		if (doRemove)
 		{
 			content.remove(prevPanel.getWrappedPanel());
-			eventBus.unregister(prevPanel);
 		}
 
 		content.revalidate();

@@ -62,6 +62,7 @@ import net.runelite.client.account.SessionManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.config.ConfigProfile;
 import net.runelite.client.config.ProfileManager;
+import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ProfileChanged;
 import net.runelite.client.events.SessionClose;
@@ -92,6 +93,7 @@ class ProfilePanel extends PluginPanel
 	private final ProfileManager profileManager;
 	private final SessionManager sessionManager;
 	private final ScheduledExecutorService executor;
+	private final EventBus eventBus;
 
 	private final JPanel profilesList;
 	private final JButton addButton;
@@ -100,8 +102,6 @@ class ProfilePanel extends PluginPanel
 	private final Map<Long, ProfileCard> cards = new HashMap<>();
 
 	private File lastFileChooserDirectory;
-
-	private boolean active;
 
 	static
 	{
@@ -119,13 +119,15 @@ class ProfilePanel extends PluginPanel
 		ConfigManager configManager,
 		ProfileManager profileManager,
 		SessionManager sessionManager,
-		ScheduledExecutorService executor
+		ScheduledExecutorService executor,
+		EventBus eventBus
 	)
 	{
 		this.profileManager = profileManager;
 		this.configManager = configManager;
 		this.sessionManager = sessionManager;
 		this.executor = executor;
+		this.eventBus = eventBus;
 
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -192,26 +194,20 @@ class ProfilePanel extends PluginPanel
 	@Override
 	public void onActivate()
 	{
-		active = true;
+		eventBus.register(this);
 		reload();
 	}
 
 	@Override
 	public void onDeactivate()
 	{
-		active = false;
 		SwingUtil.fastRemoveAll(profilesList);
-		cards.clear();
+		eventBus.unregister(this);
 	}
 
 	@Subscribe
 	private void onProfileChanged(ProfileChanged ev)
 	{
-		if (!active)
-		{
-			return;
-		}
-
 		SwingUtilities.invokeLater(() ->
 		{
 			for (ProfileCard card : cards.values())
@@ -233,22 +229,12 @@ class ProfilePanel extends PluginPanel
 	@Subscribe
 	public void onSessionOpen(SessionOpen sessionOpen)
 	{
-		if (!active)
-		{
-			return;
-		}
-
 		reload();
 	}
 
 	@Subscribe
 	public void onSessionClose(SessionClose sessionClose)
 	{
-		if (!active)
-		{
-			return;
-		}
-
 		reload();
 	}
 
