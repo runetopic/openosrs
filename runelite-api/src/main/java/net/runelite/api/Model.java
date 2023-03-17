@@ -87,6 +87,8 @@ public interface Model extends Mesh, Renderable
 
 	byte[] getTextureFaces();
 
+	float[] getFaceTextureUVCoordinates();
+
 	int[] getTexIndices1();
 	int[] getTexIndices2();
 	int[] getTexIndices3();

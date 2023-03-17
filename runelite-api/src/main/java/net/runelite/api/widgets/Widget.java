@@ -25,6 +25,7 @@
 package net.runelite.api.widgets;
 
 import java.awt.Rectangle;
+import java.util.Collection;
 import javax.annotation.Nullable;
 import net.runelite.api.FontTypeFace;
 import net.runelite.api.Point;
@@ -473,6 +474,25 @@ public interface Widget
 	Rectangle getBounds();
 
 	/**
+	 * Gets any items that are being displayed in the widget.
+	 *
+	 * @return any items displayed, or null if there are no items
+	 */
+	@Deprecated
+	Collection<WidgetItem> getWidgetItems();
+
+	/**
+	 * Gets a widget item at a specific index.
+	 *
+	 * @param index index of the item
+	 * @return the widget item at index, or null if an item at index
+	 * does not exist
+	 * @throws IndexOutOfBoundsException if the index is out of bounds
+	 */
+	@Deprecated
+	WidgetItem getWidgetItem(int index);
+
+	/**
 	 * Gets the item ID displayed by the widget.
 	 *
 	 * @return the item ID
@@ -614,9 +634,7 @@ public interface Widget
 	Widget setOriginalWidth(int originalWidth);
 
 	Widget setSize(int width, int height);
-	Widget setSize(int width, int height,
-		@MagicConstant(valuesFromClass = WidgetSizeMode.class) int widthMode,
-		@MagicConstant(valuesFromClass = WidgetSizeMode.class) int heightMode);
+	Widget setSize(int width, int height, @MagicConstant(valuesFromClass = WidgetSizeMode.class) int widthMode, @MagicConstant(valuesFromClass = WidgetSizeMode.class) int heightMode);
 
 	/**
 	 * Gets the menu options available on the widget as a sparse array.

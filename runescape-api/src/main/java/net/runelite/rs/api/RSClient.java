@@ -102,6 +102,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	int[] getVarps();
 
+	@Import("Varps_masks")
+	int[] getVarpMasks();
+
 	@Import("varcs")
 	RSVarcs getVarcs();
 
@@ -362,6 +365,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("World_worlds")
 	@Override
 	RSWorld[] getWorldList();
+
+	@Import("World_worlds")
+	void setWorldList(RSWorld[] worlds);
 
 	@Import("addChatMessage")
 	void addRSChatMessage(int type, String name, String message, String sender);
@@ -889,13 +895,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	boolean isInInstancedRegion();
 
-	@Import("itemDragDuration")
-	@Override
-	int getItemPressedDuration();
-
-	@Import("itemDragDuration")
-	void setItemPressedDuration(int duration);
-
 	@Import("worldProperties")
 	int getFlags();
 
@@ -1055,14 +1054,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("Rasterizer2D_yClipEnd")
 	int getEndY();
 
-	@Import("dragInventoryWidget")
-	@Override
-	RSWidget getIf1DraggedWidget();
-
-	@Import("dragItemSlotSource")
-	@Override
-	int getIf1DraggedItemIndex();
-
 	@Import("isSpellSelected")
 	@Override
 	void setSpellSelected(boolean selected);
@@ -1201,30 +1192,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	void insertMenuItem(String action, String target, int opcode, int identifier, int argument1, int argument2, int argument3, boolean forceLeftClick);
 
-	@Import("selectedItemId")
-	@Override
-	void setSelectedItemID(int id);
-
-	@Import("selectedItemSlot")
-	@Override
-	int getSelectedItemSlot();
-
-	@Import("selectedItemSlot")
-	@Override
-	void setSelectedItemSlot(int index);
-
-	@Import("selectedItemSlot")
-	@Override
-	int getSelectedItemIndex();
-
-	@Import("selectedItemWidget")
-	@Override
-	int getSelectedItemWidget();
-
-	@Import("selectedItemWidget")
-	@Override
-	void setSelectedItemWidget(int widgetID);
-
 	@Import("selectedSpellWidget")
 	@Override
 	int getSelectedSpellWidget();
@@ -1277,12 +1244,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("showMouseCross")
 	@Override
 	void setShowMouseCross(boolean show);
-
-	@Import("draggedWidgetX")
-	int getDraggedWidgetX(); // these should probably have if1 in their names somewhere
-
-	@Import("draggedWidgetY")
-	int getDraggedWidgetY();
 
 	@Import("changedSkills")
 	int[] getChangedSkillLevels();
@@ -1376,14 +1337,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("isItemSelected")
 	int isItemSelected();
 
-	@Override
-	@Import("isItemSelected")
-	int getSelectedItem();
-
-	@Override
-	@Import("selectedItemName")
-	String getSelectedItemName();
-
 	@Import("meslayerContinueWidget")
 	Widget getMessageContinueWidget();
 
@@ -1435,9 +1388,6 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("getScript")
 	RSScript getScript(int scriptID);
-
-	@Import("isLargePlayerInfo")
-	boolean isLargePlayerInfo();
 
 	@Import("StructDefinition_cached")
 	RSEvictingDualNodeHashTable getRSStructCompositionCache();

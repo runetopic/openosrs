@@ -827,6 +827,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * | |rot|     y chunk coord     |    x chunk coord    |pln|       |
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 	 * }</pre>
+	 *
 	 * @return the array of instance template chunks
 	 * @see Constants#CHUNK_SIZE
 	 * @see InstanceTemplates
@@ -2032,14 +2033,9 @@ public interface Client extends OAuthApi, GameEngine
 	void checkClickbox(Model model, int orientation, int pitchSin, int pitchCos, int yawSin, int yawCos, int x, int y, int z, long hash);
 
 	/**
-	 * Is a widget is in target mode?
-	 */
-	boolean isWidgetSelected();
-
-	/**
 	 * Sets if a widget is in target mode
 	 */
-	void setWidgetSelected(boolean selected);
+	void setSpellSelected(boolean selected);
 
 	/**
 	 * Get the selected widget, such as a selected spell or selected item (eg. "Use")
@@ -2165,7 +2161,7 @@ public interface Client extends OAuthApi, GameEngine
 	/**
 	 * Remove player from ignorelist
 	 */
-	void removeIgnore(String name);
+	void removeIgnore(String name, boolean confirmToJagex);
 
 	void setModulus(BigInteger modulus);
 
@@ -2319,8 +2315,6 @@ public interface Client extends OAuthApi, GameEngine
 	int getFollowerIndex();
 
 	int isItemSelected();
-
-	String getSelectedItemName();
 
 	Widget getMessageContinueWidget();
 

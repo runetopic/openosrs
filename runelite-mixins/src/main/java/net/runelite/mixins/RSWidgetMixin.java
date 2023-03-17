@@ -321,7 +321,7 @@ public abstract class RSWidgetMixin implements RSWidget
 		return items;
 	}
 
-	@Inject
+	/*@Inject
 	@Override
 	public WidgetItem getWidgetItem(int index)
 	{
@@ -363,7 +363,7 @@ public abstract class RSWidgetMixin implements RSWidget
 		Rectangle bounds = new Rectangle(itemX - 1, itemY - 1, ITEM_SLOT_SIZE, ITEM_SLOT_SIZE);
 		Rectangle draggedBounds = new Rectangle(itemX + dragOffsetX, itemY + dragOffsetY, ITEM_SLOT_SIZE, ITEM_SLOT_SIZE);
 		return new WidgetItem(itemId - 1, itemQuantity, index, bounds, this, draggedBounds);
-	}
+	}*/
 
 	@Inject
 	@Override
@@ -636,7 +636,7 @@ public abstract class RSWidgetMixin implements RSWidget
 		return copy$getModel(sequence, frame, alternate, playerComposition, npcComposition, newStuff);
 	}
 
-	@Inject
+	/*@Inject
 	@Override
 	public boolean isWidgetItemDragged(int index)
 	{
@@ -661,7 +661,7 @@ public abstract class RSWidgetMixin implements RSWidget
 		}
 
 		return new Point(dragOffsetX, dragOffsetY);
-	}
+	}*/
 
 	@Inject
 	public void setForcedX()
