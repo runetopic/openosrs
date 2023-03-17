@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Abex
+ * Copyright (c) 2023, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,12 +22,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.api.annotations;
 
-public final class DBTableID
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import net.runelite.api.VarPlayer;
+import org.intellij.lang.annotations.MagicConstant;
+
+@MagicConstant(valuesFromClass = VarPlayer.class)
+@Documented
+@Retention(RetentionPolicy.SOURCE)
+public @interface Varp
 {
-	public interface Quest
-	{
-		int NAME = 2;
-	}
 }

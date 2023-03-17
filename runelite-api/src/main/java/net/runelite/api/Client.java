@@ -37,6 +37,7 @@ import javax.annotation.Nullable;
 import net.runelite.api.annotations.VarCInt;
 import net.runelite.api.annotations.VarCStr;
 import net.runelite.api.annotations.Varbit;
+import net.runelite.api.annotations.Varp;
 import net.runelite.api.annotations.VisibleForDevtools;
 import net.runelite.api.clan.ClanChannel;
 import net.runelite.api.clan.ClanID;
@@ -44,6 +45,7 @@ import net.runelite.api.clan.ClanSettings;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.PlayerChanged;
+import net.runelite.api.dbtable.DBRowConfig;
 import net.runelite.api.hooks.Callbacks;
 import net.runelite.api.hooks.DrawCallbacks;
 import net.runelite.api.vars.AccountType;
@@ -826,7 +828,6 @@ public interface Client extends OAuthApi, GameEngine
 	 * | |rot|     y chunk coord     |    x chunk coord    |pln|       |
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 	 * }</pre>
-	 *
 	 * @return the array of instance template chunks
 	 * @see Constants#CHUNK_SIZE
 	 * @see InstanceTemplates
@@ -920,7 +921,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param varpId the VarPlayer id
 	 * @return the value
 	 */
-	int getVarpValue(int varpId);
+	int getVarpValue(@Varp int varpId);
 
 	/**
 	 * Gets the value of a given VarPlayer.
@@ -931,7 +932,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param varpId the VarPlayer id
 	 * @return the value
 	 */
-	int getServerVarpValue(int varpId);
+	int getServerVarpValue(@Varp int varpId);
 
 	/**
 	 * Gets the value of a given VarClientInt
@@ -1017,7 +1018,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * triggered next tick
 	 * @param varp
 	 */
-	void queueChangedVarp(int varp);
+	void queueChangedVarp(@Varp int varp);
 
 	/**
 	 * Gets the widget flags table.
@@ -1122,6 +1123,8 @@ public interface Client extends OAuthApi, GameEngine
 	 * @return the world areas
 	 */
 	MapElementConfig[] getMapElementConfigs();
+
+	DBRowConfig getDBRowConfig(int rowID);
 
 	/**
 	 * Get a map element config by id
@@ -2030,33 +2033,14 @@ public interface Client extends OAuthApi, GameEngine
 	void checkClickbox(Model model, int orientation, int pitchSin, int pitchCos, int yawSin, int yawCos, int x, int y, int z, long hash);
 
 	/**
-	 * Get the if1 widget whose item is being dragged
+	 * Is a widget is in target mode?
 	 */
-	@Deprecated
-	Widget getIf1DraggedWidget();
-
-	/**
-	 * Get the item index of the item being dragged on an if1 widget
-	 */
-	@Deprecated
-	int getIf1DraggedItemIndex();
+	boolean isWidgetSelected();
 
 	/**
 	 * Sets if a widget is in target mode
 	 */
-	void setSpellSelected(boolean selected);
-
-	/**
-	 * @deprecated use {@link #getSelectedWidget()} instead.
-	 */
-	@Deprecated
-	int getSelectedItem();
-
-	/**
-	 * @deprecated use {@link #getSelectedSpellChildIndex()} instead.
-	 */
-	@Deprecated
-	int getSelectedItemIndex();
+	void setWidgetSelected(boolean selected);
 
 	/**
 	 * Get the selected widget, such as a selected spell or selected item (eg. "Use")
@@ -2202,36 +2186,6 @@ public interface Client extends OAuthApi, GameEngine
 	 * Adds a MenuEntry to the current menu.
 	 */
 	void insertMenuItem(String action, String target, int opcode, int identifier, int argument1, int argument2, int itemId, boolean forceLeftClick);
-
-	/**
-	 * @deprecated use {@link #setSelectedSpellItemId(int)} instead.
-	 */
-	@Deprecated
-	void setSelectedItemID(int id);
-
-	/**
-	 * @deprecated use {@link #getSelectedSpellWidget()} instead.
-	 */
-	@Deprecated
-	int getSelectedItemWidget();
-
-	/**
-	 * @deprecated use {@link #setSelectedSpellWidget(int)} instead.
-	 */
-	@Deprecated
-	void setSelectedItemWidget(int widgetID);
-
-	/**
-	 * @deprecated use {@link #getSelectedSpellChildIndex()} instead.
-	 */
-	@Deprecated
-	int getSelectedItemSlot();
-
-	/**
-	 * @deprecated use {@link #setSelectedSpellChildIndex(int)} instead.
-	 */
-	@Deprecated
-	void setSelectedItemSlot(int idx);
 
 	int getSelectedSpellWidget();
 

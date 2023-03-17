@@ -61,6 +61,7 @@ public final class WidgetConfig
 	/**
 	 * Can this widget be used on a item in your inventory
 	 */
+	@Deprecated
 	public static final int USE_ITEM = 16 << 11;
 
 	/**
@@ -91,7 +92,7 @@ public final class WidgetConfig
 	/**
 	 * Add a USE option
 	 *
-	 * @see// MenuOpcode#ITEM_USE
+	 * @see MenuAction#ITEM_USE
 	 */
 	public static final int ITEM_USE_OP = 1 << 31;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2022 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,30 +22,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.devtools;
+package net.runelite.api.dbtable;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import net.runelite.api.widgets.WidgetItem;
-
-class WidgetItemNode extends DefaultMutableTreeNode
+public final class DBTableID
 {
-	private final WidgetItem widgetItem;
-
-	public WidgetItemNode(WidgetItem widgetItem)
+	public interface Quest
 	{
-		super(widgetItem);
-		this.widgetItem = widgetItem;
+		int NAME = 2;
 	}
-
-	public WidgetItem getWidgetItem()
-	{
-		return widgetItem;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "I " + widgetItem.getIndex();
-	}
-
 }
