@@ -37,7 +37,6 @@ import javax.annotation.Nullable;
 import net.runelite.api.annotations.VarCInt;
 import net.runelite.api.annotations.VarCStr;
 import net.runelite.api.annotations.Varbit;
-import net.runelite.api.annotations.Varp;
 import net.runelite.api.annotations.VisibleForDevtools;
 import net.runelite.api.clan.ClanChannel;
 import net.runelite.api.clan.ClanID;
@@ -921,7 +920,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param varpId the VarPlayer id
 	 * @return the value
 	 */
-	int getVarpValue(@Varp int varpId);
+	int getVarpValue(int varpId);
 
 	/**
 	 * Gets the value of a given VarPlayer.
@@ -932,7 +931,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param varpId the VarPlayer id
 	 * @return the value
 	 */
-	int getServerVarpValue(@Varp int varpId);
+	int getServerVarpValue(int varpId);
 
 	/**
 	 * Gets the value of a given VarClientInt
@@ -1018,7 +1017,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * triggered next tick
 	 * @param varp
 	 */
-	void queueChangedVarp(@Varp int varp);
+	void queueChangedVarp(int varp);
 
 	/**
 	 * Gets the widget flags table.

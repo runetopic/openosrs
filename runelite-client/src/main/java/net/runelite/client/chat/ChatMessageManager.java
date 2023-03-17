@@ -43,7 +43,6 @@ import net.runelite.api.MessageNode;
 import net.runelite.api.Player;
 import net.runelite.api.VarPlayer;
 import net.runelite.api.Varbits;
-import net.runelite.api.annotations.Varp;
 import net.runelite.api.events.ScriptCallbackEvent;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ChatColorConfig;
@@ -301,7 +300,7 @@ public class ChatMessageManager
 	}
 
 	// get the variable holding the chat color from the settings, from script4484
-	private static @Varp int getSettingsColor(ChatMessageType type, boolean transparent)
+	private static VarPlayer getSettingsColor(ChatMessageType type, boolean transparent)
 	{
 		if (transparent)
 		{
@@ -377,7 +376,7 @@ public class ChatMessageManager
 					return VarPlayer.SETTINGS_OPAQUE_CHAT_IRON_GROUP_BROADCAST;
 			}
 		}
-		return -1;
+		return null;
 	}
 
 	/**
@@ -866,8 +865,8 @@ public class ChatMessageManager
 				{
 					Color color = chatColor.getColor();
 
-					@Varp int varp = chatColor.getSetting();
-					if (varp != -1)
+					VarPlayer varp = chatColor.getSetting();
+					if (varp != null)
 					{
 						// Apply configured color from game settings, if set
 						assert chatColor.isDefault();

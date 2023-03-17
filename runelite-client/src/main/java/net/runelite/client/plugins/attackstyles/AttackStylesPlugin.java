@@ -171,7 +171,7 @@ public class AttackStylesPlugin extends Plugin
 	@Subscribe
 	public void onVarbitChanged(VarbitChanged event)
 	{
-		if (event.getVarpId() == VarPlayer.ATTACK_STYLE
+		if (event.getVarpId() == VarPlayer.ATTACK_STYLE.getId()
 			|| event.getVarbitId() == Varbits.EQUIPPED_WEAPON_TYPE
 			|| event.getVarbitId() == Varbits.DEFENSIVE_CASTING_MODE)
 		{

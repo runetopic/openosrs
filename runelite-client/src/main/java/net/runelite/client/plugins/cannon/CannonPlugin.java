@@ -296,7 +296,7 @@ public class CannonPlugin extends Plugin
 	@Subscribe
 	public void onVarbitChanged(VarbitChanged varbitChanged)
 	{
-		if (varbitChanged.getVarpId() == VarPlayer.CANNON_AMMO)
+		if (varbitChanged.getVarpId() == VarPlayer.CANNON_AMMO.getId())
 		{
 			cballsLeft = varbitChanged.getValue();
 

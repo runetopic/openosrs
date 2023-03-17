@@ -123,7 +123,7 @@ class StatusBarsOverlay extends Overlay
 			() -> getRestoreValue(Skill.HITPOINTS.getName()),
 			() ->
 			{
-				final int poisonState = client.getVarpValue(VarPlayer.POISON);
+				final int poisonState = client.getVarpValue(VarPlayer.IS_POISONED);
 
 				if (poisonState >= 1000000)
 				{
@@ -150,7 +150,7 @@ class StatusBarsOverlay extends Overlay
 			() -> HEAL_COLOR,
 			() ->
 			{
-				final int poisonState = client.getVarpValue(VarPlayer.POISON);
+				final int poisonState = client.getVarpValue(VarPlayer.IS_POISONED);
 
 				if (poisonState > 0 && poisonState < 50)
 				{

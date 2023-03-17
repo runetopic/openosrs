@@ -60,7 +60,6 @@ import net.runelite.api.VarClientInt;
 import net.runelite.api.VarPlayer;
 import net.runelite.api.Varbits;
 import net.runelite.api.annotations.Varbit;
-import net.runelite.api.annotations.Varp;
 import net.runelite.api.events.AreaSoundEffectPlayed;
 import net.runelite.api.events.BeforeRender;
 import net.runelite.api.events.ClientTick;
@@ -785,8 +784,7 @@ public class MusicPlugin extends Plugin
 	{
 		@Getter
 		private final String name;
-		@Varp
-		private final int var;
+		private final VarPlayer var;
 		@Varbit
 		private final int mutedVarbitId;
 		private final IntSupplier getter;
@@ -802,10 +800,10 @@ public class MusicPlugin extends Plugin
 		private Slider windowSlider;
 
 		Channel(String name,
-				@Varp int var, @Varbit int mutedVarbitId,
-				IntSupplier getter, Consumer<Integer> setter,
-				IntConsumer volumeChanger, int max,
-				WidgetInfo sideRoot)
+			VarPlayer var, @Varbit int mutedVarbitId,
+			IntSupplier getter, Consumer<Integer> setter,
+			IntConsumer volumeChanger, int max,
+			WidgetInfo sideRoot)
 		{
 			this.name = name;
 			this.var = var;
@@ -885,7 +883,7 @@ public class MusicPlugin extends Plugin
 		{
 			int val = getValue();
 			int varVal = Math.round((float) val / (max / 100.f));
-			client.getVarps()[this.var] = varVal;
+			client.getVarps()[this.var.getId()] = varVal;
 		}
 
 		public void shutDown()
