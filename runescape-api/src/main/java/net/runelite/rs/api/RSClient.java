@@ -535,6 +535,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	boolean isMenuOpen();
 
+	@Import("isMenuOpen")
+	void setMenuOpen(boolean open);
+
 	@Import("cycle")
 	@Override
 	int getGameCycle();
@@ -667,6 +670,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("MouseHandler_lastPressedTimeMillis")
 	@Override
 	long getMouseLastPressedMillis();
+
+	@Import("MouseHandler_lastButton")
+	int getMouseLastButton();
 
 	@Import("keyHandler")
 	RSKeyHandler getKeyHandler();
@@ -1645,4 +1651,13 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("graphicsCycle")
 	int getGraphicsCycle();
+
+	@Import("openMenu")
+	void openMenu(int mouseX, int mouseY);
+
+	@Import("createMenuAction")
+	void createMenuAction(int var0);
+
+	@Import("invalidateMenu")
+	void invalidateMenu(int menuX, int menuY, int menuWidth, int menuHeight);
 }
