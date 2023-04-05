@@ -40,13 +40,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.inject.Inject;
-import javax.swing.SwingUtilities;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.events.ProfileChanged;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.input.MouseManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -163,13 +162,14 @@ public class ScreenMarkerPlugin extends Plugin
 	}
 
 	@Subscribe
-	public void onProfileChanged(ProfileChanged profileChanged)
+	public void onConfigChanged(ConfigChanged event)
 	{
-		screenMarkers.clear();
-		loadConfig(configManager.getConfiguration(CONFIG_GROUP, CONFIG_KEY)).forEach(screenMarkers::add);
-		overlayManager.removeIf(ScreenMarkerOverlay.class::isInstance);
-		screenMarkers.forEach(overlayManager::add);
-		SwingUtilities.invokeLater(pluginPanel::rebuild);
+		if (screenMarkers.isEmpty() && event.getGroup().equals(CONFIG_GROUP) && event.getKey().equals(CONFIG_KEY))
+		{
+			loadConfig(event.getNewValue()).forEach(screenMarkers::add);
+			overlayManager.removeIf(ScreenMarkerOverlay.class::isInstance);
+			screenMarkers.forEach(overlayManager::add);
+		}
 	}
 
 	public void setMouseListenerEnabled(boolean enabled)
