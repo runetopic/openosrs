@@ -382,6 +382,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	int getScale();
 
+	@Import("viewportZoom")
+	void setScale(int scale);
+
 	@Import("canvasHeight")
 	@Override
 	int getCanvasHeight();
@@ -790,11 +793,11 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("Scene_cameraYawCosine")
 	void setYawCos(int v);
 
-	@Import("Rasterizer3D_zoom")
+	@Import("get3dZoom")
 	@Override
 	int get3dZoom();
 
-	@Import("Rasterizer3D_zoom")
+	@Import("get3dZoom")
 	void set3dZoom(int zoom);
 
 	@Import("Rasterizer3D_clipMidX2")
@@ -813,11 +816,11 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	int getRasterizer3D_clipMidY2();
 
-	@Import("Rasterizer3D_clipMidX")
+	@Import("getClipMidX")
 	@Override
 	int getCenterX();
 
-	@Import("Rasterizer3D_clipMidY")
+	@Import("getClipMidY")
 	@Override
 	int getCenterY();
 
@@ -1308,9 +1311,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("showMouseOverText")
 	void setShowMouseOverText(boolean showMouseOverText);
 
-	@Import("defaultRotations")
-	int[] getDefaultRotations();
-
 	@Import("showLoadingMessages")
 	boolean getShowLoadingMessages();
 
@@ -1654,10 +1654,4 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("openMenu")
 	void openMenu(int mouseX, int mouseY);
-
-	@Import("createMenuAction")
-	void createMenuAction(int var0);
-
-	@Import("invalidateMenu")
-	void invalidateMenu(int menuX, int menuY, int menuWidth, int menuHeight);
 }

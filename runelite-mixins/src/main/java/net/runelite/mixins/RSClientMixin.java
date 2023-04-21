@@ -114,7 +114,6 @@ import net.runelite.api.events.NpcSpawned;
 import net.runelite.api.events.PlayerDespawned;
 import net.runelite.api.events.PlayerMenuOptionsChanged;
 import net.runelite.api.events.PlayerSpawned;
-import net.runelite.api.events.PostMenuSort;
 import net.runelite.api.events.PostStructComposition;
 import net.runelite.api.events.ResizeableChanged;
 import net.runelite.api.events.StatChanged;
@@ -998,7 +997,7 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
-	@Copy("menu")
+	/*@Copy("menu")
 	@Replace("menu")
 	public final void copy$menu()
 	{
@@ -1087,7 +1086,7 @@ public abstract class RSClientMixin implements RSClient
 				}
 			}
 		}
-	}
+	}*/
 
 	@Inject
 	public static void sortMenuEntries(int left, int right)
@@ -3497,6 +3496,31 @@ public abstract class RSClientMixin implements RSClient
 	public net.runelite.api.RenderOverview getRenderOverview()
 	{
 		return client.getWorldMap();
+	}
+
+	@Shadow("clips")
+	static RSClips clips;
+
+	@Inject
+	@Override
+	public int getRasterizer3D_clipNegativeMidX()
+	{
+		return clips.getClipNegativeMidX();
+	}
+
+	@Inject
+	@Override
+	public int getRasterizer3D_clipNegativeMidY()
+	{
+		return clips.getClipNegativeMidY();
+	}
+
+	@Inject
+	@Override
+	public void set3dZoom(int zoom)
+	{
+		clips.setViewportZoom(zoom);
+		client.setScale(zoom);
 	}
 }
 
