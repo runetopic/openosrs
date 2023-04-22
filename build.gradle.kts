@@ -29,6 +29,7 @@ buildscript {
     repositories {
         mavenLocal()
         gradlePluginPortal()
+        maven(url = "https://raw.githubusercontent.com/melxin/hosting/master")
         maven(url = "https://raw.githubusercontent.com/open-osrs/hosting/master")
         maven(url = "https://repo.runelite.net")
     }
