@@ -1,25 +1,39 @@
 package net.runelite.rs.api;
 
-import net.runelite.api.Actor;
+import net.runelite.api.ActorSpotAnim;
 import net.runelite.mapping.Import;
 
-public interface RSActorSpotAnim extends RSRenderable, Actor
+public interface RSActorSpotAnim extends ActorSpotAnim
 {
-	@Import("spotAnimationHeight")
+	@Import("spotAnimation")
 	@Override
-	int getGraphicHeight();
+	int getId();
+
+	@Import("spotAnimation")
+	@Override
+	void setId(int id);
 
 	@Import("spotAnimationHeight")
 	@Override
-	void setGraphicHeight(int id);
+	int getHeight();
 
-	@Import("spotAnimationFrame")
-	int getSpotAnimFrame();
+	@Import("spotAnimationHeight")
+	@Override
+	void setHeight(int id);
 
 	@Import("spotAnimationFrame")
 	@Override
-	void setSpotAnimFrame(int id);
+	int getFrame();
+
+	@Import("spotAnimationFrame")
+	@Override
+	void setFrame(int id);
 
 	@Import("spotAnimationFrameCycle")
-	int getSpotAnimationFrameCycle();
+	@Override
+	int getCycle();
+
+	@Import("spotAnimationFrameCycle")
+	@Override
+	void setCycle(int cycle);
 }
