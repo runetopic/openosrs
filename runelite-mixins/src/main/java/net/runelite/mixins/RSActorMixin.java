@@ -231,7 +231,7 @@ public abstract class RSActorMixin implements RSActor
 	}
 
 	@Inject
-	private RSActorSpotAnim rsActorSpotAnim;
+	private ActorSpotAnim actorSpotAnim;
 
 	@MethodHook(value = "updateSpotAnimation", end = true)
 	@Inject
@@ -240,7 +240,7 @@ public abstract class RSActorMixin implements RSActor
 		if (hasSpotAnim(graphicID))
 		{
 			setGraphic(graphicID);
-			rsActorSpotAnim = (RSActorSpotAnim) this.getSpotAnims().get(idx);
+			actorSpotAnim = this.getSpotAnims().get(idx);
 		}
 
 		GraphicChanged graphicChanged = new GraphicChanged();
@@ -255,7 +255,7 @@ public abstract class RSActorMixin implements RSActor
 		if (!hasSpotAnim(getGraphic()))
 		{
 			setGraphic(-1);
-			rsActorSpotAnim = null;
+			actorSpotAnim = null;
 		}
 	}
 
@@ -274,6 +274,17 @@ public abstract class RSActorMixin implements RSActor
 			}
 		}
 		return false;
+	}
+
+	@Inject
+	@Override
+	public void removeSpotAnim(int id)
+	{
+		ActorSpotAnim actorSpotAnim = this.getSpotAnims().get(id);
+		if (actorSpotAnim != null)
+		{
+			actorSpotAnim.unlink();
+		}
 	}
 
 	/*@FieldHook("spotAnimation")
@@ -409,34 +420,34 @@ public abstract class RSActorMixin implements RSActor
 	@Override
 	public int getGraphicHeight()
 	{
-		return rsActorSpotAnim.getHeight();
+		return actorSpotAnim.getHeight();
 	}
 
 	@Inject
 	@Override
 	public void setGraphicHeight(int height)
 	{
-		rsActorSpotAnim.setHeight(height);
+		actorSpotAnim.setHeight(height);
 	}
 
 	@Inject
 	@Override
 	public int getSpotAnimFrame()
 	{
-		return rsActorSpotAnim.getFrame();
+		return actorSpotAnim.getFrame();
 	}
 
 	@Inject
 	@Override
 	public void setSpotAnimFrame(int id)
 	{
-		rsActorSpotAnim.setFrame(id);
+		actorSpotAnim.setFrame(id);
 	}
 
 	@Inject
 	@Override
 	public int getSpotAnimationFrameCycle()
 	{
-		return rsActorSpotAnim.getCycle();
+		return actorSpotAnim.getCycle();
 	}
 }
