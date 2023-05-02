@@ -64,6 +64,7 @@ import javax.swing.SwingUtilities;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+import joptsimple.OptionSpec;
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
 import joptsimple.util.EnumConverter;
@@ -226,6 +227,8 @@ public class RuneLite
 				}
 			});
 
+		final OptionSpec<Void> insecureWriteCredentials = parser.accepts("insecure-write-credentials", "Dump authentication tokens from the Jagex Launcher to a text file to be used for development");
+
 		parser.accepts("help", "Show this text").forHelp();
 		OptionSet options = parser.parse(args);
 
@@ -329,7 +332,8 @@ public class RuneLite
 				options.has("safe-mode"),
 				options.has("enable-telemetry"),
 				options.valueOf(sessionfile),
-				options.valueOf(configfile)));
+				options.valueOf(configfile),
+				options.has(insecureWriteCredentials)));
 
 			injector.getInstance(RuneLite.class).start(options);
 
