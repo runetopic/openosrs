@@ -479,9 +479,11 @@ public abstract class RSClientMixin implements RSClient
 				return AccountType.GROUP_IRONMAN;
 			case 5:
 				return AccountType.HARDCORE_GROUP_IRONMAN;
+			case 6:
+				return AccountType.UNRANKED_GROUP_IRONMAN;
+			default:
+				return AccountType.NORMAL;
 		}
-
-		return AccountType.NORMAL;
 	}
 
 	@Inject
