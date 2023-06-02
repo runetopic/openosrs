@@ -1541,8 +1541,8 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("HitSplatDefinition_cached")
 	RSEvictingDualNodeHashTable getHitSplatDefinitionCache();
 
-	@Import("HitSplatDefinition_cachedSprites")
-	RSEvictingDualNodeHashTable getHitSplatDefinitionSpritesCache();
+	//@Import("HitSplatDefinition_cachedSprites")
+	//RSEvictingDualNodeHashTable getHitSplatDefinitionSpritesCache();
 
 	@Import("HitSplatDefinition_cachedFonts")
 	RSEvictingDualNodeHashTable getHitSplatDefinitionDontsCache();
