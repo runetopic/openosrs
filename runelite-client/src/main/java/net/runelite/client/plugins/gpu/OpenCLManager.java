@@ -97,6 +97,8 @@ class OpenCLManager
 	//  };
 	private static final int SHARED_SIZE = 12 + 12 + 18 + 1; // in ints
 
+	private boolean initialized;
+
 	// The number of faces each worker processes in the two kernels
 	private int largeFaceCount;
 	private int smallFaceCount;
@@ -120,6 +122,9 @@ class OpenCLManager
 
 	void init(AWTContext awtContext)
 	{
+		CL.create();
+		initialized = true;
+
 		try (var stack = MemoryStack.stackPush())
 		{
 			initContext(awtContext, stack);
@@ -131,27 +136,36 @@ class OpenCLManager
 
 	void cleanup()
 	{
-		CL12.clReleaseKernel(kernelUnordered);
-		CL12.clReleaseKernel(kernelSmall);
-		CL12.clReleaseKernel(kernelLarge);
+		if (!initialized)
+		{
+			return;
+		}
 
-		CL12.clReleaseProgram(programUnordered);
-		CL12.clReleaseProgram(programSmall);
-		CL12.clReleaseProgram(programLarge);
+		try
+		{
+			CL12.clReleaseKernel(kernelUnordered);
+			CL12.clReleaseKernel(kernelSmall);
+			CL12.clReleaseKernel(kernelLarge);
 
-		CL12.clReleaseCommandQueue(commandQueue);
+			CL12.clReleaseProgram(programUnordered);
+			CL12.clReleaseProgram(programSmall);
+			CL12.clReleaseProgram(programLarge);
 
-		CL12.clReleaseContext(context);
+			CL12.clReleaseCommandQueue(commandQueue);
 
-		CL12.clReleaseDevice(device);
+			CL12.clReleaseContext(context);
 
-		CL.destroy();
+			CL12.clReleaseDevice(device);
+		}
+		finally
+		{
+			CL.destroy();
+			initialized = false;
+		}
 	}
 
 	private void initContext(AWTContext awtContext, MemoryStack stack)
 	{
-		CL.create();
-
 		IntBuffer pi = stack.mallocInt(1);
 		checkCLError(clGetPlatformIDs(null, pi));
 		if (pi.get(0) == 0)
@@ -208,57 +222,69 @@ class OpenCLManager
 			long platform = platforms.get(p);
 			ctxProps.put(1, platform);
 
-			CLCapabilities platformCaps = CL.createPlatformCapabilities(platform);
-
-			log.debug("Platform profile: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_PROFILE));
-			log.debug("Platform version: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_VERSION));
-			log.debug("Platform name: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_NAME));
-			log.debug("Platform vendor: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_VENDOR));
-			log.debug("Platform extensions: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_EXTENSIONS));
-
-			checkCLError(clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, null, pi));
-
-			PointerBuffer devices = stack.mallocPointer(pi.get(0));
-			checkCLError(clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, devices, (IntBuffer) null));
-
-			for (int d = 0; d < devices.capacity(); d++)
+			try
 			{
-				long device = devices.get(d);
+				CLCapabilities platformCaps = CL.createPlatformCapabilities(platform);
 
-				CLCapabilities deviceCaps = CL.createDeviceCapabilities(device, platformCaps);
+				log.debug("Platform profile: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_PROFILE));
+				log.debug("Platform version: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_VERSION));
+				log.debug("Platform name: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_NAME));
+				log.debug("Platform vendor: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_VENDOR));
+				log.debug("Platform extensions: {}", getPlatformInfoStringUTF8(platform, CL12.CL_PLATFORM_EXTENSIONS));
 
-				log.debug("Device id {}", device);
-				log.debug("\tCL_DEVICE_NAME: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_NAME));
-				log.debug("\tCL_DEVICE_VENDOR: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_VENDOR));
-				log.debug("\tCL_DRIVER_VERSION: {}", getDeviceInfoStringUTF8(device, CL_DRIVER_VERSION));
-				log.debug("\tCL_DEVICE_PROFILE: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_PROFILE));
-				log.debug("\tCL_DEVICE_VERSION: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_VERSION));
-				log.debug("\tCL_DEVICE_EXTENSIONS: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_EXTENSIONS));
-				log.debug("\tCL_DEVICE_TYPE: {}", getDeviceInfoLong(device, CL_DEVICE_TYPE));
-				log.debug("\tCL_DEVICE_VENDOR_ID: {}", getDeviceInfoInt(device, CL_DEVICE_VENDOR_ID));
-				log.debug("\tCL_DEVICE_MAX_COMPUTE_UNITS: {}", getDeviceInfoInt(device, CL_DEVICE_MAX_COMPUTE_UNITS));
-				log.debug("\tCL_DEVICE_MAX_WORK_ITEM_DIMENSIONS: {}", getDeviceInfoInt(device, CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS));
-				log.debug("\tCL_DEVICE_MAX_WORK_GROUP_SIZE: {}", getDeviceInfoPointer(device, CL_DEVICE_MAX_WORK_GROUP_SIZE));
-				log.debug("\tCL_DEVICE_MAX_CLOCK_FREQUENCY: {}", getDeviceInfoInt(device, CL_DEVICE_MAX_CLOCK_FREQUENCY));
-				log.debug("\tCL_DEVICE_ADDRESS_BITS: {}", getDeviceInfoInt(device, CL_DEVICE_ADDRESS_BITS));
-				log.debug("\tCL_DEVICE_AVAILABLE: {}", getDeviceInfoInt(device, CL_DEVICE_AVAILABLE) != 0);
-				log.debug("\tCL_DEVICE_COMPILER_AVAILABLE: {}", getDeviceInfoInt(device, CL_DEVICE_COMPILER_AVAILABLE) != 0);
+				checkCLError(clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, null, pi));
 
-				if (!deviceCaps.cl_khr_gl_sharing && !deviceCaps.cl_APPLE_gl_sharing)
+				PointerBuffer devices = stack.mallocPointer(pi.get(0));
+				checkCLError(clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, devices, (IntBuffer) null));
+
+				for (int d = 0; d < devices.capacity(); d++)
 				{
-					continue;
+					long device = devices.get(d);
+
+					try
+					{
+						CLCapabilities deviceCaps = CL.createDeviceCapabilities(device, platformCaps);
+
+						log.debug("Device id {}", device);
+						log.debug("\tCL_DEVICE_NAME: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_NAME));
+						log.debug("\tCL_DEVICE_VENDOR: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_VENDOR));
+						log.debug("\tCL_DRIVER_VERSION: {}", getDeviceInfoStringUTF8(device, CL_DRIVER_VERSION));
+						log.debug("\tCL_DEVICE_PROFILE: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_PROFILE));
+						log.debug("\tCL_DEVICE_VERSION: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_VERSION));
+						log.debug("\tCL_DEVICE_EXTENSIONS: {}", getDeviceInfoStringUTF8(device, CL_DEVICE_EXTENSIONS));
+						log.debug("\tCL_DEVICE_TYPE: {}", getDeviceInfoLong(device, CL_DEVICE_TYPE));
+						log.debug("\tCL_DEVICE_VENDOR_ID: {}", getDeviceInfoInt(device, CL_DEVICE_VENDOR_ID));
+						log.debug("\tCL_DEVICE_MAX_COMPUTE_UNITS: {}", getDeviceInfoInt(device, CL_DEVICE_MAX_COMPUTE_UNITS));
+						log.debug("\tCL_DEVICE_MAX_WORK_ITEM_DIMENSIONS: {}", getDeviceInfoInt(device, CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS));
+						log.debug("\tCL_DEVICE_MAX_WORK_GROUP_SIZE: {}", getDeviceInfoPointer(device, CL_DEVICE_MAX_WORK_GROUP_SIZE));
+						log.debug("\tCL_DEVICE_MAX_CLOCK_FREQUENCY: {}", getDeviceInfoInt(device, CL_DEVICE_MAX_CLOCK_FREQUENCY));
+						log.debug("\tCL_DEVICE_ADDRESS_BITS: {}", getDeviceInfoInt(device, CL_DEVICE_ADDRESS_BITS));
+						log.debug("\tCL_DEVICE_AVAILABLE: {}", getDeviceInfoInt(device, CL_DEVICE_AVAILABLE) != 0);
+						log.debug("\tCL_DEVICE_COMPILER_AVAILABLE: {}", getDeviceInfoInt(device, CL_DEVICE_COMPILER_AVAILABLE) != 0);
+
+						if (!deviceCaps.cl_khr_gl_sharing && !deviceCaps.cl_APPLE_gl_sharing)
+						{
+							continue;
+						}
+
+						long context = clCreateContext(ctxProps, device, CLContextCallback.create((errinfo, private_info, cb, user_data) ->
+							log.error("[LWJGL] cl_context_callback: {}", memUTF8(errinfo))), NULL, errcode_ret);
+						checkCLError(errcode_ret);
+
+						this.device = device;
+						this.context = context;
+						return;
+					}
+					catch (Exception ex)
+					{
+						log.error("error checking device", ex);
+					}
 				}
-
-				long context = clCreateContext(ctxProps, device, CLContextCallback.create((errinfo, private_info, cb, user_data) ->
-					log.error("[LWJGL] cl_context_callback: {}", memUTF8(errinfo))), NULL, errcode_ret);
-				checkCLError(errcode_ret);
-
-				this.device = device;
-				this.context = context;
-				return;
 			}
-
-			throw new RuntimeException("Unable to find compute device");
+			catch (Exception ex)
+			{
+				log.error("error checking platform", ex);
+			}
 		}
 
 		throw new RuntimeException("Unable to find compute platform");
