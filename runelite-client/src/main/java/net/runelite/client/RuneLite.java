@@ -473,6 +473,7 @@ public class RuneLite
 		if (telemetryClient != null)
 		{
 			telemetryClient.submitTelemetry();
+			telemetryClient.submitVmErrors(LOGS_DIR);
 		}
 
 		ReflectUtil.queueInjectorAnnotationCacheInvalidation(injector);

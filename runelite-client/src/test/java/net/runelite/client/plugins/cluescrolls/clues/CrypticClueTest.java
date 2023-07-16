@@ -24,12 +24,9 @@
  */
 package net.runelite.client.plugins.cluescrolls.clues;
 
-import com.google.common.base.Joiner;
 import net.runelite.api.Client;
 import net.runelite.api.Varbits;
-import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.plugins.cluescrolls.ClueScrollPlugin;
-import net.runelite.client.util.Text;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import org.junit.Test;
@@ -39,7 +36,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ThreeStepCrypticClueTest
+public class CrypticClueTest
 {
 	@Mock
 	private ClueScrollPlugin plugin;
@@ -50,22 +47,22 @@ public class ThreeStepCrypticClueTest
 	@Test
 	public void forTextEmptyString()
 	{
-		assertNull(ThreeStepCrypticClue.forText("", ""));
+		assertNull(CrypticClue.forText(""));
 	}
 
 	@Test
-	public void nonNullLocations()
+	public void forViggoraLocations()
 	{
 		when(plugin.getClient()).thenReturn(client);
-		when(client.getVarbitValue(Varbits.VIGGORA_LOCATION)).thenReturn(1);
+		when(client.getVarbitValue(Varbits.VIGGORA_LOCATION)).thenReturn(0, 1, 2, 3, 4);
 
-		final String clueText = Joiner.on("<br><br>").join(CrypticClue.CLUES.stream().map(CrypticClue::getText).toArray());
-		final ThreeStepCrypticClue clue = ThreeStepCrypticClue.forText(Text.sanitizeMultilineText(clueText).toLowerCase(), clueText);
+		CrypticClue clue = CrypticClue.forText("Come brave adventurer, your sense is on fire. If you talk to me, it's an old god you desire.");
+		assert clue != null;
 
-		assertNotNull(clue);
-		for (final WorldPoint location : clue.getLocations(plugin))
-		{
-			assertNotNull(location);
-		}
+		assertNull(clue.getLocation(plugin));
+		assertNotNull(clue.getLocation(plugin));
+		assertNotNull(clue.getLocation(plugin));
+		assertNotNull(clue.getLocation(plugin));
+		assertNull(clue.getLocation(plugin));
 	}
 }
