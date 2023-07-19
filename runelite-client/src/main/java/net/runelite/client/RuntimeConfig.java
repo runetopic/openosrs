@@ -48,9 +48,6 @@ public class RuntimeConfig
 	private Set<Integer> forceDeadAnimations;
 	private Set<Integer> nonAttackNpcs;
 
-	private String[] updateLauncherWinVers;
-	private double updateRollout;
-
 	public boolean showOutageMessage()
 	{
 		if (Strings.isNullOrEmpty(getOutageMessage()))
