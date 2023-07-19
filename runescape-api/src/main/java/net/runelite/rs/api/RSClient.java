@@ -25,6 +25,7 @@
 package net.runelite.rs.api;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Map;
 import net.runelite.api.AmbientSoundEffect;
 import net.runelite.api.Client;
@@ -1175,19 +1176,10 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("decimator")
 	RSDecimator getSoundEffectResampler();
 
-	@Import("musicTrackVolume")
-	void setMusicTrackVolume(int volume);
-
 	@Import("viewportWalking")
 	void setViewportWalking(boolean viewportWalking);
 
 	void playMusicTrack(int var0, RSAbstractArchive var1, int var2, int var3, int var4, boolean var5);
-
-	@Import("midiPcmStream")
-	RSMidiPcmStream getMidiPcmStream();
-
-	@Import("currentTrackGroupId")
-	int getCurrentTrackGroupId();
 
 	@Import("crossSprites")
 	@Override
@@ -1352,26 +1344,11 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("playingJingle")
 	boolean isPlayingJingle();
 
-	@Import("musicTrackGroupId")
-	int getMusicCurrentTrackId();
+	@Import("musicSongs")
+	ArrayList<RSMusicSong> getMusicSongs();
 
 	@Import("musicPlayerStatus")
 	void setMusicPlayerStatus(int var0);
-
-	@Import("musicTrackArchive")
-	void setMusicTrackArchive(RSAbstractArchive var0);
-
-	@Import("musicTrackGroupId")
-	void setMusicTrackGroupId(int var0);
-
-	@Import("musicTrackFileId")
-	void setMusicTrackFileId(int var0);
-
-	@Import("musicTrackBoolean")
-	void setMusicTrackBoolean(boolean var0);
-
-	@Import("pcmSampleLength")
-	void setPcmSampleLength(int var0);
 
 	@Import("changedVarps")
 	int[] getChangedVarps();
