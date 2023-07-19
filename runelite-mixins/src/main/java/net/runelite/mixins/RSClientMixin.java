@@ -3434,28 +3434,28 @@ public abstract class RSClientMixin implements RSClient
 		return client.getWorldMap();
 	}
 
-	@Shadow("clips")
-	static RSClips clips;
+	//@Shadow("clips")
+	//static RSClips clips;
 
 	@Inject
 	@Override
 	public int getRasterizer3D_clipNegativeMidX()
 	{
-		return clips.getClipNegativeMidX();
+		return client.getClips().getClipNegativeMidX();
 	}
 
 	@Inject
 	@Override
 	public int getRasterizer3D_clipNegativeMidY()
 	{
-		return clips.getClipNegativeMidY();
+		return client.getClips().getClipNegativeMidY();
 	}
 
 	@Inject
 	@Override
 	public void set3dZoom(int zoom)
 	{
-		clips.setViewportZoom(zoom);
+		client.getClips().setViewportZoom(zoom);
 		client.setScale(zoom);
 	}
 }

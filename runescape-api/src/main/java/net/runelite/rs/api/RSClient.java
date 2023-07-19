@@ -1657,4 +1657,7 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("openMenu")
 	void openMenu(int mouseX, int mouseY);
+
+	@Import("clips")
+	RSClips getClips();
 }
