@@ -1347,6 +1347,10 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("musicSongs")
 	ArrayList<RSMusicSong> getMusicSongs();
 
+	@Import("setMusicVolume")
+	@Override
+	void setMusicVolume(int var0);
+
 	@Import("musicPlayerStatus")
 	void setMusicPlayerStatus(int var0);
 

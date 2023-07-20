@@ -2765,7 +2765,7 @@ public abstract class RSClientMixin implements RSClient
 		return client.getPreferences().getMusicVolume();
 	}
 
-	@Inject
+	/*@Inject
 	@Override
 	public void setMusicVolume(int volume)
 	{
@@ -2783,7 +2783,7 @@ public abstract class RSClientMixin implements RSClient
 				musicSong.getMidiPcmStream().setPcmStreamVolume(volume);
 			}
 		}
-	}
+	}*/
 
 	@Inject
 	@MethodHook("closeInterface")
