@@ -24,6 +24,7 @@
  */
 package net.runelite.api.widgets;
 
+import org.intellij.lang.annotations.MagicConstant;
 
 /**
  * Utility class used for defining options to be used on the click mask
@@ -95,4 +96,15 @@ public final class WidgetConfig
 	 * @see MenuAction#ITEM_USE
 	 */
 	public static final int ITEM_USE_OP = 1 << 31;
+
+	/**
+	 * Does the action (zero bosed) get transmitted to the server
+	 * when clicked
+	 */
+	@SuppressWarnings("MagicConstant")
+	@MagicConstant(flagsFromClass = WidgetConfig.class)
+	public static int transmitAction(int action)
+	{
+		return 1 << (action + 1);
+	}
 }
