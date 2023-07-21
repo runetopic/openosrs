@@ -146,6 +146,7 @@ import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MIN;
 
 import net.runelite.rs.api.*;
+import com.google.common.primitives.Ints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -2090,6 +2091,7 @@ public abstract class RSClientMixin implements RSClient
 	public static void updateNpcs(boolean var0, RSPacketBuffer var1)
 	{
 		client.getCallbacks().updateNpcs();
+		syncMusicVolume();
 	}
 
 	@SuppressWarnings("InfiniteRecursion")
@@ -2765,25 +2767,49 @@ public abstract class RSClientMixin implements RSClient
 		return client.getPreferences().getMusicVolume();
 	}
 
-	/*@Inject
+	@Inject
 	@Override
 	public void setMusicVolume(int volume)
 	{
-		for (RSMusicSong musicSong : client.getMusicSongs())
+		if (volume != client.getMusicVolume())
 		{
-			if (volume > 0 && client.getPreferences().getMusicVolume() <= 0 && musicSong.getMusicTrackGroupId() != -1)
+			musicVolumeDesync = true;
+		}
+		client.setRSMusicVolume(volume);
+	}
+
+	@Inject
+	private static boolean musicVolumeDesync;
+
+	@Inject
+	public static void syncMusicVolume()
+	{
+		if (musicVolumeDesync && client.getGameState() == GameState.LOGGED_IN)
+		{
+			musicVolumeDesync = false;
+			Widget widget = client.getWidget(WidgetInfo.SETTINGS_SIDE_MUSIC_SLIDER_STEP_HOLDER);
+			if (widget != null && widget.getChildren() != null && widget.getChildren().length > 0)
 			{
-				client.playMusicTrack(1000, client.getMusicTracks(), musicSong.getMusicTrackGroupId(), 0, volume, false);
+				int childLength = widget.getChildren().length;
+				int childIndex = Ints.constrainToRange((client.getMusicVolume() * childLength + 255) / 256, 0, childLength - 1);
+				Widget child = widget.getChild(childIndex);
+				if (child != null)
+				{
+					Object[] childOnOpListener = child.getOnOpListener();
+					try
+					{
+						child.setOnOpListener((Object[])null);
+						copy$menuAction(childIndex, widget.getId(), MenuAction.CC_OP.getId(), 1, -1, "", "", -1, -1);
+					}
+					finally
+					{
+						child.setOnOpListener(childOnOpListener);
+					}
+				}
 			}
 
-			client.getPreferences().setMusicVolume(volume);
-			musicSong.setMusicTrackVolume(volume);
-			if (musicSong.getMidiPcmStream() != null)
-			{
-				musicSong.getMidiPcmStream().setPcmStreamVolume(volume);
-			}
 		}
-	}*/
+	}
 
 	@Inject
 	@MethodHook("closeInterface")
