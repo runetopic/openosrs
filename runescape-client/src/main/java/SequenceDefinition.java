@@ -6,654 +6,596 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ge")
+@ObfuscatedName("ig")
 @Implements("SequenceDefinition")
 public class SequenceDefinition extends DualNode {
-   @ObfuscatedName("f")
-   static boolean field2306 = false;
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "Lln;"
-   )
-   @Export("SequenceDefinition_archive")
-   static AbstractArchive SequenceDefinition_archive;
-   @ObfuscatedName("j")
-   @ObfuscatedSignature(
-      descriptor = "Lln;"
-   )
-   @Export("SequenceDefinition_animationsArchive")
-   static AbstractArchive SequenceDefinition_animationsArchive;
-   @ObfuscatedName("n")
-   @ObfuscatedSignature(
-      descriptor = "Lja;"
-   )
-   @Export("SequenceDefinition_cached")
-   static EvictingDualNodeHashTable SequenceDefinition_cached = new EvictingDualNodeHashTable(64);
-   @ObfuscatedName("l")
-   @ObfuscatedSignature(
-      descriptor = "Lja;"
-   )
-   @Export("SequenceDefinition_cachedFrames")
-   static EvictingDualNodeHashTable SequenceDefinition_cachedFrames = new EvictingDualNodeHashTable(100);
-   @ObfuscatedName("k")
-   @ObfuscatedSignature(
-      descriptor = "Lja;"
-   )
-   @Export("SequenceDefinition_cachedModel")
-   static EvictingDualNodeHashTable SequenceDefinition_cachedModel = new EvictingDualNodeHashTable(100);
-   @ObfuscatedName("c")
-   @ObfuscatedGetter(
-      intValue = -267802227
-   )
-   @Export("SequenceDefinition_cachedModelId")
-   public int SequenceDefinition_cachedModelId = -1;
-   @ObfuscatedName("r")
-   public Map field2290;
-   @ObfuscatedName("b")
-   @ObfuscatedGetter(
-      intValue = 494645969
-   )
-   int field2305 = 0;
-   @ObfuscatedName("m")
-   @ObfuscatedGetter(
-      intValue = 120591319
-   )
-   int field2300 = 0;
-   @ObfuscatedName("t")
-   @Export("frameIds")
-   public int[] frameIds;
-   @ObfuscatedName("h")
-   @Export("chatFrameIds")
-   int[] chatFrameIds;
-   @ObfuscatedName("p")
-   @Export("frameLengths")
-   public int[] frameLengths;
-   @ObfuscatedName("o")
-   @Export("soundEffects")
-   public int[] soundEffects;
-   @ObfuscatedName("u")
-   @ObfuscatedGetter(
-      intValue = 984617043
-   )
-   @Export("frameCount")
-   public int frameCount = -1;
-   @ObfuscatedName("x")
-   int[] field2298;
-   @ObfuscatedName("a")
-   boolean[] field2299;
-   @ObfuscatedName("q")
-   public boolean field2293 = false;
-   @ObfuscatedName("d")
-   @ObfuscatedGetter(
-      intValue = 1032909961
-   )
-   public int field2292 = 5;
-   @ObfuscatedName("e")
-   @ObfuscatedGetter(
-      intValue = 2123963467
-   )
-   @Export("shield")
-   public int shield = -1;
-   @ObfuscatedName("g")
-   @ObfuscatedGetter(
-      intValue = -1840198861
-   )
-   @Export("weapon")
-   public int weapon = -1;
-   @ObfuscatedName("y")
-   @ObfuscatedGetter(
-      intValue = 2027973353
-   )
-   public int field2304 = 99;
-   @ObfuscatedName("af")
-   public boolean field2297 = false;
-   @ObfuscatedName("aa")
-   @ObfuscatedGetter(
-      intValue = 998246135
-   )
-   public int field2307 = -1;
-   @ObfuscatedName("ai")
-   @ObfuscatedGetter(
-      intValue = 864092839
-   )
-   public int field2301 = -1;
-   @ObfuscatedName("ag")
-   @ObfuscatedGetter(
-      intValue = 527050943
-   )
-   public int field2308 = 2;
+	@ObfuscatedName("aw")
+	static boolean field2262;
+	@ObfuscatedName("as")
+	@ObfuscatedSignature(
+		descriptor = "Lnd;"
+	)
+	@Export("SequenceDefinition_archive")
+	static AbstractArchive SequenceDefinition_archive;
+	@ObfuscatedName("az")
+	@ObfuscatedSignature(
+		descriptor = "Lld;"
+	)
+	@Export("SequenceDefinition_cached")
+	static EvictingDualNodeHashTable SequenceDefinition_cached;
+	@ObfuscatedName("av")
+	@ObfuscatedSignature(
+		descriptor = "Lld;"
+	)
+	@Export("SequenceDefinition_cachedFrames")
+	static EvictingDualNodeHashTable SequenceDefinition_cachedFrames;
+	@ObfuscatedName("ap")
+	@ObfuscatedSignature(
+		descriptor = "Lld;"
+	)
+	@Export("SequenceDefinition_cachedModel")
+	static EvictingDualNodeHashTable SequenceDefinition_cachedModel;
+	@ObfuscatedName("aq")
+	@ObfuscatedGetter(
+		intValue = 2142553653
+	)
+	@Export("SequenceDefinition_cachedModelId")
+	public int SequenceDefinition_cachedModelId;
+	@ObfuscatedName("at")
+	public Map field2267;
+	@ObfuscatedName("ah")
+	@ObfuscatedGetter(
+		intValue = 979739643
+	)
+	int field2268;
+	@ObfuscatedName("ax")
+	@ObfuscatedGetter(
+		intValue = -308745293
+	)
+	int field2269;
+	@ObfuscatedName("aa")
+	@Export("frameIds")
+	public int[] frameIds;
+	@ObfuscatedName("au")
+	@Export("chatFrameIds")
+	int[] chatFrameIds;
+	@ObfuscatedName("ae")
+	@Export("frameLengths")
+	public int[] frameLengths;
+	@ObfuscatedName("ab")
+	@Export("soundEffects")
+	public int[] soundEffects;
+	@ObfuscatedName("ad")
+	@ObfuscatedGetter(
+		intValue = -1098809649
+	)
+	@Export("frameCount")
+	public int frameCount;
+	@ObfuscatedName("ao")
+	int[] field2275;
+	@ObfuscatedName("ac")
+	boolean[] field2276;
+	@ObfuscatedName("ak")
+	public boolean field2277;
+	@ObfuscatedName("an")
+	@ObfuscatedGetter(
+		intValue = 939683273
+	)
+	public int field2258;
+	@ObfuscatedName("af")
+	@ObfuscatedGetter(
+		intValue = -790885573
+	)
+	@Export("shield")
+	public int shield;
+	@ObfuscatedName("ai")
+	@ObfuscatedGetter(
+		intValue = -571050705
+	)
+	@Export("weapon")
+	public int weapon;
+	@ObfuscatedName("al")
+	@ObfuscatedGetter(
+		intValue = -840348597
+	)
+	public int field2281;
+	@ObfuscatedName("bd")
+	public boolean field2285;
+	@ObfuscatedName("bb")
+	@ObfuscatedGetter(
+		intValue = -687711657
+	)
+	public int field2279;
+	@ObfuscatedName("bn")
+	@ObfuscatedGetter(
+		intValue = -607267965
+	)
+	public int field2284;
+	@ObfuscatedName("ba")
+	@ObfuscatedGetter(
+		intValue = -1329734471
+	)
+	public int field2274;
 
-   SequenceDefinition() {
-   }
+	static {
+		field2262 = false;
+		SequenceDefinition_cached = new EvictingDualNodeHashTable(64);
+		SequenceDefinition_cachedFrames = new EvictingDualNodeHashTable(100);
+		SequenceDefinition_cachedModel = new EvictingDualNodeHashTable(100);
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;I)V",
-      garbageValue = "1334689844"
-   )
-   @Export("decode")
-   void decode(Buffer var1) {
-      while(true) {
-         int var2 = var1.readUnsignedByte();
-         if (var2 == 0) {
-            return;
-         }
+	SequenceDefinition() {
+		this.SequenceDefinition_cachedModelId = -1;
+		this.field2268 = 0;
+		this.field2269 = 0;
+		this.frameCount = -1;
+		this.field2277 = false;
+		this.field2258 = 5;
+		this.shield = -1;
+		this.weapon = -1;
+		this.field2281 = 99;
+		this.field2285 = false;
+		this.field2279 = -1;
+		this.field2284 = -1;
+		this.field2274 = 2;
+	}
 
-         this.decodeNext(var1, var2);
-      }
-   }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;S)V",
+		garbageValue = "-22539"
+	)
+	@Export("decode")
+	void decode(Buffer var1) {
+		while (true) {
+			int var2 = var1.readUnsignedByte();
+			if (var2 == 0) {
+				return;
+			}
 
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;II)V",
-      garbageValue = "2142217777"
-   )
-   @Export("decodeNext")
-   void decodeNext(Buffer var1, int var2) {
-      int var3;
-      int var4;
-      if (var2 == 1) {
-         var3 = var1.readUnsignedShort();
-         this.frameLengths = new int[var3];
+			this.decodeNext(var1, var2);
+		}
+	}
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.frameLengths[var4] = var1.readUnsignedShort();
-         }
+	@ObfuscatedName("am")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;II)V",
+		garbageValue = "1148727534"
+	)
+	@Export("decodeNext")
+	void decodeNext(Buffer var1, int var2) {
+		int var3;
+		int var4;
+		if (var2 == 1) {
+			var3 = var1.readUnsignedShort();
+			this.frameLengths = new int[var3];
 
-         this.frameIds = new int[var3];
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.frameLengths[var4] = var1.readUnsignedShort();
+			}
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.frameIds[var4] = var1.readUnsignedShort();
-         }
+			this.frameIds = new int[var3];
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.frameIds[var4] += var1.readUnsignedShort() << 16;
-         }
-      } else if (var2 == 2) {
-         this.frameCount = var1.readUnsignedShort();
-      } else if (var2 == 3) {
-         var3 = var1.readUnsignedByte();
-         this.field2298 = new int[var3 + 1];
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.frameIds[var4] = var1.readUnsignedShort();
+			}
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.field2298[var4] = var1.readUnsignedByte();
-         }
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.frameIds[var4] += var1.readUnsignedShort() << 16;
+			}
+		} else if (var2 == 2) {
+			this.frameCount = var1.readUnsignedShort();
+		} else if (var2 == 3) {
+			var3 = var1.readUnsignedByte();
+			this.field2275 = new int[var3 + 1];
 
-         this.field2298[var3] = 9999999;
-      } else if (var2 == 4) {
-         this.field2293 = true;
-      } else if (var2 == 5) {
-         this.field2292 = var1.readUnsignedByte();
-      } else if (var2 == 6) {
-         this.shield = var1.readUnsignedShort();
-      } else if (var2 == 7) {
-         this.weapon = var1.readUnsignedShort();
-      } else if (var2 == 8) {
-         this.field2304 = var1.readUnsignedByte();
-         this.field2297 = true;
-      } else if (var2 == 9) {
-         this.field2307 = var1.readUnsignedByte();
-      } else if (var2 == 10) {
-         this.field2301 = var1.readUnsignedByte();
-      } else if (var2 == 11) {
-         this.field2308 = var1.readUnsignedByte();
-      } else if (var2 == 12) {
-         var3 = var1.readUnsignedByte();
-         this.chatFrameIds = new int[var3];
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.field2275[var4] = var1.readUnsignedByte();
+			}
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.chatFrameIds[var4] = var1.readUnsignedShort();
-         }
+			this.field2275[var3] = 9999999;
+		} else if (var2 == 4) {
+			this.field2277 = true;
+		} else if (var2 == 5) {
+			this.field2258 = var1.readUnsignedByte();
+		} else if (var2 == 6) {
+			this.shield = var1.readUnsignedShort();
+		} else if (var2 == 7) {
+			this.weapon = var1.readUnsignedShort();
+		} else if (var2 == 8) {
+			this.field2281 = var1.readUnsignedByte();
+			this.field2285 = true;
+		} else if (var2 == 9) {
+			this.field2279 = var1.readUnsignedByte();
+		} else if (var2 == 10) {
+			this.field2284 = var1.readUnsignedByte();
+		} else if (var2 == 11) {
+			this.field2274 = var1.readUnsignedByte();
+		} else if (var2 == 12) {
+			var3 = var1.readUnsignedByte();
+			this.chatFrameIds = new int[var3];
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.chatFrameIds[var4] += var1.readUnsignedShort() << 16;
-         }
-      } else if (var2 == 13) {
-         var3 = var1.readUnsignedByte();
-         this.soundEffects = new int[var3];
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.chatFrameIds[var4] = var1.readUnsignedShort();
+			}
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.soundEffects[var4] = var1.readMedium();
-         }
-      } else if (var2 == 14) {
-         this.SequenceDefinition_cachedModelId = var1.readInt();
-      } else if (var2 == 15) {
-         var3 = var1.readUnsignedShort();
-         this.field2290 = new HashMap();
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.chatFrameIds[var4] += var1.readUnsignedShort() << 16;
+			}
+		} else if (var2 == 13) {
+			var3 = var1.readUnsignedByte();
+			this.soundEffects = new int[var3];
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            int var5 = var1.readUnsignedShort();
-            int var6 = var1.readMedium();
-            this.field2290.put(var5, var6);
-         }
-      } else if (var2 == 16) {
-         this.field2305 = var1.readUnsignedShort();
-         this.field2300 = var1.readUnsignedShort();
-      } else if (var2 == 17) {
-         this.field2299 = new boolean[256];
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.soundEffects[var4] = var1.readMedium();
+			}
+		} else if (var2 == 14) {
+			this.SequenceDefinition_cachedModelId = var1.readInt();
+		} else if (var2 == 15) {
+			var3 = var1.readUnsignedShort();
+			this.field2267 = new HashMap();
 
-         for(var3 = 0; var3 < this.field2299.length; ++var3) {
-            this.field2299[var3] = false;
-         }
+			for (var4 = 0; var4 < var3; ++var4) {
+				int var5 = var1.readUnsignedShort();
+				int var6 = var1.readMedium();
+				this.field2267.put(var5, var6);
+			}
+		} else if (var2 == 16) {
+			this.field2268 = var1.readUnsignedShort();
+			this.field2269 = var1.readUnsignedShort();
+		} else if (var2 == 17) {
+			this.field2276 = new boolean[256];
 
-         var3 = var1.readUnsignedByte();
+			for (var3 = 0; var3 < this.field2276.length; ++var3) {
+				this.field2276[var3] = false;
+			}
 
-         for(var4 = 0; var4 < var3; ++var4) {
-            this.field2299[var1.readUnsignedByte()] = true;
-         }
-      }
+			var3 = var1.readUnsignedByte();
 
-   }
+			for (var4 = 0; var4 < var3; ++var4) {
+				this.field2276[var1.readUnsignedByte()] = true;
+			}
+		}
 
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "-1438810920"
-   )
-   @Export("postDecode")
-   void postDecode() {
-      if (this.field2307 == -1) {
-         if (this.field2298 == null && this.field2299 == null) {
-            this.field2307 = 0;
-         } else {
-            this.field2307 = 2;
-         }
-      }
+	}
 
-      if (this.field2301 == -1) {
-         if (this.field2298 == null && this.field2299 == null) {
-            this.field2301 = 0;
-         } else {
-            this.field2301 = 2;
-         }
-      }
+	@ObfuscatedName("as")
+	@ObfuscatedSignature(
+		descriptor = "(B)V",
+		garbageValue = "121"
+	)
+	@Export("postDecode")
+	void postDecode() {
+		if (this.field2279 == -1) {
+			if (this.field2275 == null && this.field2276 == null) {
+				this.field2279 = 0;
+			} else {
+				this.field2279 = 2;
+			}
+		}
 
-   }
+		if (this.field2284 == -1) {
+			if (this.field2275 == null && this.field2276 == null) {
+				this.field2284 = 0;
+			} else {
+				this.field2284 = 2;
+			}
+		}
 
-   @ObfuscatedName("j")
-   @ObfuscatedSignature(
-      descriptor = "(Lhs;IB)Lhs;",
-      garbageValue = "80"
-   )
-   @Export("transformActorModel")
-   public Model transformActorModel(Model var1, int var2) {
-      if (!this.isCachedModelIdSet()) {
-         var2 = this.frameIds[var2];
-         Frames var8 = class131.getFrames(var2 >> 16);
-         var2 &= 65535;
-         if (var8 == null) {
-            return var1.toSharedSequenceModel(true);
-         } else {
-            Model var7 = var1.toSharedSequenceModel(!var8.hasAlphaTransform(var2));
-            var7.animate(var8, var2);
-            return var7;
-         }
-      } else {
-         int var4 = this.SequenceDefinition_cachedModelId;
-         class133 var3;
-         if (class70.method2087(var4) != 0) {
-            var3 = null;
-         } else {
-            class133 var6 = (class133)SequenceDefinition_cachedModel.get((long)var4);
-            class133 var5;
-            if (var6 != null) {
-               var5 = var6;
-            } else {
-               var6 = Login.method2165(SequenceDefinition_animationsArchive, class16.SequenceDefinition_skeletonsArchive, var4, false);
-               if (var6 != null) {
-                  SequenceDefinition_cachedModel.put(var6, (long)var4);
-               }
+	}
 
-               var5 = var6;
-            }
+	@ObfuscatedName("aj")
+	@ObfuscatedSignature(
+		descriptor = "(Ljo;II)Ljo;",
+		garbageValue = "509430466"
+	)
+	@Export("transformActorModel")
+	public Model transformActorModel(Model var1, int var2) {
+		Model var4;
+		if (!this.isCachedModelIdSet()) {
+			var2 = this.frameIds[var2];
+			Frames var5 = class157.getFrames(var2 >> 16);
+			var2 &= 65535;
+			if (var5 == null) {
+				return var1.toSharedSequenceModel(true);
+			} else {
+				var4 = var1.toSharedSequenceModel(!var5.hasAlphaTransform(var2));
+				var4.animate(var5, var2);
+				return var4;
+			}
+		} else {
+			class137 var3 = class181.method3567(this.SequenceDefinition_cachedModelId);
+			if (var3 == null) {
+				return var1.toSharedSequenceModel(true);
+			} else {
+				var4 = var1.toSharedSequenceModel(!var3.method3073());
+				var4.method4802(var3, var2);
+				return var4;
+			}
+		}
+	}
 
-            var3 = var5;
-         }
+	@ObfuscatedName("ag")
+	@ObfuscatedSignature(
+		descriptor = "(Ljo;IIB)Ljo;",
+		garbageValue = "-111"
+	)
+	@Export("transformObjectModel")
+	Model transformObjectModel(Model var1, int var2, int var3) {
+		Model var5;
+		if (!this.isCachedModelIdSet()) {
+			var2 = this.frameIds[var2];
+			Frames var6 = class157.getFrames(var2 >> 16);
+			var2 &= 65535;
+			if (var6 == null) {
+				return var1.toSharedSequenceModel(true);
+			} else {
+				var5 = var1.toSharedSequenceModel(!var6.hasAlphaTransform(var2));
+				var3 &= 3;
+				if (var3 == 1) {
+					var5.rotateY270Ccw();
+				} else if (var3 == 2) {
+					var5.rotateY180();
+				} else if (var3 == 3) {
+					var5.rotateY90Ccw();
+				}
 
-         if (var3 == null) {
-            return var1.toSharedSequenceModel(true);
-         } else {
-            Model var9 = var1.toSharedSequenceModel(!var3.method3096());
-            var9.method4727(var3, var2);
-            return var9;
-         }
-      }
-   }
+				var5.animate(var6, var2);
+				if (var3 == 1) {
+					var5.rotateY90Ccw();
+				} else if (var3 == 2) {
+					var5.rotateY180();
+				} else if (var3 == 3) {
+					var5.rotateY270Ccw();
+				}
 
-   @ObfuscatedName("i")
-   @ObfuscatedSignature(
-      descriptor = "(Lhs;IIB)Lhs;",
-      garbageValue = "-110"
-   )
-   @Export("transformObjectModel")
-   Model transformObjectModel(Model var1, int var2, int var3) {
-      if (!this.isCachedModelIdSet()) {
-         var2 = this.frameIds[var2];
-         Frames var9 = class131.getFrames(var2 >> 16);
-         var2 &= 65535;
-         if (var9 == null) {
-            return var1.toSharedSequenceModel(true);
-         } else {
-            Model var8 = var1.toSharedSequenceModel(!var9.hasAlphaTransform(var2));
-            var3 &= 3;
-            if (var3 == 1) {
-               var8.rotateY270Ccw();
-            } else if (var3 == 2) {
-               var8.rotateY180();
-            } else if (var3 == 3) {
-               var8.rotateY90Ccw();
-            }
+				return var5;
+			}
+		} else {
+			class137 var4 = class181.method3567(this.SequenceDefinition_cachedModelId);
+			if (var4 == null) {
+				return var1.toSharedSequenceModel(true);
+			} else {
+				var5 = var1.toSharedSequenceModel(!var4.method3073());
+				var3 &= 3;
+				if (var3 == 1) {
+					var5.rotateY270Ccw();
+				} else if (var3 == 2) {
+					var5.rotateY180();
+				} else if (var3 == 3) {
+					var5.rotateY90Ccw();
+				}
 
-            var8.animate(var9, var2);
-            if (var3 == 1) {
-               var8.rotateY90Ccw();
-            } else if (var3 == 2) {
-               var8.rotateY180();
-            } else if (var3 == 3) {
-               var8.rotateY270Ccw();
-            }
+				var5.method4802(var4, var2);
+				if (var3 == 1) {
+					var5.rotateY90Ccw();
+				} else if (var3 == 2) {
+					var5.rotateY180();
+				} else if (var3 == 3) {
+					var5.rotateY270Ccw();
+				}
 
-            return var8;
-         }
-      } else {
-         int var5 = this.SequenceDefinition_cachedModelId;
-         class133 var4;
-         if (class70.method2087(var5) != 0) {
-            var4 = null;
-         } else {
-            class133 var7 = (class133)SequenceDefinition_cachedModel.get((long)var5);
-            class133 var6;
-            if (var7 != null) {
-               var6 = var7;
-            } else {
-               var7 = Login.method2165(SequenceDefinition_animationsArchive, class16.SequenceDefinition_skeletonsArchive, var5, false);
-               if (var7 != null) {
-                  SequenceDefinition_cachedModel.put(var7, (long)var5);
-               }
+				return var5;
+			}
+		}
+	}
 
-               var6 = var7;
-            }
+	@ObfuscatedName("az")
+	@ObfuscatedSignature(
+		descriptor = "(Ljo;II)Ljo;",
+		garbageValue = "1735736185"
+	)
+	@Export("transformSpotAnimationModel")
+	Model transformSpotAnimationModel(Model var1, int var2) {
+		Model var4;
+		if (!this.isCachedModelIdSet()) {
+			var2 = this.frameIds[var2];
+			Frames var5 = class157.getFrames(var2 >> 16);
+			var2 &= 65535;
+			if (var5 == null) {
+				return var1.toSharedSpotAnimationModel(true);
+			} else {
+				var4 = var1.toSharedSpotAnimationModel(!var5.hasAlphaTransform(var2));
+				var4.animate(var5, var2);
+				return var4;
+			}
+		} else {
+			class137 var3 = class181.method3567(this.SequenceDefinition_cachedModelId);
+			if (var3 == null) {
+				return var1.toSharedSpotAnimationModel(true);
+			} else {
+				var4 = var1.toSharedSpotAnimationModel(!var3.method3073());
+				var4.method4802(var3, var2);
+				return var4;
+			}
+		}
+	}
 
-            var4 = var6;
-         }
+	@ObfuscatedName("av")
+	@ObfuscatedSignature(
+		descriptor = "(Ljo;ILig;II)Ljo;",
+		garbageValue = "-1383318725"
+	)
+	@Export("applyTransformations")
+	public Model applyTransformations(Model var1, int var2, SequenceDefinition var3, int var4) {
+		if (field2262 && !this.isCachedModelIdSet() && !var3.isCachedModelIdSet()) {
+			return this.method4071(var1, var2, var3, var4);
+		} else {
+			Model var5 = var1.toSharedSequenceModel(false);
+			boolean var6 = false;
+			Frames var7 = null;
+			Skeleton var8 = null;
+			class137 var9;
+			if (this.isCachedModelIdSet()) {
+				var9 = this.method4080();
+				if (var9 == null) {
+					return var5;
+				}
 
-         if (var4 == null) {
-            return var1.toSharedSequenceModel(true);
-         } else {
-            Model var10 = var1.toSharedSequenceModel(!var4.method3096());
-            var3 &= 3;
-            if (var3 == 1) {
-               var10.rotateY270Ccw();
-            } else if (var3 == 2) {
-               var10.rotateY180();
-            } else if (var3 == 3) {
-               var10.rotateY90Ccw();
-            }
+				if (var3.isCachedModelIdSet() && this.field2276 == null) {
+					var5.method4802(var9, var2);
+					return var5;
+				}
 
-            var10.method4727(var4, var2);
-            if (var3 == 1) {
-               var10.rotateY90Ccw();
-            } else if (var3 == 2) {
-               var10.rotateY180();
-            } else if (var3 == 3) {
-               var10.rotateY270Ccw();
-            }
+				var8 = var9.field1609;
+				var5.method4806(var8, var9, var2, this.field2276, false, !var3.isCachedModelIdSet());
+			} else {
+				var2 = this.frameIds[var2];
+				var7 = class157.getFrames(var2 >> 16);
+				var2 &= 65535;
+				if (var7 == null) {
+					return var3.transformActorModel(var1, var4);
+				}
 
-            return var10;
-         }
-      }
-   }
+				if (!var3.isCachedModelIdSet() && (this.field2275 == null || var4 == -1)) {
+					var5.animate(var7, var2);
+					return var5;
+				}
 
-   @ObfuscatedName("n")
-   @ObfuscatedSignature(
-      descriptor = "(Lhs;IB)Lhs;",
-      garbageValue = "1"
-   )
-   @Export("transformSpotAnimationModel")
-   Model transformSpotAnimationModel(Model var1, int var2) {
-      if (!this.isCachedModelIdSet()) {
-         var2 = this.frameIds[var2];
-         Frames var8 = class131.getFrames(var2 >> 16);
-         var2 &= 65535;
-         if (var8 == null) {
-            return var1.toSharedSpotAnimationModel(true);
-         } else {
-            Model var7 = var1.toSharedSpotAnimationModel(!var8.hasAlphaTransform(var2));
-            var7.animate(var8, var2);
-            return var7;
-         }
-      } else {
-         int var4 = this.SequenceDefinition_cachedModelId;
-         class133 var3;
-         if (class70.method2087(var4) != 0) {
-            var3 = null;
-         } else {
-            class133 var6 = (class133)SequenceDefinition_cachedModel.get((long)var4);
-            class133 var5;
-            if (var6 != null) {
-               var5 = var6;
-            } else {
-               var6 = Login.method2165(SequenceDefinition_animationsArchive, class16.SequenceDefinition_skeletonsArchive, var4, false);
-               if (var6 != null) {
-                  SequenceDefinition_cachedModel.put(var6, (long)var4);
-               }
+				if (this.field2275 == null || var4 == -1) {
+					var5.animate(var7, var2);
+					return var5;
+				}
 
-               var5 = var6;
-            }
+				var6 = var3.isCachedModelIdSet();
+				if (!var6) {
+					var5.method4807(var7, var2, this.field2275, false);
+				}
+			}
 
-            var3 = var5;
-         }
+			if (var3.isCachedModelIdSet()) {
+				var9 = var3.method4080();
+				if (var9 == null) {
+					return var5;
+				}
 
-         if (var3 == null) {
-            return var1.toSharedSpotAnimationModel(true);
-         } else {
-            Model var9 = var1.toSharedSpotAnimationModel(!var3.method3096());
-            var9.method4727(var3, var2);
-            return var9;
-         }
-      }
-   }
+				if (var8 == null) {
+					var8 = var9.field1609;
+				}
 
-   @ObfuscatedName("l")
-   @ObfuscatedSignature(
-      descriptor = "(Lhs;ILge;II)Lhs;",
-      garbageValue = "-202244152"
-   )
-   @Export("applyTransformations")
-   public Model applyTransformations(Model var1, int var2, SequenceDefinition var3, int var4) {
-      if (field2306 && !this.isCachedModelIdSet() && !var3.isCachedModelIdSet()) {
-         return this.method4056(var1, var2, var3, var4);
-      } else {
-         Model var5 = var1.toSharedSequenceModel(false);
-         boolean var6 = false;
-         Frames var7 = null;
-         Skeleton var8 = null;
-         class133 var9;
-         if (this.isCachedModelIdSet()) {
-            var9 = this.method4052();
-            if (var9 == null) {
-               return var5;
-            }
+				var5.method4806(var8, var9, var4, this.field2276, true, true);
+			} else {
+				var4 = var3.frameIds[var4];
+				Frames var10 = class157.getFrames(var4 >> 16);
+				var4 &= 65535;
+				if (var10 == null) {
+					return this.transformActorModel(var1, var2);
+				}
 
-            if (var3.isCachedModelIdSet() && this.field2299 == null) {
-               var5.method4727(var9, var2);
-               return var5;
-            }
+				var5.method4807(var10, var4, this.field2275, true);
+			}
 
-            var8 = var9.field1600;
-            var5.method4697(var8, var9, var2, this.field2299, false, !var3.isCachedModelIdSet());
-         } else {
-            var2 = this.frameIds[var2];
-            var7 = class131.getFrames(var2 >> 16);
-            var2 &= 65535;
-            if (var7 == null) {
-               return var3.transformActorModel(var1, var4);
-            }
+			if (var6 && var7 != null) {
+				var5.method4807(var7, var2, this.field2275, false);
+			}
 
-            if (!var3.isCachedModelIdSet() && (this.field2298 == null || var4 == -1)) {
-               var5.animate(var7, var2);
-               return var5;
-            }
+			var5.resetBounds();
+			return var5;
+		}
+	}
 
-            if (this.field2298 == null || var4 == -1) {
-               var5.animate(var7, var2);
-               return var5;
-            }
+	@ObfuscatedName("ap")
+	@ObfuscatedSignature(
+		descriptor = "(Ljo;ILig;IB)Ljo;",
+		garbageValue = "6"
+	)
+	Model method4071(Model var1, int var2, SequenceDefinition var3, int var4) {
+		var2 = this.frameIds[var2];
+		Frames var5 = class157.getFrames(var2 >> 16);
+		var2 &= 65535;
+		if (var5 == null) {
+			return var3.transformActorModel(var1, var4);
+		} else {
+			var4 = var3.frameIds[var4];
+			Frames var6 = class157.getFrames(var4 >> 16);
+			var4 &= 65535;
+			Model var7;
+			if (var6 == null) {
+				var7 = var1.toSharedSequenceModel(!var5.hasAlphaTransform(var2));
+				var7.animate(var5, var2);
+				return var7;
+			} else {
+				var7 = var1.toSharedSequenceModel(!var5.hasAlphaTransform(var2) & !var6.hasAlphaTransform(var4));
+				var7.animate2(var5, var2, var6, var4, this.field2275);
+				return var7;
+			}
+		}
+	}
 
-            var6 = var3.isCachedModelIdSet();
-            if (!var6) {
-               var5.method4801(var7, var2, this.field2298, false);
-            }
-         }
+	@ObfuscatedName("aq")
+	@ObfuscatedSignature(
+		descriptor = "(Ljo;II)Ljo;",
+		garbageValue = "-2020208153"
+	)
+	@Export("transformWidgetModel")
+	public Model transformWidgetModel(Model var1, int var2) {
+		if (!this.isCachedModelIdSet()) {
+			int var3 = this.frameIds[var2];
+			Frames var4 = class157.getFrames(var3 >> 16);
+			var3 &= 65535;
+			if (var4 == null) {
+				return var1.toSharedSequenceModel(true);
+			} else {
+				Frames var5 = null;
+				int var6 = 0;
+				if (this.chatFrameIds != null && var2 < this.chatFrameIds.length) {
+					var6 = this.chatFrameIds[var2];
+					var5 = class157.getFrames(var6 >> 16);
+					var6 &= 65535;
+				}
 
-         if (var3.isCachedModelIdSet()) {
-            var9 = var3.method4052();
-            if (var9 == null) {
-               return var5;
-            }
+				Model var7;
+				if (var5 != null && var6 != 65535) {
+					var7 = var1.toSharedSequenceModel(!var4.hasAlphaTransform(var3) & !var5.hasAlphaTransform(var6));
+					var7.animate(var4, var3);
+					var7.animate(var5, var6);
+					return var7;
+				} else {
+					var7 = var1.toSharedSequenceModel(!var4.hasAlphaTransform(var3));
+					var7.animate(var4, var3);
+					return var7;
+				}
+			}
+		} else {
+			return this.transformActorModel(var1, var2);
+		}
+	}
 
-            if (var8 == null) {
-               var8 = var9.field1600;
-            }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(I)Z",
+		garbageValue = "2102518176"
+	)
+	@Export("isCachedModelIdSet")
+	public boolean isCachedModelIdSet() {
+		return this.SequenceDefinition_cachedModelId >= 0;
+	}
 
-            var5.method4697(var8, var9, var4, this.field2299, true, true);
-         } else {
-            var4 = var3.frameIds[var4];
-            Frames var10 = class131.getFrames(var4 >> 16);
-            var4 &= 65535;
-            if (var10 == null) {
-               return this.transformActorModel(var1, var2);
-            }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(I)I",
+		garbageValue = "791799028"
+	)
+	public int method4074() {
+		return this.field2269 - this.field2268;
+	}
 
-            var5.method4801(var10, var4, this.field2298, true);
-         }
+	@ObfuscatedName("au")
+	@ObfuscatedSignature(
+		descriptor = "(B)Lfz;",
+		garbageValue = "49"
+	)
+	class137 method4080() {
+		return this.isCachedModelIdSet() ? class181.method3567(this.SequenceDefinition_cachedModelId) : null;
+	}
 
-         if (var6 && var7 != null) {
-            var5.method4801(var7, var2, this.field2298, false);
-         }
-
-         var5.resetBounds();
-         return var5;
-      }
-   }
-
-   @ObfuscatedName("k")
-   @ObfuscatedSignature(
-      descriptor = "(Lhs;ILge;II)Lhs;",
-      garbageValue = "-2099671514"
-   )
-   Model method4056(Model var1, int var2, SequenceDefinition var3, int var4) {
-      var2 = this.frameIds[var2];
-      Frames var5 = class131.getFrames(var2 >> 16);
-      var2 &= 65535;
-      if (var5 == null) {
-         return var3.transformActorModel(var1, var4);
-      } else {
-         var4 = var3.frameIds[var4];
-         Frames var6 = class131.getFrames(var4 >> 16);
-         var4 &= 65535;
-         Model var7;
-         if (var6 == null) {
-            var7 = var1.toSharedSequenceModel(!var5.hasAlphaTransform(var2));
-            var7.animate(var5, var2);
-            return var7;
-         } else {
-            var7 = var1.toSharedSequenceModel(!var5.hasAlphaTransform(var2) & !var6.hasAlphaTransform(var4));
-            var7.animate2(var5, var2, var6, var4, this.field2298);
-            return var7;
-         }
-      }
-   }
-
-   @ObfuscatedName("c")
-   @ObfuscatedSignature(
-      descriptor = "(Lhs;II)Lhs;",
-      garbageValue = "164179866"
-   )
-   @Export("transformWidgetModel")
-   public Model transformWidgetModel(Model var1, int var2) {
-      if (!this.isCachedModelIdSet()) {
-         int var3 = this.frameIds[var2];
-         Frames var4 = class131.getFrames(var3 >> 16);
-         var3 &= 65535;
-         if (var4 == null) {
-            return var1.toSharedSequenceModel(true);
-         } else {
-            Frames var5 = null;
-            int var6 = 0;
-            if (this.chatFrameIds != null && var2 < this.chatFrameIds.length) {
-               var6 = this.chatFrameIds[var2];
-               var5 = class131.getFrames(var6 >> 16);
-               var6 &= 65535;
-            }
-
-            Model var7;
-            if (var5 != null && var6 != 65535) {
-               var7 = var1.toSharedSequenceModel(!var4.hasAlphaTransform(var3) & !var5.hasAlphaTransform(var6));
-               var7.animate(var4, var3);
-               var7.animate(var5, var6);
-               return var7;
-            } else {
-               var7 = var1.toSharedSequenceModel(!var4.hasAlphaTransform(var3));
-               var7.animate(var4, var3);
-               return var7;
-            }
-         }
-      } else {
-         return this.transformActorModel(var1, var2);
-      }
-   }
-
-   @ObfuscatedName("r")
-   @ObfuscatedSignature(
-      descriptor = "(I)Z",
-      garbageValue = "-1029590355"
-   )
-   @Export("isCachedModelIdSet")
-   public boolean isCachedModelIdSet() {
-      return this.SequenceDefinition_cachedModelId >= 0;
-   }
-
-   @ObfuscatedName("b")
-   @ObfuscatedSignature(
-      descriptor = "(I)I",
-      garbageValue = "2032080348"
-   )
-   public int method4055() {
-      return this.field2300 - this.field2305;
-   }
-
-   @ObfuscatedName("h")
-   @ObfuscatedSignature(
-      descriptor = "(I)Lei;",
-      garbageValue = "894053899"
-   )
-   class133 method4052() {
-      if (this.isCachedModelIdSet()) {
-         int var2 = this.SequenceDefinition_cachedModelId;
-         class133 var1;
-         if (class70.method2087(var2) != 0) {
-            var1 = null;
-         } else {
-            class133 var4 = (class133)SequenceDefinition_cachedModel.get((long)var2);
-            class133 var3;
-            if (var4 != null) {
-               var3 = var4;
-            } else {
-               var4 = Login.method2165(SequenceDefinition_animationsArchive, class16.SequenceDefinition_skeletonsArchive, var2, false);
-               if (var4 != null) {
-                  SequenceDefinition_cachedModel.put(var4, (long)var2);
-               }
-
-               var3 = var4;
-            }
-
-            var1 = var3;
-         }
-
-         return var1;
-      } else {
-         return null;
-      }
-   }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(II)Lho;",
+		garbageValue = "-1093606391"
+	)
+	@Export("WorldMapElement_get")
+	public static WorldMapElement WorldMapElement_get(int var0) {
+		return var0 >= 0 && var0 < class335.WorldMapElement_cached.length && class335.WorldMapElement_cached[var0] != null ? class335.WorldMapElement_cached[var0] : new WorldMapElement(var0);
+	}
 }

@@ -1,13 +1,11 @@
 import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedName;
-import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("lr")
+@ObfuscatedName("ms")
 public class class326 {
-   @ObfuscatedName("qt")
-   @ObfuscatedSignature(
-      descriptor = "Lfr;"
-   )
-   @Export("mouseWheel")
-   static class170 mouseWheel;
+	@ObfuscatedName("bw")
+	protected static String field3544;
+	@ObfuscatedName("bz")
+	@Export("hasFocus")
+	protected static boolean hasFocus;
 }

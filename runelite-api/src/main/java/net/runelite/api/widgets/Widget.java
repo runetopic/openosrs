@@ -634,9 +634,7 @@ public interface Widget
 	Widget setOriginalWidth(int originalWidth);
 
 	Widget setSize(int width, int height);
-	Widget setSize(int width, int height,
-		@MagicConstant(valuesFromClass = WidgetSizeMode.class) int widthMode,
-		@MagicConstant(valuesFromClass = WidgetSizeMode.class) int heightMode);
+	Widget setSize(int width, int height, @MagicConstant(valuesFromClass = WidgetSizeMode.class) int widthMode, @MagicConstant(valuesFromClass = WidgetSizeMode.class) int heightMode);
 
 	/**
 	 * Gets the menu options available on the widget as a sparse array.
@@ -1133,14 +1131,4 @@ public interface Widget
 	 * Gets the image which is (or should be) drawn on this widget
 	 */
 	SpritePixels getSprite();
-
-	/**
-	 * Sets the X padding between widgets, mainly for inventory items
-	 */
-	void setPaddingX(int val);
-
-	/**
-	 * Sets the Y padding between widgets, mainly for inventory items
-	 */
-	void setPaddingY(int val);
 }

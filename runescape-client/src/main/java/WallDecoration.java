@@ -4,128 +4,113 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ij")
+@ObfuscatedName("jt")
 @Implements("WallDecoration")
 public final class WallDecoration {
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 848620101
-   )
-   @Export("z")
-   int z;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = 2051663691
-   )
-   @Export("x")
-   int x;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 1383364191
-   )
-   @Export("y")
-   int y;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = -620450551
-   )
-   @Export("orientation")
-   int orientation;
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = 2006194271
-   )
-   @Export("orientation2")
-   int orientation2;
-   @ObfuscatedName("j")
-   @ObfuscatedGetter(
-      intValue = 2110885147
-   )
-   @Export("xOffset")
-   int xOffset;
-   @ObfuscatedName("i")
-   @ObfuscatedGetter(
-      intValue = 1599637189
-   )
-   @Export("yOffset")
-   int yOffset;
-   @ObfuscatedName("n")
-   @ObfuscatedSignature(
-      descriptor = "Lhd;"
-   )
-   @Export("renderable1")
-   public Renderable renderable1;
-   @ObfuscatedName("l")
-   @ObfuscatedSignature(
-      descriptor = "Lhd;"
-   )
-   @Export("renderable2")
-   public Renderable renderable2;
-   @ObfuscatedName("k")
-   @ObfuscatedGetter(
-      longValue = -7020316289370538733L
-   )
-   @Export("tag")
-   public long tag = 0L;
-   @ObfuscatedName("c")
-   @ObfuscatedGetter(
-      intValue = -4966827
-   )
-   @Export("flags")
-   int flags = 0;
+	@ObfuscatedName("bf")
+	@ObfuscatedSignature(
+		descriptor = "Lnd;"
+	)
+	@Export("Widget_fontsArchive")
+	public static AbstractArchive Widget_fontsArchive;
+	@ObfuscatedName("aw")
+	@ObfuscatedGetter(
+		intValue = -1446438165
+	)
+	@Export("z")
+	int z;
+	@ObfuscatedName("ay")
+	@ObfuscatedGetter(
+		intValue = 2017840623
+	)
+	@Export("x")
+	int x;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = 448727349
+	)
+	@Export("y")
+	int y;
+	@ObfuscatedName("am")
+	@ObfuscatedGetter(
+		intValue = 844723307
+	)
+	@Export("orientation")
+	int orientation;
+	@ObfuscatedName("as")
+	@ObfuscatedGetter(
+		intValue = -757999873
+	)
+	@Export("orientation2")
+	int orientation2;
+	@ObfuscatedName("aj")
+	@ObfuscatedGetter(
+		intValue = 621012193
+	)
+	@Export("xOffset")
+	int xOffset;
+	@ObfuscatedName("ag")
+	@ObfuscatedGetter(
+		intValue = -830283377
+	)
+	@Export("yOffset")
+	int yOffset;
+	@ObfuscatedName("az")
+	@ObfuscatedSignature(
+		descriptor = "Lit;"
+	)
+	@Export("renderable1")
+	public Renderable renderable1;
+	@ObfuscatedName("av")
+	@ObfuscatedSignature(
+		descriptor = "Lit;"
+	)
+	@Export("renderable2")
+	public Renderable renderable2;
+	@ObfuscatedName("ap")
+	@ObfuscatedGetter(
+		longValue = 3448042175855343097L
+	)
+	@Export("tag")
+	public long tag;
+	@ObfuscatedName("aq")
+	@ObfuscatedGetter(
+		intValue = 1288984241
+	)
+	@Export("flags")
+	int flags;
 
-   WallDecoration() {
-   }
+	WallDecoration() {
+		this.tag = 0L;
+		this.flags = 0;
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(II)Z",
-      garbageValue = "1258682815"
-   )
-   public static boolean method4865(int var0) {
-      return var0 >= WorldMapDecorationType.field3752.id && var0 <= WorldMapDecorationType.field3746.id || var0 == WorldMapDecorationType.field3751.id;
-   }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(IB)I",
+		garbageValue = "63"
+	)
+	@Export("getVarbit")
+	public static int getVarbit(int var0) {
+		VarbitComposition var2 = (VarbitComposition)VarbitComposition.VarbitDefinition_cached.get((long)var0);
+		VarbitComposition var1;
+		if (var2 != null) {
+			var1 = var2;
+		} else {
+			byte[] var3 = VarbitComposition.VarbitDefinition_archive.takeFile(14, var0);
+			var2 = new VarbitComposition();
+			if (var3 != null) {
+				var2.decode(new Buffer(var3));
+			}
 
-   @ObfuscatedName("s")
-   public static int method4863(long var0) {
-      return (int)(var0 >>> 0 & 127L);
-   }
+			VarbitComposition.VarbitDefinition_cached.put(var2, (long)var0);
+			var1 = var2;
+		}
 
-   @ObfuscatedName("kr")
-   @ObfuscatedSignature(
-      descriptor = "(Lkz;I)Lkz;",
-      garbageValue = "1159720695"
-   )
-   static Widget method4864(Widget var0) {
-      Widget var2 = var0;
-      int var3 = ClanChannel.method3366(class173.getWidgetFlags(var0));
-      Widget var1;
-      if (var3 == 0) {
-         var1 = null;
-      } else {
-         int var4 = 0;
-
-         while(true) {
-            if (var4 >= var3) {
-               var1 = var2;
-               break;
-            }
-
-            var2 = class133.getWidget(var2.parentId);
-            if (var2 == null) {
-               var1 = null;
-               break;
-            }
-
-            ++var4;
-         }
-      }
-
-      Widget var5 = var1;
-      if (var1 == null) {
-         var5 = var0.parent;
-      }
-
-      return var5;
-   }
+		int var7 = var1.baseVar;
+		int var4 = var1.startBit;
+		int var5 = var1.endBit;
+		int var6 = Varps.Varps_masks[var5 - var4];
+		return Varps.Varps_main[var7] >> var4 & var6;
+	}
 }

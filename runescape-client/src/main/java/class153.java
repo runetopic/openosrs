@@ -1,204 +1,162 @@
-import java.awt.FontMetrics;
 import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ez")
-public class class153 extends class139 {
-   @ObfuscatedName("aw")
-   @Export("loginScreenFontMetrics")
-   static FontMetrics loginScreenFontMetrics;
-   @ObfuscatedName("eg")
-   @ObfuscatedSignature(
-      descriptor = "Llm;"
-   )
-   @Export("archive6")
-   static Archive archive6;
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 1864344367
-   )
-   int field1758;
-   // $FF: synthetic field
-   @ObfuscatedSignature(
-      descriptor = "Lex;"
-   )
-   final class142 this$0;
+@ObfuscatedName("fo")
+public class class153 extends class143 {
+	@ObfuscatedName("wm")
+	@ObfuscatedSignature(
+		descriptor = "Lnq;"
+	)
+	static NewArchiveStuff field1700;
+	@ObfuscatedName("aw")
+	@ObfuscatedGetter(
+		intValue = 176567155
+	)
+	int field1699;
+	@ObfuscatedName("ay")
+	String field1698;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lfr;"
+	)
+	final class146 this$0;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lex;)V"
-   )
-   class153(class142 var1) {
-      this.this$0 = var1;
-      this.field1758 = -1;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Lfr;)V"
+	)
+	class153(class146 var1) {
+		this.this$0 = var1;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;S)V",
-      garbageValue = "-5782"
-   )
-   void vmethod3394(Buffer var1) {
-      this.field1758 = var1.readUnsignedShort();
-   }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;B)V",
+		garbageValue = "1"
+	)
+	void vmethod3412(Buffer var1) {
+		this.field1699 = var1.readInt();
+		this.field1698 = var1.readStringCp1252NullTerminated();
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Leb;B)V",
-      garbageValue = "-26"
-   )
-   void vmethod3393(ClanSettings var1) {
-      var1.method3224(this.field1758);
-   }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(Lfx;B)V",
+		garbageValue = "-72"
+	)
+	void vmethod3419(ClanSettings var1) {
+		var1.method3288(this.field1699, this.field1698);
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(I)J",
-      garbageValue = "-1867500284"
-   )
-   public static final synchronized long method3317() {
-      long var0 = System.currentTimeMillis();
-      if (var0 < class286.field3335) {
-         class286.field3337 += class286.field3335 - var0;
-      }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "([Ljava/lang/CharSequence;III)Ljava/lang/String;",
+		garbageValue = "769155110"
+	)
+	public static String method3222(CharSequence[] var0, int var1, int var2) {
+		if (var2 == 0) {
+			return "";
+		} else if (var2 == 1) {
+			CharSequence var10 = var0[var1];
+			return var10 == null ? "null" : var10.toString();
+		} else {
+			int var3 = var2 + var1;
+			int var4 = 0;
 
-      class286.field3335 = var0;
-      return class286.field3337 + var0;
-   }
+			for (int var5 = var1; var5 < var3; ++var5) {
+				CharSequence var9 = var0[var5];
+				if (var9 == null) {
+					var4 += 4;
+				} else {
+					var4 += var9.length();
+				}
+			}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(III)I",
-      garbageValue = "-1876809547"
-   )
-   static int method3316(int var0, int var1) {
-      FloorOverlayDefinition var3 = (FloorOverlayDefinition)FloorOverlayDefinition.FloorOverlayDefinition_cached.get((long)var0);
-      FloorOverlayDefinition var2;
-      if (var3 != null) {
-         var2 = var3;
-      } else {
-         byte[] var4 = FloorOverlayDefinition.FloorOverlayDefinition_archive.takeFile(4, var0);
-         var3 = new FloorOverlayDefinition();
-         if (var4 != null) {
-            var3.decode(new Buffer(var4), var0);
-         }
+			StringBuilder var8 = new StringBuilder(var4);
 
-         var3.postDecode();
-         FloorOverlayDefinition.FloorOverlayDefinition_cached.put(var3, (long)var0);
-         var2 = var3;
-      }
+			for (int var6 = var1; var6 < var3; ++var6) {
+				CharSequence var7 = var0[var6];
+				if (var7 == null) {
+					var8.append("null");
+				} else {
+					var8.append(var7);
+				}
+			}
 
-      if (var2 == null) {
-         return var1;
-      } else {
-         int var5;
-         int var6;
-         int var7;
-         int var8;
-         int var9;
-         if (var2.secondaryRgb >= 0) {
-            var5 = var2.secondaryHue;
-            var6 = var2.secondarySaturation;
-            var7 = var2.secondaryLightness;
-            if (var7 > 179) {
-               var6 /= 2;
-            }
+			return var8.toString();
+		}
+	}
 
-            if (var7 > 192) {
-               var6 /= 2;
-            }
+	@ObfuscatedName("ax")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/lang/String;I)Ljava/lang/String;",
+		garbageValue = "871826027"
+	)
+	public static String method3218(String var0) {
+		int var1 = var0.length();
+		char[] var2 = new char[var1];
+		byte var3 = 2;
 
-            if (var7 > 217) {
-               var6 /= 2;
-            }
+		for (int var4 = 0; var4 < var1; ++var4) {
+			char var5 = var0.charAt(var4);
+			if (var3 == 0) {
+				var5 = Character.toLowerCase(var5);
+			} else if (var3 == 2 || Character.isUpperCase(var5)) {
+				char var6;
+				if (var5 != 181 && var5 != 402) {
+					var6 = Character.toTitleCase(var5);
+				} else {
+					var6 = var5;
+				}
 
-            if (var7 > 243) {
-               var6 /= 2;
-            }
+				var5 = var6;
+			}
 
-            var8 = (var6 / 32 << 7) + var7 / 2 + (var5 / 4 << 10);
-            var9 = class86.method2346(var8, 96);
-            return Rasterizer3D.Rasterizer3D_colorPalette[var9] | -16777216;
-         } else if (var2.texture >= 0) {
-            int var10 = class86.method2346(Rasterizer3D.Rasterizer3D_textureLoader.getAverageTextureRGB(var2.texture), 96);
-            return Rasterizer3D.Rasterizer3D_colorPalette[var10] | -16777216;
-         } else if (var2.primaryRgb == 16711935) {
-            return var1;
-         } else {
-            var5 = var2.hue;
-            var6 = var2.saturation;
-            var7 = var2.lightness;
-            if (var7 > 179) {
-               var6 /= 2;
-            }
+			if (Character.isLetter(var5)) {
+				var3 = 0;
+			} else if (var5 != '.' && var5 != '?' && var5 != '!') {
+				if (Character.isSpaceChar(var5)) {
+					if (var3 != 2) {
+						var3 = 1;
+					}
+				} else {
+					var3 = 1;
+				}
+			} else {
+				var3 = 2;
+			}
 
-            if (var7 > 192) {
-               var6 /= 2;
-            }
+			var2[var4] = var5;
+		}
 
-            if (var7 > 217) {
-               var6 /= 2;
-            }
+		return new String(var2);
+	}
 
-            if (var7 > 243) {
-               var6 /= 2;
-            }
+	@ObfuscatedName("lg")
+	@ObfuscatedSignature(
+		descriptor = "(IIIIII)V",
+		garbageValue = "1514663394"
+	)
+	@Export("drawScrollBar")
+	static final void drawScrollBar(int var0, int var1, int var2, int var3, int var4) {
+		class302.scrollBarSprites[0].drawAt(var0, var1);
+		class302.scrollBarSprites[1].drawAt(var0, var3 + var1 - 16);
+		Rasterizer2D.Rasterizer2D_fillRectangle(var0, var1 + 16, 16, var3 - 32, Client.field593);
+		int var5 = var3 * (var3 - 32) / var4;
+		if (var5 < 8) {
+			var5 = 8;
+		}
 
-            var8 = (var6 / 32 << 7) + var7 / 2 + (var5 / 4 << 10);
-            var9 = class86.method2346(var8, 96);
-            return Rasterizer3D.Rasterizer3D_colorPalette[var9] | -16777216;
-         }
-      }
-   }
-
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lln;I)V",
-      garbageValue = "-310260529"
-   )
-   public static void method3315(AbstractArchive var0) {
-   }
-
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(II)Z",
-      garbageValue = "-91961917"
-   )
-   @Export("loadInterface")
-   public static boolean loadInterface(int var0) {
-      if (class431.Widget_loadedInterfaces[var0]) {
-         return true;
-      } else if (!UserComparator8.Widget_archive.tryLoadGroup(var0)) {
-         return false;
-      } else {
-         int var1 = UserComparator8.Widget_archive.getGroupFileCount(var0);
-         if (var1 == 0) {
-            class431.Widget_loadedInterfaces[var0] = true;
-            return true;
-         } else {
-            if (WorldMapLabel.Widget_interfaceComponents[var0] == null) {
-               WorldMapLabel.Widget_interfaceComponents[var0] = new Widget[var1];
-            }
-
-            for(int var2 = 0; var2 < var1; ++var2) {
-               if (WorldMapLabel.Widget_interfaceComponents[var0][var2] == null) {
-                  byte[] var3 = UserComparator8.Widget_archive.takeFile(var0, var2);
-                  if (var3 != null) {
-                     WorldMapLabel.Widget_interfaceComponents[var0][var2] = new Widget();
-                     WorldMapLabel.Widget_interfaceComponents[var0][var2].id = var2 + (var0 << 16);
-                     if (var3[0] == -1) {
-                        WorldMapLabel.Widget_interfaceComponents[var0][var2].decode(new Buffer(var3));
-                     } else {
-                        WorldMapLabel.Widget_interfaceComponents[var0][var2].decodeLegacy(new Buffer(var3));
-                     }
-                  }
-               }
-            }
-
-            class431.Widget_loadedInterfaces[var0] = true;
-            return true;
-         }
-      }
-   }
+		int var6 = (var3 - 32 - var5) * var2 / (var4 - var3);
+		Rasterizer2D.Rasterizer2D_fillRectangle(var0, var6 + var1 + 16, 16, var5, Client.field594);
+		Rasterizer2D.Rasterizer2D_drawVerticalLine(var0, var6 + var1 + 16, var5, Client.field772);
+		Rasterizer2D.Rasterizer2D_drawVerticalLine(var0 + 1, var6 + var1 + 16, var5, Client.field772);
+		Rasterizer2D.Rasterizer2D_drawHorizontalLine(var0, var6 + var1 + 16, 16, Client.field772);
+		Rasterizer2D.Rasterizer2D_drawHorizontalLine(var0, var6 + var1 + 17, 16, Client.field772);
+		Rasterizer2D.Rasterizer2D_drawVerticalLine(var0 + 15, var6 + var1 + 16, var5, Client.field595);
+		Rasterizer2D.Rasterizer2D_drawVerticalLine(var0 + 14, var6 + var1 + 17, var5 - 1, Client.field595);
+		Rasterizer2D.Rasterizer2D_drawHorizontalLine(var0, var6 + var5 + var1 + 15, 16, Client.field595);
+		Rasterizer2D.Rasterizer2D_drawHorizontalLine(var0 + 1, var6 + var5 + var1 + 14, 15, Client.field595);
+	}
 }

@@ -1,96 +1,104 @@
-import java.io.IOException;
 import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ew")
-public class class138 extends class139 {
-   @ObfuscatedName("b")
-   @ObfuscatedSignature(
-      descriptor = "Lnv;"
-   )
-   @Export("ItemDefinition_fontPlain11")
-   public static Font ItemDefinition_fontPlain11;
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 362693273
-   )
-   int field1645;
-   // $FF: synthetic field
-   @ObfuscatedSignature(
-      descriptor = "Lex;"
-   )
-   final class142 this$0;
+@ObfuscatedName("fj")
+public enum class138 implements MouseWheel {
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1618(0, 0),
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1616(1, 1),
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1622(2, 2),
+	@ObfuscatedName("am")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1615(3, 3),
+	@ObfuscatedName("as")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1619(4, 4),
+	@ObfuscatedName("aj")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1617(5, 5),
+	@ObfuscatedName("ag")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1621(6, 6),
+	@ObfuscatedName("az")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1620(7, 7),
+	@ObfuscatedName("av")
+	@ObfuscatedSignature(
+		descriptor = "Lfj;"
+	)
+	field1623(8, 8);
 
-   @ObfuscatedSignature(
-      descriptor = "(Lex;)V"
-   )
-   class138(class142 var1) {
-      this.this$0 = var1;
-      this.field1645 = -1;
-   }
+	@ObfuscatedName("ap")
+	@ObfuscatedGetter(
+		intValue = 1823179125
+	)
+	final int field1624;
+	@ObfuscatedName("aq")
+	@ObfuscatedGetter(
+		intValue = 1944390957
+	)
+	final int field1625;
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;S)V",
-      garbageValue = "-5782"
-   )
-   void vmethod3394(Buffer var1) {
-      this.field1645 = var1.readUnsignedShort();
-   }
+	class138(int var3, int var4) {
+		this.field1624 = var3;
+		this.field1625 = var4;
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Leb;B)V",
-      garbageValue = "-26"
-   )
-   void vmethod3393(ClanSettings var1) {
-      var1.method3231(this.field1645);
-   }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(I)I",
+		garbageValue = "1644350448"
+	)
+	@Export("rsOrdinal")
+	public int rsOrdinal() {
+		return this.field1625;
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(S)Lcy;",
-      garbageValue = "190"
-   )
-   static ClientPreferences method3150() {
-      AccessFile var0 = null;
-      ClientPreferences var1 = new ClientPreferences();
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(B)Lrm;",
+		garbageValue = "16"
+	)
+	public static class451 method3097() {
+		synchronized(class451.field4744) {
+			if (class451.field4742 == 0) {
+				return new class451();
+			} else {
+				class451.field4744[--class451.field4742].method8249();
+				return class451.field4744[class451.field4742];
+			}
+		}
+	}
 
-      try {
-         var0 = UrlRequester.getPreferencesFile("", class134.field1606.name, false);
-         byte[] var2 = new byte[(int)var0.length()];
-
-         int var4;
-         for(int var3 = 0; var3 < var2.length; var3 += var4) {
-            var4 = var0.read(var2, var3, var2.length - var3);
-            if (var4 == -1) {
-               throw new IOException();
-            }
-         }
-
-         var1 = new ClientPreferences(new Buffer(var2));
-      } catch (Exception var6) {
-      }
-
-      try {
-         if (var0 != null) {
-            var0.close();
-         }
-      } catch (Exception var5) {
-      }
-
-      return var1;
-   }
-
-   @ObfuscatedName("lp")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "1273374954"
-   )
-   static final void method3149() {
-      Client.field637 = Client.cycleCntr;
-      WorldMapSectionType.ClanChat_inClanChat = true;
-   }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(I)[Llx;",
+		garbageValue = "1787686386"
+	)
+	static LoginPacket[] method3096() {
+		return new LoginPacket[]{LoginPacket.field3344, LoginPacket.field3345, LoginPacket.field3340, LoginPacket.field3341, LoginPacket.field3343, LoginPacket.field3342};
+	}
 }

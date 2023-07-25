@@ -1,76 +1,65 @@
-import java.io.File;
 import net.runelite.mapping.Export;
 import net.runelite.mapping.Implements;
+import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("dv")
+@ObfuscatedName("ee")
 @Implements("UserComparator5")
 public class UserComparator5 extends AbstractUserComparator {
-   @ObfuscatedName("s")
-   @Export("JagexCache_locationFile")
-   public static File JagexCache_locationFile;
-   @ObfuscatedName("f")
-   @Export("reversed")
-   final boolean reversed;
+	@ObfuscatedName("ie")
+	@ObfuscatedSignature(
+		descriptor = "Lqh;"
+	)
+	static AbstractSocket field1461;
+	@ObfuscatedName("jc")
+	@ObfuscatedSignature(
+		descriptor = "Liz;"
+	)
+	@Export("scene")
+	static Scene scene;
+	@ObfuscatedName("nq")
+	@ObfuscatedGetter(
+		intValue = 1108296275
+	)
+	@Export("menuWidth")
+	static int menuWidth;
+	@ObfuscatedName("aw")
+	@Export("reversed")
+	final boolean reversed;
 
-   public UserComparator5(boolean var1) {
-      this.reversed = var1;
-   }
+	public UserComparator5(boolean var1) {
+		this.reversed = var1;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Loa;Loa;I)I",
-      garbageValue = "600195653"
-   )
-   @Export("compareBuddy")
-   int compareBuddy(Buddy var1, Buddy var2) {
-      if (var1.world != 0) {
-         if (var2.world == 0) {
-            return this.reversed ? -1 : 1;
-         }
-      } else if (var2.world != 0) {
-         return this.reversed ? 1 : -1;
-      }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(Lqa;Lqa;I)I",
+		garbageValue = "-382682288"
+	)
+	@Export("compareBuddy")
+	int compareBuddy(Buddy var1, Buddy var2) {
+		if (var1.world != 0) {
+			if (var2.world == 0) {
+				return this.reversed ? -1 : 1;
+			}
+		} else if (var2.world != 0) {
+			return this.reversed ? 1 : -1;
+		}
 
-      return this.compareUser(var1, var2);
-   }
+		return this.compareUser(var1, var2);
+	}
 
-   public int compare(Object var1, Object var2) {
-      return this.compareBuddy((Buddy)var1, (Buddy)var2);
-   }
+	public int compare(Object var1, Object var2) {
+		return this.compareBuddy((Buddy)var1, (Buddy)var2);
+	}
 
-   @ObfuscatedName("jk")
-   @ObfuscatedSignature(
-      descriptor = "(Lkz;I)Z",
-      garbageValue = "-279294198"
-   )
-   @Export("runCs1")
-   static final boolean runCs1(Widget var0) {
-      if (var0.cs1Comparisons == null) {
-         return false;
-      } else {
-         for(int var1 = 0; var1 < var0.cs1Comparisons.length; ++var1) {
-            int var2 = Language.method6780(var0, var1);
-            int var3 = var0.cs1ComparisonValues[var1];
-            if (var0.cs1Comparisons[var1] == 2) {
-               if (var2 >= var3) {
-                  return false;
-               }
-            } else if (var0.cs1Comparisons[var1] == 3) {
-               if (var2 <= var3) {
-                  return false;
-               }
-            } else if (var0.cs1Comparisons[var1] == 4) {
-               if (var3 == var2) {
-                  return false;
-               }
-            } else if (var2 != var3) {
-               return false;
-            }
-         }
-
-         return true;
-      }
-   }
+	@ObfuscatedName("aa")
+	@ObfuscatedSignature(
+		descriptor = "(B)V",
+		garbageValue = "55"
+	)
+	static final void method2875() {
+		Tile.method4399("Your ignore list is full. Max of 100 for free users, and 400 for members");
+	}
 }

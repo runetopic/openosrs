@@ -3,215 +3,231 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ex")
-public class class142 {
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      longValue = -4010537834730704241L
-   )
-   long field1664;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = 1125247235
-   )
-   int field1667 = -1;
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "Lmt;"
-   )
-   IterableNodeDeque field1661 = new IterableNodeDeque();
+@ObfuscatedName("fh")
+public class class142 extends class143 {
+	@ObfuscatedName("aw")
+	@ObfuscatedGetter(
+		intValue = -1117255129
+	)
+	int field1644;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lfr;"
+	)
+	final class146 this$0;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;)V"
-   )
-   public class142(Buffer var1) {
-      this.method3168(var1);
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Lfr;)V"
+	)
+	class142(class146 var1) {
+		this.this$0 = var1;
+		this.field1644 = -1;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;B)V",
-      garbageValue = "-63"
-   )
-   void method3168(Buffer var1) {
-      this.field1664 = var1.readLong();
-      this.field1667 = var1.readInt();
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;B)V",
+		garbageValue = "1"
+	)
+	void vmethod3412(Buffer var1) {
+		this.field1644 = var1.readUnsignedShort();
+	}
 
-      for(int var2 = var1.readUnsignedByte(); var2 != 0; var2 = var1.readUnsignedByte()) {
-         Object var3;
-         if (var2 == 3) {
-            var3 = new class161(this);
-         } else if (var2 == 1) {
-            var3 = new class137(this);
-         } else if (var2 == 13) {
-            var3 = new class154(this);
-         } else if (var2 == 4) {
-            var3 = new class146(this);
-         } else if (var2 == 6) {
-            var3 = new class153(this);
-         } else if (var2 == 5) {
-            var3 = new class138(this);
-         } else if (var2 == 2) {
-            var3 = new class143(this);
-         } else if (var2 == 7) {
-            var3 = new class136(this);
-         } else if (var2 == 14) {
-            var3 = new class140(this);
-         } else if (var2 == 8) {
-            var3 = new class157(this);
-         } else if (var2 == 9) {
-            var3 = new class163(this);
-         } else if (var2 == 10) {
-            var3 = new class149(this);
-         } else if (var2 == 11) {
-            var3 = new class144(this);
-         } else if (var2 == 12) {
-            var3 = new class148(this);
-         } else {
-            if (var2 != 15) {
-               throw new RuntimeException("");
-            }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(Lfx;B)V",
+		garbageValue = "-72"
+	)
+	void vmethod3419(ClanSettings var1) {
+		var1.method3277(this.field1644);
+	}
 
-            var3 = new class158(this);
-         }
+	@ObfuscatedName("am")
+	@ObfuscatedSignature(
+		descriptor = "(ILdc;ZB)I",
+		garbageValue = "-51"
+	)
+	static int method3122(int var0, Script var1, boolean var2) {
+		if (var0 < 1000) {
+			return class301.method5746(var0, var1, var2);
+		} else if (var0 < 1100) {
+			return UserComparator10.method2903(var0, var1, var2);
+		} else if (var0 < 1200) {
+			return SecureRandomFuture.method2151(var0, var1, var2);
+		} else if (var0 < 1300) {
+			return class60.method1195(var0, var1, var2);
+		} else if (var0 < 1400) {
+			return class9.method83(var0, var1, var2);
+		} else if (var0 < 1500) {
+			return class20.method297(var0, var1, var2);
+		} else if (var0 < 1600) {
+			return class10.method84(var0, var1, var2);
+		} else if (var0 < 1700) {
+			return class423.method7819(var0, var1, var2);
+		} else if (var0 < 1800) {
+			return Player.method2365(var0, var1, var2);
+		} else if (var0 < 1900) {
+			return WorldMapIcon_1.method5097(var0, var1, var2);
+		} else if (var0 < 2000) {
+			return class319.method6071(var0, var1, var2);
+		} else if (var0 < 2100) {
+			return UserComparator10.method2903(var0, var1, var2);
+		} else if (var0 < 2200) {
+			return SecureRandomFuture.method2151(var0, var1, var2);
+		} else if (var0 < 2300) {
+			return class60.method1195(var0, var1, var2);
+		} else if (var0 < 2400) {
+			return class9.method83(var0, var1, var2);
+		} else if (var0 < 2500) {
+			return class20.method297(var0, var1, var2);
+		} else if (var0 < 2600) {
+			return VarcInt.method3638(var0, var1, var2);
+		} else if (var0 < 2700) {
+			return class47.method879(var0, var1, var2);
+		} else if (var0 < 2800) {
+			return ClanChannel.method3381(var0, var1, var2);
+		} else if (var0 < 2900) {
+			return HealthBarUpdate.method2423(var0, var1, var2);
+		} else if (var0 < 3000) {
+			return class319.method6071(var0, var1, var2);
+		} else if (var0 < 3200) {
+			return class9.method77(var0, var1, var2);
+		} else if (var0 < 3300) {
+			return ViewportMouse.method4923(var0, var1, var2);
+		} else if (var0 < 3400) {
+			return ApproximateRouteStrategy.method1246(var0, var1, var2);
+		} else if (var0 < 3500) {
+			return FloorDecoration.method4387(var0, var1, var2);
+		} else if (var0 < 3600) {
+			return class467.method8435(var0, var1, var2);
+		} else if (var0 < 3700) {
+			return class92.method2366(var0, var1, var2);
+		} else if (var0 < 3800) {
+			return Interpreter.method2073(var0, var1, var2);
+		} else if (var0 < 3900) {
+			return class345.method6645(var0, var1, var2);
+		} else if (var0 < 4000) {
+			return Occluder.method4753(var0, var1, var2);
+		} else if (var0 < 4100) {
+			return MouseRecorder.method2297(var0, var1, var2);
+		} else if (var0 < 4200) {
+			return FriendSystem.method1934(var0, var1, var2);
+		} else if (var0 < 4300) {
+			return class339.method6628(var0, var1, var2);
+		} else if (var0 < 5100) {
+			return class335.method6600(var0, var1, var2);
+		} else if (var0 < 5400) {
+			return class113.method2836(var0, var1, var2);
+		} else if (var0 < 5600) {
+			return WorldMapRectangle.method5512(var0, var1, var2);
+		} else if (var0 < 5700) {
+			return RouteStrategy.method4230(var0, var1, var2);
+		} else if (var0 < 6300) {
+			return ApproximateRouteStrategy.method1247(var0, var1, var2);
+		} else if (var0 < 6600) {
+			return class167.method3413(var0, var1, var2);
+		} else if (var0 < 6700) {
+			return WorldMapRectangle.method5511(var0, var1, var2);
+		} else if (var0 < 6800) {
+			return GrandExchangeOfferOwnWorldComparator.method1249(var0, var1, var2);
+		} else if (var0 < 6900) {
+			return class12.method167(var0, var1, var2);
+		} else if (var0 < 7000) {
+			return MouseRecorder.method2295(var0, var1, var2);
+		} else if (var0 < 7100) {
+			return class159.method3327(var0, var1, var2);
+		} else if (var0 < 7200) {
+			return class219.method4284(var0, var1, var2);
+		} else if (var0 < 7300) {
+			return class30.method447(var0, var1, var2);
+		} else if (var0 < 7500) {
+			return class18.method274(var0, var1, var2);
+		} else if (var0 < 7600) {
+			return WorldMapScaleHandler.method5645(var0, var1, var2);
+		} else {
+			return var0 < 7700 ? MenuAction.method2084(var0, var1, var2) : 2;
+		}
+	}
 
-         ((class139)var3).vmethod3394(var1);
-         this.field1661.addFirst((Node)var3);
-      }
+	@ObfuscatedName("mc")
+	@ObfuscatedSignature(
+		descriptor = "([Lmt;II)V",
+		garbageValue = "-535637665"
+	)
+	@Export("drawModelComponents")
+	static final void drawModelComponents(Widget[] var0, int var1) {
+		for (int var2 = 0; var2 < var0.length; ++var2) {
+			Widget var3 = var0[var2];
+			if (var3 != null && var3.parentId == var1 && (!var3.isIf3 || !WorldMapDecorationType.isComponentHidden(var3))) {
+				int var5;
+				if (var3.type == 0) {
+					if (!var3.isIf3 && WorldMapDecorationType.isComponentHidden(var3) && var3 != WorldMapScaleHandler.mousedOverWidgetIf1) {
+						continue;
+					}
 
-   }
+					drawModelComponents(var0, var3.id);
+					if (var3.children != null) {
+						drawModelComponents(var3.children, var3.id);
+					}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Leb;B)V",
-      garbageValue = "55"
-   )
-   public void method3169(ClanSettings var1) {
-      if (this.field1664 == var1.field1717 && this.field1667 == var1.field1718) {
-         for(class139 var2 = (class139)this.field1661.last(); var2 != null; var2 = (class139)this.field1661.previous()) {
-            var2.vmethod3393(var1);
-         }
+					InterfaceParent var4 = (InterfaceParent)Client.interfaceParents.get((long)var3.id);
+					if (var4 != null) {
+						var5 = var4.group;
+						if (Login.loadInterface(var5)) {
+							drawModelComponents(ArchiveLoader.Widget_interfaceComponents[var5], -1);
+						}
+					}
+				}
 
-         ++var1.field1718;
-      } else {
-         throw new RuntimeException("");
-      }
-   }
+				if (var3.type == 6) {
+					if (var3.sequenceId != -1 || var3.sequenceId2 != -1) {
+						boolean var8 = GrandExchangeOfferOwnWorldComparator.runCs1(var3);
+						if (var8) {
+							var5 = var3.sequenceId2;
+						} else {
+							var5 = var3.sequenceId;
+						}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/lang/CharSequence;I)Z",
-      garbageValue = "-2070835107"
-   )
-   @Export("isNumber")
-   public static boolean isNumber(CharSequence var0) {
-      boolean var2 = false;
-      boolean var3 = false;
-      int var4 = 0;
-      int var5 = var0.length();
-      int var6 = 0;
+						if (var5 != -1) {
+							SequenceDefinition var6 = class135.SequenceDefinition_get(var5);
+							if (!var6.isCachedModelIdSet()) {
+								for (var3.modelFrameCycle += Client.graphicsCycle; var3.modelFrameCycle > var6.frameLengths[var3.modelFrame]; class200.invalidateWidget(var3)) {
+									var3.modelFrameCycle -= var6.frameLengths[var3.modelFrame];
+									++var3.modelFrame;
+									if (var3.modelFrame >= var6.frameIds.length) {
+										var3.modelFrame -= var6.frameCount;
+										if (var3.modelFrame < 0 || var3.modelFrame >= var6.frameIds.length) {
+											var3.modelFrame = 0;
+										}
+									}
+								}
+							} else {
+								var3.modelFrame += Client.graphicsCycle;
+								int var7 = var6.method4074();
+								if (var3.modelFrame >= var7) {
+									var3.modelFrame -= var6.frameCount;
+									if (var3.modelFrame < 0 || var3.modelFrame >= var7) {
+										var3.modelFrame = 0;
+									}
+								}
 
-      boolean var1;
-      while(true) {
-         if (var6 >= var5) {
-            var1 = var3;
-            break;
-         }
+								class200.invalidateWidget(var3);
+							}
+						}
+					}
 
-         label84: {
-            int var7 = var0.charAt(var6);
-            if (var6 == 0) {
-               if (var7 == 45) {
-                  var2 = true;
-                  break label84;
-               }
+					if (var3.field3680 != 0 && !var3.isIf3) {
+						int var9 = var3.field3680 >> 16;
+						var5 = var3.field3680 << 16 >> 16;
+						var9 *= Client.graphicsCycle;
+						var5 *= Client.graphicsCycle;
+						var3.modelAngleX = var9 + var3.modelAngleX & 2047;
+						var3.modelAngleY = var5 + var3.modelAngleY & 2047;
+						class200.invalidateWidget(var3);
+					}
+				}
+			}
+		}
 
-               if (var7 == 43) {
-                  break label84;
-               }
-            }
-
-            if (var7 >= 48 && var7 <= 57) {
-               var7 -= 48;
-            } else if (var7 >= 65 && var7 <= 90) {
-               var7 -= 55;
-            } else {
-               if (var7 < 97 || var7 > 122) {
-                  var1 = false;
-                  break;
-               }
-
-               var7 -= 87;
-            }
-
-            if (var7 >= 10) {
-               var1 = false;
-               break;
-            }
-
-            if (var2) {
-               var7 = -var7;
-            }
-
-            int var8 = var7 + var4 * 10;
-            if (var4 != var8 / 10) {
-               var1 = false;
-               break;
-            }
-
-            var4 = var8;
-            var3 = true;
-         }
-
-         ++var6;
-      }
-
-      return var1;
-   }
-
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "([BIIIIIIIII[Lgv;I)V",
-      garbageValue = "1595690184"
-   )
-   static final void method3172(byte[] var0, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8, int var9, CollisionMap[] var10) {
-      int var12;
-      for(int var11 = 0; var11 < 8; ++var11) {
-         for(var12 = 0; var12 < 8; ++var12) {
-            if (var11 + var2 > 0 && var11 + var2 < 103 && var3 + var12 > 0 && var3 + var12 < 103) {
-               int[] var10000 = var10[var1].flags[var11 + var2];
-               var10000[var12 + var3] &= -16777217;
-            }
-         }
-      }
-
-      Buffer var19 = new Buffer(var0);
-
-      for(var12 = 0; var12 < 4; ++var12) {
-         for(int var13 = 0; var13 < 64; ++var13) {
-            for(int var14 = 0; var14 < 64; ++var14) {
-               if (var12 == var4 && var13 >= var5 && var13 < var5 + 8 && var14 >= var6 && var14 < var6 + 8) {
-                  int var15 = var2 + class133.method3118(var13 & 7, var14 & 7, var7);
-                  int var16 = var3 + class147.method3210(var13 & 7, var14 & 7, var7);
-                  int var17 = (var13 & 7) + var8 + var2;
-                  int var18 = var3 + (var14 & 7) + var9;
-                  class427.loadTerrain(var19, var1, var15, var16, var17, var18, var7);
-               } else {
-                  class427.loadTerrain(var19, 0, -1, -1, 0, 0, 0);
-               }
-            }
-         }
-      }
-
-   }
-
-   @ObfuscatedName("c")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "-354459934"
-   )
-   public static final void method3167() {
-      ViewportMouse.ViewportMouse_isInViewport = false;
-      ViewportMouse.ViewportMouse_entityCount = 0;
-   }
+	}
 }

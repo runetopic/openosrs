@@ -44,6 +44,7 @@ import net.runelite.api.clan.ClanSettings;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.PlayerChanged;
+import net.runelite.api.dbtable.DBRowConfig;
 import net.runelite.api.hooks.Callbacks;
 import net.runelite.api.hooks.DrawCallbacks;
 import net.runelite.api.vars.AccountType;
@@ -253,7 +254,9 @@ public interface Client extends OAuthApi, GameEngine
 	 * Gets the account type of the logged in player.
 	 *
 	 * @return the account type
+	 * @deprecated see Varbits#ACCOUNT_TYPE
 	 */
+	@Deprecated
 	AccountType getAccountType();
 
 	@Override
@@ -753,6 +756,24 @@ public interface Client extends OAuthApi, GameEngine
 	boolean isMenuOpen();
 
 	/**
+	 * Returns whether the currently open menu is scrollable.
+	 * @return
+	 */
+	boolean isMenuScrollable();
+
+	/**
+	 * Get the number of entries the currently open menu has been scrolled down.
+	 * @return
+	 */
+	int getMenuScroll();
+
+	/**
+	 * Set the number of entries the currently open menu has been scrolled down.
+	 * @param scroll
+	 */
+	void setMenuScroll(int scroll);
+
+	/**
 	 * Get the menu x location. Only valid if the menu is open.
 	 *
 	 * @return the menu x location
@@ -1123,6 +1144,8 @@ public interface Client extends OAuthApi, GameEngine
 	 */
 	MapElementConfig[] getMapElementConfigs();
 
+	DBRowConfig getDBRowConfig(int rowID);
+
 	/**
 	 * Get a map element config by id
 	 *
@@ -1214,7 +1237,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param endHeight end height of projectile - excludes tile height
 	 * @param target optional actor target
 	 * @param targetX target x - if an actor target is supplied should be the target x
-	 * @param targetY taret y - if an actor target is supplied should be the target y
+	 * @param targetY target y - if an actor target is supplied should be the target y
 	 * @return the new projectile
 	 */
 	Projectile createProjectile(int id, int plane, int startX, int startY, int startZ, int startCycle, int endCycle,
@@ -1297,17 +1320,6 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param volume 0-255 inclusive
 	 */
 	void setMusicVolume(int volume);
-
-	/**
-	 * @return true if the current {@link #getMusicCurrentTrackId()} is a Jingle, otherwise its a Track
-	 */
-	boolean isPlayingJingle();
-
-	/**
-	 * @return Currently playing music/jingle id, or -1 if not playing
-	 * @see #isPlayingJingle()
-	 */
-	int getMusicCurrentTrackId();
 
 	/**
 	 * Play a sound effect at the player's current location. This is how UI,
@@ -2030,33 +2042,9 @@ public interface Client extends OAuthApi, GameEngine
 	void checkClickbox(Model model, int orientation, int pitchSin, int pitchCos, int yawSin, int yawCos, int x, int y, int z, long hash);
 
 	/**
-	 * Get the if1 widget whose item is being dragged
-	 */
-	@Deprecated
-	Widget getIf1DraggedWidget();
-
-	/**
-	 * Get the item index of the item being dragged on an if1 widget
-	 */
-	@Deprecated
-	int getIf1DraggedItemIndex();
-
-	/**
 	 * Sets if a widget is in target mode
 	 */
 	void setSpellSelected(boolean selected);
-
-	/**
-	 * @deprecated use {@link #getSelectedWidget()} instead.
-	 */
-	@Deprecated
-	int getSelectedItem();
-
-	/**
-	 * @deprecated use {@link #getSelectedSpellChildIndex()} instead.
-	 */
-	@Deprecated
-	int getSelectedItemIndex();
 
 	/**
 	 * Get the selected widget, such as a selected spell or selected item (eg. "Use")
@@ -2182,7 +2170,7 @@ public interface Client extends OAuthApi, GameEngine
 	/**
 	 * Remove player from ignorelist
 	 */
-	void removeIgnore(String name);
+	void removeIgnore(String name, boolean confirmToJagex);
 
 	void setModulus(BigInteger modulus);
 
@@ -2202,36 +2190,6 @@ public interface Client extends OAuthApi, GameEngine
 	 * Adds a MenuEntry to the current menu.
 	 */
 	void insertMenuItem(String action, String target, int opcode, int identifier, int argument1, int argument2, int itemId, boolean forceLeftClick);
-
-	/**
-	 * @deprecated use {@link #setSelectedSpellItemId(int)} instead.
-	 */
-	@Deprecated
-	void setSelectedItemID(int id);
-
-	/**
-	 * @deprecated use {@link #getSelectedSpellWidget()} instead.
-	 */
-	@Deprecated
-	int getSelectedItemWidget();
-
-	/**
-	 * @deprecated use {@link #setSelectedSpellWidget(int)} instead.
-	 */
-	@Deprecated
-	void setSelectedItemWidget(int widgetID);
-
-	/**
-	 * @deprecated use {@link #getSelectedSpellChildIndex()} instead.
-	 */
-	@Deprecated
-	int getSelectedItemSlot();
-
-	/**
-	 * @deprecated use {@link #setSelectedSpellChildIndex(int)} instead.
-	 */
-	@Deprecated
-	void setSelectedItemSlot(int idx);
 
 	int getSelectedSpellWidget();
 
@@ -2366,8 +2324,6 @@ public interface Client extends OAuthApi, GameEngine
 	int getFollowerIndex();
 
 	int isItemSelected();
-
-	String getSelectedItemName();
 
 	Widget getMessageContinueWidget();
 

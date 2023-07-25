@@ -1,73 +1,77 @@
 import net.runelite.mapping.Export;
+import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("fd")
-public class class165 extends class177 {
-   @ObfuscatedName("hj")
-   @ObfuscatedSignature(
-      descriptor = "Lqq;"
-   )
-   @Export("WorldMapElement_fonts")
-   static Fonts WorldMapElement_fonts;
-   @ObfuscatedName("f")
-   String field1815;
-   // $FF: synthetic field
-   @ObfuscatedSignature(
-      descriptor = "Lfs;"
-   )
-   final class166 this$0;
+@ObfuscatedName("gm")
+public class class165 extends class143 {
+	@ObfuscatedName("uq")
+	@ObfuscatedGetter(
+		intValue = -1247158369
+	)
+	static int field1791;
+	@ObfuscatedName("ae")
+	@ObfuscatedSignature(
+		descriptor = "Lds;"
+	)
+	@Export("loginScreenRunesAnimation")
+	static LoginScreenAnimation loginScreenRunesAnimation;
+	@ObfuscatedName("aw")
+	@ObfuscatedGetter(
+		longValue = 5869356690923119311L
+	)
+	long field1787;
+	@ObfuscatedName("ay")
+	String field1790;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lfr;"
+	)
+	final class146 this$0;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lfs;Ljava/lang/String;Ljava/lang/String;)V"
-   )
-   class165(class166 var1, String var2, String var3) {
-      super(var1, var2);
-      this.this$0 = var1;
-      this.field1815 = var3;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Lfr;)V"
+	)
+	class165(class146 var1) {
+		this.this$0 = var1;
+		this.field1787 = -1L;
+		this.field1790 = null;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(S)I",
-      garbageValue = "1024"
-   )
-   public int vmethod3537() {
-      return 1;
-   }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;B)V",
+		garbageValue = "1"
+	)
+	void vmethod3412(Buffer var1) {
+		if (var1.readUnsignedByte() != 255) {
+			--var1.offset;
+			this.field1787 = var1.readLong();
+		}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(I)Ljava/lang/String;",
-      garbageValue = "1616244476"
-   )
-   public String vmethod3540() {
-      return this.field1815;
-   }
+		this.field1790 = var1.readStringCp1252NullTerminatedOrNull();
+	}
 
-   @ObfuscatedName("gl")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/lang/String;ZI)V",
-      garbageValue = "-1463339864"
-   )
-   @Export("drawLoadingMessage")
-   static final void drawLoadingMessage(String var0, boolean var1) {
-      if (Client.showLoadingMessages) {
-         byte var2 = 4;
-         int var3 = var2 + 6;
-         int var4 = var2 + 6;
-         int var5 = MenuAction.fontPlain12.lineWidth(var0, 250);
-         int var6 = MenuAction.fontPlain12.lineCount(var0, 250) * 13;
-         Rasterizer2D.Rasterizer2D_fillRectangle(var3 - var2, var4 - var2, var2 + var5 + var2, var6 + var2 + var2, 0);
-         Rasterizer2D.Rasterizer2D_drawRectangle(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var2 + var6, 16777215);
-         MenuAction.fontPlain12.drawLines(var0, var3, var4, var5, var6, 16777215, -1, 1, 1, 0);
-         Language.method6779(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2);
-         if (var1) {
-            KeyHandler.rasterProvider.drawFull(0, 0);
-         } else {
-            class7.method70(var3, var4, var5, var6);
-         }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(Lfx;B)V",
+		garbageValue = "-72"
+	)
+	void vmethod3419(ClanSettings var1) {
+		var1.method3234(this.field1787, this.field1790);
+	}
 
-      }
-   }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(Lfm;FI)F",
+		garbageValue = "-655918907"
+	)
+	static float method3402(class130 var0, float var1) {
+		if (var0 == null) {
+			return 0.0F;
+		} else {
+			float var2 = var1 - var0.field1538;
+			return (var0.field1542 + (var0.field1540 * var2 + var0.field1541) * var2) * var2 + var0.field1550;
+		}
+	}
 }

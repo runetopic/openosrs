@@ -29,13 +29,14 @@ buildscript {
     repositories {
         mavenLocal()
         gradlePluginPortal()
+        maven(url = "https://raw.githubusercontent.com/melxin/hosting/master")
         maven(url = "https://raw.githubusercontent.com/open-osrs/hosting/master")
         maven(url = "https://repo.runelite.net")
     }
     dependencies {
         classpath("org.ajoberstar.grgit:grgit-core:4.1.0")
         classpath("com.openosrs:script-assembler-plugin:1.0.1")
-        classpath("com.openosrs:injector-plugin:2.0.2")
+        classpath("com.openosrs:injector-plugin:2.0.4")
     }
 }
 

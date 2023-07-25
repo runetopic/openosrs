@@ -4,71 +4,58 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ht")
+@ObfuscatedName("jk")
 @Implements("VertexNormal")
 public class VertexNormal {
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 1947768797
-   )
-   @Export("x")
-   int x;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = 858418419
-   )
-   @Export("y")
-   int y;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 1811796619
-   )
-   @Export("z")
-   int z;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = -513667565
-   )
-   @Export("magnitude")
-   int magnitude;
+	@ObfuscatedName("aw")
+	@ObfuscatedGetter(
+		intValue = -929686261
+	)
+	@Export("x")
+	int x;
+	@ObfuscatedName("ay")
+	@ObfuscatedGetter(
+		intValue = 1772790621
+	)
+	@Export("y")
+	int y;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = -1782288159
+	)
+	@Export("z")
+	int z;
+	@ObfuscatedName("am")
+	@ObfuscatedGetter(
+		intValue = 1353901163
+	)
+	@Export("magnitude")
+	int magnitude;
 
-   VertexNormal() {
-   }
+	VertexNormal() {
+	}
 
-   @ObfuscatedSignature(
-      descriptor = "(Lht;)V"
-   )
-   VertexNormal(VertexNormal var1) {
-      this.x = var1.x;
-      this.y = var1.y;
-      this.z = var1.z;
-      this.magnitude = var1.magnitude;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Ljk;)V"
+	)
+	VertexNormal(VertexNormal var1) {
+		this.x = var1.x;
+		this.y = var1.y;
+		this.z = var1.z;
+		this.magnitude = var1.magnitude;
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(II)J",
-      garbageValue = "1903334964"
-   )
-   public static long method4844(int var0) {
-      return ViewportMouse.ViewportMouse_entityTags[var0];
-   }
-
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "1985144350"
-   )
-   static void method4845() {
-      WorldMapRegion.WorldMapRegion_cachedSprites.clear();
-   }
-
-   @ObfuscatedName("c")
-   @ObfuscatedSignature(
-      descriptor = "(B)V",
-      garbageValue = "9"
-   )
-   public static void method4843() {
-      PlayerComposition.PlayerAppearance_cachedModels.clear();
-   }
+	@ObfuscatedName("ng")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;I)V",
+		garbageValue = "1893711820"
+	)
+	static void method4951(Buffer var0) {
+		if (Client.randomDatData != null) {
+			var0.writeBytes(Client.randomDatData, 0, Client.randomDatData.length);
+		} else {
+			byte[] var1 = class215.method4223();
+			var0.writeBytes(var1, 0, var1.length);
+		}
+	}
 }

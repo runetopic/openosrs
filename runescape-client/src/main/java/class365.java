@@ -1,16 +1,14 @@
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ni")
+@ObfuscatedName("ow")
 public class class365 {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(IB)V",
-      garbageValue = "75"
-   )
-   static void method7022(int var0) {
-      class416.field4634 = var0;
-      class416.field4635 = new class416[var0];
-      class388.field4510 = 0;
-   }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(II)I",
+		garbageValue = "113848151"
+	)
+	public static int method6912(int var0) {
+		return class330.method6436(ViewportMouse.ViewportMouse_entityTags[var0]);
+	}
 }

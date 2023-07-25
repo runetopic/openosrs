@@ -4,58 +4,62 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("gd")
+@ObfuscatedName("hl")
 @Implements("VerticalAlignment")
 public enum VerticalAlignment implements MouseWheel {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lgd;"
-   )
-   field2074(1, 0),
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lgd;"
-   )
-   @Export("VerticalAlignment_centered")
-   VerticalAlignment_centered(2, 1),
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "Lgd;"
-   )
-   field2078(0, 2);
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "Lhl;"
+	)
+	field2046(0, 0),
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lhl;"
+	)
+	@Export("VerticalAlignment_centered")
+	VerticalAlignment_centered(2, 1),
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "Lhl;"
+	)
+	field2045(1, 2);
 
-   @ObfuscatedName("l")
-   @ObfuscatedGetter(
-      intValue = -76089911
-   )
-   static int field2071;
-   @ObfuscatedName("bi")
-   static String field2070;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = -404874057
-   )
-   @Export("value")
-   public final int value;
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = 589122881
-   )
-   @Export("id")
-   final int id;
+	@ObfuscatedName("wk")
+	@ObfuscatedGetter(
+		longValue = -3870115189330449071L
+	)
+	static long field2049;
+	@ObfuscatedName("ty")
+	@ObfuscatedSignature(
+		descriptor = "Lbk;"
+	)
+	@Export("pcmPlayer1")
+	static PcmPlayer pcmPlayer1;
+	@ObfuscatedName("am")
+	@ObfuscatedGetter(
+		intValue = 1128563287
+	)
+	@Export("value")
+	public final int value;
+	@ObfuscatedName("as")
+	@ObfuscatedGetter(
+		intValue = -2111203505
+	)
+	@Export("id")
+	final int id;
 
-   VerticalAlignment(int var3, int var4) {
-      this.value = var3;
-      this.id = var4;
-   }
+	VerticalAlignment(int var3, int var4) {
+		this.value = var3;
+		this.id = var4;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(B)I",
-      garbageValue = "3"
-   )
-   @Export("rsOrdinal")
-   public int rsOrdinal() {
-      return this.id;
-   }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(I)I",
+		garbageValue = "1644350448"
+	)
+	@Export("rsOrdinal")
+	public int rsOrdinal() {
+		return this.id;
+	}
 }

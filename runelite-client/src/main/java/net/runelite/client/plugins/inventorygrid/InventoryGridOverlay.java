@@ -86,7 +86,8 @@ class InventoryGridOverlay extends Overlay
 		final Widget inventoryWidget = draggingWidget.getParent();
 		final net.runelite.api.Point mouse = client.getMouseCanvasPosition();
 		final Point mousePoint = new Point(mouse.getX(), mouse.getY());
-		final int draggedItemIndex = draggingWidget.isIf3() ? draggingWidget.getIndex() : client.getIf1DraggedItemIndex();
+		//final int draggedItemIndex = draggingWidget.isIf3() ? draggingWidget.getIndex() : client.getIf1DraggedItemIndex();
+		final int draggedItemIndex = draggingWidget.getIndex();
 		final WidgetItem draggedItem = getWidgetItem(inventoryWidget, draggedItemIndex);
 		final Rectangle initialBounds = draggedItem.getCanvasBounds(false);
 
@@ -96,7 +97,7 @@ class InventoryGridOverlay extends Overlay
 		}
 
 		if (draggedItem.getId() == -1
-			|| !(draggingWidget.isIf3() ? client.getDragTime() > draggingWidget.getDragDeadTime() : client.getItemPressedDuration() >= 5)
+				|| !(draggingWidget.isIf3() ? client.getDragTime() > draggingWidget.getDragDeadTime() : client.getItemPressedDuration() >= 5)
 			|| !hoverActive && initialMousePoint.distance(mousePoint) < DISTANCE_TO_ACTIVATE_HOVER)
 		{
 			return null;
@@ -133,11 +134,11 @@ class InventoryGridOverlay extends Overlay
 
 	private Widget getDraggedWidget()
 	{
-		Widget widget = client.getIf1DraggedWidget(); // if1 drag
+		/*Widget widget = client.getIf1DraggedWidget(); // if1 drag
 		if (widget != null)
 		{
 			return widget;
-		}
+		}*/
 		return client.getDraggedWidget(); // if3 drag
 	}
 
@@ -145,9 +146,9 @@ class InventoryGridOverlay extends Overlay
 	{
 		if (parentWidget.isIf3())
 		{
-			Widget wi = parentWidget.getChild(idx);
+		Widget wi = parentWidget.getChild(idx);
 			return new WidgetItem(wi.getItemId(), wi.getItemQuantity(), -1, wi.getBounds(), parentWidget, wi.getBounds());
-		}
+	}
 		else
 		{
 			return parentWidget.getWidgetItem(idx);

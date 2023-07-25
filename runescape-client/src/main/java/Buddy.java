@@ -4,59 +4,60 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("oa")
+@ObfuscatedName("qa")
 @Implements("Buddy")
 public class Buddy extends User {
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = 931114561
-   )
-   @Export("world")
-   public int world = -1;
-   @ObfuscatedName("j")
-   @ObfuscatedGetter(
-      intValue = 143588407
-   )
-   @Export("int2")
-   public int int2;
-   @ObfuscatedName("i")
-   @ObfuscatedGetter(
-      intValue = -235745213
-   )
-   @Export("rank")
-   public int rank;
+	@ObfuscatedName("as")
+	@ObfuscatedGetter(
+		intValue = -888402897
+	)
+	@Export("world")
+	public int world;
+	@ObfuscatedName("aj")
+	@ObfuscatedGetter(
+		intValue = -1422851713
+	)
+	@Export("int2")
+	public int int2;
+	@ObfuscatedName("ag")
+	@ObfuscatedGetter(
+		intValue = -1141879863
+	)
+	@Export("rank")
+	public int rank;
 
-   Buddy() {
-   }
+	Buddy() {
+		this.world = -1;
+	}
 
-   @ObfuscatedName("ab")
-   @ObfuscatedSignature(
-      descriptor = "(III)V",
-      garbageValue = "350597562"
-   )
-   @Export("set")
-   void set(int var1, int var2) {
-      this.world = var1;
-      this.int2 = var2;
-   }
+	@ObfuscatedName("be")
+	@ObfuscatedSignature(
+		descriptor = "(IIB)V",
+		garbageValue = "-104"
+	)
+	@Export("set")
+	void set(int var1, int var2) {
+		this.world = var1;
+		this.int2 = var2;
+	}
 
-   @ObfuscatedName("an")
-   @ObfuscatedSignature(
-      descriptor = "(B)I",
-      garbageValue = "-56"
-   )
-   @Export("getWorld")
-   public int getWorld() {
-      return this.world;
-   }
+	@ObfuscatedName("bc")
+	@ObfuscatedSignature(
+		descriptor = "(B)I",
+		garbageValue = "1"
+	)
+	@Export("getWorld")
+	public int getWorld() {
+		return this.world;
+	}
 
-   @ObfuscatedName("am")
-   @ObfuscatedSignature(
-      descriptor = "(I)Z",
-      garbageValue = "1851366387"
-   )
-   @Export("hasWorld")
-   public boolean hasWorld() {
-      return this.world > 0;
-   }
+	@ObfuscatedName("bi")
+	@ObfuscatedSignature(
+		descriptor = "(I)Z",
+		garbageValue = "1047684295"
+	)
+	@Export("hasWorld")
+	public boolean hasWorld() {
+		return this.world > 0;
+	}
 }

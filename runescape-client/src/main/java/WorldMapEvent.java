@@ -4,79 +4,70 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("jd")
+@ObfuscatedName("kl")
 @Implements("WorldMapEvent")
 public class WorldMapEvent {
-   @ObfuscatedName("ef")
-   @ObfuscatedSignature(
-      descriptor = "Llm;"
-   )
-   @Export("archive8")
-   static Archive archive8;
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = -1710474049
-   )
-   @Export("mapElement")
-   public int mapElement;
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lko;"
-   )
-   @Export("coord1")
-   public Coord coord1;
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "Lko;"
-   )
-   @Export("coord2")
-   public Coord coord2;
+	@ObfuscatedName("aw")
+	@ObfuscatedGetter(
+		intValue = 1659239405
+	)
+	@Export("mapElement")
+	public int mapElement;
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lmr;"
+	)
+	@Export("coord1")
+	public Coord coord1;
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "Lmr;"
+	)
+	@Export("coord2")
+	public Coord coord2;
 
-   @ObfuscatedSignature(
-      descriptor = "(ILko;Lko;)V"
-   )
-   public WorldMapEvent(int var1, Coord var2, Coord var3) {
-      this.mapElement = var1;
-      this.coord1 = var2;
-      this.coord2 = var3;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(ILmr;Lmr;)V"
+	)
+	public WorldMapEvent(int var1, Coord var2, Coord var3) {
+		this.mapElement = var1;
+		this.coord1 = var2;
+		this.coord2 = var3;
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(IIB)V",
-      garbageValue = "-92"
-   )
-   public static void method5469(int var0, int var1) {
-      VarbitComposition var2 = VarpDefinition.method3597(var0);
-      int var3 = var2.baseVar;
-      int var4 = var2.startBit;
-      int var5 = var2.endBit;
-      int var6 = Varps.Varps_masks[var5 - var4];
-      if (var1 < 0 || var1 > var6) {
-         var1 = 0;
-      }
+	@ObfuscatedName("az")
+	@ObfuscatedSignature(
+		descriptor = "(III)I",
+		garbageValue = "-1720811535"
+	)
+	public static int method5646(int var0, int var1) {
+		int var2;
+		for (var2 = 0; var1 > 0; --var1) {
+			var2 = var2 << 1 | var0 & 1;
+			var0 >>>= 1;
+		}
 
-      var6 <<= var4;
-      Varps.Varps_main[var3] = Varps.Varps_main[var3] & ~var6 | var1 << var4 & var6;
-   }
+		return var2;
+	}
 
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "(CLmn;I)I",
-      garbageValue = "-678431768"
-   )
-   @Export("lowercaseChar")
-   static int lowercaseChar(char var0, Language var1) {
-      int var2 = var0 << 4;
-      if (Character.isUpperCase(var0) || Character.isTitleCase(var0)) {
-         var0 = Character.toLowerCase(var0);
-         var2 = (var0 << 4) + 1;
-      }
+	@ObfuscatedName("nz")
+	@ObfuscatedSignature(
+		descriptor = "(Lmt;B)Lmt;",
+		garbageValue = "84"
+	)
+	static Widget method5647(Widget var0) {
+		int var1 = ClientPacket.method5723(UserComparator8.getWidgetFlags(var0));
+		if (var1 == 0) {
+			return null;
+		} else {
+			for (int var2 = 0; var2 < var1; ++var2) {
+				var0 = VarbitComposition.getWidget(var0.parentId);
+				if (var0 == null) {
+					return null;
+				}
+			}
 
-      if (var0 == 241 && var1 == Language.Language_ES) {
-         var2 = 1762;
-      }
-
-      return var2;
-   }
+			return var0;
+		}
+	}
 }

@@ -1,187 +1,104 @@
 import net.runelite.mapping.Export;
+import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
-import net.runelite.rs.ScriptOpcodes;
 
-@ObfuscatedName("ej")
-public abstract class class139 extends Node {
-   class139() {
-   }
+@ObfuscatedName("fb")
+public enum class139 implements MouseWheel {
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "Lfb;"
+	)
+	field1634(3, 0),
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lfb;"
+	)
+	field1628(1, 1),
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "Lfb;"
+	)
+	field1629(2, 2),
+	@ObfuscatedName("am")
+	@ObfuscatedSignature(
+		descriptor = "Lfb;"
+	)
+	field1630(4, 3),
+	@ObfuscatedName("as")
+	@ObfuscatedSignature(
+		descriptor = "Lfb;"
+	)
+	field1631(0, 4);
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;S)V",
-      garbageValue = "-5782"
-   )
-   abstract void vmethod3394(Buffer var1);
+	@ObfuscatedName("cl")
+	@ObfuscatedGetter(
+		intValue = -1552511079
+	)
+	static int field1627;
+	@ObfuscatedName("aj")
+	@ObfuscatedGetter(
+		intValue = -1364431959
+	)
+	public final int field1632;
+	@ObfuscatedName("ag")
+	@ObfuscatedGetter(
+		intValue = 665629367
+	)
+	@Export("id")
+	final int id;
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Leb;B)V",
-      garbageValue = "-26"
-   )
-   abstract void vmethod3393(ClanSettings var1);
+	class139(int var3, int var4) {
+		this.field1632 = var3;
+		this.id = var4;
+	}
 
-   @ObfuscatedName("r")
-   @ObfuscatedSignature(
-      descriptor = "(ILba;ZI)I",
-      garbageValue = "1744506320"
-   )
-   static int method3157(int var0, Script var1, boolean var2) {
-      Widget var3;
-      if (var0 >= 2000) {
-         var0 -= 1000;
-         var3 = class133.getWidget(Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize]);
-      } else {
-         var3 = var2 ? Interpreter.scriptDotWidget : class85.scriptActiveWidget;
-      }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(I)I",
+		garbageValue = "1644350448"
+	)
+	@Export("rsOrdinal")
+	public int rsOrdinal() {
+		return this.id;
+	}
 
-      String var4 = Interpreter.Interpreter_stringStack[--class20.Interpreter_stringStackSize];
-      int[] var5 = null;
-      if (var4.length() > 0 && var4.charAt(var4.length() - 1) == 'Y') {
-         int var6 = Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize];
-         if (var6 > 0) {
-            for(var5 = new int[var6]; var6-- > 0; var5[var6] = Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize]) {
-            }
-         }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(Lnd;Lnd;IZI)Ljm;",
+		garbageValue = "-1006656334"
+	)
+	public static Frames method3103(AbstractArchive var0, AbstractArchive var1, int var2, boolean var3) {
+		boolean var4 = true;
+		int[] var5 = var0.getGroupFileIds(var2);
 
-         var4 = var4.substring(0, var4.length() - 1);
-      }
+		for (int var6 = 0; var6 < var5.length; ++var6) {
+			byte[] var7 = var0.getFile(var2, var5[var6]);
+			if (var7 == null) {
+				var4 = false;
+			} else {
+				int var8 = (var7[0] & 255) << 8 | var7[1] & 255;
+				byte[] var9;
+				if (var3) {
+					var9 = var1.getFile(0, var8);
+				} else {
+					var9 = var1.getFile(var8, 0);
+				}
 
-      Object[] var9 = new Object[var4.length() + 1];
+				if (var9 == null) {
+					var4 = false;
+				}
+			}
+		}
 
-      int var7;
-      for(var7 = var9.length - 1; var7 >= 1; --var7) {
-         if (var4.charAt(var7 - 1) == 's') {
-            var9[var7] = Interpreter.Interpreter_stringStack[--class20.Interpreter_stringStackSize];
-         } else {
-            var9[var7] = new Integer(Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize]);
-         }
-      }
-
-      var7 = Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize];
-      if (var7 != -1) {
-         var9[0] = new Integer(var7);
-      } else {
-         var9 = null;
-      }
-
-      if (var0 == ScriptOpcodes.CC_SETONCLICK) {
-         var3.onClick = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONHOLD) {
-         var3.onHold = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONRELEASE) {
-         var3.onRelease = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONMOUSEOVER) {
-         var3.onMouseOver = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONMOUSELEAVE) {
-         var3.onMouseLeave = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONDRAG) {
-         var3.onDrag = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONTARGETLEAVE) {
-         var3.onTargetLeave = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONVARTRANSMIT) {
-         var3.onVarTransmit = var9;
-         var3.varTransmitTriggers = var5;
-      } else if (var0 == ScriptOpcodes.CC_SETONTIMER) {
-         var3.onTimer = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONOP) {
-         var3.onOp = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONDRAGCOMPLETE) {
-         var3.onDragComplete = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONCLICKREPEAT) {
-         var3.onClickRepeat = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONMOUSEREPEAT) {
-         var3.onMouseRepeat = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONINVTRANSMIT) {
-         var3.onInvTransmit = var9;
-         var3.invTransmitTriggers = var5;
-      } else if (var0 == ScriptOpcodes.CC_SETONSTATTRANSMIT) {
-         var3.onStatTransmit = var9;
-         var3.statTransmitTriggers = var5;
-      } else if (var0 == ScriptOpcodes.CC_SETONTARGETENTER) {
-         var3.onTargetEnter = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONSCROLLWHEEL) {
-         var3.onScroll = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONCHATTRANSMIT) {
-         var3.onChatTransmit = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONKEY) {
-         var3.onKey = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONFRIENDTRANSMIT) {
-         var3.onFriendTransmit = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONCLANTRANSMIT) {
-         var3.onClanTransmit = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONMISCTRANSMIT) {
-         var3.onMiscTransmit = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONDIALOGABORT) {
-         var3.onDialogAbort = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONSUBCHANGE) {
-         var3.onSubChange = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONSTOCKTRANSMIT) {
-         var3.onStockTransmit = var9;
-      } else if (var0 == 1426) {
-         var3.field3679 = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONRESIZE) {
-         var3.onResize = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONCLANSETTINGSTRANSMIT) {
-         var3.field3672 = var9;
-      } else if (var0 == ScriptOpcodes.CC_SETONCLANCHANNELTRANSMIT) {
-         var3.field3673 = var9;
-      } else if (var0 == 1430) {
-         var3.field3604 = var9;
-      } else if (var0 == 1431) {
-         var3.field3669 = var9;
-      } else if (var0 == 1434) {
-         var3.field3680 = var9;
-      } else if (var0 == 1435) {
-         var3.field3664 = var9;
-      } else {
-         if (var0 < 1436 || var0 > 1439) {
-            return 2;
-         }
-
-         class305 var8 = var3.method6228();
-         if (var8 != null) {
-            if (var0 == 1436) {
-               var8.field3480 = var9;
-            } else if (var0 == 1437) {
-               var8.field3479 = var9;
-            } else if (var0 == 1438) {
-               var8.field3482 = var9;
-            } else if (var0 == 1439) {
-               var8.field3481 = var9;
-            }
-         }
-      }
-
-      var3.hasListener = true;
-      return 1;
-   }
-
-   @ObfuscatedName("u")
-   @ObfuscatedSignature(
-      descriptor = "(IIIB)I",
-      garbageValue = "32"
-   )
-   @Export("hslToRgb")
-   static final int hslToRgb(int var0, int var1, int var2) {
-      if (var2 > 179) {
-         var1 /= 2;
-      }
-
-      if (var2 > 192) {
-         var1 /= 2;
-      }
-
-      if (var2 > 217) {
-         var1 /= 2;
-      }
-
-      if (var2 > 243) {
-         var1 /= 2;
-      }
-
-      int var3 = (var1 / 32 << 7) + (var0 / 4 << 10) + var2 / 2;
-      return var3;
-   }
+		if (!var4) {
+			return null;
+		} else {
+			try {
+				return new Frames(var0, var1, var2, var3);
+			} catch (Exception var11) {
+				return null;
+			}
+		}
+	}
 }

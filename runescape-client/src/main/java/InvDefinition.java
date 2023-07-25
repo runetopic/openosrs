@@ -4,67 +4,76 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("fz")
+@ObfuscatedName("hh")
 @Implements("InvDefinition")
 public class InvDefinition extends DualNode {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lln;"
-   )
-   @Export("InvDefinition_archive")
-   public static AbstractArchive InvDefinition_archive;
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lja;"
-   )
-   @Export("InvDefinition_cached")
-   static EvictingDualNodeHashTable InvDefinition_cached = new EvictingDualNodeHashTable(64);
-   @ObfuscatedName("bh")
-   @Export("otp")
-   static String otp;
-   @ObfuscatedName("ju")
-   @ObfuscatedSignature(
-      descriptor = "[Lrg;"
-   )
-   @Export("scrollBarSprites")
-   static IndexedSprite[] scrollBarSprites;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 540744757
-   )
-   @Export("size")
-   public int size = 0;
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "Lnd;"
+	)
+	@Export("InvDefinition_archive")
+	public static AbstractArchive InvDefinition_archive;
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lld;"
+	)
+	@Export("InvDefinition_cached")
+	static EvictingDualNodeHashTable InvDefinition_cached;
+	@ObfuscatedName("az")
+	@Export("Tiles_underlays2")
+	static byte[][][] Tiles_underlays2;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = -905521235
+	)
+	@Export("size")
+	public int size;
 
-   InvDefinition() {
-   }
+	static {
+		InvDefinition_cached = new EvictingDualNodeHashTable(64);
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;I)V",
-      garbageValue = "-336923015"
-   )
-   @Export("decode")
-   void decode(Buffer var1) {
-      while(true) {
-         int var2 = var1.readUnsignedByte();
-         if (var2 == 0) {
-            return;
-         }
+	InvDefinition() {
+		this.size = 0;
+	}
 
-         this.decodeNext(var1, var2);
-      }
-   }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;I)V",
+		garbageValue = "-746767254"
+	)
+	@Export("decode")
+	void decode(Buffer var1) {
+		while (true) {
+			int var2 = var1.readUnsignedByte();
+			if (var2 == 0) {
+				return;
+			}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;IB)V",
-      garbageValue = "118"
-   )
-   @Export("decodeNext")
-   void decodeNext(Buffer var1, int var2) {
-      if (var2 == 2) {
-         this.size = var1.readUnsignedShort();
-      }
+			this.decodeNext(var1, var2);
+		}
+	}
 
-   }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;IB)V",
+		garbageValue = "-96"
+	)
+	@Export("decodeNext")
+	void decodeNext(Buffer var1, int var2) {
+		if (var2 == 2) {
+			this.size = var1.readUnsignedShort();
+		}
+
+	}
+
+	@ObfuscatedName("aj")
+	@ObfuscatedSignature(
+		descriptor = "(B)V",
+		garbageValue = "122"
+	)
+	public static void method3592() {
+		SpotAnimationDefinition.SpotAnimationDefinition_cached.clear();
+		SpotAnimationDefinition.SpotAnimationDefinition_cachedModels.clear();
+	}
 }

@@ -117,6 +117,7 @@ class DevToolsPanel extends PluginPanel
 
 		container.add(plugin.getChunkBorders());
 		container.add(plugin.getMapSquares());
+		container.add(plugin.getLoadingLines());
 
 		container.add(plugin.getLineOfSight());
 		container.add(plugin.getValidMovement());
@@ -196,6 +197,8 @@ class DevToolsPanel extends PluginPanel
 		{
 			log.info("Shell couldn't be loaded", e);
 		}
+
+		container.add(plugin.getMenus());
 
 		return container;
 	}

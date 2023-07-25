@@ -23,9 +23,17 @@ public abstract class RSObjectCompositionMixin implements RSObjectComposition
 	@Inject
 	private int accessBitMask = 0;
 
-	@MethodHook(value = "<clinit>", end = true)
+	/*@MethodHook(value = "<clinit>", end = true)
 	@Inject
 	public static void rl$clinit()
+	{
+		RSEvictingDualNodeHashTable objectDefinitionModelsCache = client.getObjectDefinitionModelsCache();
+		objectDefinitionModelsCache.resize(256);
+	}*/
+
+	@MethodHook(value = "<init>", end = true)
+	@Inject
+	public final void rl$init()
 	{
 		RSEvictingDualNodeHashTable objectDefinitionModelsCache = client.getObjectDefinitionModelsCache();
 		objectDefinitionModelsCache.resize(256);

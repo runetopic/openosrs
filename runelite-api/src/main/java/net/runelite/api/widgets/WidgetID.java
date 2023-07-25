@@ -107,7 +107,7 @@ public final class WidgetID
 	public static final int BARROWS_GROUP_ID = 24;
 	public static final int BLAST_MINE_GROUP_ID = 598;
 	public static final int MTA_ALCHEMY_GROUP_ID = 194;
-	public static final int MTA_ENCHANTMENT_GROUP_ID = 195;
+	public static final int MTA_ENCHANT_GROUP_ID = 195;
 	public static final int MTA_GRAVEYARD_GROUP_ID = 196;
 	public static final int MTA_TELEKINETIC_GROUP_ID = 198;
 	public static final int CORP_DAMAGE = 13;
@@ -132,6 +132,7 @@ public final class WidgetID
 	public static final int SKOTIZO_GROUP_ID = 308;
 	public static final int ENTERING_HOUSE_GROUP_ID = 71;
 	public static final int FULLSCREEN_CONTAINER_TLI = 165;
+	public static final int CHARACTER_SUMMARY_GROUP_ID = 712;
 	public static final int QUESTLIST_GROUP_ID = 399;
 	public static final int SKILLS_GROUP_ID = 320;
 	public static final int MUSIC_GROUP_ID = 239;
@@ -180,6 +181,7 @@ public final class WidgetID
 	public static final int DIALOG_SPRITE2_ID = 11;
 	public static final int MULTISKILL_MENU_GROUP_ID = 270;
 	public static final int TEMPOROSS_GROUP_ID = 437;
+	public static final int TEMPOROSS_LOBBY_GROUP_ID = 687;
 	public static final int CLAN_GROUP_ID = 701;
 	public static final int CLAN_GUEST_GROUP_ID = 702;
 	public static final int GRAVESTONE_GROUP_ID = 672;
@@ -199,6 +201,16 @@ public final class WidgetID
 	 */
 	public static final int TOA_RAID_GROUP_ID = 481;
 	public static final int ACHIEVEMENT_DIARY_SCROLL_GROUP_ID = 741;
+	public static final int GOTR_GROUP_ID = 746;
+	public static final int TROUBLE_BREWING_GROUP_ID = 415;
+	public static final int TROUBLE_BREWING_LOBBY_GROUP_ID = 418;
+	public static final int MORTTON_TEMPLE_GROUP_ID = 171;
+	public static final int BGR_RANK_DRAUGHTS_GROUP_ID = 34;
+	public static final int BGR_RANK_RUNELINK_GROUP_ID = 38;
+	public static final int BGR_RANK_RUNESQUARES_GROUP_ID = 42;
+	public static final int BGR_RANK_RUNEVERSI_GROUP_ID = 46;
+	public static final int AGILITY_ARENA_HUD_GROUP_ID = 5;
+	public static final int GNOMEBALL_SCORE_GROUP_ID = 139;
 
 	static class WorldMap
 	{
@@ -600,35 +612,35 @@ public final class WidgetID
 
 	static class Prayer
 	{
-		static final int THICK_SKIN = 5;
-		static final int BURST_OF_STRENGTH = 6;
-		static final int CLARITY_OF_THOUGHT = 7;
-		static final int SHARP_EYE = 23;
-		static final int MYSTIC_WILL = 24;
-		static final int ROCK_SKIN = 8;
-		static final int SUPERHUMAN_STRENGTH = 9;
-		static final int IMPROVED_REFLEXES = 10;
-		static final int RAPID_RESTORE = 11;
-		static final int RAPID_HEAL = 12;
-		static final int PROTECT_ITEM = 13;
-		static final int HAWK_EYE = 25;
-		static final int MYSTIC_LORE = 26;
-		static final int STEEL_SKIN = 14;
-		static final int ULTIMATE_STRENGTH = 15;
-		static final int INCREDIBLE_REFLEXES = 16;
-		static final int PROTECT_FROM_MAGIC = 17;
-		static final int PROTECT_FROM_MISSILES = 18;
-		static final int PROTECT_FROM_MELEE = 19;
-		static final int EAGLE_EYE = 27;
-		static final int MYSTIC_MIGHT = 28;
-		static final int RETRIBUTION = 20;
-		static final int REDEMPTION = 21;
-		static final int SMITE = 22;
-		static final int PRESERVE = 33;
-		static final int CHIVALRY = 29;
-		static final int PIETY = 30;
-		static final int RIGOUR = 31;
-		static final int AUGURY = 32;
+		static final int THICK_SKIN = 9;
+		static final int BURST_OF_STRENGTH = 10;
+		static final int CLARITY_OF_THOUGHT = 11;
+		static final int SHARP_EYE = 27;
+		static final int MYSTIC_WILL = 30;
+		static final int ROCK_SKIN = 12;
+		static final int SUPERHUMAN_STRENGTH = 13;
+		static final int IMPROVED_REFLEXES = 14;
+		static final int RAPID_RESTORE = 15;
+		static final int RAPID_HEAL = 16;
+		static final int PROTECT_ITEM = 17;
+		static final int HAWK_EYE = 28;
+		static final int MYSTIC_LORE = 31;
+		static final int STEEL_SKIN = 18;
+		static final int ULTIMATE_STRENGTH = 19;
+		static final int INCREDIBLE_REFLEXES = 20;
+		static final int PROTECT_FROM_MAGIC = 21;
+		static final int PROTECT_FROM_MISSILES = 22;
+		static final int PROTECT_FROM_MELEE = 23;
+		static final int EAGLE_EYE = 29;
+		static final int MYSTIC_MIGHT = 32;
+		static final int RETRIBUTION = 24;
+		static final int REDEMPTION = 25;
+		static final int SMITE = 26;
+		static final int PRESERVE = 37;
+		static final int CHIVALRY = 34;
+		static final int PIETY = 35;
+		static final int RIGOUR = 33;
+		static final int AUGURY = 36;
 	}
 
 	public static class QuickPrayer
@@ -866,7 +878,7 @@ public final class WidgetID
 	static class WorldSwitcher
 	{
 		static final int CONTAINER = 1;
-		static final int WORLD_LIST = 16;
+		static final int WORLD_LIST = 18;
 		static final int LOGOUT_BUTTON = 23;
 	}
 
@@ -875,7 +887,7 @@ public final class WidgetID
 		static final int TELEPORT_BUTTON = 30;
 	}
 
-	public static class StandardSpellBook
+	static class StandardSpellBook
 	{
 		static final int LUMBRIDGE_HOME_TELEPORT = 6;
 		static final int KOUREND_HOME_TELEPORT = 4;
@@ -927,6 +939,13 @@ public final class WidgetID
 		static final int CONTAINER = 2;
 	}
 
+	public static class CharacterSummary
+	{
+		static final int CONTAINER = 2;
+
+		public static final int COMBAT_LEVEL_BOX_CHILD_ID = 9;
+	}
+
 	static class QuestList
 	{
 		static final int BOX = 0;
@@ -936,9 +955,9 @@ public final class WidgetID
 	static class Music
 	{
 		static final int CONTAINER = 0;
-		static final int SCROLL_CONTAINER = 3;
-		static final int LIST = 5;
-		static final int SCROLLBAR = 6;
+		static final int SCROLL_CONTAINER = 4;
+		static final int LIST = 6;
+		static final int SCROLLBAR = 7;
 	}
 
 	static class Barrows_Puzzle
@@ -959,6 +978,7 @@ public final class WidgetID
 		static final int TITLE_CONTAINER = 2;
 		static final int ITEM_CONTAINER = 15;
 		static final int ITEM_TEXT = 16;
+		static final int SEARCH_BUTTON = 24;
 	}
 
 	static class ExplorersRing
@@ -968,10 +988,11 @@ public final class WidgetID
 
 	static class SettingsSide
 	{
-		static final int CAMERA_ZOOM_SLIDER_TRACK = 100;
-		static final int MUSIC_SLIDER = 29;
-		static final int SOUND_EFFECT_SLIDER = 43;
-		static final int AREA_SOUND_SLIDER = 57;
+		static final int CAMERA_ZOOM_SLIDER_TRACK = 57;
+		static final int MUSIC_SLIDER = 92;
+		static final int MUSIC_SLIDER_STEP_HOLDER = 104;
+		static final int SOUND_EFFECT_SLIDER = 106;
+		static final int AREA_SOUND_SLIDER = 120;
 	}
 
 	static class Settings
@@ -1060,6 +1081,7 @@ public final class WidgetID
 	static class TemporossStatus
 	{
 		static final int STATUS_INDICATOR = 2;
+		static final int LOBBY = 5;
 	}
 
 	static class DialogNotification
@@ -1408,5 +1430,10 @@ public final class WidgetID
 	static class Trade
 	{
 		static final int HEADER = 31;
+	}
+
+	static class TroubleBrewing
+	{
+		static final int SCORE = 68;
 	}
 }

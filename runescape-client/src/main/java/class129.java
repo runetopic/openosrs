@@ -1,87 +1,119 @@
-import java.io.IOException;
+import java.util.concurrent.Callable;
+import net.runelite.mapping.Export;
+import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("dq")
-public class class129 implements class119 {
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lln;Lln;ZIS)V",
-      garbageValue = "222"
-   )
-   static void method3086(AbstractArchive var0, AbstractArchive var1, boolean var2, int var3) {
-      if (Login.clearLoginScreen) {
-         if (var3 == 4) {
-            ReflectionCheck.method696(4);
-         }
+@ObfuscatedName("ep")
+public class class129 implements Callable {
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "Lfm;"
+	)
+	final class130 field1527;
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lfa;"
+	)
+	final class131 field1529;
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "Lfg;"
+	)
+	final class132 field1526;
+	@ObfuscatedName("am")
+	@ObfuscatedGetter(
+		intValue = 1571193313
+	)
+	final int field1525;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lfz;"
+	)
+	final class137 this$0;
 
-      } else {
-         if (var3 == 0) {
-            GrandExchangeOfferNameComparator.method6672(var2);
-         } else {
-            ReflectionCheck.method696(var3);
-         }
+	@ObfuscatedSignature(
+		descriptor = "(Lfz;Lfm;Lfa;Lfg;I)V"
+	)
+	class129(class137 var1, class130 var2, class131 var3, class132 var4, int var5) {
+		this.this$0 = var1;
+		this.field1527 = var2;
+		this.field1529 = var3;
+		this.field1526 = var4;
+		this.field1525 = var5;
+	}
 
-         Rasterizer2D.Rasterizer2D_clear();
-         byte[] var4 = var0.takeFileByNames("title.jpg", "");
-         Login.leftTitleSprite = class266.method5471(var4);
-         class275.rightTitleSprite = Login.leftTitleSprite.mirrorHorizontally();
-         ObjectComposition.method3948(var1, Client.worldProperties);
-         class147.titleboxSprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebox", "");
-         Login.titlebuttonSprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebutton", "");
-         class19.field109 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebutton_large", "");
-         Canvas.field140 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "play_now_text", "");
-         VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebutton_wide42,1", "");
-         Login.runesSprite = class125.method3066(var1, "runes", "");
-         Login.title_muteSprite = class125.method3066(var1, "title_mute", "");
-         Login.options_buttons_0Sprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,0", "");
-         ChatChannel.field1005 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,4", "");
-         Login.options_buttons_2Sprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,2", "");
-         class100.field1335 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,6", "");
-         WorldMapRectangle.field2963 = Login.options_buttons_0Sprite.subWidth;
-         class134.field1613 = Login.options_buttons_0Sprite.subHeight;
-         class305.loginScreenRunesAnimation = new LoginScreenAnimation(Login.runesSprite);
-         if (var2) {
-            Login.Login_username = "";
-            Login.Login_password = "";
-            Login.field926 = new String[8];
-            Login.field925 = 0;
-         }
+	public Object call() {
+		this.field1527.method2992();
+		class130[][] var1;
+		if (this.field1529 == class131.field1557) {
+			var1 = this.this$0.field1610;
+		} else {
+			var1 = this.this$0.field1608;
+		}
 
-         UserComparator4.field1429 = 0;
-         InvDefinition.otp = "";
-         Login.field930 = true;
-         Login.worldSelectOpen = false;
-         if (!PacketWriter.clientPreferences.method2570()) {
-            WorldMapScaleHandler.method5467(2, class153.archive6, "scape main", "", 255, false);
-         } else {
-            class28.method430(2);
-         }
+		var1[this.field1525][this.field1526.method3027()] = this.field1527;
+		return null;
+	}
 
-         if (NetCache.NetCache_socket != null) {
-            try {
-               Buffer var5 = new Buffer(4);
-               var5.writeByte(3);
-               var5.writeMedium(0);
-               NetCache.NetCache_socket.write(var5.array, 0, 4);
-            } catch (IOException var8) {
-               try {
-                  NetCache.NetCache_socket.close();
-               } catch (Exception var7) {
-               }
+	@ObfuscatedName("hp")
+	@ObfuscatedSignature(
+		descriptor = "(IB)V",
+		garbageValue = "-68"
+	)
+	@Export("updateGameState")
+	static void updateGameState(int var0) {
+		if (var0 != Client.gameState) {
+			if (Client.gameState == 30) {
+				Client.field612.method4119();
+			}
 
-               ++NetCache.NetCache_ioExceptions;
-               NetCache.NetCache_socket = null;
-            }
-         }
+			if (Client.gameState == 0) {
+				TileItem.client.method634();
+			}
 
-         Login.clearLoginScreen = true;
-         Login.xPadding = (GameEngine.canvasWidth - 765) / 2;
-         Login.loginBoxX = Login.xPadding + 202;
-         class143.loginBoxCenter = Login.loginBoxX + 180;
-         Login.leftTitleSprite.drawAt(Login.xPadding, 0);
-         class275.rightTitleSprite.drawAt(Login.xPadding + 382, 0);
-         class33.logoSprite.drawAt(Login.xPadding + 382 - class33.logoSprite.subWidth / 2, 18);
-      }
-   }
+			if (var0 == 20 || var0 == 40 || var0 == 45 || var0 == 50) {
+				BuddyRankComparator.method2912(0);
+				Client.field552 = 0;
+				Client.field796 = 0;
+				Client.timer.method7725(var0);
+				if (var0 != 20) {
+					GrandExchangeOfferTotalQuantityComparator.method6892(false);
+				}
+			}
+
+			if (var0 != 20 && var0 != 40 && UserComparator5.field1461 != null) {
+				UserComparator5.field1461.close();
+				UserComparator5.field1461 = null;
+			}
+
+			if (Client.gameState == 25) {
+				Client.field537 = 0;
+				Client.field730 = 0;
+				Client.field584 = 1;
+				Client.field679 = 0;
+				Client.field586 = 1;
+			}
+
+			if (var0 != 5 && var0 != 10) {
+				if (var0 == 20) {
+					int var3 = Client.gameState == 11 ? 4 : 0;
+					UserComparator10.method2904(class131.archive10, class386.archive8, false, var3);
+				} else if (var0 == 11) {
+					UserComparator10.method2904(class131.archive10, class386.archive8, false, 4);
+				} else if (var0 == 50) {
+					Actor.setLoginResponseString("", "Updating date of birth...", "");
+					UserComparator10.method2904(class131.archive10, class386.archive8, false, 7);
+				} else {
+					WorldMapData_0.method5080();
+				}
+			} else {
+				boolean var1 = class150.clientPreferences.method2539() >= Client.field521;
+				int var2 = var1 ? 0 : 12;
+				UserComparator10.method2904(class131.archive10, class386.archive8, true, var2);
+			}
+
+			Client.gameState = var0;
+		}
+	}
 }

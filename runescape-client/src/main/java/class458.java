@@ -1,79 +1,91 @@
-import java.util.Iterator;
-import net.runelite.mapping.ObfuscatedGetter;
+import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("qt")
-public class class458 extends class422 implements class268 {
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lln;"
-   )
-   final AbstractArchive field4886;
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "Ljp;"
-   )
-   final DemotingHashTable field4888 = new DemotingHashTable(64);
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = -1043559905
-   )
-   final int field4885;
+@ObfuscatedName("rc")
+public abstract class class458 implements class281 {
+	@ObfuscatedName("tn")
+	static boolean field4775;
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "Ltm;"
+	)
+	class503 field4772;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lle;ILmn;Lln;)V"
-   )
-   public class458(StudioGame var1, int var2, Language var3, AbstractArchive var4) {
-      super(var1, var3, var4 != null ? var4.getGroupFileCount(var2) : 0);
-      this.field4886 = var4;
-      this.field4885 = var2;
-   }
+	class458(int var1) {
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(II)Lpj;",
-      garbageValue = "-982443960"
-   )
-   protected class424 vmethod8461(int var1) {
-      synchronized(this.field4888) {
-         class423 var2 = (class423)this.field4888.get((long)var1);
-         if (var2 == null) {
-            var2 = this.method8467(var1);
-            this.field4888.method5482(var2, (long)var1);
-         }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;II)V",
+		garbageValue = "-546839154"
+	)
+	abstract void vmethod8372(Buffer var1, int var2);
 
-         return var2;
-      }
-   }
+	@ObfuscatedName("as")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;B)V",
+		garbageValue = "126"
+	)
+	public void method8381(Buffer var1) {
+		while (true) {
+			int var2 = var1.readUnsignedByte();
+			if (var2 == 0) {
+				return;
+			}
 
-   @ObfuscatedName("b")
-   @ObfuscatedSignature(
-      descriptor = "(II)Lpp;",
-      garbageValue = "-1876607651"
-   )
-   class423 method8467(int var1) {
-      byte[] var2 = this.field4886.takeFile(this.field4885, var1);
-      class423 var3 = new class423(var1);
-      if (var2 != null) {
-         var3.method8016(new Buffer(var2));
-      }
+			class454 var3 = (class454)ClientPreferences.findEnumerated(UrlRequester.method2824(), var2);
+			if (var3 != null) {
+				switch(var3.field4765) {
+				case 0:
+					ClientPreferences.findEnumerated(Tiles.method2247(), var1.readUnsignedByte());
+					break;
+				case 1:
+				default:
+					throw new IllegalStateException("Unrecognised VarTypeEncodingKey - " + var3);
+				case 2:
+					var1.readStringCp1252NullCircumfixed();
+					break;
+				case 3:
+					int var4 = var1.readUnsignedByte();
+					this.field4772 = class395.method7456(var4);
+					if (this.field4772 == null) {
+						throw new IllegalStateException("Unknown ScriptVarType ID in VarType.decode: " + var4);
+					}
+				}
+			} else {
+				this.vmethod8372(var1, var2);
+			}
+		}
+	}
 
-      return var3;
-   }
+	@ObfuscatedName("aj")
+	@ObfuscatedSignature(
+		descriptor = "(I)Z",
+		garbageValue = "1079590565"
+	)
+	boolean method8373() {
+		return this.field4772 != null;
+	}
 
-   @ObfuscatedName("m")
-   @ObfuscatedSignature(
-      descriptor = "(B)V",
-      garbageValue = "-105"
-   )
-   public void method8463() {
-      synchronized(this.field4888) {
-         this.field4888.clear();
-      }
-   }
+	@ObfuscatedName("ag")
+	@ObfuscatedSignature(
+		descriptor = "(I)Ljava/lang/Object;",
+		garbageValue = "703790014"
+	)
+	Object method8374() {
+		if (this.field4772 == class503.field5030) {
+			return 0;
+		} else if (this.field4772 == class503.field5027) {
+			return -1L;
+		} else {
+			return this.field4772 == class503.field5028 ? "" : null;
+		}
+	}
 
-   public Iterator iterator() {
-      return new class457(this);
-   }
+	@ObfuscatedName("aj")
+	@Export("Entity_unpackID")
+	public static int Entity_unpackID(long var0) {
+		return (int)(var0 >>> 17 & 4294967295L);
+	}
 }

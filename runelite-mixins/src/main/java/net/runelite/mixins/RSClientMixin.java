@@ -146,6 +146,7 @@ import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MIN;
 
 import net.runelite.rs.api.*;
+import com.google.common.primitives.Ints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -479,9 +480,11 @@ public abstract class RSClientMixin implements RSClient
 				return AccountType.GROUP_IRONMAN;
 			case 5:
 				return AccountType.HARDCORE_GROUP_IRONMAN;
+			case 6:
+				return AccountType.UNRANKED_GROUP_IRONMAN;
+			default:
+				return AccountType.NORMAL;
 		}
-
-		return AccountType.NORMAL;
 	}
 
 	@Inject
@@ -998,6 +1001,30 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
+	@Copy("menuSort")
+	@Replace("menuSort")
+	public static final void copy$menuSort()
+	{
+		boolean var0 = false;
+
+		while (!var0)
+		{
+			var0 = true;
+			for (int var1 = 0; var1 < client.getMenuOptionCount() - 1; ++var1)
+			{
+				if (client.getMenuOpcodes()[var1] < 1000 && client.getMenuOpcodes()[var1 + 1] > 1000)
+				{
+					sortMenuEntries(var1, var1 + 1);
+					var0 = false;
+				}
+			}
+			if (var0 && !client.isMenuOpen())
+			{
+				client.getCallbacks().post(new PostMenuSort());
+			}
+		}
+	}
+
 	@Inject
 	public static void sortMenuEntries(int left, int right)
 	{
@@ -1117,7 +1144,6 @@ public abstract class RSClientMixin implements RSClient
 				client.getMenuItemIds()[tmpOptionsCount] = menuEntryAdded.getItemId();
 			}
 		}
-		client.getCallbacks().post(new PostMenuSort());
 	}
 
 	@Inject
@@ -1291,7 +1317,7 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
-	@FieldHook("itemDragDuration")
+	/*@FieldHook("itemDragDuration")
 	@Inject
 	public static void itemPressedDurationChanged(int idx)
 	{
@@ -1311,7 +1337,7 @@ public abstract class RSClientMixin implements RSClient
 		{
 			itemPressedDurationBuffer = 0;
 		}
-	}
+	}*/
 
 	@FieldHook("experience")
 	@Inject
@@ -2048,7 +2074,7 @@ public abstract class RSClientMixin implements RSClient
 		client.getScene().menuOpen(client.getPlane(), x - client.getViewportXOffset(), y - client.getViewportYOffset(), false);
 	}
 
-	@Copy("addWidgetItemMenuItem")
+	/*@Copy("addWidgetItemMenuItem")
 	@Replace("addWidgetItemMenuItem")
 	static void copy$addWidgetItemMenuItem(RSWidget var0, RSItemComposition var1, int var2, int var3, boolean var4)
 	{
@@ -2058,13 +2084,14 @@ public abstract class RSClientMixin implements RSClient
 		{
 			copy$addWidgetItemMenuItem(var0, var1, var2, var3, var4);
 		}
-	}
+	}*/
 
 	@Inject
 	@MethodHook("updateNpcs")
 	public static void updateNpcs(boolean var0, RSPacketBuffer var1)
 	{
 		client.getCallbacks().updateNpcs();
+		syncMusicVolume();
 	}
 
 	@SuppressWarnings("InfiniteRecursion")
@@ -2413,11 +2440,11 @@ public abstract class RSClientMixin implements RSClient
 	@Inject
 	static boolean shouldHideAttackOptionFor(RSPlayer p)
 	{
-		if (client.getSpellSelected())
+		/*if (client.getSpellSelected())
 		{
 			return ((hideFriendCastOptions && p.isFriended()) || (hideClanmateCastOptions && p.isFriendsChatMember()))
 				&& !unhiddenCasts.contains(client.getSelectedSpellName().replaceAll("<[^>]*>", "").toLowerCase());
-		}
+		}*/
 
 		return ((hideFriendAttackOptions && p.isFriended()) || (hideClanmateAttackOptions && p.isFriendsChatMember()));
 	}
@@ -2448,10 +2475,10 @@ public abstract class RSClientMixin implements RSClient
 
 	@Inject
 	@Override
-	public void removeIgnore(String friend)
+	public void removeIgnore(String friend, boolean confirmToJagex)
 	{
 		RSFriendSystem friendSystem = getFriendManager();
-		friendSystem.removeIgnore(friend);
+		friendSystem.removeIgnore(friend, confirmToJagex);
 	}
 
 	@Inject
@@ -2629,13 +2656,20 @@ public abstract class RSClientMixin implements RSClient
 	@Inject
 	public void playMusicTrack(int var0, RSAbstractArchive var1, int var2, int var3, int var4, boolean var5)
 	{
-		client.setMusicPlayerStatus(1);
-		client.setMusicTrackArchive(var1);
-		client.setMusicTrackGroupId(var2);
-		client.setMusicTrackFileId(var3);
-		client.setMusicTrackVolume(var4);
-		client.setMusicTrackBoolean(var5);
-		client.setPcmSampleLength(var0);
+		for (RSMusicSong musicSong : client.getMusicSongs())
+		{
+			if (musicSong.getMusicTrackGroupId() == var2)
+			{
+				client.setMusicPlayerStatus(1);
+				musicSong.setMusicTrackArchive(var1);
+				musicSong.setMusicTrackGroupId(var2);
+				musicSong.setMusicTrackFileId(var3);
+				musicSong.setMusicTrackVolume(var4);
+				musicSong.setMusicTrackBoolean(var5);
+				//musicSong.setPcmSampleLength(var0);
+				break;
+			}
+		}
 	}
 
 	@Inject
@@ -2737,16 +2771,43 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public void setMusicVolume(int volume)
 	{
-		if (volume > 0 && client.getPreferences().getMusicVolume() <= 0 && client.getCurrentTrackGroupId() != -1)
+		if (volume != client.getMusicVolume())
 		{
-			client.playMusicTrack(1000, client.getMusicTracks(), client.getCurrentTrackGroupId(), 0, volume, false);
+			musicVolumeDesync = true;
 		}
+		client.setRSMusicVolume(volume);
+	}
 
-		client.getPreferences().setMusicVolume(volume);
-		client.setMusicTrackVolume(volume);
-		if (client.getMidiPcmStream() != null)
+	@Inject
+	private static boolean musicVolumeDesync;
+
+	@Inject
+	public static void syncMusicVolume()
+	{
+		if (musicVolumeDesync && client.getGameState() == GameState.LOGGED_IN)
 		{
-			client.getMidiPcmStream().setPcmStreamVolume(volume);
+			musicVolumeDesync = false;
+			Widget widget = client.getWidget(WidgetInfo.SETTINGS_SIDE_MUSIC_SLIDER_STEP_HOLDER);
+			if (widget != null && widget.getChildren() != null && widget.getChildren().length > 0)
+			{
+				int childLength = widget.getChildren().length;
+				int childIndex = Ints.constrainToRange((client.getMusicVolume() * childLength + 255) / 256, 0, childLength - 1);
+				Widget child = widget.getChild(childIndex);
+				if (child != null)
+				{
+					Object[] childOnOpListener = child.getOnOpListener();
+					try
+					{
+						child.setOnOpListener((Object[])null);
+						copy$menuAction(childIndex, widget.getId(), MenuAction.CC_OP.getId(), 1, -1, "", "", -1, -1);
+					}
+					finally
+					{
+						child.setOnOpListener(childOnOpListener);
+					}
+				}
+			}
+
 		}
 	}
 
@@ -3067,7 +3128,7 @@ public abstract class RSClientMixin implements RSClient
 		check("FloorUnderlayDefinition_cached", client.getFloorUnderlayDefinitionCache());
 		check("FloorOverlayDefinition_cached", client.getFloorOverlayDefinitionCache());
 		check("HitSplatDefinition_cached", client.getHitSplatDefinitionCache());
-		check("HitSplatDefinition_cachedSprites", client.getHitSplatDefinitionSpritesCache());
+		//check("HitSplatDefinition_cachedSprites", client.getHitSplatDefinitionSpritesCache());
 		check("HitSplatDefinition_cachedFonts", client.getHitSplatDefinitionDontsCache());
 		check("InvDefinition_cached", client.getInvDefinitionCache());
 		check("ItemDefinition_cachedModels", client.getItemDefinitionModelsCache());
@@ -3249,7 +3310,7 @@ public abstract class RSClientMixin implements RSClient
 
 	@Inject
 	@MethodHook("loginScreen")
-	public static void loginScreenClick(RSGameEngine var0, RSFont var1)
+	public static void loginScreenClick(RSGameEngine var0, RSFont var1, RSFont var2)
 	{
 		if (!client.isWorldSelectOpen() && (client.getMouseLastPressedX() > client.getLoginScreenXPadding() + 765 || client.getMouseLastPressedY() > 503))
 		{
@@ -3407,6 +3468,31 @@ public abstract class RSClientMixin implements RSClient
 	public net.runelite.api.RenderOverview getRenderOverview()
 	{
 		return client.getWorldMap();
+	}
+
+	//@Shadow("clips")
+	//static RSClips clips;
+
+	@Inject
+	@Override
+	public int getRasterizer3D_clipNegativeMidX()
+	{
+		return client.getClips().getClipNegativeMidX();
+	}
+
+	@Inject
+	@Override
+	public int getRasterizer3D_clipNegativeMidY()
+	{
+		return client.getClips().getClipNegativeMidY();
+	}
+
+	@Inject
+	@Override
+	public void set3dZoom(int zoom)
+	{
+		client.getClips().setViewportZoom(zoom);
+		client.setScale(zoom);
 	}
 }
 

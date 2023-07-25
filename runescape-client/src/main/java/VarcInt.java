@@ -2,82 +2,90 @@ import net.runelite.mapping.Export;
 import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
+import net.runelite.rs.ScriptOpcodes;
 
-@ObfuscatedName("ga")
+@ObfuscatedName("he")
 @Implements("VarcInt")
 public class VarcInt extends DualNode {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lln;"
-   )
-   @Export("VarcInt_archive")
-   public static AbstractArchive VarcInt_archive;
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lja;"
-   )
-   @Export("VarcInt_cached")
-   public static EvictingDualNodeHashTable VarcInt_cached = new EvictingDualNodeHashTable(64);
-   @ObfuscatedName("fp")
-   static String field1962;
-   @ObfuscatedName("v")
-   @Export("persist")
-   public boolean persist = false;
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "Lnd;"
+	)
+	@Export("VarcInt_archive")
+	public static AbstractArchive VarcInt_archive;
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lld;"
+	)
+	@Export("VarcInt_cached")
+	static EvictingDualNodeHashTable VarcInt_cached;
+	@ObfuscatedName("ar")
+	@Export("persist")
+	public boolean persist;
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;I)V",
-      garbageValue = "865098803"
-   )
-   public void method3633(Buffer var1) {
-      while(true) {
-         int var2 = var1.readUnsignedByte();
-         if (var2 == 0) {
-            return;
-         }
+	static {
+		VarcInt_cached = new EvictingDualNodeHashTable(64);
+	}
 
-         this.method3636(var1, var2);
-      }
-   }
+	VarcInt() {
+		this.persist = false;
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;IB)V",
-      garbageValue = "4"
-   )
-   void method3636(Buffer var1, int var2) {
-      if (var2 == 2) {
-         this.persist = true;
-      }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;I)V",
+		garbageValue = "1325526126"
+	)
+	void method3627(Buffer var1) {
+		while (true) {
+			int var2 = var1.readUnsignedByte();
+			if (var2 == 0) {
+				return;
+			}
 
-   }
+			this.method3635(var1, var2);
+		}
+	}
 
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "(Lln;Ljava/lang/String;Ljava/lang/String;I)Lrg;",
-      garbageValue = "749635841"
-   )
-   @Export("SpriteBuffer_getIndexedSpriteByName")
-   public static IndexedSprite SpriteBuffer_getIndexedSpriteByName(AbstractArchive var0, String var1, String var2) {
-      int var3 = var0.getGroupId(var1);
-      int var4 = var0.getFileId(var3, var2);
-      IndexedSprite var5;
-      if (!Buffer.method8892(var0, var3, var4)) {
-         var5 = null;
-      } else {
-         IndexedSprite var7 = new IndexedSprite();
-         var7.width = class488.SpriteBuffer_spriteWidth;
-         var7.height = class488.SpriteBuffer_spriteHeight;
-         var7.xOffset = class488.SpriteBuffer_xOffsets[0];
-         var7.yOffset = ApproximateRouteStrategy.SpriteBuffer_yOffsets[0];
-         var7.subWidth = FriendsList.SpriteBuffer_spriteWidths[0];
-         var7.subHeight = class132.SpriteBuffer_spriteHeights[0];
-         var7.palette = class100.SpriteBuffer_spritePalette;
-         var7.pixels = class140.SpriteBuffer_pixels[0];
-         class100.method2724();
-         var5 = var7;
-      }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;IB)V",
+		garbageValue = "109"
+	)
+	void method3635(Buffer var1, int var2) {
+		if (var2 == 2) {
+			this.persist = true;
+		}
 
-      return var5;
-   }
+	}
+
+	@ObfuscatedName("ac")
+	@ObfuscatedSignature(
+		descriptor = "(ILdc;ZI)I",
+		garbageValue = "1683320936"
+	)
+	static int method3638(int var0, Script var1, boolean var2) {
+		Widget var3 = VarbitComposition.getWidget(Interpreter.Interpreter_intStack[--Interpreter.Interpreter_intStackSize]);
+		if (var0 == ScriptOpcodes.IF_GETX) {
+			Interpreter.Interpreter_intStack[++Interpreter.Interpreter_intStackSize - 1] = var3.x;
+			return 1;
+		} else if (var0 == ScriptOpcodes.IF_GETY) {
+			Interpreter.Interpreter_intStack[++Interpreter.Interpreter_intStackSize - 1] = var3.y;
+			return 1;
+		} else if (var0 == ScriptOpcodes.IF_GETWIDTH) {
+			Interpreter.Interpreter_intStack[++Interpreter.Interpreter_intStackSize - 1] = var3.width;
+			return 1;
+		} else if (var0 == ScriptOpcodes.IF_GETHEIGHT) {
+			Interpreter.Interpreter_intStack[++Interpreter.Interpreter_intStackSize - 1] = var3.height;
+			return 1;
+		} else if (var0 == ScriptOpcodes.IF_GETHIDE) {
+			Interpreter.Interpreter_intStack[++Interpreter.Interpreter_intStackSize - 1] = var3.isHidden ? 1 : 0;
+			return 1;
+		} else if (var0 == ScriptOpcodes.IF_GETLAYER) {
+			Interpreter.Interpreter_intStack[++Interpreter.Interpreter_intStackSize - 1] = var3.parentId;
+			return 1;
+		} else {
+			return 2;
+		}
+	}
 }

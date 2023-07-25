@@ -25,6 +25,7 @@
 package net.runelite.rs.api;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Map;
 import net.runelite.api.AmbientSoundEffect;
 import net.runelite.api.Client;
@@ -101,6 +102,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("Varps_main")
 	@Override
 	int[] getVarps();
+
+	@Import("Varps_masks")
+	int[] getVarpMasks();
 
 	@Import("varcs")
 	RSVarcs getVarcs();
@@ -363,6 +367,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	RSWorld[] getWorldList();
 
+	@Import("World_worlds")
+	void setWorldList(RSWorld[] worlds);
+
 	@Import("addChatMessage")
 	void addRSChatMessage(int type, String name, String message, String sender);
 
@@ -375,6 +382,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("viewportZoom")
 	@Override
 	int getScale();
+
+	@Import("viewportZoom")
+	void setScale(int scale);
 
 	@Import("canvasHeight")
 	@Override
@@ -529,6 +539,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	boolean isMenuOpen();
 
+	@Import("isMenuOpen")
+	void setMenuOpen(boolean open);
+
 	@Import("cycle")
 	@Override
 	int getGameCycle();
@@ -662,6 +675,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	long getMouseLastPressedMillis();
 
+	@Import("MouseHandler_lastButton")
+	int getMouseLastButton();
+
 	@Import("keyHandler")
 	RSKeyHandler getKeyHandler();
 
@@ -778,11 +794,11 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("Scene_cameraYawCosine")
 	void setYawCos(int v);
 
-	@Import("Rasterizer3D_zoom")
+	@Import("get3dZoom")
 	@Override
 	int get3dZoom();
 
-	@Import("Rasterizer3D_zoom")
+	@Import("get3dZoom")
 	void set3dZoom(int zoom);
 
 	@Import("Rasterizer3D_clipMidX2")
@@ -801,11 +817,11 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	int getRasterizer3D_clipMidY2();
 
-	@Import("Rasterizer3D_clipMidX")
+	@Import("getClipMidX")
 	@Override
 	int getCenterX();
 
-	@Import("Rasterizer3D_clipMidY")
+	@Import("getClipMidY")
 	@Override
 	int getCenterY();
 
@@ -849,6 +865,9 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("runScript")
 	void runScript(RSScriptEvent ev, int ex, int var2);
 
+	@Import("runScriptLogic")
+	void runScriptLogic(RSScriptEvent ev, RSScript s, int ex, int var2);
+
 	@Import("hintArrowType")
 	void setHintArrowTargetType(int value);
 
@@ -888,13 +907,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("isInInstance")
 	@Override
 	boolean isInInstancedRegion();
-
-	@Import("itemDragDuration")
-	@Override
-	int getItemPressedDuration();
-
-	@Import("itemDragDuration")
-	void setItemPressedDuration(int duration);
 
 	@Import("worldProperties")
 	int getFlags();
@@ -1055,14 +1067,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("Rasterizer2D_yClipEnd")
 	int getEndY();
 
-	@Import("dragInventoryWidget")
-	@Override
-	RSWidget getIf1DraggedWidget();
-
-	@Import("dragItemSlotSource")
-	@Override
-	int getIf1DraggedItemIndex();
-
 	@Import("isSpellSelected")
 	@Override
 	void setSpellSelected(boolean selected);
@@ -1172,19 +1176,10 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("decimator")
 	RSDecimator getSoundEffectResampler();
 
-	@Import("musicTrackVolume")
-	void setMusicTrackVolume(int volume);
-
 	@Import("viewportWalking")
 	void setViewportWalking(boolean viewportWalking);
 
 	void playMusicTrack(int var0, RSAbstractArchive var1, int var2, int var3, int var4, boolean var5);
-
-	@Import("midiPcmStream")
-	RSMidiPcmStream getMidiPcmStream();
-
-	@Import("currentTrackGroupId")
-	int getCurrentTrackGroupId();
 
 	@Import("crossSprites")
 	@Override
@@ -1200,30 +1195,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("insertMenuItem")
 	@Override
 	void insertMenuItem(String action, String target, int opcode, int identifier, int argument1, int argument2, int argument3, boolean forceLeftClick);
-
-	@Import("selectedItemId")
-	@Override
-	void setSelectedItemID(int id);
-
-	@Import("selectedItemSlot")
-	@Override
-	int getSelectedItemSlot();
-
-	@Import("selectedItemSlot")
-	@Override
-	void setSelectedItemSlot(int index);
-
-	@Import("selectedItemSlot")
-	@Override
-	int getSelectedItemIndex();
-
-	@Import("selectedItemWidget")
-	@Override
-	int getSelectedItemWidget();
-
-	@Import("selectedItemWidget")
-	@Override
-	void setSelectedItemWidget(int widgetID);
 
 	@Import("selectedSpellWidget")
 	@Override
@@ -1277,12 +1248,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("showMouseCross")
 	@Override
 	void setShowMouseCross(boolean show);
-
-	@Import("draggedWidgetX")
-	int getDraggedWidgetX(); // these should probably have if1 in their names somewhere
-
-	@Import("draggedWidgetY")
-	int getDraggedWidgetY();
 
 	@Import("changedSkills")
 	int[] getChangedSkillLevels();
@@ -1341,9 +1306,6 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("showMouseOverText")
 	void setShowMouseOverText(boolean showMouseOverText);
 
-	@Import("defaultRotations")
-	int[] getDefaultRotations();
-
 	@Import("showLoadingMessages")
 	boolean getShowLoadingMessages();
 
@@ -1376,40 +1338,20 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("isItemSelected")
 	int isItemSelected();
 
-	@Override
-	@Import("isItemSelected")
-	int getSelectedItem();
-
-	@Override
-	@Import("selectedItemName")
-	String getSelectedItemName();
-
 	@Import("meslayerContinueWidget")
 	Widget getMessageContinueWidget();
 
 	@Import("playingJingle")
 	boolean isPlayingJingle();
 
-	@Import("musicTrackGroupId")
-	int getMusicCurrentTrackId();
+	@Import("musicSongs")
+	ArrayList<RSMusicSong> getMusicSongs();
+
+	@Import("setMusicVolume")
+	void setRSMusicVolume(int var0);
 
 	@Import("musicPlayerStatus")
 	void setMusicPlayerStatus(int var0);
-
-	@Import("musicTrackArchive")
-	void setMusicTrackArchive(RSAbstractArchive var0);
-
-	@Import("musicTrackGroupId")
-	void setMusicTrackGroupId(int var0);
-
-	@Import("musicTrackFileId")
-	void setMusicTrackFileId(int var0);
-
-	@Import("musicTrackBoolean")
-	void setMusicTrackBoolean(boolean var0);
-
-	@Import("pcmSampleLength")
-	void setPcmSampleLength(int var0);
 
 	@Import("changedVarps")
 	int[] getChangedVarps();
@@ -1435,9 +1377,6 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("getScript")
 	RSScript getScript(int scriptID);
-
-	@Import("isLargePlayerInfo")
-	boolean isLargePlayerInfo();
 
 	@Import("StructDefinition_cached")
 	RSEvictingDualNodeHashTable getRSStructCompositionCache();
@@ -1585,8 +1524,8 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("HitSplatDefinition_cached")
 	RSEvictingDualNodeHashTable getHitSplatDefinitionCache();
 
-	@Import("HitSplatDefinition_cachedSprites")
-	RSEvictingDualNodeHashTable getHitSplatDefinitionSpritesCache();
+	//@Import("HitSplatDefinition_cachedSprites")
+	//RSEvictingDualNodeHashTable getHitSplatDefinitionSpritesCache();
 
 	@Import("HitSplatDefinition_cachedFonts")
 	RSEvictingDualNodeHashTable getHitSplatDefinitionDontsCache();
@@ -1695,4 +1634,10 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("graphicsCycle")
 	int getGraphicsCycle();
+
+	@Import("openMenu")
+	void openMenu(int mouseX, int mouseY);
+
+	@Import("clips")
+	RSClips getClips();
 }

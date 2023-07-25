@@ -3,70 +3,88 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ec")
-public class class148 extends class139 {
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = -448895225
-   )
-   static int field1702;
-   @ObfuscatedName("eb")
-   @ObfuscatedSignature(
-      descriptor = "Llm;"
-   )
-   static Archive field1704;
-   @ObfuscatedName("nl")
-   @ObfuscatedSignature(
-      descriptor = "Lbs;"
-   )
-   @Export("tempMenuAction")
-   static MenuAction tempMenuAction;
-   @ObfuscatedName("f")
-   String field1706;
-   // $FF: synthetic field
-   @ObfuscatedSignature(
-      descriptor = "Lex;"
-   )
-   final class142 this$0;
+@ObfuscatedName("fn")
+public class class148 extends class143 {
+	@ObfuscatedName("fn")
+	@ObfuscatedSignature(
+		descriptor = "Lny;"
+	)
+	static Archive field1670;
+	@ObfuscatedName("jb")
+	@ObfuscatedGetter(
+		intValue = -607814879
+	)
+	@Export("baseY")
+	static int baseY;
+	@ObfuscatedName("aw")
+	@ObfuscatedGetter(
+		intValue = 1269845755
+	)
+	int field1669;
+	@ObfuscatedName("ay")
+	@ObfuscatedGetter(
+		intValue = -4986227
+	)
+	int field1666;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = 57408083
+	)
+	int field1668;
+	@ObfuscatedName("am")
+	@ObfuscatedGetter(
+		intValue = 1191160211
+	)
+	int field1667;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lfr;"
+	)
+	final class146 this$0;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lex;)V"
-   )
-   class148(class142 var1) {
-      this.this$0 = var1;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Lfr;)V"
+	)
+	class148(class146 var1) {
+		this.this$0 = var1;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;S)V",
-      garbageValue = "-5782"
-   )
-   void vmethod3394(Buffer var1) {
-      this.field1706 = var1.readStringCp1252NullTerminated();
-      var1.readInt();
-   }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(Lty;B)V",
+		garbageValue = "1"
+	)
+	void vmethod3412(Buffer var1) {
+		this.field1669 = var1.readInt();
+		this.field1667 = var1.readInt();
+		this.field1666 = var1.readUnsignedByte();
+		this.field1668 = var1.readUnsignedByte();
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Leb;B)V",
-      garbageValue = "-26"
-   )
-   void vmethod3393(ClanSettings var1) {
-      var1.name = this.field1706;
-   }
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "(Lfx;B)V",
+		garbageValue = "-72"
+	)
+	void vmethod3419(ClanSettings var1) {
+		var1.method3237(this.field1669, this.field1667, this.field1666, this.field1668);
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lln;IIIZI)V",
-      garbageValue = "1410945003"
-   )
-   public static void method3216(AbstractArchive var0, int var1, int var2, int var3, boolean var4) {
-      class290.musicPlayerStatus = 1;
-      class6.musicTrackArchive = var0;
-      class20.musicTrackGroupId = var1;
-      class161.musicTrackFileId = var2;
-      class290.musicTrackVolume = var3;
-      class423.musicTrackBoolean = var4;
-      class203.pcmSampleLength = 10000;
-   }
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(ILrg;Lny;B)V",
+		garbageValue = "98"
+	)
+	static void method3170(int var0, ArchiveDisk var1, Archive var2) {
+		ArchiveDiskAction var3 = new ArchiveDiskAction();
+		var3.type = 1;
+		var3.key = (long)var0;
+		var3.archiveDisk = var1;
+		var3.archive = var2;
+		synchronized(ArchiveDiskActionHandler.ArchiveDiskActionHandler_requestQueue) {
+			ArchiveDiskActionHandler.ArchiveDiskActionHandler_requestQueue.addFirst(var3);
+		}
+
+		class292.method5721();
+	}
 }
