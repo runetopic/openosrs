@@ -3359,7 +3359,17 @@ public abstract class RSClientMixin implements RSClient
 
 	@Inject
 	@Override
-	public Object getDBTableField(int rowID, int column, int tupleIndex, int fieldIndex)
+	public List getDBRowsByValue(int rowID, int column, int tupleIndex, Object value)
+	{
+		RSDbTable dbTable = client.getDbTable((rowID << 12 | column << 4));
+		Map columns = (Map) dbTable.getColumns().get(tupleIndex);
+		List rows = (List) columns.get(value);
+		return rows == null ? Collections.emptyList() : Collections.unmodifiableList(rows);
+	}
+
+	@Inject
+	@Override
+	public Object[] getDBTableField(int rowID, int column, int tupleIndex)
 	{
 		RSDbRowType dbRowType = client.getDbRowType(rowID);
 		RSDbTableType dbTableType = client.getDbTableType(dbRowType.getTableId());
@@ -3372,24 +3382,25 @@ public abstract class RSClientMixin implements RSClient
 			columnType = dbTableType.getDefaultValues()[column];
 		}
 
-		if (columnType == null)
-		{
-			return null;
-		}
-		else if (tupleIndex >= type.length)
+		if (tupleIndex >= type.length)
 		{
 			throw new IllegalArgumentException("tuple index too large");
 		}
+		else if (columnType == null)
+		{
+			return new Object[0];
+		}
 		else
 		{
-			if (fieldIndex > columnType.length / type.length)
+			int fieldLength = columnType.length / type.length;
+			Object[] field = new Object[fieldLength];
+
+			for (int fieldIndex = 0; fieldIndex < fieldLength; ++fieldIndex)
 			{
-				throw new IllegalArgumentException("field index too large");
+				field[fieldIndex] = columnType[fieldIndex * type.length + tupleIndex];
 			}
-			else
-			{
-				return columnType[tupleIndex * type.length + fieldIndex];
-			}
+
+			return field;
 		}
 	}
 
