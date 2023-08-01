@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Abex
+ * Copyright (c) 2023, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,15 +22,67 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api.dbtable;
+package net.runelite.cache.util;
 
-public final class DBTableID
+import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
+import java.util.Arrays;
+import java.util.List;
+
+public class BzStream extends Structure
 {
-	public interface Quest
+	/*
+	  char *next_in;
+	  unsigned int avail_in;
+	  unsigned int total_in_lo32;
+	  unsigned int total_in_hi32;
+
+	  char *next_out;
+	  unsigned int avail_out;
+	  unsigned int total_out_lo32;
+	  unsigned int total_out_hi32;
+
+	  void *state;
+
+	  void *(*bzalloc)(void *,int,int);
+	  void (*bzfree)(void *,void *);
+	  void *opaque;
+	 */
+	public Pointer next_in;
+	public int avail_in;
+	public int total_in_lo32;
+	public int total_in_hi32;
+
+	public Pointer next_out;
+	public int avail_out;
+	public int total_out_lo32;
+	public int total_out_hi32;
+
+	public Pointer state;
+
+	public Pointer bzalloc;
+	public Pointer bzfree;
+	public Pointer opaque;
+
+	@Override
+	protected List<String> getFieldOrder()
 	{
-		int TABLE = 0;
-		int NAME = 2;
-		int MAP_ELEMENT = 14;
-		int MAIN_QUEST = 19;
+		return Arrays.asList(
+			"next_in",
+			"avail_in",
+			"total_in_lo32",
+			"total_in_hi32",
+
+			"next_out",
+			"avail_out",
+			"total_out_lo32",
+			"total_out_hi32",
+
+			"state",
+
+			"bzalloc",
+			"bzfree",
+			"opaque"
+		);
 	}
 }

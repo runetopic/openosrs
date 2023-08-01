@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Abex
+ * Copyright (c) 2023, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,15 +22,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api.dbtable;
+package net.runelite.cache.util;
 
-public final class DBTableID
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+
+public interface LibBZip2 extends Library
 {
-	public interface Quest
-	{
-		int TABLE = 0;
-		int NAME = 2;
-		int MAP_ELEMENT = 14;
-		int MAIN_QUEST = 19;
-	}
+	LibBZip2 INSTANCE = Native.load("libbz2", LibBZip2.class);
+
+	int BZ_OK = 0;
+	int BZ_RUN_OK = 1;
+	int BZ_FLUSH_OK = 2;
+	int BZ_FINISH_OK = 3;
+	int BZ_STREAM_END = 4;
+
+	int BZ_RUN = 0;
+	int BZ_FLUSH = 1;
+	int BZ_FINISH = 2;
+
+	int BZ2_bzCompressInit(BzStream stream, int blockSize100k, int verbosity, int workFactor);
+	int BZ2_bzCompress(BzStream stream, int action);
+	int BZ2_bzCompressEnd(BzStream stream);
 }

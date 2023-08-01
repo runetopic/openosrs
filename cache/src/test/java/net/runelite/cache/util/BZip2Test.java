@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Abex
+ * Copyright (c) 2023, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,15 +22,52 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api.dbtable;
+package net.runelite.cache.util;
 
-public final class DBTableID
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Random;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assume.assumeNoException;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+@Ignore
+public class BZip2Test
 {
-	public interface Quest
+	@BeforeClass
+	public static void beforeClass()
 	{
-		int TABLE = 0;
-		int NAME = 2;
-		int MAP_ELEMENT = 14;
-		int MAIN_QUEST = 19;
+		try
+		{
+			var l = LibBZip2.INSTANCE;
+		}
+		catch (UnsatisfiedLinkError ex)
+		{
+			assumeNoException(ex);
+		}
+	}
+
+	@Test
+	public void testLibBZip2Small() throws IOException
+	{
+		byte[] data = "runelite".getBytes(StandardCharsets.UTF_8);
+		byte[] ddata = BZip2.compressLibBZip2(data);
+		byte[] idata = BZip2.decompress(ddata, ddata.length);
+		assertEquals("runelite", new String(idata));
+	}
+
+	@Test
+	public void testLibBZipLarge() throws IOException
+	{
+		byte[] data = new byte[1024 * 1024];
+		Random r = new Random(42);
+		r.nextBytes(data);
+
+		byte[] ddata = BZip2.compressLibBZip2(data);
+		byte[] idata = BZip2.decompress(ddata, ddata.length);
+		assertArrayEquals(data, idata);
 	}
 }
