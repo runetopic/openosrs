@@ -43,11 +43,6 @@ public final class EnumID
 	 */
 	public static final int RUNEPOUCH_RUNE = 982;
 	public static final int XPDROP_COLORS = 1169;
-	/**
-	 * key: int
-	 * val: string boss name
-	 */
-	public static final int SLAYER_TASK_BOSS = 1174;
 
 	/**
 	 * Translates spellbook varbit into enum ID
@@ -79,4 +74,10 @@ public final class EnumID
 
 	public static final int PRAYERS_NORMAL = 4956;
 	public static final int PRAYERS_RUINOUS = 4959;
+
+	/**
+	 * key: int
+	 * val: struct slayer task
+	 */
+	public static final int SLAYER_TASK = 5008;
 }
