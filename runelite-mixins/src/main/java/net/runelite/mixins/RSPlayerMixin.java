@@ -27,6 +27,8 @@ package net.runelite.mixins;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.util.ArrayList;
+import java.util.Iterator;
+import net.runelite.api.ActorSpotAnim;
 import net.runelite.api.HeadIcon;
 import net.runelite.api.Model;
 import net.runelite.api.Perspective;
@@ -231,7 +233,7 @@ public abstract class RSPlayerMixin implements RSPlayer
 	@Replace("getModel")
 	public RSModel copy$getModel()
 	{
-		if (!client.isInterpolatePlayerAnimations() || !this.hasSpotAnim(getGraphic()) || this.getPoseAnimation() == 244)
+		if (!client.isInterpolatePlayerAnimations() || this.getPoseAnimation() == 244)
 		{
 			return copy$getModel();
 		}
@@ -245,6 +247,16 @@ public abstract class RSPlayerMixin implements RSPlayer
 			setActionFrame(Integer.MIN_VALUE | getActionFrameCycle() << 16 | actionFrame);
 			setPoseFrame(Integer.MIN_VALUE | getPoseFrameCycle() << 16 | poseFrame);
 			setSpotAnimFrame(Integer.MIN_VALUE | getSpotAnimationFrameCycle() << 16 | spotAnimFrame);
+			Iterator iter = getSpotAnims().iterator();
+			while (iter.hasNext())
+			{
+				ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+				int frame = actorSpotAnim.getFrame();
+				if (frame != -1)
+				{
+					actorSpotAnim.setFrame(Integer.MIN_VALUE | actorSpotAnim.getCycle() << 16 | frame);
+				}
+			}
 			return copy$getModel();
 		}
 		finally
@@ -253,6 +265,16 @@ public abstract class RSPlayerMixin implements RSPlayer
 			setActionFrame(actionFrame);
 			setPoseFrame(poseFrame);
 			setSpotAnimFrame(spotAnimFrame);
+			Iterator iter = getSpotAnims().iterator();
+			while (iter.hasNext())
+			{
+				ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+				int frame = actorSpotAnim.getFrame();
+				if (frame != -1)
+				{
+					actorSpotAnim.setFrame(frame & '\uFFFF');
+				}
+			}
 		}
 	}
 
