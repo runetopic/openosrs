@@ -423,6 +423,12 @@ public interface RSClient extends RSGameEngine, Client
 	@Override
 	int[] getWidgetPositionsY();
 
+	@Import("rootWidgetWidths")
+	int[] getWidgetWidths();
+
+	@Import("rootWidgetHeights")
+	int[] getWidgetHeights();
+
 	@Import("mouseCam")
 	boolean isMouseCam();
 
@@ -1655,4 +1661,7 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("modelDataArray")
 	RSModelData[] getModelDataArray();
+
+	@Import("validRootWidgets")
+	boolean[] getValidRootWidgets();
 }
