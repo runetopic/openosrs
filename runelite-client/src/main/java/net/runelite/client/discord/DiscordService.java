@@ -56,7 +56,7 @@ public class DiscordService implements AutoCloseable
 	private final DiscordRPC discordRPC;
 
 	// Hold a reference to the event handlers to prevent the garbage collector from deleting them
-	private final DiscordEventHandlers discordEventHandlers;
+	private DiscordEventHandlers discordEventHandlers;
 
 	@Getter
 	private DiscordUser currentUser;
@@ -65,6 +65,7 @@ public class DiscordService implements AutoCloseable
 	private DiscordService(
 		final EventBus eventBus,
 		final ScheduledExecutorService executorService,
+		@Named("runelite.discord.enable") boolean enable,
 		@Named("runelite.discord.appid") final String discordAppId,
 		final OpenOSRSConfig openOSRSConfig
 	)
@@ -75,21 +76,26 @@ public class DiscordService implements AutoCloseable
 		this.discordAppId = discordAppId;
 		this.openOSRSConfig = openOSRSConfig;
 
-		DiscordRPC discordRPC = null;
-		DiscordEventHandlers discordEventHandlers = null;
+		if (!enable)
+		{
+			this.discordRPC = null;
+			return;
+		}
+
+		DiscordRPC discordRPC;
 
 		try
 		{
 			discordRPC = DiscordRPC.INSTANCE;
-			discordEventHandlers = new DiscordEventHandlers();
 		}
 		catch (Error e)
 		{
 			log.warn("Failed to load Discord library, Discord support will be disabled.");
+			this.discordRPC = null;
+			return;
 		}
 
 		this.discordRPC = discordRPC;
-		this.discordEventHandlers = discordEventHandlers;
 	}
 
 	/**
@@ -105,12 +111,13 @@ public class DiscordService implements AutoCloseable
 			return;
 		}
 
-		if (discordEventHandlers == null)
+		if (discordRPC == null)
 		{
 			return;
 		}
 
 		log.info("Initializing Discord RPC service.");
+		discordEventHandlers = new DiscordEventHandlers();
 		discordEventHandlers.ready = this::ready;
 		discordEventHandlers.disconnected = this::disconnected;
 		discordEventHandlers.errored = this::errored;

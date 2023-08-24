@@ -475,6 +475,10 @@ public class GrandExchangePlugin extends Plugin
 		{
 			return WorldType.SEASONAL;
 		}
+		else if (worldTypes.contains(net.runelite.api.WorldType.TOURNAMENT_WORLD))
+		{
+			return WorldType.TOURNAMENT;
+		}
 		else if (worldTypes.contains(net.runelite.api.WorldType.DEADMAN))
 		{
 			return WorldType.DEADMAN;
