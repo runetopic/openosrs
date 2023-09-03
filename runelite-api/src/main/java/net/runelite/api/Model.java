@@ -24,7 +24,6 @@
  */
 package net.runelite.api;
 
-import java.util.HashMap;
 import javax.annotation.Nonnull;
 
 /**
@@ -65,16 +64,8 @@ public interface Model extends Mesh, Renderable
 	@Nonnull
 	AABB getAABB(int orientation);
 
-	HashMap<Integer, AABB> getAABBMap();
-
-	void calculateBoundingBox(int orientation);
-
-	int getLastOrientation();
-
 	int getXYZMag();
 	boolean isClickable();
-	
-	void drawFace(int face);
 
 	int[] getVertexNormalsX();
 	int[] getVertexNormalsY();

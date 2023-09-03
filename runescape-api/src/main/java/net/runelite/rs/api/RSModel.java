@@ -135,7 +135,6 @@ public interface RSModel extends RSRenderable, Model
 	int getDiameter();
 
 	@Import("aabb")
-	@Override
 	HashMap<Integer, AABB> getAABBMap();
 
 	@Import("faceTextures")
@@ -155,7 +154,6 @@ public interface RSModel extends RSRenderable, Model
 	int getBottomY();;
 	
 	@Import("drawFace")
-	@Override
 	void drawFace(int face);
 
 	void interpolateFrames(RSFrames frames, int frameId, RSFrames nextFrames, int nextFrameId, int interval, int intervalCount);
