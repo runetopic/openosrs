@@ -218,10 +218,17 @@ public abstract class RSActorMixin implements RSActor
 		if (this instanceof RSNPC)
 		{
 			int id = ((RSNPC) this).getId();
-
-			if (id == NpcID.CORPOREAL_BEAST && this.getAnimation() == 1676)
+			switch (id)
 			{
-				setDead(true);
+				case 8615:
+				case 8616:
+				case 8617:
+				case 8618:
+				case 8619:
+				case 8620:
+				case 8621:
+				case 8622:
+					return;
 			}
 		}
 
