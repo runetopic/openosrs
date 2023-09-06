@@ -2038,6 +2038,7 @@ public interface Client extends OAuthApi, GameEngine
 
 	boolean isGpu();
 	void setGpuFlags(int gpuflags);
+	int getGpuFlags();
 
 	int get3dZoom();
 
