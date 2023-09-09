@@ -38,6 +38,7 @@ public interface TileObject extends Locatable
 	/**
 	 * A bitfield containing various flags:
 	 * <pre>{@code
+	 * (RL) plane = bits >> 49 & 3
 	 * id = bits >> 17 & 0xffffffff
 	 * wall = bits >> 16 & 1
 	 * type = bits >> 14 & 3
