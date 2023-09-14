@@ -1268,7 +1268,7 @@ public interface Client extends OAuthApi, GameEngine
 	 * @return the new projectile
 	 */
 	Projectile createProjectile(int id, int plane, int startX, int startY, int startZ, int startCycle, int endCycle,
-								int slope, int startHeight, int endHeight, @Nullable Actor target, int targetX, int targetY);
+		int slope, int startHeight, int endHeight, @Nullable Actor target, int targetX, int targetY);
 
 	/**
 	 * Gets a list of all projectiles currently spawned.
@@ -2059,8 +2059,6 @@ public interface Client extends OAuthApi, GameEngine
 
 	NodeCache getCachedModels2();
 
-	void setRenderArea(boolean[][] renderArea);
-
 	int getRasterizer3D_clipMidX2();
 
 	int getRasterizer3D_clipNegativeMidX();
@@ -2132,10 +2130,10 @@ public interface Client extends OAuthApi, GameEngine
 	}
 
 	void invokeMenuAction(String option, String target, int identifier, int opcode, int param0, int param1,
-			int screenX, int screenY);
+		int screenX, int screenY);
 
 	void invokeMenuAction(String option, String target, int identifier, int opcode, int param0, int param1,
-			int itemId, int screenX, int screenY);
+		int itemId, int screenX, int screenY);
 
 	MouseRecorder getMouseRecorder();
 
