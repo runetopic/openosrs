@@ -2059,6 +2059,8 @@ public interface Client extends OAuthApi, GameEngine
 
 	NodeCache getCachedModels2();
 
+	void setRenderArea(boolean[][] renderArea);
+
 	int getRasterizer3D_clipMidX2();
 
 	int getRasterizer3D_clipNegativeMidX();
