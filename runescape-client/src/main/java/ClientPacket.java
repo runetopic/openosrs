@@ -669,7 +669,7 @@ public class ClientPacket implements class307 {
 
 					InterfaceParent var4 = (InterfaceParent)Client.interfaceParents.get((long)var3.id);
 					if (var4 != null) {
-						Interpreter.method2071(var4.group, var1);
+						Interpreter.runIntfCloseListeners(var4.group, var1);
 					}
 				}
 

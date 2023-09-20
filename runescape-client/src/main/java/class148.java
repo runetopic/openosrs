@@ -204,7 +204,7 @@ public class class148 {
 	)
 	static final void method3177() {
 		if (Client.logoutTimer > 0) {
-			CollisionMap.method4301();
+			CollisionMap.logOut();
 		} else {
 			Client.timer.method7836();
 			DefaultsGroup.updateGameState(40);

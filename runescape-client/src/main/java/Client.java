@@ -551,7 +551,8 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 	@ObfuscatedGetter(
 		intValue = -848420063
 	)
-	static int field609;
+	@Export("mouseCamClickedY")
+	static int mouseCamClickedY;
 	@ObfuscatedName("lc")
 	@ObfuscatedGetter(
 		intValue = 197447207
@@ -752,7 +753,8 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 	@Export("playerOptionsPriorities")
 	static boolean[] playerOptionsPriorities;
 	@ObfuscatedName("nh")
-	static int[] field655;
+	@Export("defaultRotations")
+	static int[] defaultRotations;
 	@ObfuscatedName("nw")
 	@ObfuscatedGetter(
 		intValue = 1612926111
@@ -1481,7 +1483,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 		camAngleDY = 0;
 		camAngleDX = 0;
 		field608 = 0;
-		field609 = 0;
+		mouseCamClickedY = 0;
 		oculusOrbState = 0;
 		camFollowHeight = 50;
 		field612 = 0;
@@ -1527,7 +1529,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 		playerMenuOpcodes = new int[]{44, 45, 46, 47, 48, 49, 50, 51};
 		playerMenuActions = new String[8];
 		playerOptionsPriorities = new boolean[8];
-		field655 = new int[]{768, 1024, 1280, 512, 1536, 256, 0, 1792};
+		defaultRotations = new int[]{768, 1024, 1280, 512, 1536, 256, 0, 1792};
 		combatTargetPlayerIndex = -1;
 		groundItems = new NodeDeque[4][104][104];
 		pendingSpawns = new NodeDeque();
@@ -3450,9 +3452,9 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 																					}
 
 																					if (MouseHandler.MouseHandler_currentButton == 4 && UserComparator8.mouseCam) {
-																						var4 = MouseHandler.MouseHandler_y - field609;
+																						var4 = MouseHandler.MouseHandler_y - mouseCamClickedY;
 																						camAngleDX = var4 * 2;
-																						field609 = var4 != -1 && var4 != 1 ? (MouseHandler.MouseHandler_y + field609) / 2 : MouseHandler.MouseHandler_y;
+																						mouseCamClickedY = var4 != -1 && var4 != 1 ? (MouseHandler.MouseHandler_y + mouseCamClickedY) / 2 : MouseHandler.MouseHandler_y;
 																						var5 = field608 - MouseHandler.MouseHandler_x;
 																						camAngleDY = var5 * 2;
 																						field608 = var5 != -1 && var5 != 1 ? (field608 + MouseHandler.MouseHandler_x) / 2 : MouseHandler.MouseHandler_x;
@@ -3473,7 +3475,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 																							camAngleDX /= 2;
 																						}
 
-																						field609 = MouseHandler.MouseHandler_y;
+																						mouseCamClickedY = MouseHandler.MouseHandler_y;
 																						field608 = MouseHandler.MouseHandler_x;
 																					}
 
@@ -4306,7 +4308,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 
 				if (ServerPacket.field3318 == var1.serverPacket) {
 					if (rootInterface != -1) {
-						Interpreter.method2071(rootInterface, 0);
+						Interpreter.runIntfCloseListeners(rootInterface, 0);
 					}
 
 					var1.serverPacket = null;
@@ -4631,7 +4633,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 					}
 
 					if (rootInterface != -1) {
-						Interpreter.method2071(rootInterface, 1);
+						Interpreter.runIntfCloseListeners(rootInterface, 1);
 					}
 
 					var1.serverPacket = null;
@@ -5996,7 +5998,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 				}
 
 				if (ServerPacket.field3328 == var1.serverPacket) {
-					CollisionMap.method4301();
+					CollisionMap.logOut();
 					var1.serverPacket = null;
 					return false;
 				}
@@ -6064,7 +6066,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 				}
 
 				class190.RunException_sendStackTrace("" + (var1.serverPacket != null ? var1.serverPacket.id : -1) + "," + (var1.field1420 != null ? var1.field1420.id : -1) + "," + (var1.field1433 != null ? var1.field1433.id : -1) + "," + var1.serverPacketLength, (Throwable)null);
-				CollisionMap.method4301();
+				CollisionMap.logOut();
 			} catch (IOException var48) {
 				class148.method3177();
 			} catch (Exception var49) {
@@ -6075,7 +6077,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 				}
 
 				class190.RunException_sendStackTrace(var21, var49);
-				CollisionMap.method4301();
+				CollisionMap.logOut();
 			}
 
 			return true;
