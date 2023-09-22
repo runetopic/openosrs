@@ -1765,7 +1765,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 		this.method488(field756, 0);
 		this.method488(field755, 1);
 		this.setUpClipboard();
-		UserComparator10.field1480 = new ArchiveDisk(255, JagexCache.JagexCache_dat2File, JagexCache.JagexCache_idx255File, 500000);
+		UserComparator10.masterDisk = new ArchiveDisk(255, JagexCache.JagexCache_dat2File, JagexCache.JagexCache_idx255File, 500000);
 		class91.clientPreferences = FadeInTask.method7759();
 		class416.method7746(this, GraphicsObject.field888);
 		NPCComposition.setWindowedMode(class91.clientPreferences.method2525());
@@ -3771,7 +3771,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 		viewportY = -1;
 		if (rootInterface != -1) {
 			rootWidgetCount = 0;
-			class410.method7604(rootInterface, 0, 0, class340.canvasWidth, class491.canvasHeight, 0, 0, -1);
+			class410.drawWidgets(rootInterface, 0, 0, class340.canvasWidth, class491.canvasHeight, 0, 0, -1);
 		}
 
 		Rasterizer2D.Rasterizer2D_resetClip();
