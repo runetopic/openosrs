@@ -21,7 +21,4 @@ public interface RSWidgetDefinition
 
 	@Import("Widget_cachedSpriteMasks")
 	RSEvictingDualNodeHashTable getSpriteMasksCache();
-
-	@Import("widgetArchive")
-	RSAbstractArchive getWidgetArchive();
 }
