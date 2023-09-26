@@ -30,7 +30,6 @@ buildscript {
         mavenLocal()
         gradlePluginPortal()
         maven(url = "https://raw.githubusercontent.com/melxin/hosting/master")
-        maven(url = "https://raw.githubusercontent.com/open-osrs/hosting/master")
         maven(url = "https://repo.runelite.net")
     }
     dependencies {
@@ -92,7 +91,7 @@ subprojects {
         exclusiveContent {
             forRepository {
                 maven {
-                    url = uri("https://raw.githubusercontent.com/open-osrs/hosting/master")
+                    url = uri("https://raw.githubusercontent.com/melxin/hosting/master")
                 }
             }
             filter {
