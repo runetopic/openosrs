@@ -2503,4 +2503,6 @@ public interface Client extends OAuthApi, GameEngine
 	 * @param zoom
 	 */
 	void setMinimapZoom(double zoom);
+
+	Rasterizer getRasterizer();
 }
