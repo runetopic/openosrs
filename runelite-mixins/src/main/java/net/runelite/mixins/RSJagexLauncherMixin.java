@@ -45,7 +45,6 @@ public abstract class RSJagexLauncherMixin implements RSClient
 	@Override
 	public String getCredentialsProperty(String var1)
 	{
-		client.getLogger().info("rl dir: {}", runeLiteDir.getAbsolutePath());
 		if (this.credentialsProperties == null)
 		{
 			this.credentialsFile = new File(this.runeLiteDir, System.getProperty("runelite.credentials.path", "credentials.properties"));
