@@ -76,12 +76,6 @@ public interface Scene
 	void setMinLevel(int minLevel);
 
 	/**
-	 * Remove a tile from the scene
-	 * @param tile
-	 */
-	void removeTile(Tile tile);
-
-	/**
 	 * Remove a game object from the scene
 	 * @param gameObject
 	 */
