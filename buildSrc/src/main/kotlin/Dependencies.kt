@@ -32,5 +32,5 @@ object ProjectVersions {
     const val rsversion = 217
     const val cacheversion = 165
 
-    const val lombokVersion = "1.18.20"
+    const val lombokVersion = "1.18.30"
 }
