@@ -28,6 +28,10 @@ package net.runelite.mixins;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Ints;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,15 +62,6 @@ import net.runelite.api.IntegerNode;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.MenuAction;
-import static net.runelite.api.MenuAction.PLAYER_EIGHTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_FIFTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_FIRST_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_FOURTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_SECOND_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_SEVENTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_SIXTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_THIRD_OPTION;
-import static net.runelite.api.MenuAction.UNKNOWN;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.MessageNode;
 import net.runelite.api.Model;
@@ -77,7 +72,6 @@ import net.runelite.api.NameableContainer;
 import net.runelite.api.NodeCache;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.Perspective;
-import static net.runelite.api.Perspective.LOCAL_TILE_SIZE;
 import net.runelite.api.Player;
 import net.runelite.api.Point;
 import net.runelite.api.Prayer;
@@ -140,19 +134,63 @@ import net.runelite.api.overlay.OverlayIndex;
 import net.runelite.api.vars.AccountType;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetConfig;
+import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
 import net.runelite.api.widgets.WidgetType;
-import net.runelite.api.widgets.WidgetID;
+import net.runelite.rs.api.RSAbstractArchive;
+import net.runelite.rs.api.RSArchive;
+import net.runelite.rs.api.RSBuffer;
+import net.runelite.rs.api.RSChatChannel;
+import net.runelite.rs.api.RSClanChannel;
+import net.runelite.rs.api.RSClient;
+import net.runelite.rs.api.RSCollisionMap;
+import net.runelite.rs.api.RSDbRowType;
+import net.runelite.rs.api.RSDbTable;
+import net.runelite.rs.api.RSDbTableType;
+import net.runelite.rs.api.RSDualNode;
+import net.runelite.rs.api.RSEnumComposition;
+import net.runelite.rs.api.RSEvictingDualNodeHashTable;
+import net.runelite.rs.api.RSFloorOverlayDefinition;
+import net.runelite.rs.api.RSFont;
+import net.runelite.rs.api.RSFriendSystem;
+import net.runelite.rs.api.RSGameEngine;
+import net.runelite.rs.api.RSIndexedSprite;
+import net.runelite.rs.api.RSInterfaceParent;
+import net.runelite.rs.api.RSItemContainer;
+import net.runelite.rs.api.RSModelData;
+import net.runelite.rs.api.RSMusicSong;
+import net.runelite.rs.api.RSNPC;
+import net.runelite.rs.api.RSNode;
+import net.runelite.rs.api.RSNodeDeque;
+import net.runelite.rs.api.RSNodeHashTable;
+import net.runelite.rs.api.RSPacketBuffer;
+import net.runelite.rs.api.RSPlayer;
+import net.runelite.rs.api.RSProjectile;
+import net.runelite.rs.api.RSRuneLiteClanMember;
+import net.runelite.rs.api.RSRuneLiteMenuEntry;
+import net.runelite.rs.api.RSScene;
+import net.runelite.rs.api.RSScriptEvent;
+import net.runelite.rs.api.RSSpritePixels;
+import net.runelite.rs.api.RSStructComposition;
+import net.runelite.rs.api.RSTile;
+import net.runelite.rs.api.RSTileItem;
+import net.runelite.rs.api.RSUsername;
+import net.runelite.rs.api.RSWidget;
+import net.runelite.rs.api.RSWorld;
+import static net.runelite.api.MenuAction.PLAYER_EIGHTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_FIFTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_FIRST_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_FOURTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_SECOND_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_SEVENTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_SIXTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_THIRD_OPTION;
+import static net.runelite.api.MenuAction.UNKNOWN;
+import static net.runelite.api.Perspective.LOCAL_TILE_SIZE;
 import static net.runelite.mixins.CameraMixin.NEW_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MIN;
-
-import net.runelite.rs.api.*;
-import com.google.common.primitives.Ints;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @Mixin(RSClient.class)
 public abstract class RSClientMixin implements RSClient
@@ -1396,7 +1434,6 @@ public abstract class RSClientMixin implements RSClient
 		return createRSItemSprite(itemId, quantity, border, shadowColor, stackable, noted);
 	}
 
-
 	@Inject
 	@Override
 	public SpritePixels createItemSprite(int itemId, int quantity, int border, int shadowColor, int stackable, boolean noted, int scale)
@@ -1933,12 +1970,12 @@ public abstract class RSClientMixin implements RSClient
 		for (int i = client.getMenuOptionCount() - 1; i >= 0; --i)
 		{
 			if (client.getMenuOpcodes()[i] == opcode
-					&& client.getMenuIdentifiers()[i] == id
-					&& client.getMenuArguments1()[i] == param0
-					&& client.getMenuArguments2()[i] == param1
-					&& client.getMenuItemIds()[i] == itemId
-					&& option.equals(client.getMenuOptions()[i])
-					&& target.equals(client.getMenuTargets()[i])
+				&& client.getMenuIdentifiers()[i] == id
+				&& client.getMenuArguments1()[i] == param0
+				&& client.getMenuArguments2()[i] == param1
+				&& client.getMenuItemIds()[i] == itemId
+				&& option.equals(client.getMenuOptions()[i])
+				&& target.equals(client.getMenuTargets()[i])
 			)
 			{
 				menuEntry = rl$menuEntries[i];
@@ -1950,12 +1987,12 @@ public abstract class RSClientMixin implements RSClient
 		if (client.getTempMenuAction() != null)
 		{
 			isTemp = client.getTempMenuAction().getOpcode() == opcode &&
-					client.getTempMenuAction().getIdentifier() == id &&
-					client.getTempMenuAction().getOption().equals(option) &&
-					client.getTempMenuAction().getTarget().equals(target) &&
-					client.getTempMenuAction().getParam0() == param0 &&
-					client.getTempMenuAction().getParam1() == param1 &&
-					client.getTempMenuAction().getItemId() == itemId;
+				client.getTempMenuAction().getIdentifier() == id &&
+				client.getTempMenuAction().getOption().equals(option) &&
+				client.getTempMenuAction().getTarget().equals(target) &&
+				client.getTempMenuAction().getParam0() == param0 &&
+				client.getTempMenuAction().getParam1() == param1 &&
+				client.getTempMenuAction().getItemId() == itemId;
 		}
 
 		if (menuEntry == null && isTemp)
@@ -2040,17 +2077,17 @@ public abstract class RSClientMixin implements RSClient
 		if (printMenuActions)
 		{
 			client.getLogger().info(
-					"|MenuAction|: MenuOption={} MenuTarget={} Id={} Opcode={}/{} Param0={} Param1={} CanvasX={} CanvasY={} ItemId={}",
-					event.getMenuOption(), event.getMenuTarget(), event.getId(),
-					event.getMenuAction(), opcode + (decremented ? 2000 : 0),
-					event.getParam0(), event.getParam1(), canvasX, canvasY, event.getItemId()
+				"|MenuAction|: MenuOption={} MenuTarget={} Id={} Opcode={}/{} Param0={} Param1={} CanvasX={} CanvasY={} ItemId={}",
+				event.getMenuOption(), event.getMenuTarget(), event.getId(),
+				event.getMenuAction(), opcode + (decremented ? 2000 : 0),
+				event.getParam0(), event.getParam1(), canvasX, canvasY, event.getItemId()
 			);
 
 			if (menuEntry != null)
 			{
 				client.getLogger().info(
-						"|MenuEntry|: Idx={} MenuOption={} MenuTarget={} Id={} MenuAction={} Param0={} Param1={} Consumer={} IsItemOp={} ItemOp={} ItemID={} Widget={}",
-						menuEntry.getIdx(), menuEntry.getOption(), menuEntry.getTarget(), menuEntry.getIdentifier(), menuEntry.getType(), menuEntry.getParam0(), menuEntry.getParam1(), menuEntry.getConsumer(), menuEntry.isItemOp(), menuEntry.getItemOp(), menuEntry.getItemId(), menuEntry.getWidget()
+					"|MenuEntry|: Idx={} MenuOption={} MenuTarget={} Id={} MenuAction={} Param0={} Param1={} Consumer={} IsItemOp={} ItemOp={} ItemID={} Widget={}",
+					menuEntry.getIdx(), menuEntry.getOption(), menuEntry.getTarget(), menuEntry.getIdentifier(), menuEntry.getType(), menuEntry.getParam0(), menuEntry.getParam1(), menuEntry.getConsumer(), menuEntry.isItemOp(), menuEntry.getItemOp(), menuEntry.getItemId(), menuEntry.getWidget()
 				);
 			}
 		}
@@ -2381,7 +2418,6 @@ public abstract class RSClientMixin implements RSClient
 			}
 		}
 	}
-
 
 	@Inject
 	@Override
@@ -2920,7 +2956,7 @@ public abstract class RSClientMixin implements RSClient
 					Object[] childOnOpListener = child.getOnOpListener();
 					try
 					{
-						child.setOnOpListener((Object[])null);
+						child.setOnOpListener((Object[]) null);
 						copy$menuAction(childIndex, widget.getId(), MenuAction.CC_OP.getId(), 1, -1, "", "", -1, -1);
 					}
 					finally
@@ -2929,7 +2965,6 @@ public abstract class RSClientMixin implements RSClient
 					}
 				}
 			}
-
 		}
 	}
 
@@ -3048,7 +3083,6 @@ public abstract class RSClientMixin implements RSClient
 			client.getCallbacks().post(new ClanChannelChanged(clanChannel, idx, false));
 		}
 	}
-
 
 	@Inject
 	public static RSArchive[] archives = new RSArchive[21];
@@ -3567,7 +3601,7 @@ public abstract class RSClientMixin implements RSClient
 		if (client.getMouseIdleTicks() > 0)
 		{
 			long l = System.nanoTime() - lastActivityNanos;
-			idleCycles = (int)(l / 20000000L);
+			idleCycles = (int) (l / 20000000L);
 		}
 		else
 		{
