@@ -24,14 +24,14 @@
  */
 
 struct uniform {
-  float cameraYaw;
-  float cameraPitch;
+  int cameraYaw;
+  int cameraPitch;
   int centerX;
   int centerY;
   int zoom;
-  float cameraX;
-  float cameraY;
-  float cameraZ;
+  int cameraX;
+  int cameraY;
+  int cameraZ;
   int4 sinCosTable[2048];
 };
 
