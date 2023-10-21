@@ -281,13 +281,6 @@ public interface Client extends OAuthApi, GameEngine
 	int getCameraX();
 
 	/**
-	 * Floating point camera position, x-axis
-	 * @see #getCameraX()
-	 * @return
-	 */
-	double getCameraFpX();
-
-	/**
 	 * Gets the y-axis coordinate of the camera.
 	 * <p>
 	 * This value is a local coordinate value similar to
@@ -296,13 +289,6 @@ public interface Client extends OAuthApi, GameEngine
 	 * @return the camera y coordinate
 	 */
 	int getCameraY();
-
-	/**
-	 * Floating point camera position, y-axis
-	 * @see #getCameraY()
-	 * @return
-	 */
-	double getCameraFpY();
 
 	/**
 	 * Gets the z-axis coordinate of the camera.
@@ -315,14 +301,7 @@ public interface Client extends OAuthApi, GameEngine
 	int getCameraZ();
 
 	/**
-	 * Floating point camera position, z-axis
-	 * @see #getCameraZ()
-	 * @return
-	 */
-	double getCameraFpZ();
-
-	/**
-	 * Gets the pitch of the camera.
+	 * Gets the actual pitch of the camera.
 	 * <p>
 	 * The value returned by this method is measured in JAU, or Jagex
 	 * Angle Unit, which is 1/1024 of a revolution.
@@ -332,25 +311,11 @@ public interface Client extends OAuthApi, GameEngine
 	int getCameraPitch();
 
 	/**
-	 * Floating point camera pitch.
-	 * @see #getCameraPitch()
-	 * @return
-	 */
-	double getCameraFpPitch();
-
-	/**
 	 * Gets the yaw of the camera.
 	 *
 	 * @return the camera yaw
 	 */
 	int getCameraYaw();
-
-	/**
-	 * Floating point camera yaw
-	 * @see #getCameraYaw()
-	 * @return
-	 */
-	double getCameraFpYaw();
 
 	/**
 	 * Gets the current world number of the logged in player.
