@@ -26,27 +26,12 @@ package net.runelite.client.plugins.playerindicators;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Provides;
-import lombok.extern.slf4j.Slf4j;
 import javax.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.FriendsChatRank;
-import net.runelite.api.MenuAction;
-import net.runelite.api.MenuEntry;
-import net.runelite.api.Player;
-import net.runelite.api.ScriptID;
-import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.ScriptPostFired;
-import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
-import net.runelite.client.callback.ClientThread;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.game.ChatIconManager;
-import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.ui.overlay.OverlayManager;
-import net.runelite.client.util.ColorUtil;
 import static net.runelite.api.FriendsChatRank.UNRANKED;
+import net.runelite.api.MenuAction;
 import static net.runelite.api.MenuAction.ITEM_USE_ON_PLAYER;
 import static net.runelite.api.MenuAction.PLAYER_EIGHTH_OPTION;
 import static net.runelite.api.MenuAction.PLAYER_FIFTH_OPTION;
@@ -59,6 +44,22 @@ import static net.runelite.api.MenuAction.PLAYER_THIRD_OPTION;
 import static net.runelite.api.MenuAction.RUNELITE_PLAYER;
 import static net.runelite.api.MenuAction.WALK;
 import static net.runelite.api.MenuAction.WIDGET_TARGET_ON_PLAYER;
+import net.runelite.api.MenuEntry;
+import net.runelite.api.Player;
+import net.runelite.api.ScriptID;
+import net.runelite.api.events.ClientTick;
+import net.runelite.api.events.ScriptPostFired;
+import net.runelite.api.widgets.ComponentID;
+import net.runelite.api.widgets.Widget;
+import net.runelite.client.callback.ClientThread;
+import net.runelite.client.config.ConfigManager;
+import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ProfileChanged;
+import net.runelite.client.game.ChatIconManager;
+import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
+import net.runelite.client.util.ColorUtil;
 
 @PluginDescriptor(
 	name = "Player Indicators",
@@ -121,6 +122,12 @@ public class PlayerIndicatorsPlugin extends Plugin
 		overlayManager.remove(playerIndicatorsOverlay);
 		overlayManager.remove(playerIndicatorsTileOverlay);
 		overlayManager.remove(playerIndicatorsMinimapOverlay);
+	}
+
+	@Subscribe
+	public void onProfileChanged(ProfileChanged profileChanged)
+	{
+		migrate();
 	}
 
 	private void migrate()
@@ -283,7 +290,7 @@ public class PlayerIndicatorsPlugin extends Plugin
 		{
 			clientThread.invokeLater(() ->
 			{
-				Widget tradeTitle = client.getWidget(WidgetInfo.TRADE_WINDOW_HEADER);
+				Widget tradeTitle = client.getWidget(ComponentID.TRADE_HEADER);
 				String header = tradeTitle.getText();
 				String playerName = header.substring(TRADING_WITH_TEXT.length());
 
