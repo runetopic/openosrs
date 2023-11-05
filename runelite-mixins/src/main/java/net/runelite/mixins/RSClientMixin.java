@@ -138,6 +138,7 @@ import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
 import net.runelite.api.widgets.WidgetType;
+import net.runelite.api.widgets.WidgetUtil;
 import net.runelite.rs.api.RSAbstractArchive;
 import net.runelite.rs.api.RSArchive;
 import net.runelite.rs.api.RSBuffer;
@@ -725,15 +726,22 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public Widget getWidget(int id)
 	{
-		return getWidget(WidgetInfo.TO_GROUP(id), WidgetInfo.TO_CHILD(id));
+		return getWidget(WidgetUtil.componentToInterface(id), WidgetUtil.componentToId(id));
 	}
 
 	@Inject
 	@Override
 	public RSWidget[] getGroup(int groupId)
 	{
-		RSWidget[][] widgets = client.getWidgetDefinition().getWidgets();
-		return widgets != null && groupId >= 0 && groupId < widgets.length && widgets[groupId] != null ? widgets[groupId] : null;
+		if (client.getWidgetDefinition() == null)
+		{
+			return null;
+		}
+		else
+		{
+			RSWidget[][] widgets = client.getWidgetDefinition().getWidgets();
+			return widgets != null && groupId >= 0 && groupId < widgets.length && widgets[groupId] != null ? widgets[groupId] : null;
+		}
 	}
 
 	@Inject
@@ -2395,7 +2403,7 @@ public abstract class RSClientMixin implements RSClient
 			{
 				if (widget != null)
 				{
-					group = WidgetInfo.TO_GROUP(widget.getId());
+					group = WidgetUtil.componentToInterface(widget.getId());
 					break;
 				}
 			}
@@ -2410,7 +2418,7 @@ public abstract class RSClientMixin implements RSClient
 			for (int i = hiddenWidgets.size() - 1; i >= 0; i--)
 			{
 				Widget widget = hiddenWidgets.get(i);
-				if (WidgetInfo.TO_GROUP(widget.getId()) == group)
+				if (WidgetUtil.componentToInterface(widget.getId()) == group)
 				{
 					widget.setHidden(false);
 					hiddenWidgets.remove(i);
