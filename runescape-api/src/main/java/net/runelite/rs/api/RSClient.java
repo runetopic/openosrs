@@ -1689,6 +1689,15 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("validRootWidgets")
 	boolean[] getValidRootWidgets();
 
+	@Import("scriptEvents")
+	RSNodeDeque getScriptEvents();
+
+	@Import("scriptEvents2")
+	RSNodeDeque getScriptEvents2();
+
+	@Import("scriptEvents3")
+	RSNodeDeque getScriptEvents3();
+
 	/**
 	 * Jagex launcher credentials
 	 */
