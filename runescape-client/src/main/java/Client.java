@@ -2792,7 +2792,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 						class53.method1110();
 						Players.updatePlayer(var2);
 						DefaultsGroup.field4740 = -1;
-						GrandExchangeOfferUnitPriceComparator.method7146(false, var2, revision >= 218);
+						GrandExchangeOfferUnitPriceComparator.loadRegions(false, var2, revision >= 218);
 						packetWriter.serverPacket = null;
 					}
 
@@ -4325,7 +4325,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 					if (var25 != null) {
 						for (var7 = 0; var7 < var25.itemIds.length; ++var7) {
 							var25.itemIds[var7] = 0;
-							var25.field3791[var7] = 0;
+							var25.itemQuantities[var7] = 0;
 						}
 					}
 
@@ -4341,7 +4341,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 
 						if (var25 != null && var8 < var25.itemIds.length) {
 							var25.itemIds[var8] = var9;
-							var25.field3791[var8] = var23;
+							var25.itemQuantities[var8] = var23;
 						}
 
 						class185.itemContainerSetItem(var5, var8, var9 - 1, var23);
@@ -5270,7 +5270,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 
 						if (var25 != null && var7 >= 0 && var7 < var25.itemIds.length) {
 							var25.itemIds[var7] = var8;
-							var25.field3791[var7] = var9;
+							var25.itemQuantities[var7] = var9;
 						}
 					}
 
@@ -5386,7 +5386,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 				}
 
 				if (ServerPacket.field3329 == var1.serverPacket) {
-					GrandExchangeOfferUnitPriceComparator.method7146(true, var1.packetBuffer, false);
+					GrandExchangeOfferUnitPriceComparator.loadRegions(true, var1.packetBuffer, false);
 					var1.serverPacket = null;
 					return true;
 				}
@@ -5424,13 +5424,13 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 				}
 
 				if (ServerPacket.field3365 == var1.serverPacket) {
-					GrandExchangeOfferUnitPriceComparator.method7146(false, var1.packetBuffer, false);
+					GrandExchangeOfferUnitPriceComparator.loadRegions(false, var1.packetBuffer, false);
 					var1.serverPacket = null;
 					return true;
 				}
 
 				if (ServerPacket.field3341 == var1.serverPacket) {
-					GrandExchangeOfferUnitPriceComparator.method7146(false, var1.packetBuffer, true);
+					GrandExchangeOfferUnitPriceComparator.loadRegions(false, var1.packetBuffer, true);
 					var1.serverPacket = null;
 					return true;
 				}
