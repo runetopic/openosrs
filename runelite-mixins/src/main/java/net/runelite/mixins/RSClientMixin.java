@@ -92,6 +92,7 @@ import net.runelite.api.clan.ClanSettings;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.AccountHashChanged;
+import net.runelite.api.events.AmbientSoundEffectCreated;
 import net.runelite.api.events.BeforeMenuRender;
 import net.runelite.api.events.CanvasSizeChanged;
 import net.runelite.api.events.ChatMessage;
@@ -165,6 +166,7 @@ import net.runelite.rs.api.RSNPC;
 import net.runelite.rs.api.RSNode;
 import net.runelite.rs.api.RSNodeDeque;
 import net.runelite.rs.api.RSNodeHashTable;
+import net.runelite.rs.api.RSObjectSound;
 import net.runelite.rs.api.RSPacketBuffer;
 import net.runelite.rs.api.RSPlayer;
 import net.runelite.rs.api.RSProjectile;
@@ -3811,5 +3813,13 @@ public abstract class RSClientMixin implements RSClient
 	{
 		return expandedMapLoadingChunks;
 	}
-}
 
+	@Inject
+	@MethodHook(value = "createObjectSound", end = true)
+	public static void onAmbientSoundEffect(int var0, int var1, int var2, ObjectComposition var3, int var4)
+	{
+		RSObjectSound ambientSoundEffect = (RSObjectSound) client.getAmbientSoundEffects().last();
+		AmbientSoundEffectCreated ambientSoundEffectCreated = new AmbientSoundEffectCreated(ambientSoundEffect);
+		client.getCallbacks().post(ambientSoundEffectCreated);
+	}
+}
