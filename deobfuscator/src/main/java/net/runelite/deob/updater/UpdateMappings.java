@@ -42,6 +42,7 @@ import net.runelite.deob.deobfuscators.mapping.ParallelExecutorMapping;
 import net.runelite.deob.deobfuscators.transformers.BufferRenameTransformer;
 import net.runelite.deob.deobfuscators.transformers.ClassToPackageTransformer;
 import net.runelite.deob.deobfuscators.transformers.GraphicsObjectTransformer;
+import net.runelite.deob.deobfuscators.transformers.JSONSyntheticTransformer;
 import net.runelite.deob.deobfuscators.transformers.ScriptOpcodesTransformer;
 import net.runelite.deob.deobfuscators.transformers.BadEnumConstructorTransformer;
 import net.runelite.deob.util.JarUtil;
@@ -110,6 +111,8 @@ public class UpdateMappings
 		new GraphicsObjectTransformer().transform(group2);
 
 		new ClassToPackageTransformer().transform(group2);
+		new JSONSyntheticTransformer().transform(group2);
+		new BadEnumConstructorTransformer().transform(group2);
 
 		for (ClassFile cf : group2)
 		{
@@ -120,8 +123,6 @@ public class UpdateMappings
 				.collect(Collectors.toList())
 				.forEach(annotations::remove);
 		}
-
-		new BadEnumConstructorTransformer().transform(group2);
 	}
 
 	public void save(File out) throws IOException
