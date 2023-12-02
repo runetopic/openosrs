@@ -8,7 +8,7 @@ import net.runelite.mapping.ObfuscatedSignature;
 
 @ObfuscatedName("ok")
 @Implements("ModeWhere")
-public enum ModeWhere implements MouseWheel {
+public enum ModeWhere implements Enum {
 	@ObfuscatedName("at")
 	@ObfuscatedSignature(
 		descriptor = "Lok;"
