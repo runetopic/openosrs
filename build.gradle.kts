@@ -210,5 +210,6 @@ tasks {
 
         classpath = project(":runelite-client").sourceSets.main.get().runtimeClasspath
         enableAssertions = true
+        jvmArgs("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED")
     }
 }
