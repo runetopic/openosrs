@@ -28,7 +28,8 @@ import org.ajoberstar.grgit.Grgit
 buildscript {
     repositories {
         mavenLocal()
-        gradlePluginPortal()
+        mavenCentral()
+        //gradlePluginPortal()
         maven(url = "https://raw.githubusercontent.com/melxin/hosting/master")
         maven(url = "https://repo.runelite.net")
     }
