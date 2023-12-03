@@ -1454,7 +1454,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 			}
 		}
 
-		field537 = class415.method7821(var2);
+		field537 = class415.base64Encode(var2);
 		var1 = "com_jagex_auth_desktop_runelite:public".length();
 		var2 = new byte[var1];
 
@@ -1467,7 +1467,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 			}
 		}
 
-		field538 = class415.method7821(var2);
+		field538 = class415.base64Encode(var2);
 		Login_isUsernameRemembered = false;
 		secureRandomFuture = new SecureRandomFuture();
 		randomDatData = null;
@@ -2045,20 +2045,20 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 		var2.put("grant_type", "refresh_token");
 		var2.put("scope", "gamesso.token.create");
 		var2.put("refresh_token", var1);
-		URL var3 = new URL(class314.field3401 + "shield/oauth/token" + (new class475(var2)).method8589());
-		class431 var4 = new class431();
+		URL var3 = new URL(class314.authServiceBaseUrl + "shield/oauth/token" + (new class475(var2)).method8589());
+		HttpRequestBuilder var4 = new HttpRequestBuilder();
 		if (this.method1263()) {
-			var4.method7957(field538);
+			var4.basicAuthentication(field538);
 		} else {
-			var4.method7957(field537);
+			var4.basicAuthentication(field537);
 		}
 
-		var4.method7954("Host", (new URL(class314.field3401)).getHost());
-		var4.method7961(class472.field4810);
+		var4.header("Host", (new URL(class314.authServiceBaseUrl)).getHost());
+		var4.accept(HttpContentType.APPLICATION_JSON);
 		class9 var5 = class9.field33;
 		RefreshAccessTokenRequester var6 = this.field535;
 		if (var6 != null) {
-			this.field536 = var6.request(var5.method75(), var3, var4.method7953(), "");
+			this.field536 = var6.request(var5.method75(), var3, var4.getHeaders(), "");
 		} else {
 			class10 var7 = new class10(var3, var5, var4, this.field532);
 			this.field611 = this.field528.method181(var7);
@@ -2071,13 +2071,13 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 		garbageValue = "-43"
 	)
 	void method1386(String var1) throws IOException {
-		URL var2 = new URL(class314.field3401 + "public/v1/games/YCfdbvr2pM1zUYMxJRexZY/play");
-		class431 var3 = new class431();
-		var3.method7977(var1);
+		URL var2 = new URL(class314.authServiceBaseUrl + "public/v1/games/YCfdbvr2pM1zUYMxJRexZY/play");
+		HttpRequestBuilder var3 = new HttpRequestBuilder();
+		var3.bearerToken(var1);
 		class9 var4 = class9.field31;
 		OtlTokenRequester var5 = this.field530;
 		if (var5 != null) {
-			this.field605 = var5.request(var4.method75(), var2, var3.method7953(), "");
+			this.field605 = var5.request(var4.method75(), var2, var3.getHeaders(), "");
 		} else {
 			class10 var6 = new class10(var2, var4, var3, this.field532);
 			this.field657 = this.field528.method181(var6);
@@ -2092,8 +2092,8 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 	void method1270(String var1, String var2) throws IOException, JSONException {
 		URL var3 = new URL(FriendsChat.field4677 + "game-session/v1/tokens");
 		class10 var4 = new class10(var3, class9.field33, this.field532);
-		var4.method95().method7977(var1);
-		var4.method95().method7961(class472.field4810);
+		var4.method95().bearerToken(var1);
+		var4.method95().accept(HttpContentType.APPLICATION_JSON);
 		JSONObject var5 = new JSONObject();
 		var5.method8392("accountId", var2);
 		var4.method92(new class474(var5));
@@ -2417,7 +2417,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 					}
 
 					List var27 = (List)var24.method301().get("Content-Type");
-					if (var27 != null && var27.contains(class472.field4810.method8563())) {
+					if (var27 != null && var27.contains(HttpContentType.APPLICATION_JSON.getValue())) {
 						try {
 							JSONObject var5 = new JSONObject(var24.method299());
 							this.field527 = var5.getString("token");
@@ -6317,7 +6317,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 							}
 							break;
 						case 11:
-							class314.field3401 = var2;
+							class314.authServiceBaseUrl = var2;
 							break;
 						case 12:
 							worldId = Integer.parseInt(var2);
