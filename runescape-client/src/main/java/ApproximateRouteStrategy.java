@@ -48,8 +48,8 @@ public class ApproximateRouteStrategy extends RouteStrategy {
 		int var10 = 0;
 		boolean var29 = false;
 
-		label933: {
-			label934: {
+		label934: {
+			label935: {
 				try {
 					int var13;
 					try {
@@ -133,7 +133,7 @@ public class ApproximateRouteStrategy extends RouteStrategy {
 								switch(var14) {
 								case 0:
 									var29 = false;
-									break label933;
+									break label934;
 								case 1:
 								default:
 									break;
@@ -176,7 +176,7 @@ public class ApproximateRouteStrategy extends RouteStrategy {
 							} else if (var32 == 21) {
 								if (Interpreter.Interpreter_frameDepth == 0) {
 									var29 = false;
-									break;
+									break label935;
 								}
 
 								ScriptFrame var39 = Interpreter.Interpreter_frames[--Interpreter.Interpreter_frameDepth];
@@ -340,15 +340,19 @@ public class ApproximateRouteStrategy extends RouteStrategy {
 						var9 = true;
 						StringBuilder var26 = new StringBuilder(30);
 						var26.append("").append(var1.key).append(" ");
+						var13 = Interpreter.Interpreter_frameDepth - 1;
 
-						for (var13 = Interpreter.Interpreter_frameDepth - 1; var13 >= 0; --var13) {
+						while (true) {
+							if (var13 < 0) {
+								var26.append("").append(var8);
+								GrandExchangeOfferWorldComparator.RunException_sendStackTrace(var26.toString(), var30);
+								var29 = false;
+								break;
+							}
+
 							var26.append("").append(Interpreter.Interpreter_frames[var13].script.key).append(" ");
+							--var13;
 						}
-
-						var26.append("").append(var8);
-						GrandExchangeOfferWorldComparator.RunException_sendStackTrace(var26.toString(), var30);
-						var29 = false;
-						break label934;
 					}
 				} finally {
 					if (var29) {
@@ -370,8 +374,8 @@ public class ApproximateRouteStrategy extends RouteStrategy {
 				}
 
 				while (Interpreter.field847.size() > 0) {
-					class102 var40 = (class102)Interpreter.field847.remove(0);
-					FloorOverlayDefinition.widgetDefaultMenuAction(var40.method2734(), var40.method2730(), var40.method2731(), var40.method2732(), "");
+					class102 var25 = (class102)Interpreter.field847.remove(0);
+					FloorOverlayDefinition.widgetDefaultMenuAction(var25.method2734(), var25.method2730(), var25.method2731(), var25.method2732(), "");
 				}
 
 				if (Interpreter.field846) {
@@ -387,8 +391,8 @@ public class ApproximateRouteStrategy extends RouteStrategy {
 			}
 
 			while (Interpreter.field847.size() > 0) {
-				class102 var25 = (class102)Interpreter.field847.remove(0);
-				FloorOverlayDefinition.widgetDefaultMenuAction(var25.method2734(), var25.method2730(), var25.method2731(), var25.method2732(), "");
+				class102 var40 = (class102)Interpreter.field847.remove(0);
+				FloorOverlayDefinition.widgetDefaultMenuAction(var40.method2734(), var40.method2730(), var40.method2731(), var40.method2732(), "");
 			}
 
 			if (Interpreter.field846) {

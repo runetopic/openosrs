@@ -12,8 +12,8 @@ import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
 @ObfuscatedName("qf")
-@Implements("HttpRequestBuilder")
-public class HttpRequestBuilder {
+@Implements("HttpHeaders")
+public class HttpHeaders {
 	@ObfuscatedName("ao")
 	@Export("headers")
 	final Map headers;
@@ -24,7 +24,7 @@ public class HttpRequestBuilder {
 	@Export("decimalFormat")
 	final DecimalFormat decimalFormat;
 
-	public HttpRequestBuilder() {
+	public HttpHeaders() {
 		this.headers = new HashMap();
 		this.acceptHeaderValues = new HashMap();
 		this.decimalFormat = new DecimalFormat();

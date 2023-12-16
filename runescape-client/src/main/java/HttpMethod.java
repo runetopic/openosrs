@@ -1,4 +1,5 @@
 import net.runelite.mapping.Export;
+import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
@@ -7,55 +8,62 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @ObfuscatedName("az")
-public class class9 implements Enum {
+@Implements("HttpMethod")
+public class HttpMethod implements Enum {
 	@ObfuscatedName("at")
 	@ObfuscatedSignature(
 		descriptor = "Laz;"
 	)
-	public static final class9 field33;
+	@Export("POST")
+	public static final HttpMethod POST;
 	@ObfuscatedName("ah")
 	@ObfuscatedSignature(
 		descriptor = "Laz;"
 	)
-	public static final class9 field31;
+	@Export("GET")
+	public static final HttpMethod GET;
 	@ObfuscatedName("ar")
 	@ObfuscatedSignature(
 		descriptor = "Laz;"
 	)
-	static final class9 field32;
+	@Export("PUT")
+	static final HttpMethod PUT;
 	@ObfuscatedName("ao")
 	@ObfuscatedSignature(
 		descriptor = "Laz;"
 	)
-	static final class9 field37;
+	@Export("PATCH")
+	static final HttpMethod PATCH;
 	@ObfuscatedName("ab")
 	@ObfuscatedSignature(
 		descriptor = "Laz;"
 	)
-	static final class9 field34;
+	@Export("DELETE")
+	static final HttpMethod DELETE;
 	@ObfuscatedName("au")
 	@ObfuscatedGetter(
 		intValue = 275629241
 	)
 	int field30;
 	@ObfuscatedName("aa")
-	String field36;
+	@Export("name")
+	String name;
 	@ObfuscatedName("ac")
 	boolean field38;
 	@ObfuscatedName("al")
 	boolean field35;
 
 	static {
-		field33 = new class9(0, "POST", true, true);
-		field31 = new class9(1, "GET", true, false);
-		field32 = new class9(2, "PUT", false, true);
-		field37 = new class9(3, "PATCH", false, true);
-		field34 = new class9(4, "DELETE", false, true);
+		POST = new HttpMethod(0, "POST", true, true);
+		GET = new HttpMethod(1, "GET", true, false);
+		PUT = new HttpMethod(2, "PUT", false, true);
+		PATCH = new HttpMethod(3, "PATCH", false, true);
+		DELETE = new HttpMethod(4, "DELETE", false, true);
 	}
 
-	class9(int var1, String var2, boolean var3, boolean var4) {
+	HttpMethod(int var1, String var2, boolean var3, boolean var4) {
 		this.field30 = var1;
-		this.field36 = var2;
+		this.name = var2;
 		this.field38 = var3;
 		this.field35 = var4;
 	}
@@ -84,8 +92,9 @@ public class class9 implements Enum {
 		descriptor = "(B)Ljava/lang/String;",
 		garbageValue = "62"
 	)
-	public String method75() {
-		return this.field36;
+	@Export("getName")
+	public String getName() {
+		return this.name;
 	}
 
 	@ObfuscatedName("ao")
@@ -406,7 +415,7 @@ public class class9 implements Enum {
 			}
 		}
 
-		PacketBufferNode var2 = class113.getPacketBufferNode(ClientPacket.field3183, Client.packetWriter.isaacCipher);
+		PacketBufferNode var2 = SecureUrlRequester.getPacketBufferNode(ClientPacket.field3183, Client.packetWriter.isaacCipher);
 		var2.packetBuffer.writeByte(var0.length() + 1);
 		var2.packetBuffer.writeStringCp1252NullTerminated(var0);
 		Client.packetWriter.addNode(var2);
@@ -433,7 +442,7 @@ public class class9 implements Enum {
 		}
 
 		if (Client.gameState >= 25 && Client.packetWriter != null && Client.packetWriter.isaacCipher != null) {
-			PacketBufferNode var1 = class113.getPacketBufferNode(ClientPacket.field3209, Client.packetWriter.isaacCipher);
+			PacketBufferNode var1 = SecureUrlRequester.getPacketBufferNode(ClientPacket.field3209, Client.packetWriter.isaacCipher);
 			var1.packetBuffer.writeByte(ApproximateRouteStrategy.getWindowedMode());
 			var1.packetBuffer.writeShort(Language.canvasWidth);
 			var1.packetBuffer.writeShort(class47.canvasHeight);

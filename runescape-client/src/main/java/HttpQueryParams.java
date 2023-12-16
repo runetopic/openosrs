@@ -3,16 +3,20 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import net.runelite.mapping.Export;
+import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
 @ObfuscatedName("sk")
-public class class475 implements HttpContent {
+@Implements("HttpQueryParams")
+public class HttpQueryParams implements HttpPayload {
 	@ObfuscatedName("at")
-	final Map field4816;
+	@Export("queryParameters")
+	final Map queryParameters;
 
-	public class475(Map var1) {
-		this.field4816 = var1;
+	public HttpQueryParams(Map var1) {
+		this.queryParameters = var1;
 	}
 
 	@ObfuscatedName("at")
@@ -20,7 +24,8 @@ public class class475 implements HttpContent {
 		descriptor = "(B)Lsi;",
 		garbageValue = "-24"
 	)
-	public HttpContentType type() {
+	@Export("getContentType")
+	public HttpContentType getContentType() {
 		return null;
 	}
 
@@ -29,8 +34,9 @@ public class class475 implements HttpContent {
 		descriptor = "(B)[B",
 		garbageValue = "0"
 	)
-	public byte[] vmethod8587() throws UnsupportedEncodingException {
-		return this.method8589().getBytes("UTF-8");
+	@Export("toBytes")
+	public byte[] toBytes() throws UnsupportedEncodingException {
+		return this.encode().getBytes("UTF-8");
 	}
 
 	@ObfuscatedName("aa")
@@ -38,9 +44,10 @@ public class class475 implements HttpContent {
 		descriptor = "(I)Ljava/lang/String;",
 		garbageValue = "-2008716639"
 	)
-	public String method8589() throws UnsupportedEncodingException {
+	@Export("encode")
+	public String encode() throws UnsupportedEncodingException {
 		StringBuilder var1 = new StringBuilder();
-		Iterator var2 = this.field4816.entrySet().iterator();
+		Iterator var2 = this.queryParameters.entrySet().iterator();
 
 		while (var2.hasNext()) {
 			Entry var3 = (Entry)var2.next();
@@ -63,7 +70,8 @@ public class class475 implements HttpContent {
 		descriptor = "([Ljava/lang/String;[IIIB)V",
 		garbageValue = "-67"
 	)
-	public static void method8597(String[] var0, int[] var1, int var2, int var3) {
+	@Export("quicksortStringsWithCorrespondingIntegers")
+	public static void quicksortStringsWithCorrespondingIntegers(String[] var0, int[] var1, int var2, int var3) {
 		if (var2 < var3) {
 			int var4 = (var3 + var2) / 2;
 			int var5 = var2;
@@ -89,8 +97,8 @@ public class class475 implements HttpContent {
 			var0[var5] = var6;
 			var1[var3] = var1[var5];
 			var1[var5] = var7;
-			method8597(var0, var1, var2, var5 - 1);
-			method8597(var0, var1, var5 + 1, var3);
+			quicksortStringsWithCorrespondingIntegers(var0, var1, var2, var5 - 1);
+			quicksortStringsWithCorrespondingIntegers(var0, var1, var5 + 1, var3);
 		}
 
 	}
