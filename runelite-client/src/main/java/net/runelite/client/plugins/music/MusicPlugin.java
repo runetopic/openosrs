@@ -191,10 +191,19 @@ public class MusicPlugin extends Plugin
 			channels = new Channel[]{musicChannel, effectChannel, areaChannel};
 
 			addMusicButtons();
-			if (client.getGameState() == GameState.LOGGED_IN && musicConfig.granularSliders())
+			if (client.getGameState() == GameState.LOGGED_IN)
 			{
-				updateMusicOptions();
-				resetSettingsWindow();
+				if (musicConfig.granularSliders())
+				{
+					updateMusicOptions();
+					resetSettingsWindow();
+				}
+
+				if (musicConfig.muteAmbientSounds())
+				{
+					// Reload the scene to remove ambient sounds
+					client.setGameState(GameState.LOADING);
+				}
 			}
 		});
 	}
@@ -213,6 +222,15 @@ public class MusicPlugin extends Plugin
 		{
 			shuttingDown = true;
 			teardownMusicOptions();
+
+			if (musicConfig.muteAmbientSounds())
+			{
+				// Reload the scene to reapply ambient sounds
+				if (client.getGameState() == GameState.LOGGED_IN)
+				{
+					client.setGameState(GameState.LOADING);
+				}
+			}
 		});
 	}
 
