@@ -4,140 +4,182 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("cg")
+@ObfuscatedName("ec")
 @Implements("TileItem")
 public final class TileItem extends Renderable {
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = -1625083761
-   )
-   @Export("id")
-   int id;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = -921940105
-   )
-   @Export("quantity")
-   int quantity;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = -1195842737
-   )
-   int field1323 = 31;
+	@ObfuscatedName("at")
+	@ObfuscatedGetter(
+		intValue = -1683425433
+	)
+	@Export("id")
+	int id;
+	@ObfuscatedName("ah")
+	@ObfuscatedGetter(
+		intValue = 232562963
+	)
+	@Export("quantity")
+	int quantity;
+	@ObfuscatedName("ao")
+	@ObfuscatedGetter(
+		intValue = 553790659
+	)
+	int field1342;
 
-   TileItem() {
-   }
+	TileItem() {
+		this.field1342 = 31;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(II)V",
-      garbageValue = "-138937291"
-   )
-   void method2723(int var1) {
-      this.field1323 = var1;
-   }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(II)V",
+		garbageValue = "-2048402866"
+	)
+	void method2754(int var1) {
+		this.field1342 = var1;
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(I)Lhs;",
-      garbageValue = "922199662"
-   )
-   @Export("getModel")
-   protected final Model getModel() {
-      return ItemDefinition_get(this.id).getModel(this.quantity);
-   }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(B)Lka;",
+		garbageValue = "1"
+	)
+	@Export("getModel")
+	protected final Model getModel() {
+		return class214.ItemDefinition_get(this.id).getModel(this.quantity);
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(II)Z",
-      garbageValue = "27915480"
-   )
-   boolean method2712(int var1) {
-      if (var1 >= 0 && var1 <= 4) {
-         return (this.field1323 & 1 << var1) != 0;
-      } else {
-         return true;
-      }
-   }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(II)Z",
+		garbageValue = "117367628"
+	)
+	boolean method2755(int var1) {
+		if (var1 >= 0 && var1 <= 4) {
+			return (this.field1342 & 1 << var1) != 0;
+		} else {
+			return true;
+		}
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(IB)Lgr;",
-      garbageValue = "37"
-   )
-   @Export("ItemDefinition_get")
-   public static ItemComposition ItemDefinition_get(int var0) {
-      ItemComposition var1 = (ItemComposition)ItemComposition.ItemDefinition_cached.get((long)var0);
-      if (var1 != null) {
-         return var1;
-      } else {
-         byte[] var2 = class4.ItemDefinition_archive.takeFile(10, var0);
-         var1 = new ItemComposition();
-         var1.id = var0;
-         if (var2 != null) {
-            var1.decode(new Buffer(var2));
-         }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(CLof;I)C",
+		garbageValue = "938832228"
+	)
+	@Export("standardizeChar")
+	static char standardizeChar(char var0, Language var1) {
+		if (var0 >= 192 && var0 <= 255) {
+			if (var0 >= 192 && var0 <= 198) {
+				return 'A';
+			}
 
-         var1.post();
-         if (var1.noteTemplate != -1) {
-            var1.genCert(ItemDefinition_get(var1.noteTemplate), ItemDefinition_get(var1.note));
-         }
+			if (var0 == 199) {
+				return 'C';
+			}
 
-         if (var1.notedId != -1) {
-            var1.genBought(ItemDefinition_get(var1.notedId), ItemDefinition_get(var1.unnotedId));
-         }
+			if (var0 >= 200 && var0 <= 203) {
+				return 'E';
+			}
 
-         if (var1.placeholderTemplate != -1) {
-            var1.genPlaceholder(ItemDefinition_get(var1.placeholderTemplate), ItemDefinition_get(var1.placeholder));
-         }
+			if (var0 >= 204 && var0 <= 207) {
+				return 'I';
+			}
 
-         if (!ItemComposition.ItemDefinition_inMembersWorld && var1.isMembersOnly) {
-            var1.name = "Members object";
-            var1.isTradable = false;
+			if (var0 == 209 && var1 != Language.Language_ES) {
+				return 'N';
+			}
 
-            int var3;
-            for(var3 = 0; var3 < var1.groundActions.length; ++var3) {
-               var1.groundActions[var3] = null;
-            }
+			if (var0 >= 210 && var0 <= 214) {
+				return 'O';
+			}
 
-            for(var3 = 0; var3 < var1.inventoryActions.length; ++var3) {
-               if (var3 != 4) {
-                  var1.inventoryActions[var3] = null;
-               }
-            }
+			if (var0 >= 217 && var0 <= 220) {
+				return 'U';
+			}
 
-            var1.shiftClickIndex = -2;
-            var1.team = 0;
-            if (var1.params != null) {
-               boolean var6 = false;
+			if (var0 == 221) {
+				return 'Y';
+			}
 
-               for(Node var4 = var1.params.first(); var4 != null; var4 = var1.params.next()) {
-                  ParamComposition var5 = ClanChannelMember.getParamDefinition((int)var4.key);
-                  if (var5.autoDisable) {
-                     var4.remove();
-                  } else {
-                     var6 = true;
-                  }
-               }
+			if (var0 == 223) {
+				return 's';
+			}
 
-               if (!var6) {
-                  var1.params = null;
-               }
-            }
-         }
+			if (var0 >= 224 && var0 <= 230) {
+				return 'a';
+			}
 
-         ItemComposition.ItemDefinition_cached.put(var1, (long)var0);
-         return var1;
-      }
-   }
+			if (var0 == 231) {
+				return 'c';
+			}
 
-   @ObfuscatedName("n")
-   @ObfuscatedSignature(
-      descriptor = "(I)Lbw;",
-      garbageValue = "-702923171"
-   )
-   @Export("getNextWorldListWorld")
-   static World getNextWorldListWorld() {
-      return World.World_listCount < World.World_count ? class88.World_worlds[++World.World_listCount - 1] : null;
-   }
+			if (var0 >= 232 && var0 <= 235) {
+				return 'e';
+			}
+
+			if (var0 >= 236 && var0 <= 239) {
+				return 'i';
+			}
+
+			if (var0 == 241 && var1 != Language.Language_ES) {
+				return 'n';
+			}
+
+			if (var0 >= 242 && var0 <= 246) {
+				return 'o';
+			}
+
+			if (var0 >= 249 && var0 <= 252) {
+				return 'u';
+			}
+
+			if (var0 == 253 || var0 == 255) {
+				return 'y';
+			}
+		}
+
+		if (var0 == 338) {
+			return 'O';
+		} else if (var0 == 339) {
+			return 'o';
+		} else if (var0 == 376) {
+			return 'Y';
+		} else {
+			return var0;
+		}
+	}
+
+	@ObfuscatedName("kq")
+	@ObfuscatedSignature(
+		descriptor = "(IIIIIIIIIII)V",
+		garbageValue = "2136163663"
+	)
+	static final void method2766(int var0, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8, int var9) {
+		PendingSpawn var10 = null;
+
+		for (PendingSpawn var11 = (PendingSpawn)Client.pendingSpawns.last(); var11 != null; var11 = (PendingSpawn)Client.pendingSpawns.previous()) {
+			if (var0 == var11.plane && var11.x == var1 && var2 == var11.y && var3 == var11.type) {
+				var10 = var11;
+				break;
+			}
+		}
+
+		if (var10 == null) {
+			var10 = new PendingSpawn();
+			var10.plane = var0;
+			var10.type = var3;
+			var10.x = var1;
+			var10.y = var2;
+			var10.field1152 = -1;
+			ScriptFrame.method1212(var10);
+			Client.pendingSpawns.addFirst(var10);
+		}
+
+		var10.field1162 = var4;
+		var10.field1161 = var5;
+		var10.field1160 = var6;
+		var10.delay = var8;
+		var10.hitpoints = var9;
+		var10.method2453(var7);
+	}
 }

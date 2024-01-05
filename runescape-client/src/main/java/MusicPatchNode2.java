@@ -2,54 +2,54 @@ import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 
-@ObfuscatedName("kq")
+@ObfuscatedName("mk")
 @Implements("MusicPatchNode2")
 public class MusicPatchNode2 {
-   @ObfuscatedName("bo")
-   @ObfuscatedGetter(
-      intValue = 199509955
-   )
-   static int field3356;
-   @ObfuscatedName("f")
-   byte[] field3353;
-   @ObfuscatedName("w")
-   byte[] field3351;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 57176299
-   )
-   int field3345;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = 836275101
-   )
-   int field3346;
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = -9164575
-   )
-   int field3347;
-   @ObfuscatedName("j")
-   @ObfuscatedGetter(
-      intValue = -1018793487
-   )
-   int field3352;
-   @ObfuscatedName("i")
-   @ObfuscatedGetter(
-      intValue = 963851919
-   )
-   int field3349;
-   @ObfuscatedName("n")
-   @ObfuscatedGetter(
-      intValue = 46834767
-   )
-   int field3354;
-   @ObfuscatedName("l")
-   @ObfuscatedGetter(
-      intValue = 928751949
-   )
-   int field3350;
+	@ObfuscatedName("av")
+	@ObfuscatedGetter(
+		intValue = -2109926181
+	)
+	static int field3403;
+	@ObfuscatedName("at")
+	byte[] field3406;
+	@ObfuscatedName("ah")
+	byte[] field3411;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = 126824827
+	)
+	int field3405;
+	@ObfuscatedName("ao")
+	@ObfuscatedGetter(
+		intValue = 1444847531
+	)
+	int field3412;
+	@ObfuscatedName("ab")
+	@ObfuscatedGetter(
+		intValue = 1206773621
+	)
+	int field3407;
+	@ObfuscatedName("au")
+	@ObfuscatedGetter(
+		intValue = -1980738393
+	)
+	int field3408;
+	@ObfuscatedName("aa")
+	@ObfuscatedGetter(
+		intValue = 119084135
+	)
+	int field3409;
+	@ObfuscatedName("ac")
+	@ObfuscatedGetter(
+		intValue = -316321355
+	)
+	int field3410;
+	@ObfuscatedName("al")
+	@ObfuscatedGetter(
+		intValue = -1993220297
+	)
+	int field3404;
 
-   MusicPatchNode2() {
-   }
+	MusicPatchNode2() {
+	}
 }

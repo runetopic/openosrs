@@ -7,51 +7,52 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("q")
+@ObfuscatedName("ae")
 @Implements("MouseWheelHandler")
-public final class MouseWheelHandler implements class170, MouseWheelListener {
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 2073284289
-   )
-   @Export("rotation")
-   int rotation = 0;
+public final class MouseWheelHandler implements MouseWheel, MouseWheelListener {
+	@ObfuscatedName("at")
+	@ObfuscatedGetter(
+		intValue = 1014752237
+	)
+	@Export("rotation")
+	int rotation;
 
-   MouseWheelHandler() {
-   }
+	MouseWheelHandler() {
+		this.rotation = 0;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/awt/Component;I)V",
-      garbageValue = "-708063290"
-   )
-   @Export("addTo")
-   void addTo(Component var1) {
-      var1.addMouseWheelListener(this);
-   }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/awt/Component;I)V",
+		garbageValue = "635528306"
+	)
+	@Export("addTo")
+	void addTo(Component var1) {
+		var1.addMouseWheelListener(this);
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/awt/Component;S)V",
-      garbageValue = "29424"
-   )
-   void method308(Component var1) {
-      var1.removeMouseWheelListener(this);
-   }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/awt/Component;B)V",
+		garbageValue = "72"
+	)
+	void method306(Component var1) {
+		var1.removeMouseWheelListener(this);
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(B)I",
-      garbageValue = "47"
-   )
-   @Export("useRotation")
-   public synchronized int useRotation() {
-      int var1 = this.rotation;
-      this.rotation = 0;
-      return var1;
-   }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(I)I",
+		garbageValue = "-855152300"
+	)
+	@Export("useRotation")
+	public synchronized int useRotation() {
+		int var1 = this.rotation;
+		this.rotation = 0;
+		return var1;
+	}
 
-   public synchronized void mouseWheelMoved(MouseWheelEvent var1) {
-      this.rotation += var1.getWheelRotation();
-   }
+	public synchronized void mouseWheelMoved(MouseWheelEvent var1) {
+		this.rotation += var1.getWheelRotation();
+	}
 }

@@ -37,15 +37,14 @@ import net.runelite.api.SpriteID;
 import net.runelite.api.SpritePixels;
 import net.runelite.api.events.BeforeMenuRender;
 import net.runelite.api.events.BeforeRender;
-import net.runelite.client.events.ConfigChanged;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.PostHealthBar;
 import net.runelite.api.events.ScriptCallbackEvent;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.SpriteManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -83,7 +82,7 @@ public class InterfaceStylesPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		clientThread.invoke(this::updateAllOverrides);
+		queueUpdateAllOverrides();
 	}
 
 	@Override
@@ -95,6 +94,29 @@ public class InterfaceStylesPlugin extends Plugin
 			removeGameframe();
 			restoreHealthBars();
 			restoreCrossSprites();
+		});
+	}
+
+	@Subscribe
+	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	{
+		if (gameStateChanged.getGameState() == GameState.STARTING)
+		{
+			queueUpdateAllOverrides();
+		}
+	}
+
+	private void queueUpdateAllOverrides()
+	{
+		clientThread.invoke(() ->
+		{
+			// Cross sprites and widget sprite cache are not setup until login screen
+			if (client.getGameState().getState() < GameState.LOGIN_SCREEN.getState())
+			{
+				return false;
+			}
+			updateAllOverrides();
+			return true;
 		});
 	}
 
@@ -141,22 +163,6 @@ public class InterfaceStylesPlugin extends Plugin
 			// Increase padding to show some more green at very low hp percentages
 			healthBar.setPadding(override.getPadding());
 		}
-	}
-
-	@Subscribe
-	public void onGameStateChanged(GameStateChanged gameStateChanged)
-	{
-		if (gameStateChanged.getGameState() != GameState.LOGIN_SCREEN)
-		{
-			return;
-		}
-
-		/*
-		 * The cross sprites aren't loaded yet when the initial config change event is received.
-		 * So run the overriding for cross sprites when we reach the login screen,
-		 * at which point the cross sprites will have been loaded.
-		 */
-		overrideCrossSprites();
 	}
 
 	private void updateAllOverrides()
@@ -239,9 +245,9 @@ public class InterfaceStylesPlugin extends Plugin
 
 				if (spritePixels != null)
 				{
-					for (WidgetInfo widgetInfo : widgetOverride.getWidgetInfo())
+					for (int widgetInfo : widgetOverride.getWidgetInfo())
 					{
-						client.getWidgetSpriteOverrides().put(widgetInfo.getPackedId(), spritePixels);
+						client.getWidgetSpriteOverrides().put(widgetInfo, spritePixels);
 					}
 				}
 			}
@@ -252,9 +258,9 @@ public class InterfaceStylesPlugin extends Plugin
 	{
 		for (WidgetOverride widgetOverride : WidgetOverride.values())
 		{
-			for (WidgetInfo widgetInfo : widgetOverride.getWidgetInfo())
+			for (int widgetInfo : widgetOverride.getWidgetInfo())
 			{
-				client.getWidgetSpriteOverrides().remove(widgetInfo.getPackedId());
+				client.getWidgetSpriteOverrides().remove(widgetInfo);
 			}
 		}
 	}
@@ -284,7 +290,7 @@ public class InterfaceStylesPlugin extends Plugin
 				continue;
 			}
 
-			Widget widget = client.getWidget(widgetOffset.getWidgetInfo());
+			Widget widget = client.getWidget(widgetOffset.getComponent());
 
 			if (widget != null)
 			{
@@ -391,7 +397,7 @@ public class InterfaceStylesPlugin extends Plugin
 	{
 		for (WidgetOffset widgetOffset : WidgetOffset.values())
 		{
-			Widget widget = client.getWidget(widgetOffset.getWidgetInfo());
+			Widget widget = client.getWidget(widgetOffset.getComponent());
 
 			if (widget != null)
 			{

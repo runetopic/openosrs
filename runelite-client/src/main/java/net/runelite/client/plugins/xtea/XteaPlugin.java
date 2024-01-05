@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class XteaPlugin extends Plugin
 	{
 		try (FileInputStream in = new FileInputStream(XTEA_CACHE);
 			FileChannel channel = in.getChannel();
-			InputStreamReader reader = new InputStreamReader(in))
+			InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8))
 		{
 			channel.lock(0, Long.MAX_VALUE, true);
 			return gson.fromJson(reader,
@@ -108,7 +109,7 @@ public class XteaPlugin extends Plugin
 	{
 		try (FileOutputStream out = new FileOutputStream(XTEA_CACHE);
 			FileChannel channel = out.getChannel();
-			OutputStreamWriter writer = new OutputStreamWriter(out))
+			OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
 		{
 			channel.lock();
 			gson.toJson(xteas,

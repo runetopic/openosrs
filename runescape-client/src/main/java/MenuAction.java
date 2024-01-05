@@ -4,89 +4,78 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("bs")
+@ObfuscatedName("cb")
 @Implements("MenuAction")
 public class MenuAction {
-   @ObfuscatedName("hu")
-   @ObfuscatedSignature(
-      descriptor = "Lnv;"
-   )
-   @Export("fontPlain12")
-   static Font fontPlain12;
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 1800513627
-   )
-   @Export("param0")
-   int param0;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = 1545642217
-   )
-   @Export("param1")
-   int param1;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 612439209
-   )
-   @Export("opcode")
-   int opcode;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = -123568167
-   )
-   @Export("identifier")
-   int identifier;
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = 280536773
-   )
-   @Export("itemId")
-   int itemId;
-   @ObfuscatedName("j")
-   @Export("action")
-   String action;
-   @ObfuscatedName("i")
-   @Export("target")
-   String target;
+	@ObfuscatedName("ax")
+	@Export("Tiles_hueMultiplier")
+	static int[] Tiles_hueMultiplier;
+	@ObfuscatedName("cq")
+	static String field878;
+	@ObfuscatedName("at")
+	@ObfuscatedGetter(
+		intValue = 445021513
+	)
+	@Export("param0")
+	int param0;
+	@ObfuscatedName("ah")
+	@ObfuscatedGetter(
+		intValue = -1332337083
+	)
+	@Export("param1")
+	int param1;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = 732979691
+	)
+	@Export("opcode")
+	int opcode;
+	@ObfuscatedName("ao")
+	@ObfuscatedGetter(
+		intValue = 555130035
+	)
+	@Export("identifier")
+	int identifier;
+	@ObfuscatedName("ab")
+	@ObfuscatedGetter(
+		intValue = 1498864933
+	)
+	@Export("itemId")
+	int itemId;
+	@ObfuscatedName("au")
+	@Export("action")
+	String action;
+	@ObfuscatedName("aa")
+	@Export("target")
+	String target;
 
-   MenuAction() {
-   }
+	MenuAction() {
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(CI)Z",
-      garbageValue = "-1320413975"
-   )
-   public static final boolean method2084(char var0) {
-      return var0 == 160 || var0 == ' ' || var0 == '_' || var0 == '-';
-   }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(I)[Ldy;",
+		garbageValue = "-180597093"
+	)
+	static AttackOption[] method2139() {
+		return new AttackOption[]{AttackOption.field1334, AttackOption.AttackOption_alwaysRightClick, AttackOption.AttackOption_hidden, AttackOption.AttackOption_dependsOnCombatLevels, AttackOption.field1337};
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(IB)I",
-      garbageValue = "42"
-   )
-   @Export("Widget_unpackTargetMask")
-   public static int Widget_unpackTargetMask(int var0) {
-      return var0 >> 11 & 63;
-   }
+	@ObfuscatedName("au")
+	@ObfuscatedSignature(
+		descriptor = "(Lol;II)V",
+		garbageValue = "1404218002"
+	)
+	static void method2140(AbstractArchive var0, int var1) {
+		if ((var1 & class522.field5122.rsOrdinal()) != 0) {
+			Login.logoSprite = class313.SpriteBuffer_getIndexedSpriteByName(var0, "logo_deadman_mode", "");
+		} else if ((var1 & class522.field5123.rsOrdinal()) != 0) {
+			Login.logoSprite = class313.SpriteBuffer_getIndexedSpriteByName(var0, "logo_seasonal_mode", "");
+		} else if ((var1 & class522.field5094.rsOrdinal()) != 0) {
+			Login.logoSprite = class313.SpriteBuffer_getIndexedSpriteByName(var0, "logo_speedrunning", "");
+		} else {
+			Login.logoSprite = class313.SpriteBuffer_getIndexedSpriteByName(var0, "logo", "");
+		}
 
-   @ObfuscatedName("gn")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "-358398577"
-   )
-   static final void method2082() {
-      int var0 = Players.Players_count;
-      int[] var1 = Players.Players_indices;
-
-      for(int var2 = 0; var2 < var0; ++var2) {
-         Player var3 = Client.players[var1[var2]];
-         if (var3 != null) {
-            PcmPlayer.updateActorSequence(var3, 1);
-         }
-      }
-
-   }
+	}
 }

@@ -4,119 +4,72 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("oo")
+@ObfuscatedName("rm")
 @Implements("FriendLoginUpdate")
 public class FriendLoginUpdate extends Link {
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 322459375
-   )
-   public int field4556 = (int)(class153.method3317() / 1000L);
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lsi;"
-   )
-   @Export("username")
-   public Username username;
-   @ObfuscatedName("v")
-   @Export("world")
-   public short world;
+	@ObfuscatedName("at")
+	@ObfuscatedGetter(
+		intValue = 910859569
+	)
+	public int field4683;
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "Lvj;"
+	)
+	@Export("username")
+	public Username username;
+	@ObfuscatedName("ar")
+	@Export("world")
+	public short world;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lsi;I)V"
-   )
-   FriendLoginUpdate(Username var1, int var2) {
-      this.username = var1;
-      this.world = (short)var2;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Lvj;I)V"
+	)
+	FriendLoginUpdate(Username var1, int var2) {
+		this.field4683 = (int)(SpotAnimationDefinition.method3775() / 1000L);
+		this.username = var1;
+		this.world = (short)var2;
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(I)Ljava/lang/String;",
-      garbageValue = "-1614306334"
-   )
-   static String method7586() {
-      String var0;
-      if (PacketWriter.clientPreferences.method2484()) {
-         String var2 = Login.Login_username;
-         String var1 = KeyHandler.method366('*', var2.length());
-         var0 = var1;
-      } else {
-         var0 = Login.Login_username;
-      }
+	@ObfuscatedName("ic")
+	@ObfuscatedSignature(
+		descriptor = "(Lhx;IIILdf;B)V",
+		garbageValue = "-64"
+	)
+	static void method8127(SequenceDefinition var0, int var1, int var2, int var3, Actor var4) {
+		if (Client.soundEffectCount < 50) {
+			if (var0.field2212 != null && var0.field2212.containsKey(var1)) {
+				int var5 = (Integer)var0.field2212.get(var1) & 15;
+				if ((var5 <= 0 || WorldMapIcon_1.clientPreferences.getAreaSoundEffectsVolume() != 0) && (var5 != 0 || WorldMapIcon_1.clientPreferences.getSoundEffectsVolume() != 0)) {
+					int var6 = (Integer)var0.field2212.get(var1);
+					boolean var9 = var4 == class229.localPlayer;
+					if (var6 != 0) {
+						int var10 = var6 & 15;
+						int var11;
+						int var12;
+						if (var10 == 0) {
+							if (!var9) {
+								return;
+							}
 
-      return var0;
-   }
+							Client.soundLocations[Client.soundEffectCount] = 0;
+						} else {
+							var11 = (var2 - 64) / 128;
+							var12 = (var3 - 64) / 128;
+							Client.soundLocations[Client.soundEffectCount] = var10 + (var12 << 8) + (var11 << 16);
+						}
 
-   @ObfuscatedName("l")
-   @ObfuscatedSignature(
-      descriptor = "([BI)V",
-      garbageValue = "-1201846591"
-   )
-   @Export("SpriteBuffer_decode")
-   static void SpriteBuffer_decode(byte[] var0) {
-      Buffer var1 = new Buffer(var0);
-      var1.offset = var0.length - 2;
-      class488.SpriteBuffer_spriteCount = var1.readUnsignedShort();
-      class488.SpriteBuffer_xOffsets = new int[class488.SpriteBuffer_spriteCount];
-      ApproximateRouteStrategy.SpriteBuffer_yOffsets = new int[class488.SpriteBuffer_spriteCount];
-      FriendsList.SpriteBuffer_spriteWidths = new int[class488.SpriteBuffer_spriteCount];
-      class132.SpriteBuffer_spriteHeights = new int[class488.SpriteBuffer_spriteCount];
-      class140.SpriteBuffer_pixels = new byte[class488.SpriteBuffer_spriteCount][];
-      var1.offset = var0.length - 7 - class488.SpriteBuffer_spriteCount * 8;
-      class488.SpriteBuffer_spriteWidth = var1.readUnsignedShort();
-      class488.SpriteBuffer_spriteHeight = var1.readUnsignedShort();
-      int var2 = (var1.readUnsignedByte() & 255) + 1;
+						var11 = var6 >> 8;
+						var12 = var6 >> 4 & 7;
+						Client.soundEffectIds[Client.soundEffectCount] = var11;
+						Client.queuedSoundEffectLoops[Client.soundEffectCount] = var12;
+						Client.queuedSoundEffectDelays[Client.soundEffectCount] = 0;
+						Client.soundEffects[Client.soundEffectCount] = null;
+						++Client.soundEffectCount;
+					}
 
-      int var3;
-      for(var3 = 0; var3 < class488.SpriteBuffer_spriteCount; ++var3) {
-         class488.SpriteBuffer_xOffsets[var3] = var1.readUnsignedShort();
-      }
-
-      for(var3 = 0; var3 < class488.SpriteBuffer_spriteCount; ++var3) {
-         ApproximateRouteStrategy.SpriteBuffer_yOffsets[var3] = var1.readUnsignedShort();
-      }
-
-      for(var3 = 0; var3 < class488.SpriteBuffer_spriteCount; ++var3) {
-         FriendsList.SpriteBuffer_spriteWidths[var3] = var1.readUnsignedShort();
-      }
-
-      for(var3 = 0; var3 < class488.SpriteBuffer_spriteCount; ++var3) {
-         class132.SpriteBuffer_spriteHeights[var3] = var1.readUnsignedShort();
-      }
-
-      var1.offset = var0.length - 7 - class488.SpriteBuffer_spriteCount * 8 - (var2 - 1) * 3;
-      class100.SpriteBuffer_spritePalette = new int[var2];
-
-      for(var3 = 1; var3 < var2; ++var3) {
-         class100.SpriteBuffer_spritePalette[var3] = var1.readMedium();
-         if (class100.SpriteBuffer_spritePalette[var3] == 0) {
-            class100.SpriteBuffer_spritePalette[var3] = 1;
-         }
-      }
-
-      var1.offset = 0;
-
-      for(var3 = 0; var3 < class488.SpriteBuffer_spriteCount; ++var3) {
-         int var4 = FriendsList.SpriteBuffer_spriteWidths[var3];
-         int var5 = class132.SpriteBuffer_spriteHeights[var3];
-         int var6 = var4 * var5;
-         byte[] var7 = new byte[var6];
-         class140.SpriteBuffer_pixels[var3] = var7;
-         int var8 = var1.readUnsignedByte();
-         int var9;
-         if (var8 == 0) {
-            for(var9 = 0; var9 < var6; ++var9) {
-               var7[var9] = var1.readByte();
-            }
-         } else if (var8 == 1) {
-            for(var9 = 0; var9 < var4; ++var9) {
-               for(int var10 = 0; var10 < var5; ++var10) {
-                  var7[var9 + var10 * var4] = var1.readByte();
-               }
-            }
-         }
-      }
-
-   }
+				}
+			}
+		}
+	}
 }

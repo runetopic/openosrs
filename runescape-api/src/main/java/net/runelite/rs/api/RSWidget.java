@@ -81,8 +81,8 @@ public interface RSWidget extends Widget
 	@Import("itemIds")
 	int[] getItemIds();
 
-	@Import("itemQuantities")
-	int[] getItemQuantities();
+	@Import("itemIds")
+	void setItemIds(int[] itemIds);
 
 	@Import("modelType")
 	int getModelType();
@@ -101,13 +101,6 @@ public interface RSWidget extends Widget
 	@Import("actions")
 	@Override
 	String[] getActions();
-
-	@Import("itemActions")
-	@Override
-	String[] getItemActions();
-
-	@Import("spellName")
-	String getSpellName();
 
 	@Import("buttonText")
 	String getRSButtonText();
@@ -342,20 +335,6 @@ public interface RSWidget extends Widget
 	@Override
 	RSWidget setOriginalWidth(int originalWidth);
 
-	@Import("paddingX")
-	int getPaddingX();
-
-	@Import("paddingY")
-	int getPaddingY();
-
-	@Import("paddingX")
-	@Override
-	void setPaddingX(int paddingX);
-
-	@Import("paddingY")
-	@Override
-	void setPaddingY(int paddingY);
-
 
 	@Import("onOp")
 	@Override
@@ -513,8 +492,7 @@ public interface RSWidget extends Widget
 	RSWidget setHeightMode(int heightMode);
 
 	@Import("getFont")
-	@Override
-	RSFont getFont();
+	RSFont getRSFont(RSWidgetDefinition var1);
 
 	@Import("fill")
 	@Override
@@ -558,12 +536,8 @@ public interface RSWidget extends Widget
 	@Override
 	Object[] getOnInvTransmitListener();
 
-	@Import("containsMouse")
-	@Override
-	boolean containsMouse();
-
 	@Import("getSprite")
-	RSSpritePixels getSprite(boolean b, RSUrlRequester urlRequester);
+	RSSpritePixels getSprite(RSWidgetDefinition widgetDefinition, boolean b, RSUrlRequester urlRequester);
 
 	@Import("onRelease")
 	@Override
@@ -588,6 +562,10 @@ public interface RSWidget extends Widget
 	@Import("onDrag")
 	@Override
 	void setOnDragListener(Object[] o);
+
+	@Import("onScroll")
+	@Override
+	void setOnScrollWheelListener(Object[] o);
 
 	@Import("parent")
 	@Override

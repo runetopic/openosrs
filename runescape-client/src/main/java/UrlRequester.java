@@ -1,6 +1,6 @@
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.LinkedList;
@@ -10,354 +10,244 @@ import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
+import net.runelite.rs.ScriptOpcodes;
 
-@ObfuscatedName("di")
+@ObfuscatedName("el")
 @Implements("UrlRequester")
 public abstract class UrlRequester implements Runnable {
-   @ObfuscatedName("f")
-   final Thread field1410 = new Thread(this);
-   @ObfuscatedName("w")
-   @Export("isClosed")
-   volatile boolean isClosed;
-   @ObfuscatedName("v")
-   @Export("requests")
-   Queue requests = new LinkedList();
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = 2025768381
-   )
-   int field1406;
+	@ObfuscatedName("at")
+	final Thread field1418;
+	@ObfuscatedName("ah")
+	@Export("isClosed")
+	volatile boolean isClosed;
+	@ObfuscatedName("ar")
+	@Export("requests")
+	Queue requests;
+	@ObfuscatedName("ao")
+	@ObfuscatedGetter(
+		intValue = -108410615
+	)
+	int field1419;
 
-   UrlRequester(int var1) {
-      this.field1410.setPriority(1);
-      this.field1410.start();
-      this.field1406 = var1;
-   }
+	UrlRequester(int var1) {
+		this.requests = new LinkedList();
+		this.field1418 = new Thread(this);
+		this.field1418.setPriority(1);
+		this.field1418.start();
+		this.field1419 = var1;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Ldg;I)V",
-      garbageValue = "1626777935"
-   )
-   abstract void vmethod2875(UrlRequest var1) throws IOException;
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(Lea;I)V",
+		garbageValue = "422697771"
+	)
+	abstract void vmethod2910(UrlRequest var1) throws IOException;
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/net/URLConnection;I)V",
-      garbageValue = "1863650112"
-   )
-   void method2855(URLConnection var1) {
-      var1.setConnectTimeout(5000);
-      var1.setReadTimeout(5000);
-      var1.setUseCaches(false);
-      var1.setRequestProperty("Connection", "close");
-      var1.setRequestProperty("User-Agent", "OldSchoolRuneScape/" + this.field1406);
-   }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/net/URLConnection;B)I",
+		garbageValue = "117"
+	)
+	int method2888(URLConnection var1) {
+		int var2 = UrlRequest.field1432;
+		if (var1 != null) {
+			try {
+				if (var1 instanceof HttpURLConnection) {
+					var2 = ((HttpURLConnection)var1).getResponseCode();
+				}
+			} catch (IOException var4) {
+			}
+		}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/net/URLConnection;Ldg;I)V",
-      garbageValue = "635566150"
-   )
-   void method2859(URLConnection var1, UrlRequest var2) {
-      DataInputStream var3 = null;
+		return var2;
+	}
 
-      try {
-         int var5 = var1.getContentLength();
-         var3 = new DataInputStream(var1.getInputStream());
-         byte[] var4;
-         if (var5 >= 0) {
-            var4 = new byte[var5];
-            var3.readFully(var4);
-         } else {
-            var4 = new byte[0];
-            byte[] var6 = ClientPacket.ByteArrayPool_getArray(5000);
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/net/URLConnection;I)V",
+		garbageValue = "-727405176"
+	)
+	void method2905(URLConnection var1) {
+		var1.setConnectTimeout(5000);
+		var1.setReadTimeout(5000);
+		var1.setUseCaches(false);
+		var1.setRequestProperty("Connection", "close");
+		var1.setRequestProperty("User-Agent", "OldSchoolRuneScape/" + this.field1419);
+	}
 
-            byte[] var8;
-            for(int var7 = var3.read(var6, 0, var6.length); var7 > -1; var4 = var8) {
-               var8 = new byte[var4.length + var7];
-               System.arraycopy(var4, 0, var8, 0, var4.length);
-               System.arraycopy(var6, 0, var8, var4.length, var7);
-            }
+	@ObfuscatedName("ao")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/net/URLConnection;Lea;I)V",
+		garbageValue = "-1518278388"
+	)
+	void method2890(URLConnection var1, UrlRequest var2) {
+		DataInputStream var3 = null;
 
-            class277.ByteArrayPool_release(var6);
-         }
+		try {
+			int var5 = var1.getContentLength();
+			var3 = new DataInputStream(var1.getInputStream());
+			byte[] var4;
+			if (var5 >= 0) {
+				var4 = new byte[var5];
+				var3.readFully(var4);
+			} else {
+				var4 = new byte[0];
+				byte[] var6 = class362.ByteArrayPool_getArray(5000);
 
-         var2.response0 = var4;
-      } catch (IOException var10) {
-      }
+				for (int var7 = var3.read(var6); var7 > -1; var7 = var3.read(var6)) {
+					byte[] var8 = new byte[var4.length + var7];
+					System.arraycopy(var4, 0, var8, 0, var4.length);
+					System.arraycopy(var6, 0, var8, var4.length, var7);
+					var4 = var8;
+				}
 
-      if (var3 != null) {
-         try {
-            var3.close();
-         } catch (IOException var9) {
-         }
-      }
+				SwapSongTask.ByteArrayPool_release(var6);
+			}
 
-   }
+			var2.response0 = var4;
+		} catch (IOException var14) {
+			var2.response0 = null;
+		} finally {
+			var2.field1427 = this.method2888(var1);
+		}
 
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/net/URL;I)Ldg;",
-      garbageValue = "-1293624183"
-   )
-   @Export("request")
-   public UrlRequest request(URL var1) {
-      UrlRequest var2 = new UrlRequest(var1);
-      synchronized(this) {
-         this.requests.add(var2);
-         this.notify();
-         return var2;
-      }
-   }
+		if (var3 != null) {
+			try {
+				var3.close();
+			} catch (IOException var13) {
+			}
+		}
 
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "-1651940663"
-   )
-   @Export("close")
-   public void close() {
-      this.isClosed = true;
+	}
 
-      try {
-         synchronized(this) {
-            this.notify();
-         }
+	@ObfuscatedName("ab")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/net/URL;I)Lea;",
+		garbageValue = "-511964616"
+	)
+	@Export("request")
+	public UrlRequest request(URL var1) {
+		UrlRequest var2 = new UrlRequest(var1);
+		synchronized(this) {
+			this.requests.add(var2);
+			this.notify();
+			return var2;
+		}
+	}
 
-         this.field1410.join();
-      } catch (InterruptedException var4) {
-      }
+	@ObfuscatedName("au")
+	@ObfuscatedSignature(
+		descriptor = "(I)V",
+		garbageValue = "-264971545"
+	)
+	@Export("close")
+	public void close() {
+		this.isClosed = true;
 
-   }
+		try {
+			synchronized(this) {
+				this.notify();
+			}
 
-   public void run() {
-      while(!this.isClosed) {
-         try {
-            UrlRequest var1;
-            synchronized(this) {
-               var1 = (UrlRequest)this.requests.poll();
-               if (var1 == null) {
-                  try {
-                     this.wait();
-                  } catch (InterruptedException var5) {
-                  }
-                  continue;
-               }
-            }
+			this.field1418.join();
+		} catch (InterruptedException var4) {
+		}
 
-            this.vmethod2875(var1);
-         } catch (Exception var7) {
-            class121.RunException_sendStackTrace((String)null, var7);
-         }
-      }
+	}
 
-   }
+	public void run() {
+		while (!this.isClosed) {
+			try {
+				UrlRequest var1;
+				synchronized(this) {
+					var1 = (UrlRequest)this.requests.poll();
+					if (var1 == null) {
+						try {
+							this.wait();
+						} catch (InterruptedException var5) {
+						}
+						continue;
+					}
+				}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/lang/String;Ljava/lang/String;ZB)Lqr;",
-      garbageValue = "9"
-   )
-   @Export("getPreferencesFile")
-   public static AccessFile getPreferencesFile(String var0, String var1, boolean var2) {
-      File var3 = new File(Ignored.cacheDir, "preferences" + var0 + ".dat");
-      if (var3.exists()) {
-         try {
-            AccessFile var10 = new AccessFile(var3, "rw", 10000L);
-            return var10;
-         } catch (IOException var9) {
-         }
-      }
+				this.vmethod2910(var1);
+			} catch (Exception var7) {
+				GrandExchangeOfferWorldComparator.RunException_sendStackTrace((String)null, var7);
+			}
+		}
 
-      String var4 = "";
-      if (class86.cacheGamebuild == 33) {
-         var4 = "_rc";
-      } else if (class86.cacheGamebuild == 34) {
-         var4 = "_wip";
-      }
+	}
 
-      File var5 = new File(UserComparator4.userHomeDirectory, "jagex_" + var1 + "_preferences" + var0 + var4 + ".dat");
-      AccessFile var6;
-      if (!var2 && var5.exists()) {
-         try {
-            var6 = new AccessFile(var5, "rw", 10000L);
-            return var6;
-         } catch (IOException var8) {
-         }
-      }
+	@ObfuscatedName("ao")
+	@ObfuscatedSignature(
+		descriptor = "(IIILhs;II)V",
+		garbageValue = "237436184"
+	)
+	@Export("createObjectSound")
+	static void createObjectSound(int var0, int var1, int var2, ObjectComposition var3, int var4) {
+		ObjectSound var5 = new ObjectSound();
+		var5.plane = var0;
+		var5.x = var1 * 128;
+		var5.y = var2 * 16384;
+		int var6 = var3.sizeX;
+		int var7 = var3.sizeY;
+		if (var4 == 1 || var4 == 3) {
+			var6 = var3.sizeY;
+			var7 = var3.sizeX;
+		}
 
-      try {
-         var6 = new AccessFile(var3, "rw", 10000L);
-         return var6;
-      } catch (IOException var7) {
-         throw new RuntimeException();
-      }
-   }
+		var5.maxX = (var6 + var1) * 16384;
+		var5.maxY = (var7 + var2) * 16384;
+		var5.soundEffectId = var3.ambientSoundId;
+		var5.field824 = var3.int7 * 16384;
+		var5.field827 = var3.int5;
+		var5.field828 = var3.int6;
+		var5.soundEffectIds = var3.soundEffectIds;
+		if (var3.transforms != null) {
+			var5.obj = var3;
+			var5.set();
+		}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(II)Lgf;",
-      garbageValue = "1042587763"
-   )
-   @Export("KitDefinition_get")
-   public static KitDefinition KitDefinition_get(int var0) {
-      KitDefinition var1 = (KitDefinition)KitDefinition.KitDefinition_cached.get((long)var0);
-      if (var1 != null) {
-         return var1;
-      } else {
-         byte[] var2 = KitDefinition.KitDefinition_archive.takeFile(3, var0);
-         var1 = new KitDefinition();
-         if (var2 != null) {
-            var1.decode(new Buffer(var2));
-         }
+		ObjectSound.objectSounds.addFirst(var5);
+		if (var5.soundEffectIds != null) {
+			var5.field832 = var5.field827 + (int)(Math.random() * (double)(var5.field828 - var5.field827));
+		}
 
-         KitDefinition.KitDefinition_cached.put(var1, (long)var0);
-         return var1;
-      }
-   }
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lda;FI)F",
-      garbageValue = "-1354016584"
-   )
-   static float method2874(class125 var0, float var1) {
-      if (var0 != null && var0.method3060() != 0) {
-         if (var1 < (float)var0.field1524[0].field1474) {
-            return var0.field1522 == class123.field1502 ? var0.field1524[0].field1467 : Messages.method2821(var0, var1, true);
-         } else if (var1 > (float)var0.field1524[var0.method3060() - 1].field1474) {
-            return var0.field1541 == class123.field1502 ? var0.field1524[var0.method3060() - 1].field1467 : Messages.method2821(var0, var1, false);
-         } else if (var0.field1521) {
-            return var0.field1524[0].field1467;
-         } else {
-            class120 var2 = var0.method3049(var1);
-            boolean var3 = false;
-            boolean var4 = false;
-            if (var2 == null) {
-               return 0.0F;
-            } else {
-               if (0.0 == (double)var2.field1473 && 0.0 == (double)var2.field1472) {
-                  var3 = true;
-               } else if (var2.field1473 == Float.MAX_VALUE && var2.field1472 == Float.MAX_VALUE) {
-                  var4 = true;
-               } else if (var2.field1468 != null) {
-                  if (var0.field1530) {
-                     float var5 = (float)var2.field1474;
-                     float var9 = var2.field1467;
-                     float var6 = var5 + 0.33333334F * var2.field1473;
-                     float var10 = var2.field1472 * 0.33333334F + var9;
-                     float var8 = (float)var2.field1468.field1474;
-                     float var12 = var2.field1468.field1467;
-                     float var7 = var8 - 0.33333334F * var2.field1468.field1469;
-                     float var11 = var12 - var2.field1468.field1470 * 0.33333334F;
-                     if (var0.field1545) {
-                        float var15 = var10;
-                        float var16 = var11;
-                        if (var0 != null) {
-                           float var17 = var8 - var5;
-                           if (0.0 != (double)var17) {
-                              float var18 = var6 - var5;
-                              float var19 = var7 - var5;
-                              float[] var20 = new float[]{var18 / var17, var19 / var17};
-                              var0.field1525 = var20[0] == 0.33333334F && var20[1] == 0.6666667F;
-                              float var21 = var20[0];
-                              float var22 = var20[1];
-                              if ((double)var20[0] < 0.0) {
-                                 var20[0] = 0.0F;
-                              }
+	@ObfuscatedName("ag")
+	@ObfuscatedSignature(
+		descriptor = "(ILdt;ZS)I",
+		garbageValue = "-175"
+	)
+	static int method2901(int var0, Script var1, boolean var2) {
+		Widget var3 = HealthBarDefinition.widgetDefinition.method6285(Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize]);
+		if (var0 == ScriptOpcodes.IF_GETTARGETMASK) {
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = WorldMapData_0.Widget_unpackTargetMask(class361.getWidgetFlags(var3));
+			return 1;
+		} else if (var0 != ScriptOpcodes.IF_GETOP) {
+			if (var0 == ScriptOpcodes.IF_GETOPBASE) {
+				if (var3.dataText == null) {
+					Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = "";
+				} else {
+					Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = var3.dataText;
+				}
 
-                              if ((double)var20[1] > 1.0) {
-                                 var20[1] = 1.0F;
-                              }
+				return 1;
+			} else {
+				return 2;
+			}
+		} else {
+			int var4 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+			--var4;
+			if (var3.actions != null && var4 < var3.actions.length && var3.actions[var4] != null) {
+				Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = var3.actions[var4];
+			} else {
+				Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = "";
+			}
 
-                              if ((double)var20[0] > 1.0 || var20[1] < -1.0F) {
-                                 var20[1] = 1.0F - var20[1];
-                                 if (var20[0] < 0.0F) {
-                                    var20[0] = 0.0F;
-                                 }
-
-                                 if (var20[1] < 0.0F) {
-                                    var20[1] = 0.0F;
-                                 }
-
-                                 if (var20[0] > 1.0F || var20[1] > 1.0F) {
-                                    float var23 = (float)(((double)var20[1] - 2.0) * (double)var20[1] + (double)((var20[1] + (var20[0] - 2.0F)) * var20[0]) + 1.0);
-                                    if (var23 + class121.field1479 > 0.0F) {
-                                       if (class121.field1479 + var20[0] < 1.3333334F) {
-                                          float var24 = var20[0] - 2.0F;
-                                          float var25 = var20[0] - 1.0F;
-                                          float var26 = (float)Math.sqrt((double)(var24 * var24 - 4.0F * var25 * var25));
-                                          float var27 = 0.5F * (-var24 + var26);
-                                          if (var20[1] + class121.field1479 > var27) {
-                                             var20[1] = var27 - class121.field1479;
-                                          } else {
-                                             var27 = (-var24 - var26) * 0.5F;
-                                             if (var20[1] < var27 + class121.field1479) {
-                                                var20[1] = class121.field1479 + var27;
-                                             }
-                                          }
-                                       } else {
-                                          var20[0] = 1.3333334F - class121.field1479;
-                                          var20[1] = 0.33333334F - class121.field1479;
-                                       }
-                                    }
-                                 }
-
-                                 var20[1] = 1.0F - var20[1];
-                              }
-
-                              float var10000;
-                              if (var21 != var20[0]) {
-                                 var10000 = var5 + var17 * var20[0];
-                                 if ((double)var21 != 0.0) {
-                                    var15 = var9 + (var10 - var9) * var20[0] / var21;
-                                 }
-                              }
-
-                              if (var22 != var20[1]) {
-                                 var10000 = var5 + var17 * var20[1];
-                                 if ((double)var22 != 1.0) {
-                                    var16 = (float)((double)var12 - (1.0 - (double)var20[1]) * (double)(var12 - var11) / (1.0 - (double)var22));
-                                 }
-                              }
-
-                              var0.field1520 = var5;
-                              var0.field1527 = var8;
-                              GrandExchangeOfferOwnWorldComparator.method1202(0.0F, var20[0], var20[1], 1.0F, var0);
-                              FriendSystem.method1909(var9, var15, var16, var12, var0);
-                           }
-                        }
-                     } else {
-                        ScriptFrame.method1155(var0, var5, var6, var7, var8, var9, var10, var11, var12);
-                     }
-
-                     var0.field1530 = false;
-                  }
-               } else {
-                  var3 = true;
-               }
-
-               if (var3) {
-                  return var2.field1467;
-               } else if (var4) {
-                  return (float)var2.field1474 != var1 && var2.field1468 != null ? var2.field1468.field1467 : var2.field1467;
-               } else {
-                  return var0.field1545 ? DynamicObject.method2202(var0, var1) : class382.method7405(var0, var1);
-               }
-            }
-         }
-      } else {
-         return 0.0F;
-      }
-   }
-
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(I)[Lde;",
-      garbageValue = "1673828737"
-   )
-   static class123[] method2852() {
-      return new class123[]{class123.field1502, class123.field1504, class123.field1503, class123.field1506, class123.field1505};
-   }
+			return 1;
+		}
+	}
 }

@@ -1,34 +1,93 @@
+import java.util.Random;
+import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedName;
-import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("pq")
-public class class421 implements class426 {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lqs;"
-   )
-   public final class451 field4671;
+@ObfuscatedName("qp")
+public class class421 {
+	@ObfuscatedName("at")
+	@Export("writeRandomDat")
+	public static void writeRandomDat(byte[] var0, int var1, byte[] var2, int var3, int var4) {
+		if (var2 == var0) {
+			if (var3 == var1) {
+				return;
+			}
 
-   @ObfuscatedSignature(
-      descriptor = "(Lqe;)V"
-   )
-   class421(class452 var1) {
-      this.field4671 = var1;
-   }
+			if (var3 > var1 && var3 < var4 + var1) {
+				--var4;
+				var1 += var4;
+				var3 += var4;
+				var4 = var1 - var4;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lpo;)V"
-   )
-   public class421(class422 var1) {
-      this(new class452(var1));
-   }
+				for (var4 += 7; var1 >= var4; var2[var3--] = var0[var1--]) {
+					var2[var3--] = var0[var1--];
+					var2[var3--] = var0[var1--];
+					var2[var3--] = var0[var1--];
+					var2[var3--] = var0[var1--];
+					var2[var3--] = var0[var1--];
+					var2[var3--] = var0[var1--];
+					var2[var3--] = var0[var1--];
+				}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(IB)I",
-      garbageValue = "70"
-   )
-   public int method7995(int var1) {
-      return this.field4671.vmethod8375(var1);
-   }
+				for (var4 -= 7; var1 >= var4; var2[var3--] = var0[var1--]) {
+				}
+
+				return;
+			}
+		}
+
+		var4 += var1;
+
+		for (var4 -= 7; var1 < var4; var2[var3++] = var0[var1++]) {
+			var2[var3++] = var0[var1++];
+			var2[var3++] = var0[var1++];
+			var2[var3++] = var0[var1++];
+			var2[var3++] = var0[var1++];
+			var2[var3++] = var0[var1++];
+			var2[var3++] = var0[var1++];
+			var2[var3++] = var0[var1++];
+		}
+
+		for (var4 += 7; var1 < var4; var2[var3++] = var0[var1++]) {
+		}
+
+	}
+
+	@ObfuscatedName("az")
+	@Export("clearIntArray")
+	public static void clearIntArray(int[] var0, int var1, int var2) {
+		for (var2 = var2 + var1 - 7; var1 < var2; var0[var1++] = 0) {
+			var0[var1++] = 0;
+			var0[var1++] = 0;
+			var0[var1++] = 0;
+			var0[var1++] = 0;
+			var0[var1++] = 0;
+			var0[var1++] = 0;
+			var0[var1++] = 0;
+		}
+
+		for (var2 += 7; var1 < var2; var0[var1++] = 0) {
+		}
+
+	}
+
+	@ObfuscatedName("ap")
+	public static void method7884(int[] var0, int var1, int var2, int var3) {
+		if (var2 == 0 && var3 == 0) {
+			var2 = (int)(Math.random() * 2.147483647E9D);
+			var3 = (int)(Math.random() * 2.147483647E9D);
+		}
+
+		long var4 = (long)var2 << 32 | (long)var3;
+		Random var6 = new Random(var4);
+
+		for (int var7 = var1 - 1; var7 > 0; --var7) {
+			int var8 = var6.nextInt(var7 + 1);
+			if (var7 != var8) {
+				int var9 = var0[var7];
+				var0[var7] = var0[var8];
+				var0[var8] = var9;
+			}
+		}
+
+	}
 }

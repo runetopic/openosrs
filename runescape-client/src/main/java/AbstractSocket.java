@@ -1,60 +1,68 @@
 import java.io.IOException;
 import net.runelite.mapping.Export;
 import net.runelite.mapping.Implements;
+import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ov")
+@ObfuscatedName("ro")
 @Implements("AbstractSocket")
 public abstract class AbstractSocket {
-   AbstractSocket() {
-   }
+	@ObfuscatedName("gg")
+	@ObfuscatedGetter(
+		intValue = -211744297
+	)
+	@Export("js5Port")
+	static int js5Port;
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(II)Z",
-      garbageValue = "-38626951"
-   )
-   @Export("isAvailable")
-   public abstract boolean isAvailable(int var1) throws IOException;
+	AbstractSocket() {
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(B)I",
-      garbageValue = "50"
-   )
-   @Export("available")
-   public abstract int available() throws IOException;
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(II)Z",
+		garbageValue = "278911957"
+	)
+	@Export("isAvailable")
+	public abstract boolean isAvailable(int var1) throws IOException;
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(I)I",
-      garbageValue = "-1455058201"
-   )
-   @Export("readUnsignedByte")
-   public abstract int readUnsignedByte() throws IOException;
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(I)I",
+		garbageValue = "1133909296"
+	)
+	@Export("available")
+	public abstract int available() throws IOException;
 
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "([BIII)I",
-      garbageValue = "2061560315"
-   )
-   @Export("read")
-   public abstract int read(byte[] var1, int var2, int var3) throws IOException;
+	@ObfuscatedName("ao")
+	@ObfuscatedSignature(
+		descriptor = "(I)I",
+		garbageValue = "-1251290768"
+	)
+	@Export("readUnsignedByte")
+	public abstract int readUnsignedByte() throws IOException;
 
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "([BIIS)V",
-      garbageValue = "26113"
-   )
-   @Export("write")
-   public abstract void write(byte[] var1, int var2, int var3) throws IOException;
+	@ObfuscatedName("ab")
+	@ObfuscatedSignature(
+		descriptor = "([BIIB)I",
+		garbageValue = "-54"
+	)
+	@Export("read")
+	public abstract int read(byte[] var1, int var2, int var3) throws IOException;
 
-   @ObfuscatedName("j")
-   @ObfuscatedSignature(
-      descriptor = "(B)V",
-      garbageValue = "2"
-   )
-   @Export("close")
-   public abstract void close();
+	@ObfuscatedName("au")
+	@ObfuscatedSignature(
+		descriptor = "([BIII)V",
+		garbageValue = "-1734190943"
+	)
+	@Export("write")
+	public abstract void write(byte[] var1, int var2, int var3) throws IOException;
+
+	@ObfuscatedName("aa")
+	@ObfuscatedSignature(
+		descriptor = "(I)V",
+		garbageValue = "1195407219"
+	)
+	@Export("close")
+	public abstract void close();
 }

@@ -28,14 +28,16 @@ import org.ajoberstar.grgit.Grgit
 buildscript {
     repositories {
         mavenLocal()
-        gradlePluginPortal()
-        maven(url = "https://raw.githubusercontent.com/open-osrs/hosting/master")
+        mavenCentral()
+        //gradlePluginPortal()
+        maven(url = "https://raw.githubusercontent.com/melxin/hosting/master")
         maven(url = "https://repo.runelite.net")
     }
     dependencies {
         classpath("org.ajoberstar.grgit:grgit-core:4.1.0")
-        classpath("com.openosrs:script-assembler-plugin:1.0.1")
-        classpath("com.openosrs:injector-plugin:2.0.2")
+        classpath("com.openosrs:script-assembler-plugin:1.0.2")
+        classpath("com.openosrs:injector-plugin:2.0.6")
+        classpath("com.openosrs:interface-parser-plugin:1.0.0")
     }
 }
 
@@ -91,7 +93,7 @@ subprojects {
         exclusiveContent {
             forRepository {
                 maven {
-                    url = uri("https://raw.githubusercontent.com/open-osrs/hosting/master")
+                    url = uri("https://raw.githubusercontent.com/melxin/hosting/master")
                 }
             }
             filter {
@@ -208,5 +210,6 @@ tasks {
 
         classpath = project(":runelite-client").sourceSets.main.get().runtimeClasspath
         enableAssertions = true
+        jvmArgs("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED")
     }
 }

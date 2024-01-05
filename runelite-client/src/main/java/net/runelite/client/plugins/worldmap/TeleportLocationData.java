@@ -48,7 +48,7 @@ enum TeleportLocationData
 	KHARYRLL(TeleportType.ANCIENT_MAGICKS, "Kharyrll", 66, new WorldPoint(3494, 3473, 0), "kharyrll_teleport_icon.png"),
 	LASSAR(TeleportType.ANCIENT_MAGICKS, "Lassar", 72, new WorldPoint(3002, 3472, 0), "lassar_teleport_icon.png"),
 	DAREEYAK(TeleportType.ANCIENT_MAGICKS, "Dareeyak", 78, new WorldPoint(2969, 3695, 0), "dareeyak_teleport_icon.png"),
-	CARRALLANGAR(TeleportType.ANCIENT_MAGICKS, "Carrallangar", 84, new WorldPoint(3157, 3667, 0), "carrallangar_teleport_icon.png"),
+	CARRALLANGER(TeleportType.ANCIENT_MAGICKS, "Carrallanger", 84, new WorldPoint(3157, 3667, 0), "carrallanger_teleport_icon.png"),
 	ANNAKARL(TeleportType.ANCIENT_MAGICKS, "Annakarl", 90, new WorldPoint(3288, 3888, 0), "annakarl_teleport_icon.png"),
 	GHORROCK(TeleportType.ANCIENT_MAGICKS, "Ghorrock", 96, new WorldPoint(2977, 3872, 0), "ghorrock_teleport_icon.png"),
 	MOONCLAN(TeleportType.LUNAR_MAGIC, "Moonclan", 69, new WorldPoint(2113, 3915, 0), "moonclan_teleport_icon.png"),
@@ -146,6 +146,12 @@ enum TeleportLocationData
 	TELEPORT_CRYSTAL_PRIFDDINAS(TeleportType.OTHER, "Teleport crystal", "Prifddinas", new WorldPoint(3264, 6065, 0), "teleport_crystal_icon.png"),
 	DRAKANS_MEDALLION_VER_SINHAZA(TeleportType.OTHER, "Drakan's medallion", "Ver Sinhaza", new WorldPoint(3649, 3230, 0), "drakans_medallion_teleport_icon.png"),
 	DRAKANS_MEDALLION_DARKMEYER(TeleportType.OTHER, "Drakan's medallion", "Darkmeyer", new WorldPoint(3592, 3337, 0), "drakans_medallion_teleport_icon.png"),
+	RING_OF_THE_ELEMENTS_AIR(TeleportType.OTHER, "Ring of the elements", "Air Altar", new WorldPoint(2981, 3276, 0), "ring_of_the_elements_teleport_icon.png"),
+	RING_OF_THE_ELEMENTS_WATER(TeleportType.OTHER, "Ring of the elements", "Water Altar", new WorldPoint(3166, 3158, 0), "ring_of_the_elements_teleport_icon.png"),
+	RING_OF_THE_ELEMENTS_EARTH(TeleportType.OTHER, "Ring of the elements", "Earth Altar", new WorldPoint(3288, 3468, 0), "ring_of_the_elements_teleport_icon.png"),
+	RING_OF_THE_ELEMENTS_FIRE(TeleportType.OTHER, "Ring of the elements", "Fire Altar", new WorldPoint(3315, 3278, 0), "ring_of_the_elements_teleport_icon.png"),
+	RING_OF_SHADOWS_LASSAR_UNDERCITY(TeleportType.OTHER, "Ring of shadows", "Lassar Undercity", new WorldPoint(2588, 6435, 0), "ring_of_shadows_teleport_icon.png"),
+	RING_OF_SHADOWS_THE_STRANGLEWOOD(TeleportType.OTHER, "Ring of shadows", "The Stranglewood", new WorldPoint(1175, 3422, 0), "ring_of_shadows_teleport_icon.png"),
 
 	// Wilderness
 	OBELISK_13(TeleportType.OTHER, "Obelisk", "13", new WorldPoint(3156, 3620, 0), "obelisk_icon.png"),

@@ -4,34 +4,35 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ff")
+@ObfuscatedName("iq")
 @Implements("Task")
 public class Task {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lff;"
-   )
-   @Export("next")
-   Task next;
-   @ObfuscatedName("s")
-   @Export("status")
-   public volatile int status = 0;
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = -1356039255
-   )
-   @Export("type")
-   int type;
-   @ObfuscatedName("j")
-   @Export("intArgument")
-   public int intArgument;
-   @ObfuscatedName("i")
-   @Export("objectArgument")
-   Object objectArgument;
-   @ObfuscatedName("n")
-   @Export("result")
-   public volatile Object result;
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "Liq;"
+	)
+	@Export("next")
+	Task next;
+	@ObfuscatedName("ao")
+	@Export("status")
+	public volatile int status;
+	@ObfuscatedName("ab")
+	@ObfuscatedGetter(
+		intValue = 671081225
+	)
+	@Export("type")
+	int type;
+	@ObfuscatedName("au")
+	@Export("intArgument")
+	public int intArgument;
+	@ObfuscatedName("aa")
+	@Export("objectArgument")
+	Object objectArgument;
+	@ObfuscatedName("ac")
+	@Export("result")
+	public volatile Object result;
 
-   Task() {
-   }
+	Task() {
+		this.status = 0;
+	}
 }

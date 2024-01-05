@@ -24,7 +24,6 @@
  */
 package net.runelite.api;
 
-import java.util.HashMap;
 import javax.annotation.Nonnull;
 
 /**
@@ -56,8 +55,6 @@ public interface Model extends Mesh, Renderable
 	int getRadius();
 	int getDiameter();
 
-	float[] getFaceTextureUVCoordinates();
-
 	/**
 	 * @see #getAABB(int)
 	 */
@@ -67,16 +64,8 @@ public interface Model extends Mesh, Renderable
 	@Nonnull
 	AABB getAABB(int orientation);
 
-	HashMap<Integer, AABB> getAABBMap();
-
-	void calculateBoundingBox(int orientation);
-
-	int getLastOrientation();
-
 	int getXYZMag();
 	boolean isClickable();
-
-	void drawFace(int face);
 
 	int[] getVertexNormalsX();
 	int[] getVertexNormalsY();
@@ -86,4 +75,14 @@ public interface Model extends Mesh, Renderable
 	byte getOverrideHue();
 	byte getOverrideSaturation();
 	byte getOverrideLuminance();
+
+	byte[] getTextureFaces();
+
+	int[] getTexIndices1();
+	int[] getTexIndices2();
+	int[] getTexIndices3();
+
+	Model getUnskewedModel();
+
+	void drawFrustum(int zero, int xRotate, int yRotate, int zRotate, int xCamera, int yCamera, int zCamera);
 }

@@ -2,71 +2,66 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("fi")
-public class class163 extends class139 {
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = -1391357531
-   )
-   int field1811;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      longValue = -3892957661762122141L
-   )
-   long field1812;
-   // $FF: synthetic field
-   @ObfuscatedSignature(
-      descriptor = "Lex;"
-   )
-   final class142 this$0;
+@ObfuscatedName("gq")
+public class class163 extends class144 {
+	@ObfuscatedName("at")
+	@ObfuscatedGetter(
+		intValue = -1490830621
+	)
+	int field1762;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lfv;"
+	)
+	final class147 this$0;
 
-   @ObfuscatedSignature(
-      descriptor = "(Lex;)V"
-   )
-   class163(class142 var1) {
-      this.this$0 = var1;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Lfv;)V"
+	)
+	class163(class147 var1) {
+		this.this$0 = var1;
+		this.field1762 = -1;
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;S)V",
-      garbageValue = "-5782"
-   )
-   void vmethod3394(Buffer var1) {
-      this.field1811 = var1.readInt();
-      this.field1812 = var1.readLong();
-   }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(Luj;I)V",
+		garbageValue = "-734756620"
+	)
+	void vmethod3510(Buffer var1) {
+		this.field1762 = var1.readUnsignedShort();
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Leb;B)V",
-      garbageValue = "-26"
-   )
-   void vmethod3393(ClanSettings var1) {
-      var1.method3241(this.field1811, this.field1812);
-   }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(Lfc;I)V",
+		garbageValue = "-2111347169"
+	)
+	void vmethod3506(ClanSettings var1) {
+		var1.method3366(this.field1762);
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;B)Ljava/lang/String;",
-      garbageValue = "-120"
-   )
-   public static String method3398(Buffer var0) {
-      String var1;
-      try {
-         int var2 = var0.readUShortSmart();
-         if (var2 > 32767) {
-            var2 = 32767;
-         }
+	@ObfuscatedName("ax")
+	@ObfuscatedSignature(
+		descriptor = "(B)V",
+		garbageValue = "-114"
+	)
+	static final void method3461() {
+		WorldMapArea.method4622("You can't add yourself to your own friend list");
+	}
 
-         byte[] var3 = new byte[var2];
-         var0.offset += class312.huffman.decompress(var0.array, var0.offset, var3, 0, var2);
-         String var4 = class101.decodeStringCp1252(var3, 0, var2);
-         var1 = var4;
-      } catch (Exception var6) {
-         var1 = "Cabbage";
-      }
+	@ObfuscatedName("mx")
+	@ObfuscatedSignature(
+		descriptor = "(II)Z",
+		garbageValue = "2130928035"
+	)
+	static boolean method3462(int var0) {
+		for (int var1 = 0; var1 < Client.field726; ++var1) {
+			if (Client.field518[var1] == var0) {
+				return true;
+			}
+		}
 
-      return var1;
-   }
+		return false;
+	}
 }

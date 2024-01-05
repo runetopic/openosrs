@@ -31,8 +31,12 @@ package net.runelite.api;
  */
 public final class EnumID
 {
-	public static final int MUSIC_TRACK_NAMES = 812;
-	public static final int MUSIC_TRACK_IDS = 819;
+	/**
+	 * key: int
+	 * val: string creature name
+	 */
+	public static final int SLAYER_TASK_CREATURE = 693;
+
 	/**
 	 * key: int 1-n+1
 	 * val: namedobj
@@ -59,12 +63,30 @@ public final class EnumID
 	 * val: namedobj
 	 */
 	public static final int PETS = 2158;
+	public static final int POH_COSTUME_MEMBERS = 3077;
+	public static final int POH_COSTUME_CLUE_BEGINNER = 3293;
+	public static final int POH_COSTUME_CLUE_EASY = 3294;
+	public static final int POH_COSTUME_CLUE_MEDIUM = 3295;
+	public static final int POH_COSTUME_CLUE_HARD = 3296;
+	public static final int POH_COSTUME_CLUE_ELITE = 3297;
+	public static final int POH_COSTUME_CLUE_MASTER = 3298;
+	public static final int POH_COSTUME_ALTERNATE = 3303;
+	public static final int POH_COSTUME_ALTERNATES = 3304;
 	public static final int CLAN_RANK_NAME = 3797;
 	public static final int CLAN_RANK_GRAPHIC = 3798;
 
 	/**
-	 * key: mapelement
-	 * val: dbrow
+	 * key: int
+	 * val: string location name
 	 */
-	public static final int MAPELEMENT_TO_QUEST = 4385;
+	public static final int SLAYER_TASK_LOCATION = 4064;
+
+	public static final int PRAYERS_NORMAL = 4956;
+	public static final int PRAYERS_RUINOUS = 4959;
+
+	/**
+	 * key: int
+	 * val: struct slayer task
+	 */
+	public static final int SLAYER_TASK = 5008;
 }

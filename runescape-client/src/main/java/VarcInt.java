@@ -3,81 +3,109 @@ import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ga")
+@ObfuscatedName("gk")
 @Implements("VarcInt")
 public class VarcInt extends DualNode {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lln;"
-   )
-   @Export("VarcInt_archive")
-   public static AbstractArchive VarcInt_archive;
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lja;"
-   )
-   @Export("VarcInt_cached")
-   public static EvictingDualNodeHashTable VarcInt_cached = new EvictingDualNodeHashTable(64);
-   @ObfuscatedName("fp")
-   static String field1962;
-   @ObfuscatedName("v")
-   @Export("persist")
-   public boolean persist = false;
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "Llk;"
+	)
+	@Export("VarcInt_cached")
+	public static EvictingDualNodeHashTable VarcInt_cached;
+	@ObfuscatedName("aj")
+	@ObfuscatedSignature(
+		descriptor = "Lgn;"
+	)
+	static ClanChannel field1851;
+	@ObfuscatedName("ar")
+	@Export("persist")
+	public boolean persist;
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;I)V",
-      garbageValue = "865098803"
-   )
-   public void method3633(Buffer var1) {
-      while(true) {
-         int var2 = var1.readUnsignedByte();
-         if (var2 == 0) {
-            return;
-         }
+	static {
+		VarcInt_cached = new EvictingDualNodeHashTable(64);
+	}
 
-         this.method3636(var1, var2);
-      }
-   }
+	VarcInt() {
+		this.persist = false;
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;IB)V",
-      garbageValue = "4"
-   )
-   void method3636(Buffer var1, int var2) {
-      if (var2 == 2) {
-         this.persist = true;
-      }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(Luj;S)V",
+		garbageValue = "-26758"
+	)
+	void method3593(Buffer var1) {
+		while (true) {
+			int var2 = var1.readUnsignedByte();
+			if (var2 == 0) {
+				return;
+			}
 
-   }
+			this.method3592(var1, var2);
+		}
+	}
 
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "(Lln;Ljava/lang/String;Ljava/lang/String;I)Lrg;",
-      garbageValue = "749635841"
-   )
-   @Export("SpriteBuffer_getIndexedSpriteByName")
-   public static IndexedSprite SpriteBuffer_getIndexedSpriteByName(AbstractArchive var0, String var1, String var2) {
-      int var3 = var0.getGroupId(var1);
-      int var4 = var0.getFileId(var3, var2);
-      IndexedSprite var5;
-      if (!Buffer.method8892(var0, var3, var4)) {
-         var5 = null;
-      } else {
-         IndexedSprite var7 = new IndexedSprite();
-         var7.width = class488.SpriteBuffer_spriteWidth;
-         var7.height = class488.SpriteBuffer_spriteHeight;
-         var7.xOffset = class488.SpriteBuffer_xOffsets[0];
-         var7.yOffset = ApproximateRouteStrategy.SpriteBuffer_yOffsets[0];
-         var7.subWidth = FriendsList.SpriteBuffer_spriteWidths[0];
-         var7.subHeight = class132.SpriteBuffer_spriteHeights[0];
-         var7.palette = class100.SpriteBuffer_spritePalette;
-         var7.pixels = class140.SpriteBuffer_pixels[0];
-         class100.method2724();
-         var5 = var7;
-      }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(Luj;IB)V",
+		garbageValue = "14"
+	)
+	void method3592(Buffer var1, int var2) {
+		if (var2 == 2) {
+			this.persist = true;
+		}
 
-      return var5;
-   }
+	}
+
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "([BZI)Ljava/lang/Object;",
+		garbageValue = "-648175177"
+	)
+	public static Object method3598(byte[] var0, boolean var1) {
+		if (var0 == null) {
+			return null;
+		} else if (var0.length > 136) {
+			DirectByteArrayCopier var2 = new DirectByteArrayCopier();
+			var2.set(var0);
+			return var2;
+		} else {
+			return var0;
+		}
+	}
+
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(B)V",
+		garbageValue = "60"
+	)
+	public static void method3601() {
+		class176.archive5.clear();
+	}
+
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(III)V",
+		garbageValue = "1925718940"
+	)
+	@Export("changeWorldSelectSorting")
+	static void changeWorldSelectSorting(int var0, int var1) {
+		int[] var2 = new int[4];
+		int[] var3 = new int[4];
+		var2[0] = var0;
+		var3[0] = var1;
+		int var4 = 1;
+
+		for (int var5 = 0; var5 < 4; ++var5) {
+			if (World.World_sortOption1[var5] != var0) {
+				var2[var4] = World.World_sortOption1[var5];
+				var3[var4] = World.World_sortOption2[var5];
+				++var4;
+			}
+		}
+
+		World.World_sortOption1 = var2;
+		World.World_sortOption2 = var3;
+		class181.sortWorlds(class361.World_worlds, 0, class361.World_worlds.length - 1, World.World_sortOption1, World.World_sortOption2);
+	}
 }

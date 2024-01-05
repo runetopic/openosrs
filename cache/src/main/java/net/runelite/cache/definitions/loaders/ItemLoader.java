@@ -39,7 +39,7 @@ public class ItemLoader
 	{
 		ItemDefinition def = new ItemDefinition(id);
 		InputStream is = new InputStream(b);
-
+		
 		while (true)
 		{
 			int opcode = is.readUnsignedByte();
