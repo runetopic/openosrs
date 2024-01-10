@@ -1249,7 +1249,7 @@ public interface RSClient extends RSGameEngine, Client
 	RSNodeDeque newNodeDeque();
 
 	@Import("updateItemPile")
-	void updateItemPile(int localX, int localY);
+	void updateItemPile(int plane, int localX, int localY);
 
 	@Import("showMouseCross")
 	@Override
