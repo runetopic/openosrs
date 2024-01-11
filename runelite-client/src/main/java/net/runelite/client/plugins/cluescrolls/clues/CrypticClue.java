@@ -486,7 +486,7 @@ public class CrypticClue extends ClueScroll implements NpcClueScroll, ObjectClue
 			.text("Speak to Donovan, the Family Handyman.")
 			.location(new WorldPoint(2737, 3580, 0))
 			.npc("Donovan the Family Handyman")
-			.solution("Donovan the Family Handyman is found on the first floor of Sinclair Mansion, north of Seers' Village. Fairy ring CJR.")
+			.solution("Donovan the Family Handyman is found on the top floor of Sinclair Mansion, north of Seers' Village. Fairy ring CJR.")
 			.build(),
 		CrypticClue.builder()
 			.text("Search the crates in the Barbarian Village helmet shop.")
@@ -1723,12 +1723,12 @@ public class CrypticClue extends ClueScroll implements NpcClueScroll, ObjectClue
 	{
 		this.text = text;
 		this.npc = npc;
-		this.objectId = objectId;
+		this.objectId = objectId > 0 ? objectId : -1;
 		this.locationProvider = locationProvider != null ? locationProvider : (location != null ? (plugin) -> location : null);
 		this.solution = solution;
 		this.questionText = questionText;
 		this.npcRegions = npcRegions;
-		setRequiresSpade(this.locationProvider != null && npc == null && objectId == -1);
+		setRequiresSpade(this.locationProvider != null && npc == null && this.objectId == -1);
 		setRequiresLight(requiresLight);
 	}
 
