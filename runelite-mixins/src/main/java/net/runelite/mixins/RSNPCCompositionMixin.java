@@ -1,5 +1,6 @@
 package net.runelite.mixins;
 
+import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import net.runelite.api.HeadIcon;
 import net.runelite.api.events.NpcActionChanged;
 import net.runelite.api.mixins.FieldHook;

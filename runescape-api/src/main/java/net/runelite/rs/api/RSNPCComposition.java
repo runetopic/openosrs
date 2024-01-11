@@ -1,5 +1,6 @@
 package net.runelite.rs.api;
 
+import net.runelite.api.HeadIcon;
 import net.runelite.api.IterableHashTable;
 import net.runelite.api.NPCComposition;
 import net.runelite.mapping.Import;
