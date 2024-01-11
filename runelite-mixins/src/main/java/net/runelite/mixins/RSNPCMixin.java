@@ -26,6 +26,8 @@ package net.runelite.mixins;
 
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.util.Iterator;
+import net.runelite.api.ActorSpotAnim;
 import net.runelite.api.AnimationID;
 import net.runelite.api.NPCComposition;
 import net.runelite.api.NpcID;
@@ -164,6 +166,16 @@ public abstract class RSNPCMixin implements RSNPC
 			setActionFrame(Integer.MIN_VALUE | getActionFrameCycle() << 16 | actionFrame);
 			setPoseFrame(Integer.MIN_VALUE | getPoseFrameCycle() << 16 | poseFrame);
 			setSpotAnimFrame(Integer.MIN_VALUE | getSpotAnimationFrameCycle() << 16 | spotAnimFrame);
+			Iterator iter = getSpotAnims().iterator();
+			while (iter.hasNext())
+			{
+				ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+				int frame = actorSpotAnim.getFrame();
+				if (frame != -1)
+				{
+					actorSpotAnim.setFrame(Integer.MIN_VALUE | actorSpotAnim.getCycle() << 16 | frame);
+				}
+			}
 			return copy$getModel();
 		}
 		finally
@@ -172,6 +184,16 @@ public abstract class RSNPCMixin implements RSNPC
 			setActionFrame(actionFrame);
 			setPoseFrame(poseFrame);
 			setSpotAnimFrame(spotAnimFrame);
+			Iterator iter = getSpotAnims().iterator();
+			while (iter.hasNext())
+			{
+				ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+				int frame = actorSpotAnim.getFrame();
+				if (frame != -1)
+				{
+					actorSpotAnim.setFrame(frame & '\uFFFF');
+				}
+			}
 		}
 	}
 
@@ -220,6 +242,6 @@ public abstract class RSNPCMixin implements RSNPC
 
 		int tileHeight = Perspective.getTileHeight(client, tileHeightPoint, client.getPlane());
 
-		return model.getConvexHull(getX(), getY(), getOrientation(), tileHeight);
+		return model.getConvexHull(getX(), getY(), getCurrentOrientation(), tileHeight);
 	}
 }

@@ -1,147 +1,171 @@
+import java.util.concurrent.Callable;
 import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
+import net.runelite.rs.ScriptOpcodes;
 
-@ObfuscatedName("el")
-public enum class134 implements MouseWheel {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1621(0, 0),
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1607(1, 1),
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1608(2, 2),
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1609(3, 3),
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1610(4, 4),
-   @ObfuscatedName("j")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1617(5, 5),
-   @ObfuscatedName("i")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1612(6, 6),
-   @ObfuscatedName("n")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1611(7, 7),
-   @ObfuscatedName("l")
-   @ObfuscatedSignature(
-      descriptor = "Lel;"
-   )
-   field1614(8, 8);
+@ObfuscatedName("fe")
+class class134 implements Callable {
+	@ObfuscatedName("ao")
+	@ObfuscatedSignature(
+		descriptor = "[Lup;"
+	)
+	@Export("runesSprite")
+	static IndexedSprite[] runesSprite;
+	@ObfuscatedName("ko")
+	@ObfuscatedSignature(
+		descriptor = "[Lup;"
+	)
+	static IndexedSprite[] field1582;
+	@ObfuscatedName("uc")
+	@ObfuscatedGetter(
+		intValue = -2047858965
+	)
+	static int field1581;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lfo;"
+	)
+	final class139 this$0;
+	// $FF: synthetic field
+	final int val$workStart;
+	// $FF: synthetic field
+	final int val$workEnd;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "[Lfd;"
+	)
+	final class130[] val$curveLoadJobs;
 
-   @ObfuscatedName("be")
-   @ObfuscatedSignature(
-      descriptor = "Lle;"
-   )
-   static StudioGame field1606;
-   @ObfuscatedName("bu")
-   @ObfuscatedGetter(
-      intValue = -2047759423
-   )
-   static int field1613;
-   @ObfuscatedName("k")
-   @ObfuscatedGetter(
-      intValue = -1695238653
-   )
-   final int field1615;
-   @ObfuscatedName("c")
-   @ObfuscatedGetter(
-      intValue = -1557384537
-   )
-   final int field1616;
+	@ObfuscatedSignature(
+		descriptor = "(Lfo;II[Lfd;)V"
+	)
+	class134(class139 var1, int var2, int var3, class130[] var4) {
+		this.this$0 = var1;
+		this.val$workStart = var2;
+		this.val$workEnd = var3;
+		this.val$curveLoadJobs = var4;
+	}
 
-   class134(int var3, int var4) {
-      this.field1615 = var3;
-      this.field1616 = var4;
-   }
+	public Object call() {
+		for (int var1 = this.val$workStart; var1 < this.val$workEnd; ++var1) {
+			this.val$curveLoadJobs[var1].call();
+		}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(B)I",
-      garbageValue = "3"
-   )
-   @Export("rsOrdinal")
-   public int rsOrdinal() {
-      return this.field1616;
-   }
+		return null;
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;B)V",
-      garbageValue = "-116"
-   )
-   @Export("addChatMessage")
-   static void addChatMessage(int var0, String var1, String var2, String var3) {
-      ChatChannel var4 = (ChatChannel)Messages.Messages_channels.get(var0);
-      if (var4 == null) {
-         var4 = new ChatChannel();
-         Messages.Messages_channels.put(var0, var4);
-      }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(IIII)Z",
+		garbageValue = "392757608"
+	)
+	static boolean method3146(int var0, int var1, int var2) {
+		return var0 >= 0 && var0 < 4 && var1 >= 0 && var1 < 104 && var2 >= 0 && var2 < 104;
+	}
 
-      Message var5 = var4.addMessage(var0, var1, var2, var3);
-      Messages.Messages_hashTable.put(var5, (long)var5.count);
-      Messages.Messages_queue.add(var5);
-      Client.chatCycle = Client.cycleCntr;
-   }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(II)I",
+		garbageValue = "-1168679162"
+	)
+	public static int method3149(int var0) {
+		return (var0 & class520.field5086) - 1;
+	}
 
-   @ObfuscatedName("n")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "328947468"
-   )
-   public static void method3124() {
-      KitDefinition.KitDefinition_cached.clear();
-   }
+	@ObfuscatedName("by")
+	@ObfuscatedSignature(
+		descriptor = "(ILdt;ZI)I",
+		garbageValue = "1497825445"
+	)
+	static int method3148(int var0, Script var1, boolean var2) {
+		if (var0 == ScriptOpcodes.VIEWPORT_SETFOV) {
+			DbTableType.Interpreter_intStackSize -= 2;
+			Client.field760 = (short)class354.method6859(Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize]);
+			if (Client.field760 <= 0) {
+				Client.field760 = 256;
+			}
 
-   @ObfuscatedName("ae")
-   @ObfuscatedSignature(
-      descriptor = "(ILba;ZB)I",
-      garbageValue = "-33"
-   )
-   static int method3126(int var0, Script var1, boolean var2) {
-      if (var0 == 6754) {
-         int var5 = Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize];
-         NPCComposition var6 = class137.getNpcDefinition(var5);
-         Interpreter.Interpreter_stringStack[++class20.Interpreter_stringStackSize - 1] = var6 != null ? var6.name : "";
-         return 1;
-      } else {
-         NPCComposition var3;
-         if (var0 == 6764) {
-            class302.Interpreter_intStackSize -= 2;
-            var3 = class137.getNpcDefinition(Interpreter.Interpreter_intStack[class302.Interpreter_intStackSize]);
-            int var4 = Interpreter.Interpreter_intStack[class302.Interpreter_intStackSize + 1];
-            Interpreter.Interpreter_intStack[++class302.Interpreter_intStackSize - 1] = var3.method3751(var4);
-            Interpreter.Interpreter_intStack[++class302.Interpreter_intStackSize - 1] = var3.method3734(var4);
-            return 1;
-         } else if (var0 == 6765) {
-            var3 = class137.getNpcDefinition(Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize]);
-            Interpreter.Interpreter_intStack[++class302.Interpreter_intStackSize - 1] = var3 != null ? var3.combatLevel : 0;
-            return 1;
-         } else {
-            return 2;
-         }
-      }
-   }
+			Client.field761 = (short)class354.method6859(Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize + 1]);
+			if (Client.field761 <= 0) {
+				Client.field761 = 256;
+			}
+
+			return 1;
+		} else if (var0 == ScriptOpcodes.VIEWPORT_SETZOOM) {
+			DbTableType.Interpreter_intStackSize -= 2;
+			Client.zoomHeight = (short)Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize];
+			if (Client.zoomHeight <= 0) {
+				Client.zoomHeight = 256;
+			}
+
+			Client.zoomWidth = (short)Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize + 1];
+			if (Client.zoomWidth <= 0) {
+				Client.zoomWidth = 320;
+			}
+
+			return 1;
+		} else if (var0 == ScriptOpcodes.VIEWPORT_CLAMPFOV) {
+			DbTableType.Interpreter_intStackSize -= 4;
+			Client.field764 = (short)Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize];
+			if (Client.field764 <= 0) {
+				Client.field764 = 1;
+			}
+
+			Client.field765 = (short)Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize + 1];
+			if (Client.field765 <= 0) {
+				Client.field765 = 32767;
+			} else if (Client.field765 < Client.field764) {
+				Client.field765 = Client.field764;
+			}
+
+			Client.field531 = (short)Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize + 2];
+			if (Client.field531 <= 0) {
+				Client.field531 = 1;
+			}
+
+			Client.field722 = (short)Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize + 3];
+			if (Client.field722 <= 0) {
+				Client.field722 = 32767;
+			} else if (Client.field722 < Client.field531) {
+				Client.field722 = Client.field531;
+			}
+
+			return 1;
+		} else if (var0 == ScriptOpcodes.VIEWPORT_GETEFFECTIVESIZE) {
+			if (Client.viewportWidget != null) {
+				class348.setViewportShape(0, 0, Client.viewportWidget.width, Client.viewportWidget.height, false);
+				Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = Client.viewportWidth;
+				Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = Client.viewportHeight;
+			} else {
+				Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = -1;
+				Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = -1;
+			}
+
+			return 1;
+		} else if (var0 == ScriptOpcodes.VIEWPORT_GETZOOM) {
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = Client.zoomHeight;
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = Client.zoomWidth;
+			return 1;
+		} else if (var0 == ScriptOpcodes.VIEWPORT_GETFOV) {
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class142.method3220(Client.field760);
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class142.method3220(Client.field761);
+			return 1;
+		} else if (var0 == 6220) {
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = 0;
+			return 1;
+		} else if (var0 == 6221) {
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = 0;
+			return 1;
+		} else if (var0 == 6222) {
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = Language.canvasWidth;
+			return 1;
+		} else if (var0 == 6223) {
+			Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class47.canvasHeight;
+			return 1;
+		} else {
+			return 2;
+		}
+	}
 }

@@ -4,82 +4,133 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("cr")
+@ObfuscatedName("dh")
 @Implements("ArchiveLoader")
 public class ArchiveLoader {
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "Llm;"
-   )
-   @Export("archive")
-   final Archive archive;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 322604319
-   )
-   @Export("groupCount")
-   final int groupCount;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = 1823567525
-   )
-   @Export("loadedCount")
-   int loadedCount = 0;
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "Loh;"
+	)
+	@Export("archive")
+	final Archive archive;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = -872314017
+	)
+	@Export("groupCount")
+	final int groupCount;
+	@ObfuscatedName("ao")
+	@ObfuscatedGetter(
+		intValue = 2111746149
+	)
+	@Export("loadedCount")
+	int loadedCount;
 
-   @ObfuscatedSignature(
-      descriptor = "(Llm;Ljava/lang/String;)V"
-   )
-   ArchiveLoader(Archive var1, String var2) {
-      this.archive = var1;
-      this.groupCount = var1.getGroupCount();
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Loh;Ljava/lang/String;)V"
+	)
+	ArchiveLoader(Archive var1, String var2) {
+		this.loadedCount = 0;
+		this.archive = var1;
+		this.groupCount = var1.getGroupCount();
+	}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(B)Z",
-      garbageValue = "-100"
-   )
-   @Export("isLoaded")
-   boolean isLoaded() {
-      this.loadedCount = 0;
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(I)Z",
+		garbageValue = "2136927523"
+	)
+	@Export("isLoaded")
+	boolean isLoaded() {
+		this.loadedCount = 0;
 
-      for(int var1 = 0; var1 < this.groupCount; ++var1) {
-         if (!this.archive.method6484(var1) || this.archive.method6483(var1)) {
-            ++this.loadedCount;
-         }
-      }
+		for (int var1 = 0; var1 < this.groupCount; ++var1) {
+			if (!this.archive.method6909(var1) || this.archive.method6908(var1)) {
+				++this.loadedCount;
+			}
+		}
 
-      return this.loadedCount >= this.groupCount;
-   }
+		return this.loadedCount >= this.groupCount;
+	}
 
-   @ObfuscatedName("v")
-   @ObfuscatedSignature(
-      descriptor = "(I)[Llu;",
-      garbageValue = "1369192932"
-   )
-   @Export("PlayerType_values")
-   public static PlayerType[] PlayerType_values() {
-      return new PlayerType[]{PlayerType.field4175, PlayerType.field4169, PlayerType.PlayerType_jagexModerator, PlayerType.PlayerType_ironman, PlayerType.field4178, PlayerType.field4184, PlayerType.PlayerType_ultimateIronman, PlayerType.field4182, PlayerType.PlayerType_normal, PlayerType.PlayerType_playerModerator, PlayerType.PlayerType_hardcoreIronman, PlayerType.field4176, PlayerType.field4177, PlayerType.field4180, PlayerType.field4174, PlayerType.field4190, PlayerType.field4179};
-   }
+	@ObfuscatedName("at")
+	public static final int method2328(double var0, double var2, double var4) {
+		double var6 = var4;
+		double var8 = var4;
+		double var10 = var4;
+		if (0.0D != var2) {
+			double var12;
+			if (var4 < 0.5D) {
+				var12 = (var2 + 1.0D) * var4;
+			} else {
+				var12 = var2 + var4 - var2 * var4;
+			}
 
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "(Lru;B)I",
-      garbageValue = "38"
-   )
-   static int method2283(PacketBuffer var0) {
-      int var1 = var0.readBits(2);
-      int var2;
-      if (var1 == 0) {
-         var2 = 0;
-      } else if (var1 == 1) {
-         var2 = var0.readBits(5);
-      } else if (var1 == 2) {
-         var2 = var0.readBits(8);
-      } else {
-         var2 = var0.readBits(11);
-      }
+			double var14 = 2.0D * var4 - var12;
+			double var16 = var0 + 0.3333333333333333D;
+			if (var16 > 1.0D) {
+				--var16;
+			}
 
-      return var2;
-   }
+			double var20 = var0 - 0.3333333333333333D;
+			if (var20 < 0.0D) {
+				++var20;
+			}
+
+			if (6.0D * var16 < 1.0D) {
+				var6 = (var12 - var14) * 6.0D * var16 + var14;
+			} else if (var16 * 2.0D < 1.0D) {
+				var6 = var12;
+			} else if (3.0D * var16 < 2.0D) {
+				var6 = 6.0D * (0.6666666666666666D - var16) * (var12 - var14) + var14;
+			} else {
+				var6 = var14;
+			}
+
+			if (6.0D * var0 < 1.0D) {
+				var8 = var14 + 6.0D * (var12 - var14) * var0;
+			} else if (var0 * 2.0D < 1.0D) {
+				var8 = var12;
+			} else if (var0 * 3.0D < 2.0D) {
+				var8 = var14 + (var12 - var14) * (0.6666666666666666D - var0) * 6.0D;
+			} else {
+				var8 = var14;
+			}
+
+			if (6.0D * var20 < 1.0D) {
+				var10 = var14 + var20 * 6.0D * (var12 - var14);
+			} else if (2.0D * var20 < 1.0D) {
+				var10 = var12;
+			} else if (var20 * 3.0D < 2.0D) {
+				var10 = var14 + 6.0D * (0.6666666666666666D - var20) * (var12 - var14);
+			} else {
+				var10 = var14;
+			}
+		}
+
+		int var22 = (int)(var6 * 256.0D);
+		int var13 = (int)(var8 * 256.0D);
+		int var23 = (int)(var10 * 256.0D);
+		int var15 = var23 + (var13 << 8) + (var22 << 16);
+		return var15;
+	}
+
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V",
+		garbageValue = "2035865306"
+	)
+	@Export("addChatMessage")
+	static void addChatMessage(int var0, String var1, String var2, String var3) {
+		ChatChannel var4 = (ChatChannel)Messages.Messages_channels.get(var0);
+		if (var4 == null) {
+			var4 = new ChatChannel();
+			Messages.Messages_channels.put(var0, var4);
+		}
+
+		Message var5 = var4.addMessage(var0, var1, var2, var3);
+		Messages.Messages_hashTable.put(var5, (long)var5.count);
+		Messages.Messages_queue.add(var5);
+		Client.chatCycle = Client.cycleCntr;
+	}
 }

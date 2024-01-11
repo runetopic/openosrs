@@ -112,9 +112,8 @@ public interface Widget
 
 	/**
 	 * Gets a dynamic child by index
-	 *
-	 * @throws IndexOutOfBoundsException if the index is outside of the child array
 	 */
+	@Nullable
 	Widget getChild(int index);
 
 	/**
@@ -634,15 +633,20 @@ public interface Widget
 	Widget setOriginalWidth(int originalWidth);
 
 	Widget setSize(int width, int height);
-	Widget setSize(int width, int height,
-		@MagicConstant(valuesFromClass = WidgetSizeMode.class) int widthMode,
-		@MagicConstant(valuesFromClass = WidgetSizeMode.class) int heightMode);
+	Widget setSize(int width, int height, @MagicConstant(valuesFromClass = WidgetSizeMode.class) int widthMode, @MagicConstant(valuesFromClass = WidgetSizeMode.class) int heightMode);
 
 	/**
 	 * Gets the menu options available on the widget as a sparse array.
 	 */
 	@Nullable
 	String[] getActions();
+
+	/**
+	 * Create a static widget child
+	 * @param type the {@link WidgetType} of the widget
+	 * @return
+	 */
+	Widget createStaticChild(@MagicConstant(valuesFromClass = WidgetType.class) int type);
 
 	/**
 	 * Creates a dynamic widget child
@@ -1053,6 +1057,13 @@ public interface Widget
 	void setOnDragListener(Object ...args);
 
 	/**
+	 * Sets a script to be ran when the mouse is scrolled when on the widget
+	 *
+	 * @param args A ScriptID, then the args for the script
+	 */
+	void setOnScrollWheelListener(Object ...args);
+
+	/**
 	 * Container this can be dragged in
 	 */
 	Widget getDragParent();
@@ -1133,14 +1144,4 @@ public interface Widget
 	 * Gets the image which is (or should be) drawn on this widget
 	 */
 	SpritePixels getSprite();
-
-	/**
-	 * Sets the X padding between widgets, mainly for inventory items
-	 */
-	void setPaddingX(int val);
-
-	/**
-	 * Sets the Y padding between widgets, mainly for inventory items
-	 */
-	void setPaddingY(int val);
 }

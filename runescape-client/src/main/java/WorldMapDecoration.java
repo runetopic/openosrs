@@ -4,130 +4,117 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ik")
+@ObfuscatedName("js")
 @Implements("WorldMapDecoration")
 public class WorldMapDecoration {
-   @ObfuscatedName("uy")
-   @ObfuscatedGetter(
-      intValue = -1318536169
-   )
-   static int field2970;
-   @ObfuscatedName("m")
-   @ObfuscatedSignature(
-      descriptor = "Lld;"
-   )
-   @Export("NetCache_currentResponse")
-   public static NetFileRequest NetCache_currentResponse;
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = 981301237
-   )
-   @Export("objectDefinitionId")
-   final int objectDefinitionId;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = 992100525
-   )
-   @Export("decoration")
-   final int decoration;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = -565157325
-   )
-   @Export("rotation")
-   final int rotation;
+	@ObfuscatedName("at")
+	@ObfuscatedGetter(
+		intValue = -1757511385
+	)
+	@Export("objectDefinitionId")
+	final int objectDefinitionId;
+	@ObfuscatedName("ah")
+	@ObfuscatedGetter(
+		intValue = -982756641
+	)
+	@Export("decoration")
+	final int decoration;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = 805230653
+	)
+	@Export("rotation")
+	final int rotation;
 
-   WorldMapDecoration(int var1, int var2, int var3) {
-      this.objectDefinitionId = var1;
-      this.decoration = var2;
-      this.rotation = var3;
-   }
+	WorldMapDecoration(int var1, int var2, int var3) {
+		this.objectDefinitionId = var1;
+		this.decoration = var2;
+		this.rotation = var3;
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(CLmn;B)C",
-      garbageValue = "75"
-   )
-   @Export("standardizeChar")
-   static char standardizeChar(char var0, Language var1) {
-      if (var0 >= 192 && var0 <= 255) {
-         if (var0 >= 192 && var0 <= 198) {
-            return 'A';
-         }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(B)Lrz;",
+		garbageValue = "55"
+	)
+	public static class462 method4928() {
+		synchronized(class462.field4770) {
+			if (DirectByteArrayCopier.field3822 == 0) {
+				return new class462();
+			} else {
+				class462.field4770[--DirectByteArrayCopier.field3822].method8457();
+				return class462.field4770[DirectByteArrayCopier.field3822];
+			}
+		}
+	}
 
-         if (var0 == 199) {
-            return 'C';
-         }
+	@ObfuscatedName("jz")
+	@ObfuscatedSignature(
+		descriptor = "(II)V",
+		garbageValue = "750324904"
+	)
+	static final void method4929(int var0) {
+		int[] var1 = class102.sceneMinimapSprite.pixels;
+		int var2 = var1.length;
 
-         if (var0 >= 200 && var0 <= 203) {
-            return 'E';
-         }
+		int var3;
+		for (var3 = 0; var3 < var2; ++var3) {
+			var1[var3] = 0;
+		}
 
-         if (var0 >= 204 && var0 <= 207) {
-            return 'I';
-         }
+		int var4;
+		int var5;
+		for (var3 = 1; var3 < 103; ++var3) {
+			var4 = (103 - var3) * 2048 + 24628;
 
-         if (var0 == 209 && var1 != Language.Language_ES) {
-            return 'N';
-         }
+			for (var5 = 1; var5 < 103; ++var5) {
+				if ((Tiles.Tiles_renderFlags[var0][var5][var3] & 24) == 0) {
+					class36.scene.drawTileMinimap(var1, var4, 512, var0, var5, var3);
+				}
 
-         if (var0 >= 210 && var0 <= 214) {
-            return 'O';
-         }
+				if (var0 < 3 && (Tiles.Tiles_renderFlags[var0 + 1][var5][var3] & 8) != 0) {
+					class36.scene.drawTileMinimap(var1, var4, 512, var0 + 1, var5, var3);
+				}
 
-         if (var0 >= 217 && var0 <= 220) {
-            return 'U';
-         }
+				var4 += 4;
+			}
+		}
 
-         if (var0 == 221) {
-            return 'Y';
-         }
+		var3 = (238 + (int)(Math.random() * 20.0D) - 10 << 16) + (238 + (int)(Math.random() * 20.0D) - 10 << 8) + (238 + (int)(Math.random() * 20.0D) - 10);
+		var4 = 238 + (int)(Math.random() * 20.0D) - 10 << 16;
+		class102.sceneMinimapSprite.setRaster();
 
-         if (var0 == 223) {
-            return 's';
-         }
+		int var6;
+		for (var5 = 1; var5 < 103; ++var5) {
+			for (var6 = 1; var6 < 103; ++var6) {
+				if ((Tiles.Tiles_renderFlags[var0][var6][var5] & 24) == 0) {
+					class511.drawObject(var0, var6, var5, var3, var4);
+				}
 
-         if (var0 >= 224 && var0 <= 230) {
-            return 'a';
-         }
+				if (var0 < 3 && (Tiles.Tiles_renderFlags[var0 + 1][var6][var5] & 8) != 0) {
+					class511.drawObject(var0 + 1, var6, var5, var3, var4);
+				}
+			}
+		}
 
-         if (var0 == 231) {
-            return 'c';
-         }
+		Client.mapIconCount = 0;
 
-         if (var0 >= 232 && var0 <= 235) {
-            return 'e';
-         }
+		for (var5 = 0; var5 < 104; ++var5) {
+			for (var6 = 0; var6 < 104; ++var6) {
+				long var7 = class36.scene.getFloorDecorationTag(ItemLayer.Client_plane, var5, var6);
+				if (0L != var7) {
+					int var9 = class232.Entity_unpackID(var7);
+					int var10 = WorldMapSection2.getObjectDefinition(var9).mapIconId;
+					if (var10 >= 0 && class141.WorldMapElement_get(var10).field1824) {
+						Client.mapIcons[Client.mapIconCount] = class141.WorldMapElement_get(var10).getSpriteBool(false);
+						Client.mapIconXs[Client.mapIconCount] = var5;
+						Client.mapIconYs[Client.mapIconCount] = var6;
+						++Client.mapIconCount;
+					}
+				}
+			}
+		}
 
-         if (var0 >= 236 && var0 <= 239) {
-            return 'i';
-         }
-
-         if (var0 == 241 && var1 != Language.Language_ES) {
-            return 'n';
-         }
-
-         if (var0 >= 242 && var0 <= 246) {
-            return 'o';
-         }
-
-         if (var0 >= 249 && var0 <= 252) {
-            return 'u';
-         }
-
-         if (var0 == 253 || var0 == 255) {
-            return 'y';
-         }
-      }
-
-      if (var0 == 338) {
-         return 'O';
-      } else if (var0 == 339) {
-         return 'o';
-      } else if (var0 == 376) {
-         return 'Y';
-      } else {
-         return var0;
-      }
-   }
+		class338.rasterProvider.apply();
+	}
 }

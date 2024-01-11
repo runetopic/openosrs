@@ -252,7 +252,7 @@ public class PluginManager
 	{
 		try
 		{
-			for (Object config : getPluginConfigProxies(plugins))
+			for (Config config : getPluginConfigProxies(plugins))
 			{
 				configManager.setDefaultConfiguration(config, false);
 			}

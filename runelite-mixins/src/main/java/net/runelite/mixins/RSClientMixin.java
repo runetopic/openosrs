@@ -28,6 +28,10 @@ package net.runelite.mixins;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Ints;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +39,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,15 +62,6 @@ import net.runelite.api.IntegerNode;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.MenuAction;
-import static net.runelite.api.MenuAction.PLAYER_EIGHTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_FIFTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_FIRST_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_FOURTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_SECOND_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_SEVENTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_SIXTH_OPTION;
-import static net.runelite.api.MenuAction.PLAYER_THIRD_OPTION;
-import static net.runelite.api.MenuAction.UNKNOWN;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.MessageNode;
 import net.runelite.api.Model;
@@ -76,7 +72,6 @@ import net.runelite.api.NameableContainer;
 import net.runelite.api.NodeCache;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.Perspective;
-import static net.runelite.api.Perspective.LOCAL_TILE_SIZE;
 import net.runelite.api.Player;
 import net.runelite.api.Point;
 import net.runelite.api.Prayer;
@@ -89,12 +84,15 @@ import net.runelite.api.Tile;
 import net.runelite.api.VarPlayer;
 import net.runelite.api.VarbitComposition;
 import net.runelite.api.Varbits;
+import net.runelite.api.WidgetNode;
 import net.runelite.api.WorldType;
 import net.runelite.api.clan.ClanChannel;
 import net.runelite.api.clan.ClanRank;
 import net.runelite.api.clan.ClanSettings;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.AccountHashChanged;
+import net.runelite.api.events.AmbientSoundEffectCreated;
 import net.runelite.api.events.BeforeMenuRender;
 import net.runelite.api.events.CanvasSizeChanged;
 import net.runelite.api.events.ChatMessage;
@@ -137,18 +135,65 @@ import net.runelite.api.overlay.OverlayIndex;
 import net.runelite.api.vars.AccountType;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetConfig;
+import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
 import net.runelite.api.widgets.WidgetType;
-import net.runelite.api.widgets.WidgetID;
+import net.runelite.api.widgets.WidgetUtil;
+import net.runelite.rs.api.RSAbstractArchive;
+import net.runelite.rs.api.RSArchive;
+import net.runelite.rs.api.RSBuffer;
+import net.runelite.rs.api.RSChatChannel;
+import net.runelite.rs.api.RSClanChannel;
+import net.runelite.rs.api.RSClient;
+import net.runelite.rs.api.RSCollisionMap;
+import net.runelite.rs.api.RSDbRowType;
+import net.runelite.rs.api.RSDbTable;
+import net.runelite.rs.api.RSDbTableType;
+import net.runelite.rs.api.RSDualNode;
+import net.runelite.rs.api.RSEnumComposition;
+import net.runelite.rs.api.RSEvictingDualNodeHashTable;
+import net.runelite.rs.api.RSFloorOverlayDefinition;
+import net.runelite.rs.api.RSFont;
+import net.runelite.rs.api.RSFriendSystem;
+import net.runelite.rs.api.RSGameEngine;
+import net.runelite.rs.api.RSIndexedSprite;
+import net.runelite.rs.api.RSInterfaceParent;
+import net.runelite.rs.api.RSItemContainer;
+import net.runelite.rs.api.RSModelData;
+import net.runelite.rs.api.RSMusicSong;
+import net.runelite.rs.api.RSNPC;
+import net.runelite.rs.api.RSNode;
+import net.runelite.rs.api.RSNodeDeque;
+import net.runelite.rs.api.RSNodeHashTable;
+import net.runelite.rs.api.RSObjectSound;
+import net.runelite.rs.api.RSPacketBuffer;
+import net.runelite.rs.api.RSPlayer;
+import net.runelite.rs.api.RSProjectile;
+import net.runelite.rs.api.RSRuneLiteClanMember;
+import net.runelite.rs.api.RSRuneLiteMenuEntry;
+import net.runelite.rs.api.RSScene;
+import net.runelite.rs.api.RSScriptEvent;
+import net.runelite.rs.api.RSSpritePixels;
+import net.runelite.rs.api.RSStructComposition;
+import net.runelite.rs.api.RSTile;
+import net.runelite.rs.api.RSTileItem;
+import net.runelite.rs.api.RSUsername;
+import net.runelite.rs.api.RSWidget;
+import net.runelite.rs.api.RSWorld;
+import static net.runelite.api.MenuAction.PLAYER_EIGHTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_FIFTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_FIRST_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_FOURTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_SECOND_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_SEVENTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_SIXTH_OPTION;
+import static net.runelite.api.MenuAction.PLAYER_THIRD_OPTION;
+import static net.runelite.api.MenuAction.UNKNOWN;
+import static net.runelite.api.Perspective.LOCAL_TILE_SIZE;
 import static net.runelite.mixins.CameraMixin.NEW_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MAX;
 import static net.runelite.mixins.CameraMixin.STANDARD_PITCH_MIN;
-
-import net.runelite.rs.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @Mixin(RSClient.class)
 public abstract class RSClientMixin implements RSClient
@@ -203,7 +248,7 @@ public abstract class RSClientMixin implements RSClient
 	private static boolean invertYaw;
 
 	@Inject
-	private boolean gpu;
+	private int gpuFlags;
 
 	@Inject
 	private static boolean oldIsResized;
@@ -479,9 +524,11 @@ public abstract class RSClientMixin implements RSClient
 				return AccountType.GROUP_IRONMAN;
 			case 5:
 				return AccountType.HARDCORE_GROUP_IRONMAN;
+			case 6:
+				return AccountType.UNRANKED_GROUP_IRONMAN;
+			default:
+				return AccountType.NORMAL;
 		}
-
-		return AccountType.NORMAL;
 	}
 
 	@Inject
@@ -657,7 +704,7 @@ public abstract class RSClientMixin implements RSClient
 			return new Widget[]{};
 		}
 		List<Widget> widgets = new ArrayList<Widget>();
-		for (RSWidget widget : getWidgets()[topGroup])
+		for (RSWidget widget : client.getWidgetDefinition().getWidgets()[topGroup])
 		{
 			if (widget != null && widget.getRSParentId() == -1)
 			{
@@ -681,41 +728,52 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public Widget getWidget(int id)
 	{
-		return getWidget(WidgetInfo.TO_GROUP(id), WidgetInfo.TO_CHILD(id));
+		return getWidget(WidgetUtil.componentToInterface(id), WidgetUtil.componentToId(id));
 	}
 
 	@Inject
 	@Override
 	public RSWidget[] getGroup(int groupId)
 	{
-		RSWidget[][] widgets = getWidgets();
-
-		if (widgets == null || groupId < 0 || groupId >= widgets.length || widgets[groupId] == null)
+		if (client.getWidgetDefinition() == null)
 		{
 			return null;
 		}
-
-		return widgets[groupId];
+		else
+		{
+			RSWidget[][] widgets = client.getWidgetDefinition().getWidgets();
+			return widgets != null && groupId >= 0 && groupId < widgets.length && widgets[groupId] != null ? widgets[groupId] : null;
+		}
 	}
 
 	@Inject
 	@Override
 	public Widget getWidget(int groupId, int childId)
 	{
-		RSWidget[][] widgets = getWidgets();
-
-		if (widgets == null || widgets.length <= groupId)
+		if (client.getWidgetDefinition() == null)
 		{
 			return null;
 		}
-
-		RSWidget[] childWidgets = widgets[groupId];
-		if (childWidgets == null || childWidgets.length <= childId)
+		else
 		{
-			return null;
+			RSWidget[][] widgets = client.getWidgetDefinition().getWidgets();
+			if (widgets != null && widgets.length > groupId)
+			{
+				RSWidget[] childWidgets = widgets[groupId];
+				return childWidgets != null && childWidgets.length > childId ? childWidgets[childId] : null;
+			}
+			else
+			{
+				return null;
+			}
 		}
+	}
 
-		return childWidgets[childId];
+	@Inject
+	@Override
+	public RSEvictingDualNodeHashTable getWidgetSpriteCache()
+	{
+		return getWidgetDefinition() != null ? getWidgetDefinition().getWidgetSpriteCache() : null;
 	}
 
 	@Inject
@@ -998,6 +1056,139 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
+	@Copy("menu")
+	@Replace("menu")
+	final void menu()
+	{
+		boolean var1 = false;
+		int var2;
+		int var5;
+		while (!var1)
+		{
+			var1 = true;
+			for (var2 = 0; var2 < client.getMenuOptionCount() - 1; ++var2)
+			{
+				if (client.getMenuOpcodes()[var2] < 1000 && client.getMenuOpcodes()[var2 + 1] > 1000)
+				{
+					sortMenuEntries(var2, var2 + 1);
+					var1 = false;
+				}
+			}
+			if (var1 && !client.isMenuOpen())
+			{
+				client.getCallbacks().post(new PostMenuSort());
+			}
+		}
+
+		if (client.getDraggedWidget() == null)
+		{
+			int var19 = client.getMouseLastButton();
+			int var4;
+			int var7;
+			int var8;
+			int var20;
+			if (client.isMenuOpen())
+			{
+				int var3;
+				if (var19 != 1 && (client.isMouseCam() || var19 != 4))
+				{
+					var2 = client.getMouseX();
+					var3 = client.getMouseY();
+					if (var2 < client.getMenuX() - 10 || var2 > client.getMenuX() + client.getMenuWidth() + 10 || var3 < client.getMenuY() - 10 || var3 > client.getMenuY() + client.getMenuHeight() + 10)
+					{
+						client.setMenuOpen(false);
+						var4 = client.getMenuX();
+						var5 = client.getMenuY();
+						var20 = client.getMenuWidth();
+						var7 = client.getMenuHeight();
+
+						for (var8 = 0; var8 < client.getRootWidgetCount(); ++var8)
+						{
+							if (client.getWidgetWidths()[var8] + client.getWidgetPositionsX()[var8] > var4 && client.getWidgetPositionsX()[var8] < var4 + var20 && client.getWidgetPositionsY()[var8] + client.getWidgetHeights()[var8] > var5 && client.getWidgetPositionsY()[var8] < var5 + var7)
+							{
+								client.getValidRootWidgets()[var8] = true;
+							}
+						}
+					}
+				}
+
+				if (var19 == 1 || !client.isMouseCam() && var19 == 4)
+				{
+					var2 = client.getMenuX();
+					var3 = client.getMenuY();
+					var4 = client.getMenuWidth();
+					var5 = client.getMouseLastPressedX();
+					var20 = client.getMouseLastPressedY();
+					var7 = -1;
+
+					int var15;
+					for (var8 = 0; var8 < client.getMenuOptionCount(); ++var8)
+					{
+						var15 = (client.getMenuOptionCount() - 1 - var8) * 15 + var3 + 31;
+						if (var5 > var2 && var5 < var4 + var2 && var20 > var15 - 13 && var20 < var15 + 3)
+						{
+							var7 = var8;
+						}
+					}
+
+					int var11;
+					int var12;
+					int var16;
+					if (var7 != -1 && var7 >= 0)
+					{
+						var8 = client.getMenuArguments1()[var7];
+						var15 = client.getMenuArguments2()[var7];
+						var16 = client.getMenuOpcodes()[var7];
+						var11 = client.getMenuIdentifiers()[var7];
+						var12 = client.getMenuItemIds()[var7];
+						String var13 = client.getMenuOptions()[var7];
+						String var14 = client.getMenuTargets()[var7];
+						client.sendMenuAction(var8, var15, var16, var11, var12, var13, var14, client.getMouseLastPressedX(), client.getMouseLastPressedY());
+					}
+
+					client.setMenuOpen(false);
+					var8 = client.getMenuX();
+					var15 = client.getMenuY();
+					var16 = client.getMenuWidth();
+					var11 = client.getMenuHeight();
+
+					for (var12 = 0; var12 < client.getRootWidgetCount(); ++var12)
+					{
+						if (client.getWidgetWidths()[var12] + client.getWidgetPositionsX()[var12] > var8 && client.getWidgetPositionsX()[var12] < var8 + var16 && client.getWidgetHeights()[var12] + client.getWidgetPositionsY()[var12] > var15 && client.getWidgetPositionsY()[var12] < var15 + var11)
+						{
+							client.getValidRootWidgets()[var12] = true;
+						}
+					}
+				}
+			}
+			else
+			{
+				var2 = client.getMenuOptionCount() - 1;
+				if ((var19 == 1 || !client.isMouseCam() && var19 == 4) && copy$shouldLeftClickOpenMenu())
+				{
+					var19 = 2;
+				}
+
+				if ((var19 == 1 || !client.isMouseCam() && var19 == 4) && client.getMenuOptionCount() > 0 && var2 >= 0)
+				{
+					var4 = client.getMenuArguments1()[var2];
+					var5 = client.getMenuArguments2()[var2];
+					var20 = client.getMenuOpcodes()[var2];
+					var7 = client.getMenuIdentifiers()[var2];
+					var8 = client.getMenuItemIds()[var2];
+					String var9 = client.getMenuOptions()[var2];
+					String var10 = client.getMenuTargets()[var2];
+					client.sendMenuAction(var4, var5, var20, var7, var8, var9, var10, client.getMouseLastPressedX(), client.getMouseLastPressedY());
+				}
+
+				if (var19 == 2 && client.getMenuOptionCount() > 0)
+				{
+					this.openMenu(client.getMouseLastPressedX(), client.getMouseLastPressedY());
+				}
+			}
+		}
+	}
+
 	@Inject
 	public static void sortMenuEntries(int left, int right)
 	{
@@ -1117,7 +1308,6 @@ public abstract class RSClientMixin implements RSClient
 				client.getMenuItemIds()[tmpOptionsCount] = menuEntryAdded.getItemId();
 			}
 		}
-		client.getCallbacks().post(new PostMenuSort());
 	}
 
 	@Inject
@@ -1254,7 +1444,6 @@ public abstract class RSClientMixin implements RSClient
 		return createRSItemSprite(itemId, quantity, border, shadowColor, stackable, noted);
 	}
 
-
 	@Inject
 	@Override
 	public SpritePixels createItemSprite(int itemId, int quantity, int border, int shadowColor, int stackable, boolean noted, int scale)
@@ -1280,7 +1469,7 @@ public abstract class RSClientMixin implements RSClient
 	{
 		copy$runWidgetOnLoadListener(groupId);
 
-		RSWidget[][] widgets = client.getWidgets();
+		RSWidget[][] widgets = client.getWidgetDefinition().getWidgets();
 		boolean loaded = widgets != null && widgets[groupId] != null;
 
 		if (loaded)
@@ -1291,7 +1480,7 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
-	@FieldHook("itemDragDuration")
+	/*@FieldHook("itemDragDuration")
 	@Inject
 	public static void itemPressedDurationChanged(int idx)
 	{
@@ -1311,7 +1500,7 @@ public abstract class RSClientMixin implements RSClient
 		{
 			itemPressedDurationBuffer = 0;
 		}
-	}
+	}*/
 
 	@FieldHook("experience")
 	@Inject
@@ -1319,8 +1508,7 @@ public abstract class RSClientMixin implements RSClient
 	{
 		Skill[] possibleSkills = Skill.values();
 
-		// We subtract one here because 'Overall' isn't considered a skill that's updated.
-		if (idx < possibleSkills.length - 1)
+		if (idx < possibleSkills.length)
 		{
 			Skill updatedSkill = possibleSkills[idx];
 			StatChanged statChanged = new StatChanged(
@@ -1345,7 +1533,7 @@ public abstract class RSClientMixin implements RSClient
 		int changedSkillIdx = idx - 1 & 31;
 		int skillIdx = client.getChangedSkillLevels()[changedSkillIdx];
 		Skill[] skills = Skill.values();
-		if (skillIdx >= 0 && skillIdx < skills.length - 1)
+		if (skillIdx >= 0 && skillIdx < skills.length)
 		{
 			StatChanged statChanged = new StatChanged(
 				skills[skillIdx],
@@ -1792,12 +1980,12 @@ public abstract class RSClientMixin implements RSClient
 		for (int i = client.getMenuOptionCount() - 1; i >= 0; --i)
 		{
 			if (client.getMenuOpcodes()[i] == opcode
-					&& client.getMenuIdentifiers()[i] == id
-					&& client.getMenuArguments1()[i] == param0
-					&& client.getMenuArguments2()[i] == param1
-					&& client.getMenuItemIds()[i] == itemId
-					&& option.equals(client.getMenuOptions()[i])
-					&& target.equals(client.getMenuTargets()[i])
+				&& client.getMenuIdentifiers()[i] == id
+				&& client.getMenuArguments1()[i] == param0
+				&& client.getMenuArguments2()[i] == param1
+				&& client.getMenuItemIds()[i] == itemId
+				&& option.equals(client.getMenuOptions()[i])
+				&& target.equals(client.getMenuTargets()[i])
 			)
 			{
 				menuEntry = rl$menuEntries[i];
@@ -1809,12 +1997,12 @@ public abstract class RSClientMixin implements RSClient
 		if (client.getTempMenuAction() != null)
 		{
 			isTemp = client.getTempMenuAction().getOpcode() == opcode &&
-					client.getTempMenuAction().getIdentifier() == id &&
-					client.getTempMenuAction().getOption().equals(option) &&
-					client.getTempMenuAction().getTarget().equals(target) &&
-					client.getTempMenuAction().getParam0() == param0 &&
-					client.getTempMenuAction().getParam1() == param1 &&
-					client.getTempMenuAction().getItemId() == itemId;
+				client.getTempMenuAction().getIdentifier() == id &&
+				client.getTempMenuAction().getOption().equals(option) &&
+				client.getTempMenuAction().getTarget().equals(target) &&
+				client.getTempMenuAction().getParam0() == param0 &&
+				client.getTempMenuAction().getParam1() == param1 &&
+				client.getTempMenuAction().getItemId() == itemId;
 		}
 
 		if (menuEntry == null && isTemp)
@@ -1899,17 +2087,17 @@ public abstract class RSClientMixin implements RSClient
 		if (printMenuActions)
 		{
 			client.getLogger().info(
-					"|MenuAction|: MenuOption={} MenuTarget={} Id={} Opcode={}/{} Param0={} Param1={} CanvasX={} CanvasY={} ItemId={}",
-					event.getMenuOption(), event.getMenuTarget(), event.getId(),
-					event.getMenuAction(), opcode + (decremented ? 2000 : 0),
-					event.getParam0(), event.getParam1(), canvasX, canvasY, event.getItemId()
+				"|MenuAction|: MenuOption={} MenuTarget={} Id={} Opcode={}/{} Param0={} Param1={} CanvasX={} CanvasY={} ItemId={}",
+				event.getMenuOption(), event.getMenuTarget(), event.getId(),
+				event.getMenuAction(), opcode + (decremented ? 2000 : 0),
+				event.getParam0(), event.getParam1(), canvasX, canvasY, event.getItemId()
 			);
 
 			if (menuEntry != null)
 			{
 				client.getLogger().info(
-						"|MenuEntry|: Idx={} MenuOption={} MenuTarget={} Id={} MenuAction={} Param0={} Param1={} Consumer={} IsItemOp={} ItemOp={} ItemID={} Widget={}",
-						menuEntry.getIdx(), menuEntry.getOption(), menuEntry.getTarget(), menuEntry.getIdentifier(), menuEntry.getType(), menuEntry.getParam0(), menuEntry.getParam1(), menuEntry.getConsumer(), menuEntry.isItemOp(), menuEntry.getItemOp(), menuEntry.getItemId(), menuEntry.getWidget()
+					"|MenuEntry|: Idx={} MenuOption={} MenuTarget={} Id={} MenuAction={} Param0={} Param1={} Consumer={} IsItemOp={} ItemOp={} ItemID={} Widget={}",
+					menuEntry.getIdx(), menuEntry.getOption(), menuEntry.getTarget(), menuEntry.getIdentifier(), menuEntry.getType(), menuEntry.getParam0(), menuEntry.getParam1(), menuEntry.getConsumer(), menuEntry.isItemOp(), menuEntry.getItemOp(), menuEntry.getItemId(), menuEntry.getWidget()
 				);
 			}
 		}
@@ -2048,7 +2236,7 @@ public abstract class RSClientMixin implements RSClient
 		client.getScene().menuOpen(client.getPlane(), x - client.getViewportXOffset(), y - client.getViewportYOffset(), false);
 	}
 
-	@Copy("addWidgetItemMenuItem")
+	/*@Copy("addWidgetItemMenuItem")
 	@Replace("addWidgetItemMenuItem")
 	static void copy$addWidgetItemMenuItem(RSWidget var0, RSItemComposition var1, int var2, int var3, boolean var4)
 	{
@@ -2058,13 +2246,14 @@ public abstract class RSClientMixin implements RSClient
 		{
 			copy$addWidgetItemMenuItem(var0, var1, var2, var3, var4);
 		}
-	}
+	}*/
 
 	@Inject
 	@MethodHook("updateNpcs")
 	public static void updateNpcs(boolean var0, RSPacketBuffer var1)
 	{
 		client.getCallbacks().updateNpcs();
+		syncMusicVolume();
 	}
 
 	@SuppressWarnings("InfiniteRecursion")
@@ -2216,7 +2405,7 @@ public abstract class RSClientMixin implements RSClient
 			{
 				if (widget != null)
 				{
-					group = WidgetInfo.TO_GROUP(widget.getId());
+					group = WidgetUtil.componentToInterface(widget.getId());
 					break;
 				}
 			}
@@ -2231,7 +2420,7 @@ public abstract class RSClientMixin implements RSClient
 			for (int i = hiddenWidgets.size() - 1; i >= 0; i--)
 			{
 				Widget widget = hiddenWidgets.get(i);
-				if (WidgetInfo.TO_GROUP(widget.getId()) == group)
+				if (WidgetUtil.componentToInterface(widget.getId()) == group)
 				{
 					widget.setHidden(false);
 					hiddenWidgets.remove(i);
@@ -2239,7 +2428,6 @@ public abstract class RSClientMixin implements RSClient
 			}
 		}
 	}
-
 
 	@Inject
 	@Override
@@ -2259,14 +2447,21 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public boolean isGpu()
 	{
-		return gpu;
+		return (gpuFlags & 1) == 1;
 	}
 
 	@Inject
 	@Override
-	public void setGpu(boolean gpu)
+	public void setGpuFlags(int gpuFlags)
 	{
-		this.gpu = gpu;
+		this.gpuFlags = gpuFlags;
+	}
+
+	@Inject
+	@Override
+	public int getGpuFlags()
+	{
+		return gpuFlags;
 	}
 
 	@Inject
@@ -2413,11 +2608,11 @@ public abstract class RSClientMixin implements RSClient
 	@Inject
 	static boolean shouldHideAttackOptionFor(RSPlayer p)
 	{
-		if (client.getSpellSelected())
+		/*if (client.getSpellSelected())
 		{
 			return ((hideFriendCastOptions && p.isFriended()) || (hideClanmateCastOptions && p.isFriendsChatMember()))
 				&& !unhiddenCasts.contains(client.getSelectedSpellName().replaceAll("<[^>]*>", "").toLowerCase());
-		}
+		}*/
 
 		return ((hideFriendAttackOptions && p.isFriended()) || (hideClanmateAttackOptions && p.isFriendsChatMember()));
 	}
@@ -2448,10 +2643,10 @@ public abstract class RSClientMixin implements RSClient
 
 	@Inject
 	@Override
-	public void removeIgnore(String friend)
+	public void removeIgnore(String friend, boolean confirmToJagex)
 	{
 		RSFriendSystem friendSystem = getFriendManager();
-		friendSystem.removeIgnore(friend);
+		friendSystem.removeIgnore(friend, confirmToJagex);
 	}
 
 	@Inject
@@ -2629,13 +2824,20 @@ public abstract class RSClientMixin implements RSClient
 	@Inject
 	public void playMusicTrack(int var0, RSAbstractArchive var1, int var2, int var3, int var4, boolean var5)
 	{
-		client.setMusicPlayerStatus(1);
-		client.setMusicTrackArchive(var1);
-		client.setMusicTrackGroupId(var2);
-		client.setMusicTrackFileId(var3);
-		client.setMusicTrackVolume(var4);
-		client.setMusicTrackBoolean(var5);
-		client.setPcmSampleLength(var0);
+		for (RSMusicSong musicSong : client.getMusicSongs())
+		{
+			if (musicSong.getMusicTrackGroupId() == var2)
+			{
+				client.setMusicPlayerStatus(1);
+				musicSong.setMusicTrackArchive(var1);
+				musicSong.setMusicTrackGroupId(var2);
+				musicSong.setMusicTrackFileId(var3);
+				musicSong.setMusicTrackVolume(var4);
+				musicSong.setMusicTrackBoolean(var5);
+				//musicSong.setPcmSampleLength(var0);
+				break;
+			}
+		}
 	}
 
 	@Inject
@@ -2737,16 +2939,56 @@ public abstract class RSClientMixin implements RSClient
 	@Override
 	public void setMusicVolume(int volume)
 	{
-		if (volume > 0 && client.getPreferences().getMusicVolume() <= 0 && client.getCurrentTrackGroupId() != -1)
+		if (volume != client.getMusicVolume())
 		{
-			client.playMusicTrack(1000, client.getMusicTracks(), client.getCurrentTrackGroupId(), 0, volume, false);
+			musicVolumeDesync = true;
 		}
+		client.setRSMusicVolume(volume);
+	}
 
-		client.getPreferences().setMusicVolume(volume);
-		client.setMusicTrackVolume(volume);
-		if (client.getMidiPcmStream() != null)
+	@Inject
+	private static boolean musicVolumeDesync;
+
+	@Inject
+	public static void syncMusicVolume()
+	{
+		if (musicVolumeDesync && client.getGameState() == GameState.LOGGED_IN)
 		{
-			client.getMidiPcmStream().setPcmStreamVolume(volume);
+			musicVolumeDesync = false;
+			Widget widget = client.getWidget(WidgetInfo.SETTINGS_SIDE_MUSIC_SLIDER_STEP_HOLDER);
+			if (widget != null && widget.getChildren() != null && widget.getChildren().length > 0)
+			{
+				int childLength = widget.getChildren().length;
+				int childIndex = Ints.constrainToRange((client.getMusicVolume() * childLength + 255) / 256, 0, childLength - 1);
+				Widget child = widget.getChild(childIndex);
+				if (child != null)
+				{
+					Object[] childOnOpListener = child.getOnOpListener();
+					try
+					{
+						child.setOnOpListener((Object[]) null);
+						copy$menuAction(childIndex, widget.getId(), MenuAction.CC_OP.getId(), 1, -1, "", "", -1, -1);
+					}
+					finally
+					{
+						child.setOnOpListener(childOnOpListener);
+					}
+				}
+			}
+		}
+	}
+
+	@Inject
+	private static void unloadInterface(int id, RSNodeDeque nodeDeque)
+	{
+		for (RSScriptEvent scriptEvent = (RSScriptEvent) nodeDeque.last(); scriptEvent != null; scriptEvent = (RSScriptEvent) nodeDeque.previous())
+		{
+			RSWidget widget = (RSWidget) scriptEvent.getSource();
+			int group = WidgetUtil.componentToInterface(widget.getId());
+			if (id == group)
+			{
+				scriptEvent.unlink();
+			}
 		}
 	}
 
@@ -2755,6 +2997,13 @@ public abstract class RSClientMixin implements RSClient
 	public static void preCloseInterface(RSInterfaceParent iface, boolean willUnload)
 	{
 		client.getCallbacks().post(new WidgetClosed(iface.getId(), iface.getModalMode(), willUnload));
+		if (willUnload)
+		{
+			int id = iface.getId();
+			unloadInterface(id, client.getScriptEvents());
+			unloadInterface(id, client.getScriptEvents3());
+			unloadInterface(id, client.getScriptEvents2());
+		}
 	}
 
 	@Inject
@@ -2865,7 +3114,6 @@ public abstract class RSClientMixin implements RSClient
 			client.getCallbacks().post(new ClanChannelChanged(clanChannel, idx, false));
 		}
 	}
-
 
 	@Inject
 	public static RSArchive[] archives = new RSArchive[21];
@@ -3055,60 +3303,85 @@ public abstract class RSClientMixin implements RSClient
 	@Inject
 	public static void checkResize()
 	{
-		check("Script_cached", client.getScriptCache());
-		check("StructDefinition_cached", client.getRSStructCompositionCache());
-		check("HealthBarDefinition_cached", client.getHealthBarCache());
-		check("HealthBarDefinition_cachedSprites", client.getHealthBarSpriteCache());
-		check("ObjectDefinition_cachedModels", client.getObjectDefinitionModelsCache());
-		check("Widget_cachedSprites", client.getWidgetSpriteCache());
-		check("ItemDefinition_cached", client.getItemCompositionCache());
-		check("VarbitDefinition_cached", client.getVarbitCache());
 		check("EnumDefinition_cached", client.getEnumDefinitionCache());
-		check("FloorUnderlayDefinition_cached", client.getFloorUnderlayDefinitionCache());
-		check("FloorOverlayDefinition_cached", client.getFloorOverlayDefinitionCache());
-		check("HitSplatDefinition_cached", client.getHitSplatDefinitionCache());
-		check("HitSplatDefinition_cachedSprites", client.getHitSplatDefinitionSpritesCache());
-		check("HitSplatDefinition_cachedFonts", client.getHitSplatDefinitionDontsCache());
-		check("InvDefinition_cached", client.getInvDefinitionCache());
-		check("ItemDefinition_cachedModels", client.getItemDefinitionModelsCache());
-		check("ItemDefinition_cachedSprites", client.getItemDefinitionSpritesCache());
-		check("KitDefinition_cached", client.getKitDefinitionCache());
-		check("NpcDefinition_cached", client.getNpcDefinitionCache());
-		check("NpcDefinition_cachedModels", client.getNpcDefinitionModelsCache());
-		check("ObjectDefinition_cached", client.getObjectDefinitionCache());
-		check("ObjectDefinition_cachedModelData", client.getObjectDefinitionModelDataCache());
-		check("ObjectDefinition_cachedEntities", client.getObjectDefinitionEntitiesCache());
-		check("ParamDefinition_cached", client.getParamDefinitionCache());
-		check("PlayerAppearance_cachedModels", client.getPlayerAppearanceModelsCache());
+
+		check("SpotAnimationDefinition_cached", client.getSpotAnimationDefinitionCache());
+		check("SpotAnimationDefinition_cachedModels", client.getSpotAnimationDefinitionModelsCache());
+
 		check("SequenceDefinition_cached", client.getSequenceDefinitionCache());
 		check("SequenceDefinition_cachedFrames", client.getSequenceDefinitionFramesCache());
 		check("SequenceDefinition_cachedModel", client.getSequenceDefinitionModelsCache());
-		check("SpotAnimationDefinition_cached", client.getSpotAnimationDefinitionCache());
-		check("SpotAnimationDefinition_cachedModels", client.getSpotAnimationDefinitionModlesCache());
-		check("VarcInt_cached", client.getVarcIntCache());
-		check("VarpDefinition_cached", client.getVarpDefinitionCache());
-		check("Widget_cachedModels", client.getModelsCache());
-		check("Widget_cachedFonts", client.getFontsCache());
-		check("Widget_cachedSpriteMasks", client.getSpriteMasksCache());
-		check("WorldMapElement_cachedSprites", client.getSpritesCache());
+
 		check("DBRowType_cache", client.getDbRowTypeCache());
 		check("DBTableType_cache", client.getDbTableTypeCache());
 		check("DBTableIndex_cache", client.getDbTableIndexCache());
-		check("DBTableMasterIndex_cache", client.getDbTableMasterIndexCache());
+
+		check("field1909", client.getField1909());
+		check("field1913", client.getField1913());
+		check("field1915", client.getField1915());
+		check("archive7", client.getArchive7());
+		check("archive5", client.getArchive5());
+		check("field2007", client.getField2007());
+		check("field2023", client.getField2023());
+		check("field2026", client.getField2026());
+		check("field2100", client.getField2100());
+		check("field2136", client.getField2136());
+		check("archive4", client.getArchive4());
+		check("archive11", client.getArchive11());
+
+		check("HealthBarDefinition_cached", client.getHealthBarCache());
+		check("HealthBarDefinition_cachedSprites", client.getHealthBarSpriteCache());
+
+		check("HitSplatDefinition_cached", client.getHitSplatDefinitionCache());
+		check("HitSplatDefinition_cachedSprites", client.getHitSplatDefinitionSpritesCache());
+		check("HitSplatDefinition_cachedFonts", client.getHitSplatDefinitionFontsCache());
+
+		check("Widget_cachedSpriteMasks", client.getSpriteMasksCache());
+
+		check("KitDefinition_cached", client.getKitDefinitionCache());
+
+		check("InvDefinition_cached", client.getInvDefinitionCache());
+
+		check("ItemDefinition_cached", client.getItemCompositionCache());
+		check("ItemDefinition_cachedModels", client.getItemDefinitionModelsCache());
+		check("ItemDefinition_cachedSprites", client.getItemDefinitionSpritesCache());
+
+		check("NpcDefinition_cached", client.getNpcDefinitionCache());
+		check("NpcDefinition_cachedModels", client.getNpcDefinitionModelsCache());
+
+		check("ObjectDefinition_cached", client.getObjectDefinitionCache());
+		check("ObjectDefinition_cachedModelData", client.getObjectDefinitionModelDataCache());
+		check("ObjectDefinition_cachedEntities", client.getObjectDefinitionEntitiesCache());
+		check("ObjectDefinition_cachedModels", client.getObjectDefinitionModelsCache());
+
+		check("ParamDefinition_cached", client.getParamDefinitionCache());
+
+		check("PlayerAppearance_cachedModels", client.getPlayerAppearanceModelsCache());
+
+		check("Script_cached", client.getScriptCache());
+
+		check("StructDefinition_cached", client.getRSStructCompositionCache());
+
+		check("VarbitDefinition_cached", client.getVarbitCache());
+		check("VarcInt_cached", client.getVarcIntCache());
+		check("VarpDefinition_cached", client.getVarpDefinitionCache());
+
+		check("FloorUnderlayDefinition_cached", client.getFloorUnderlayDefinitionCache());
+		check("FloorOverlayDefinition_cached", client.getFloorOverlayDefinitionCache());
 	}
 
 	@Inject
 	@Override
 	public RSModelData mergeModels(ModelData[] var0, int var1)
 	{
-		return newModelData(var0, var1);
+		return newModelData(Arrays.copyOf(var0, var1, getModelDataArray().getClass()), var1);
 	}
 
 	@Inject
 	@Override
 	public RSModelData mergeModels(ModelData... var0)
 	{
-		return newModelData(var0, var0.length);
+		return mergeModels(var0, var0.length);
 	}
 
 	@Inject
@@ -3249,7 +3522,7 @@ public abstract class RSClientMixin implements RSClient
 
 	@Inject
 	@MethodHook("loginScreen")
-	public static void loginScreenClick(RSGameEngine var0, RSFont var1)
+	public static void loginScreenClick(RSGameEngine var0, RSFont var1, RSFont var2)
 	{
 		if (!client.isWorldSelectOpen() && (client.getMouseLastPressedX() > client.getLoginScreenXPadding() + 765 || client.getMouseLastPressedY() > 503))
 		{
@@ -3298,7 +3571,17 @@ public abstract class RSClientMixin implements RSClient
 
 	@Inject
 	@Override
-	public Object getDBTableField(int rowID, int column, int tupleIndex, int fieldIndex)
+	public List getDBRowsByValue(int rowID, int column, int tupleIndex, Object value)
+	{
+		RSDbTable dbTable = client.getDbTable((rowID << 12 | column << 4));
+		Map columns = (Map) dbTable.getColumns().get(tupleIndex);
+		List rows = (List) columns.get(value);
+		return rows == null ? Collections.emptyList() : Collections.unmodifiableList(rows);
+	}
+
+	@Inject
+	@Override
+	public Object[] getDBTableField(int rowID, int column, int tupleIndex)
 	{
 		RSDbRowType dbRowType = client.getDbRowType(rowID);
 		RSDbTableType dbTableType = client.getDbTableType(dbRowType.getTableId());
@@ -3311,24 +3594,25 @@ public abstract class RSClientMixin implements RSClient
 			columnType = dbTableType.getDefaultValues()[column];
 		}
 
-		if (columnType == null)
-		{
-			return null;
-		}
-		else if (tupleIndex >= type.length)
+		if (tupleIndex >= type.length)
 		{
 			throw new IllegalArgumentException("tuple index too large");
 		}
+		else if (columnType == null)
+		{
+			return new Object[0];
+		}
 		else
 		{
-			if (fieldIndex > columnType.length / type.length)
+			int fieldLength = columnType.length / type.length;
+			Object[] field = new Object[fieldLength];
+
+			for (int fieldIndex = 0; fieldIndex < fieldLength; ++fieldIndex)
 			{
-				throw new IllegalArgumentException("field index too large");
+				field[fieldIndex] = columnType[fieldIndex * type.length + tupleIndex];
 			}
-			else
-			{
-				return columnType[tupleIndex * type.length + fieldIndex];
-			}
+
+			return field;
 		}
 	}
 
@@ -3348,7 +3632,7 @@ public abstract class RSClientMixin implements RSClient
 		if (client.getMouseIdleTicks() > 0)
 		{
 			long l = System.nanoTime() - lastActivityNanos;
-			idleCycles = (int)(l / 20000000L);
+			idleCycles = (int) (l / 20000000L);
 		}
 		else
 		{
@@ -3408,5 +3692,148 @@ public abstract class RSClientMixin implements RSClient
 	{
 		return client.getWorldMap();
 	}
-}
 
+	//@Shadow("clips")
+	//static RSClips clips;
+
+	@Inject
+	@Override
+	public int getRasterizer3D_clipNegativeMidX()
+	{
+		return client.getClips().getClipNegativeMidX();
+	}
+
+	@Inject
+	@Override
+	public int getRasterizer3D_clipNegativeMidY()
+	{
+		return client.getClips().getClipNegativeMidY();
+	}
+
+	@Inject
+	@Override
+	public void set3dZoom(int zoom)
+	{
+		client.getClips().setViewportZoom(zoom);
+		client.setScale(zoom);
+	}
+
+	@Inject
+	@Override
+	public WidgetNode openInterface(int componentId, int interfaceId, int modalMode)
+	{
+		assert this.isClientThread() : "openInterface must be called on client thread";
+
+		Widget component = this.getWidget(componentId);
+		if (component == null)
+		{
+			throw new IllegalStateException("component does not exist");
+		}
+		else if (component.getType() != 0)
+		{
+			throw new IllegalStateException("component is not a layer");
+		}
+		else
+		{
+			RSInterfaceParent interfaceNode = (RSInterfaceParent) this.getComponentTable().get((long) componentId);
+			if (interfaceNode != null)
+			{
+				this.closeInterface(interfaceNode, interfaceId != interfaceNode.getId());
+			}
+
+			Iterator iter = this.getComponentTable().iterator();
+
+			RSInterfaceParent iface;
+			do
+			{
+				if (!iter.hasNext())
+				{
+					interfaceNode = newInterfaceParent();
+					interfaceNode.setId(interfaceId);
+					interfaceNode.setModalMode(modalMode);
+					this.getComponentTable().put(interfaceNode, (long) componentId);
+					this.getWidgetDefinition().loadInterface(interfaceId);
+					this.revalidateWidgetScroll(this.getWidgetDefinition().getWidgets()[componentId >> 16], component, false);
+					this.copy$runWidgetOnLoadListener(interfaceId);
+					int topLevelInterfaceId = this.getTopLevelInterfaceId();
+					if (topLevelInterfaceId != -1 && this.getWidgetDefinition().loadInterface(topLevelInterfaceId))
+					{
+						this.runComponentCloseListeners(this.getWidgetDefinition().getWidgets()[topLevelInterfaceId], 1);
+					}
+
+					return interfaceNode;
+				}
+
+				iface = (RSInterfaceParent) iter.next();
+			}
+			while (iface.getId() != interfaceId);
+
+			throw new IllegalStateException("interface " + interfaceId + " is already open");
+		}
+	}
+
+	@Inject
+	@Override
+	public void closeInterface(WidgetNode interfaceNode, boolean unload)
+	{
+		WidgetNode widgetNode = (WidgetNode) interfaceNode;
+		if (widgetNode != this.getComponentTable().get(widgetNode.getHash()))
+		{
+			throw new IllegalArgumentException("WidgetNode is no longer valid");
+		}
+		else
+		{
+			this.closeRSInterface(widgetNode, unload);
+		}
+	}
+
+	@Inject
+	@FieldHook("accountHash")
+	public void onAccountHashChanged(int var0)
+	{
+		if (this.callbacks != null)
+		{
+			this.callbacks.post(new AccountHashChanged());
+		}
+	}
+
+	@Inject
+	private int expandedMapLoadingChunks;
+
+	@Inject
+	@Override
+	public void setExpandedMapLoading(int chunks)
+	{
+		this.expandedMapLoadingChunks = Ints.constrainToRange(chunks, 0, 5);
+	}
+
+	@Inject
+	@Override
+	public int getExpandedMapLoading()
+	{
+		return expandedMapLoadingChunks;
+	}
+
+	@Inject
+	@MethodHook(value = "createObjectSound", end = true)
+	public static void onAmbientSoundEffect(int var0, int var1, int var2, ObjectComposition var3, int var4)
+	{
+		RSObjectSound ambientSoundEffect = (RSObjectSound) client.getAmbientSoundEffects().last();
+		AmbientSoundEffectCreated ambientSoundEffectCreated = new AmbientSoundEffectCreated(ambientSoundEffect);
+		client.getCallbacks().post(ambientSoundEffectCreated);
+	}
+
+	@Copy("openURL")
+	@Replace("openURL")
+	public static void copy$openURL(String url, boolean var1, boolean var2)
+	{
+		try
+		{
+			client.getCallbacks().openUrl(url);
+		}
+		catch (Exception e)
+		{
+			client.getLogger().error("unable to open url {}", url, e);
+		}
+	}
+}

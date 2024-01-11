@@ -1359,4 +1359,64 @@ public abstract class RSSceneMixin implements RSScene
 			return this.newGameObject(level, var11, var12, var13 - var11 + 1, var14 - var12 + 1, x, y, z, (RSRenderable) renderable, orientation, true, var8, 0);
 		}
 	}
+
+	@Inject
+	@MethodHook("init")
+	public void init(int var1)
+	{
+		final DrawCallbacks drawCallbacks = client.getDrawCallbacks();
+		if (drawCallbacks != null)
+		{
+			drawCallbacks.loadScene(this);
+			drawCallbacks.swapScene(this);
+		}
+	}
+
+	@Inject
+	private RSTile[][][] rl$extendedTiles;
+
+	@Inject
+	private byte[][][] rl$extendedTileSettings;
+
+	@Inject
+	@MethodHook(value = "init", end = true)
+	public void initEnd(int var1)
+	{
+		// create 4x184x184 arrays with default 4x104x104 content
+		// this is an attempt to stay compatible with most (gpu) plugins
+		// maybe fix this somewhere in the future whoever has time
+		rl$extendedTiles = new RSTile[4][184][184];
+		rl$extendedTileSettings = new byte[4][184][184];
+
+		// copy original to extended
+		for (int z = 0; z < 4; ++z)
+		{
+			for (int x = 0; x < 104; ++x)
+			{
+				for (int y = 0; y < 104; ++y)
+				{
+					RSTile tile = getTiles()[z][x][y];
+					if (tile != null)
+					{
+						rl$extendedTiles[z][x][y] = tile;
+						rl$extendedTileSettings[z][x][y] = client.getTileSettings()[z][x][y];
+					}
+				}
+			}
+		}
+	}
+
+	@Inject
+	@Override
+	public Tile[][][] getExtendedTiles()
+	{
+		return rl$extendedTiles;
+	}
+
+	@Inject
+	@Override
+	public byte[][][] getExtendedTileSettings()
+	{
+		return rl$extendedTileSettings;
+	}
 }

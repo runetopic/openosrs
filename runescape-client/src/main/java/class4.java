@@ -1,94 +1,66 @@
-import net.runelite.mapping.Export;
+import java.util.Collections;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("z")
+@ObfuscatedName("ab")
 public final class class4 {
-   @ObfuscatedName("j")
-   @ObfuscatedSignature(
-      descriptor = "Lln;"
-   )
-   @Export("ItemDefinition_archive")
-   public static AbstractArchive ItemDefinition_archive;
-   @ObfuscatedName("ib")
-   @Export("regionLandArchives")
-   static byte[][] regionLandArchives;
+	@ObfuscatedName("iy")
+	@ObfuscatedSignature(
+		descriptor = "Lro;"
+	)
+	static AbstractSocket field4;
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "([Lmb;II)Lmb;",
-      garbageValue = "1096060078"
-   )
-   @Export("findEnumerated")
-   public static MouseWheel findEnumerated(MouseWheel[] var0, int var1) {
-      MouseWheel[] var2 = var0;
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "([I[II)V",
+		garbageValue = "1584240093"
+	)
+	public static void method20(int[] var0, int[] var1) {
+		if (var0 != null && var1 != null) {
+			Clock.ByteArrayPool_alternativeSizes = var0;
+			class267.ByteArrayPool_altSizeArrayCounts = new int[var0.length];
+			class1.ByteArrayPool_arrays = new byte[var0.length][][];
 
-      for(int var3 = 0; var3 < var2.length; ++var3) {
-         MouseWheel var4 = var2[var3];
-         if (var1 == var4.rsOrdinal()) {
-            return var4;
-         }
-      }
+			for (int var2 = 0; var2 < Clock.ByteArrayPool_alternativeSizes.length; ++var2) {
+				class1.ByteArrayPool_arrays[var2] = new byte[var1[var2]][];
+				ByteArrayPool.field4590.add(var0[var2]);
+			}
 
-      return null;
-   }
+			Collections.sort(ByteArrayPool.field4590);
+		} else {
+			Clock.ByteArrayPool_alternativeSizes = null;
+			class267.ByteArrayPool_altSizeArrayCounts = null;
+			class1.ByteArrayPool_arrays = null;
+			Renderable.method5509();
+		}
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(II)Lgk;",
-      garbageValue = "1400820827"
-   )
-   @Export("WorldMapElement_get")
-   public static WorldMapElement WorldMapElement_get(int var0) {
-      return var0 >= 0 && var0 < GrandExchangeOfferNameComparator.WorldMapElement_cached.length && GrandExchangeOfferNameComparator.WorldMapElement_cached[var0] != null ? GrandExchangeOfferNameComparator.WorldMapElement_cached[var0] : new WorldMapElement(var0);
-   }
+	@ObfuscatedName("nk")
+	@ObfuscatedSignature(
+		descriptor = "(IIZB)V",
+		garbageValue = "0"
+	)
+	static final void method19(int var0, int var1, boolean var2) {
+		if (Client.currentClanChannels[var0] != null) {
+			if (var1 >= 0 && var1 < Client.currentClanChannels[var0].method3479()) {
+				ClanChannelMember var3 = (ClanChannelMember)Client.currentClanChannels[var0].members.get(var1);
+				PacketBufferNode var4 = class113.getPacketBufferNode(ClientPacket.field3129, Client.packetWriter.isaacCipher);
+				var4.packetBuffer.writeByte(4 + ClanChannel.stringCp1252NullTerminatedByteSize(var3.username.getName()));
+				var4.packetBuffer.writeByte(var0);
+				var4.packetBuffer.writeShort(var1);
+				var4.packetBuffer.writeBoolean(var2);
+				var4.packetBuffer.writeStringCp1252NullTerminated(var3.username.getName());
+				Client.packetWriter.addNode(var4);
+			}
+		}
+	}
 
-   @ObfuscatedName("z")
-   @ObfuscatedSignature(
-      descriptor = "(IB)I",
-      garbageValue = "103"
-   )
-   public static int method21(int var0) {
-      --var0;
-      var0 |= var0 >>> 1;
-      var0 |= var0 >>> 2;
-      var0 |= var0 >>> 4;
-      var0 |= var0 >>> 8;
-      var0 |= var0 >>> 16;
-      return var0 + 1;
-   }
-
-   @ObfuscatedName("b")
-   @ObfuscatedSignature(
-      descriptor = "(IIII)I",
-      garbageValue = "-669376956"
-   )
-   static final int method17(int var0, int var1, int var2) {
-      int var3 = var0 / var2;
-      int var4 = var0 & var2 - 1;
-      int var5 = var1 / var2;
-      int var6 = var1 & var2 - 1;
-      int var7 = Message.method1192(var3, var5);
-      int var8 = Message.method1192(var3 + 1, var5);
-      int var9 = Message.method1192(var3, var5 + 1);
-      int var10 = Message.method1192(var3 + 1, var5 + 1);
-      int var11 = class123.method3037(var7, var8, var4, var2);
-      int var12 = class123.method3037(var9, var10, var4, var2);
-      return class123.method3037(var11, var12, var6, var2);
-   }
-
-   @ObfuscatedName("as")
-   @ObfuscatedSignature(
-      descriptor = "(ILba;ZI)I",
-      garbageValue = "1899720097"
-   )
-   static int method22(int var0, Script var1, boolean var2) {
-      if (var0 == 7463) {
-         boolean var3 = Interpreter.Interpreter_intStack[--class302.Interpreter_intStackSize] == 1;
-         class194.method3809(var3);
-         return 1;
-      } else {
-         return 2;
-      }
-   }
+	@ObfuscatedName("ov")
+	@ObfuscatedSignature(
+		descriptor = "(S)Z",
+		garbageValue = "2291"
+	)
+	static boolean method21() {
+		return WorldMapIcon_1.clientPreferences.method2562() >= Client.field488;
+	}
 }

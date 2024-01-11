@@ -1,19 +1,44 @@
+import java.util.Comparator;
+import java.util.Map.Entry;
+import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedName;
+import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ph")
-public class class432 {
-   @ObfuscatedName("k")
-   static final int[] field4697 = new int[2048];
-   @ObfuscatedName("c")
-   static final int[] field4698 = new int[2048];
+@ObfuscatedName("qx")
+class class432 implements Comparator {
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "Lol;"
+	)
+	@Export("WorldMapElement_archive")
+	public static AbstractArchive WorldMapElement_archive;
+	// $FF: synthetic field
+	@ObfuscatedSignature(
+		descriptor = "Lqf;"
+	)
+	final HttpRequestBuilder this$0;
 
-   static {
-      double var0 = 0.0030679615757712823;
+	@ObfuscatedSignature(
+		descriptor = "(Lqf;)V"
+	)
+	class432(HttpRequestBuilder var1) {
+		this.this$0 = var1;
+	}
 
-      for(int var2 = 0; var2 < 2048; ++var2) {
-         field4697[var2] = (int)(65536.0 * Math.sin((double)var2 * var0));
-         field4698[var2] = (int)(65536.0 * Math.cos(var0 * (double)var2));
-      }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/util/Map$Entry;Ljava/util/Map$Entry;I)I",
+		garbageValue = "-2140651191"
+	)
+	int method7999(Entry var1, Entry var2) {
+		return ((Float)var2.getValue()).compareTo((Float)var1.getValue());
+	}
 
-   }
+	public int compare(Object var1, Object var2) {
+		return this.method7999((Entry)var1, (Entry)var2);
+	}
+
+	public boolean equals(Object var1) {
+		return super.equals(var1);
+	}
 }

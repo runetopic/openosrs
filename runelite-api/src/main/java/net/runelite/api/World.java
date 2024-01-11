@@ -163,7 +163,7 @@ public interface World
 	 */
 	default boolean isNormal()
 	{
-		return !isAllPkWorld() && !isSkillTotal() && !isTournament() && !isLeague() && !isPvpArena();
+		return !isAllPkWorld() && !isSkillTotal() && !isTournament() && !isLeague() && !isPvpArena() && !isQuestSpeedRunning();
 	}
 
 	/**
@@ -174,5 +174,15 @@ public interface World
 	default boolean isPvpArena()
 	{
 		return getTypes().contains(WorldType.PVP_ARENA);
+	}
+
+	/**
+	 * Is world type quest speed running?
+	 *
+	 * @return true if world type is quest speed running, false otherwise
+	 */
+	default boolean isQuestSpeedRunning()
+	{
+		return getTypes().contains(WorldType.QUEST_SPEEDRUNNING);
 	}
 }

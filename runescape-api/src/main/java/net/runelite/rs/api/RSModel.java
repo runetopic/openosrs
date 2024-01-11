@@ -135,7 +135,6 @@ public interface RSModel extends RSRenderable, Model
 	int getDiameter();
 
 	@Import("aabb")
-	@Override
 	HashMap<Integer, AABB> getAABBMap();
 
 	@Import("faceTextures")
@@ -155,7 +154,6 @@ public interface RSModel extends RSRenderable, Model
 	int getBottomY();;
 
 	@Import("drawFace")
-	@Override
 	void drawFace(int face);
 
 	void interpolateFrames(RSFrames frames, int frameId, RSFrames nextFrames, int nextFrameId, int interval, int intervalCount);
@@ -165,9 +163,6 @@ public interface RSModel extends RSRenderable, Model
 	 */
 	Shape getConvexHull(int localX, int localY, int orientation, int tileHeight);
 
-	float[] getFaceTextureUVCoordinates();
-	void setFaceTextureUVCoordinates(float[] faceTextureUVCoordinates);
-
 	int[] getVertexNormalsX();
 	void setVertexNormalsX(int[] vertexNormalsX);
 
@@ -176,6 +171,9 @@ public interface RSModel extends RSRenderable, Model
 
 	int[] getVertexNormalsZ();
 	void setVertexNormalsZ(int[] vertexNormalsZ);
+
+	RSModel getUnskewedModel();
+	void setUnskewedModel(RSModel unskewedModel);
 
 	@Import("overrideAmount")
 	@Override
@@ -192,4 +190,24 @@ public interface RSModel extends RSRenderable, Model
 	@Import("overrideLuminance")
 	@Override
 	byte getOverrideLuminance();
+
+	@Import("textureFaces")
+	@Override
+	byte[] getTextureFaces();
+
+	@Import("texIndices1")
+	@Override
+	int[] getTexIndices1();
+
+	@Import("texIndices2")
+	@Override
+	int[] getTexIndices2();
+
+	@Import("texIndices3")
+	@Override
+	int[] getTexIndices3();
+
+	@Import("drawFrustum")
+	@Override
+	void drawFrustum(int zero, int xRotate, int yRotate, int zRotate, int xCamera, int yCamera, int zCamera);
 }

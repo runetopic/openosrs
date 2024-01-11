@@ -4,50 +4,38 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("il")
+@ObfuscatedName("jk")
 @Implements("WorldMapLabel")
 public class WorldMapLabel {
-   @ObfuscatedName("af")
-   @ObfuscatedSignature(
-      descriptor = "[[Lkz;"
-   )
-   @Export("Widget_interfaceComponents")
-   public static Widget[][] Widget_interfaceComponents;
-   @ObfuscatedName("ix")
-   @ObfuscatedGetter(
-      intValue = 1971001137
-   )
-   @Export("selectedItemWidget")
-   static int selectedItemWidget;
-   @ObfuscatedName("f")
-   @Export("text")
-   String text;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = -1718779497
-   )
-   @Export("width")
-   int width;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 1498015633
-   )
-   @Export("height")
-   int height;
-   @ObfuscatedName("s")
-   @ObfuscatedSignature(
-      descriptor = "Lip;"
-   )
-   @Export("size")
-   WorldMapLabelSize size;
+	@ObfuscatedName("at")
+	@Export("text")
+	String text;
+	@ObfuscatedName("ah")
+	@ObfuscatedGetter(
+		intValue = -415719505
+	)
+	@Export("width")
+	int width;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = -481945253
+	)
+	@Export("height")
+	int height;
+	@ObfuscatedName("ao")
+	@ObfuscatedSignature(
+		descriptor = "Lio;"
+	)
+	@Export("size")
+	WorldMapLabelSize size;
 
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/lang/String;IILip;)V"
-   )
-   WorldMapLabel(String var1, int var2, int var3, WorldMapLabelSize var4) {
-      this.text = var1;
-      this.width = var2;
-      this.height = var3;
-      this.size = var4;
-   }
+	@ObfuscatedSignature(
+		descriptor = "(Ljava/lang/String;IILio;)V"
+	)
+	WorldMapLabel(String var1, int var2, int var3, WorldMapLabelSize var4) {
+		this.text = var1;
+		this.width = var2;
+		this.height = var3;
+		this.size = var4;
+	}
 }

@@ -1,79 +1,53 @@
 import net.runelite.mapping.Export;
-import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("ep")
-public class class144 extends class139 {
-   @ObfuscatedName("ep")
-   @ObfuscatedSignature(
-      descriptor = "Llm;"
-   )
-   @Export("archive4")
-   static Archive archive4;
-   @ObfuscatedName("f")
-   @ObfuscatedGetter(
-      intValue = -214710763
-   )
-   int field1679;
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = 89085259
-   )
-   int field1674;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 1840054739
-   )
-   int field1676;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = 432447909
-   )
-   int field1677;
-   // $FF: synthetic field
-   @ObfuscatedSignature(
-      descriptor = "Lex;"
-   )
-   final class142 this$0;
+@ObfuscatedName("fl")
+public abstract class class144 extends Node {
+	class144() {
+	}
 
-   @ObfuscatedSignature(
-      descriptor = "(Lex;)V"
-   )
-   class144(class142 var1) {
-      this.this$0 = var1;
-   }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(Luj;I)V",
+		garbageValue = "-734756620"
+	)
+	abstract void vmethod3510(Buffer var1);
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;S)V",
-      garbageValue = "-5782"
-   )
-   void vmethod3394(Buffer var1) {
-      this.field1679 = var1.readInt();
-      this.field1677 = var1.readInt();
-      this.field1674 = var1.readUnsignedByte();
-      this.field1676 = var1.readUnsignedByte();
-   }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(Lfc;I)V",
+		garbageValue = "-2111347169"
+	)
+	abstract void vmethod3506(ClanSettings var1);
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Leb;B)V",
-      garbageValue = "-26"
-   )
-   void vmethod3393(ClanSettings var1) {
-      var1.method3240(this.field1679, this.field1677, this.field1674, this.field1676);
-   }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(Luj;Ltz;I)Ltz;",
+		garbageValue = "-1693455974"
+	)
+	@Export("readStringIntParameters")
+	static final IterableNodeHashTable readStringIntParameters(Buffer var0, IterableNodeHashTable var1) {
+		int var2 = var0.readUnsignedByte();
+		int var3;
+		if (var1 == null) {
+			var3 = class184.method3680(var2);
+			var1 = new IterableNodeHashTable(var3);
+		}
 
-   @ObfuscatedName("ky")
-   @ObfuscatedSignature(
-      descriptor = "(IIIIIIII)V",
-      garbageValue = "-1463294808"
-   )
-   @Export("updateRootInterface")
-   static final void updateRootInterface(int var0, int var1, int var2, int var3, int var4, int var5, int var6) {
-      if (class153.loadInterface(var0)) {
-         class85.updateInterface(WorldMapLabel.Widget_interfaceComponents[var0], -1, var1, var2, var3, var4, var5, var6);
-      }
-   }
+		for (var3 = 0; var3 < var2; ++var3) {
+			boolean var4 = var0.readUnsignedByte() == 1;
+			int var5 = var0.readMedium();
+			Object var6;
+			if (var4) {
+				var6 = new ObjectNode(var0.readStringCp1252NullTerminated());
+			} else {
+				var6 = new IntegerNode(var0.readInt());
+			}
+
+			var1.put((Node)var6, (long)var5);
+		}
+
+		return var1;
+	}
 }

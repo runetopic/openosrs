@@ -246,6 +246,22 @@ public enum VarPlayer
 	 */
 	LAST_MINIGAME_TELEPORT(888),
 
+	/**
+	 * Number of slayer creatures remaining on the assigned task
+	 */
+	SLAYER_TASK_SIZE(394),
+
+	/**
+	 * Currently assigned slayer task if SLAYER_TASK_SIZE is greater than 0.
+	 * Mapping of value to name can be found in {@link EnumID#SLAYER_TASK_CREATURE}.
+	 */
+	SLAYER_TASK_CREATURE(395),
+
+	/**
+	 * Assigned slayer task location. The mapping of value to name can be found in {@link EnumID#SLAYER_TASK_LOCATION}
+	 */
+	SLAYER_TASK_LOCATION(2096),
+
 	;
 
 	private final int id;

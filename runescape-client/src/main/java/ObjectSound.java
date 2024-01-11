@@ -1,230 +1,370 @@
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import net.runelite.mapping.Export;
 import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
+import net.runelite.rs.ScriptOpcodes;
 
-@ObfuscatedName("bd")
+@ObfuscatedName("ca")
 @Implements("ObjectSound")
 public final class ObjectSound extends Node {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "Lmo;"
-   )
-   @Export("objectSounds")
-   static NodeDeque objectSounds = new NodeDeque();
-   @ObfuscatedName("w")
-   @ObfuscatedGetter(
-      intValue = 1507744253
-   )
-   @Export("plane")
-   int plane;
-   @ObfuscatedName("v")
-   @ObfuscatedGetter(
-      intValue = 1231672185
-   )
-   @Export("x")
-   int x;
-   @ObfuscatedName("s")
-   @ObfuscatedGetter(
-      intValue = 384654351
-   )
-   int field845;
-   @ObfuscatedName("z")
-   @ObfuscatedGetter(
-      intValue = -836680057
-   )
-   @Export("maxX")
-   int maxX;
-   @ObfuscatedName("j")
-   @ObfuscatedGetter(
-      intValue = 445471917
-   )
-   @Export("y")
-   int y;
-   @ObfuscatedName("i")
-   @ObfuscatedGetter(
-      intValue = 1742067623
-   )
-   @Export("maxY")
-   int maxY;
-   @ObfuscatedName("n")
-   @ObfuscatedGetter(
-      intValue = 2111223021
-   )
-   int field837;
-   @ObfuscatedName("l")
-   @ObfuscatedGetter(
-      intValue = -139276523
-   )
-   @Export("soundEffectId")
-   int soundEffectId;
-   @ObfuscatedName("k")
-   @ObfuscatedSignature(
-      descriptor = "Lab;"
-   )
-   @Export("stream1")
-   RawPcmStream stream1;
-   @ObfuscatedName("c")
-   @ObfuscatedGetter(
-      intValue = -387748741
-   )
-   int field841;
-   @ObfuscatedName("r")
-   @ObfuscatedSignature(
-      descriptor = "Lgp;"
-   )
-   @Export("obj")
-   ObjectComposition obj;
-   @ObfuscatedName("b")
-   @Export("soundEffectIds")
-   int[] soundEffectIds;
-   @ObfuscatedName("m")
-   @ObfuscatedGetter(
-      intValue = -1523032859
-   )
-   int field843;
-   @ObfuscatedName("t")
-   @ObfuscatedSignature(
-      descriptor = "Lab;"
-   )
-   @Export("stream2")
-   RawPcmStream stream2;
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "Lon;"
+	)
+	@Export("objectSounds")
+	static NodeDeque objectSounds;
+	@ObfuscatedName("ah")
+	@ObfuscatedGetter(
+		intValue = -69802151
+	)
+	@Export("plane")
+	int plane;
+	@ObfuscatedName("ar")
+	@ObfuscatedGetter(
+		intValue = -621731961
+	)
+	@Export("x")
+	int x;
+	@ObfuscatedName("ao")
+	@ObfuscatedGetter(
+		intValue = -695019648
+	)
+	@Export("y")
+	int y;
+	@ObfuscatedName("ab")
+	@ObfuscatedGetter(
+		intValue = 197368448
+	)
+	@Export("maxX")
+	int maxX;
+	@ObfuscatedName("au")
+	@ObfuscatedGetter(
+		intValue = 1177906816
+	)
+	@Export("maxY")
+	int maxY;
+	@ObfuscatedName("aa")
+	@ObfuscatedGetter(
+		intValue = -1736475093
+	)
+	int field824;
+	@ObfuscatedName("ac")
+	@ObfuscatedGetter(
+		intValue = 4042297
+	)
+	@Export("soundEffectId")
+	int soundEffectId;
+	@ObfuscatedName("al")
+	@ObfuscatedSignature(
+		descriptor = "Lbb;"
+	)
+	@Export("stream1")
+	RawPcmStream stream1;
+	@ObfuscatedName("az")
+	@ObfuscatedGetter(
+		intValue = 2032217193
+	)
+	int field827;
+	@ObfuscatedName("ap")
+	@ObfuscatedGetter(
+		intValue = -1837221441
+	)
+	int field828;
+	@ObfuscatedName("av")
+	@Export("soundEffectIds")
+	int[] soundEffectIds;
+	@ObfuscatedName("ax")
+	@ObfuscatedGetter(
+		intValue = 1799658609
+	)
+	int field832;
+	@ObfuscatedName("as")
+	@ObfuscatedSignature(
+		descriptor = "Lbb;"
+	)
+	@Export("stream2")
+	RawPcmStream stream2;
+	@ObfuscatedName("ay")
+	@ObfuscatedSignature(
+		descriptor = "Lhs;"
+	)
+	@Export("obj")
+	ObjectComposition obj;
 
-   ObjectSound() {
-   }
+	static {
+		objectSounds = new NodeDeque();
+	}
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "1406631425"
-   )
-   @Export("set")
-   void set() {
-      int var1 = this.soundEffectId;
-      ObjectComposition var2 = this.obj.transform();
-      if (var2 != null) {
-         this.soundEffectId = var2.ambientSoundId;
-         this.field837 = var2.int7 * 128;
-         this.field845 = var2.int5;
-         this.field841 = var2.int6;
-         this.soundEffectIds = var2.soundEffectIds;
-      } else {
-         this.soundEffectId = -1;
-         this.field837 = 0;
-         this.field845 = 0;
-         this.field841 = 0;
-         this.soundEffectIds = null;
-      }
+	ObjectSound() {
+	}
 
-      if (var1 != this.soundEffectId && this.stream1 != null) {
-         class209.pcmStreamMixer.removeSubStream(this.stream1);
-         this.stream1 = null;
-      }
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "(I)V",
+		garbageValue = "12079465"
+	)
+	@Export("set")
+	void set() {
+		int var1 = this.soundEffectId;
+		ObjectComposition var2 = this.obj.transform();
+		if (var2 != null) {
+			this.soundEffectId = var2.ambientSoundId;
+			this.field824 = var2.int7 * 16384;
+			this.field827 = var2.int5;
+			this.field828 = var2.int6;
+			this.soundEffectIds = var2.soundEffectIds;
+		} else {
+			this.soundEffectId = -1;
+			this.field824 = 0;
+			this.field827 = 0;
+			this.field828 = 0;
+			this.soundEffectIds = null;
+		}
 
-   }
+		if (var1 != this.soundEffectId && this.stream1 != null) {
+			LoginScreenAnimation.pcmStreamMixer.removeSubStream(this.stream1);
+			this.stream1 = null;
+		}
 
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(IB)Ljava/lang/String;",
-      garbageValue = "1"
-   )
-   static String method1919(int var0) {
-      return "<img=" + var0 + ">";
-   }
+	}
 
-   @ObfuscatedName("l")
-   @ObfuscatedSignature(
-      descriptor = "(Lkz;I[B[BB)V",
-      garbageValue = "8"
-   )
-   @Export("Widget_setKey")
-   static final void Widget_setKey(Widget var0, int var1, byte[] var2, byte[] var3) {
-      if (var0.field3632 == null) {
-         if (var2 == null) {
-            return;
-         }
+	@ObfuscatedName("ax")
+	@ObfuscatedSignature(
+		descriptor = "(III)I",
+		garbageValue = "-737174701"
+	)
+	static int method1978(int var0, int var1) {
+		for (int var2 = 0; var2 < 8; ++var2) {
+			if (var1 <= var0 + 30) {
+				return var2;
+			}
 
-         var0.field3632 = new byte[11][];
-         var0.field3633 = new byte[11][];
-         var0.field3634 = new int[11];
-         var0.field3635 = new int[11];
-      }
+			var0 += 30;
+			var0 += var2 != 1 && var2 != 3 ? 5 : 20;
+		}
 
-      var0.field3632[var1] = var2;
-      if (var2 != null) {
-         var0.field3631 = true;
-      } else {
-         var0.field3631 = false;
+		return 0;
+	}
 
-         for(int var4 = 0; var4 < var0.field3632.length; ++var4) {
-            if (var0.field3632[var4] != null) {
-               var0.field3631 = true;
-               break;
-            }
-         }
-      }
+	@ObfuscatedName("bp")
+	@ObfuscatedSignature(
+		descriptor = "(ILdt;ZB)I",
+		garbageValue = "2"
+	)
+	static int method1973(int var0, Script var1, boolean var2) {
+		int var3;
+		if (var0 == ScriptOpcodes.OC_NAME) {
+			var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+			Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = class214.ItemDefinition_get(var3).name;
+			return 1;
+		} else {
+			ItemComposition var5;
+			int var6;
+			if (var0 == ScriptOpcodes.OC_OP) {
+				DbTableType.Interpreter_intStackSize -= 2;
+				var3 = Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize];
+				var6 = Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize + 1];
+				var5 = class214.ItemDefinition_get(var3);
+				if (var6 >= 1 && var6 <= 5 && var5.groundActions[var6 - 1] != null) {
+					Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = var5.groundActions[var6 - 1];
+				} else {
+					Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = "";
+				}
 
-      var0.field3633[var1] = var3;
-   }
+				return 1;
+			} else if (var0 == ScriptOpcodes.OC_IOP) {
+				DbTableType.Interpreter_intStackSize -= 2;
+				var3 = Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize];
+				var6 = Interpreter.Interpreter_intStack[DbTableType.Interpreter_intStackSize + 1];
+				var5 = class214.ItemDefinition_get(var3);
+				if (var6 >= 1 && var6 <= 5 && var5.inventoryActions[var6 - 1] != null) {
+					Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = var5.inventoryActions[var6 - 1];
+				} else {
+					Interpreter.Interpreter_stringStack[++class127.Interpreter_stringStackSize - 1] = "";
+				}
 
-   @ObfuscatedName("p")
-   @ObfuscatedSignature(
-      descriptor = "(I)V",
-      garbageValue = "-1223653382"
-   )
-   public static void method1920() {
-      SequenceDefinition.SequenceDefinition_cached.clear();
-      SequenceDefinition.SequenceDefinition_cachedFrames.clear();
-      SequenceDefinition.SequenceDefinition_cachedModel.clear();
-   }
+				return 1;
+			} else if (var0 == ScriptOpcodes.OC_COST) {
+				var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+				Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class214.ItemDefinition_get(var3).price;
+				return 1;
+			} else if (var0 == ScriptOpcodes.OC_STACKABLE) {
+				var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+				Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class214.ItemDefinition_get(var3).isStackable == 1 ? 1 : 0;
+				return 1;
+			} else {
+				ItemComposition var4;
+				if (var0 == ScriptOpcodes.OC_CERT) {
+					var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+					var4 = class214.ItemDefinition_get(var3);
+					if (var4.noteTemplate == -1 && var4.note >= 0) {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var4.note;
+					} else {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var3;
+					}
 
-   @ObfuscatedName("q")
-   @ObfuscatedSignature(
-      descriptor = "(Lfg;III)Lak;",
-      garbageValue = "-613295096"
-   )
-   public static final PcmPlayer method1911(TaskHandler var0, int var1, int var2) {
-      if (class284.field3321 == 0) {
-         throw new IllegalStateException();
-      } else if (var1 >= 0 && var1 < 2) {
-         if (var2 < 256) {
-            var2 = 256;
-         }
+					return 1;
+				} else if (var0 == ScriptOpcodes.OC_UNCERT) {
+					var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+					var4 = class214.ItemDefinition_get(var3);
+					if (var4.noteTemplate >= 0 && var4.note >= 0) {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var4.note;
+					} else {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var3;
+					}
 
-         try {
-            PcmPlayer var3 = class157.pcmPlayerProvider.player();
-            var3.samples = new int[256 * (PcmPlayer.PcmPlayer_stereo ? 2 : 1)];
-            var3.field313 = var2;
-            var3.init();
-            var3.capacity = (var2 & -1024) + 1024;
-            if (var3.capacity > 16384) {
-               var3.capacity = 16384;
-            }
+					return 1;
+				} else if (var0 == ScriptOpcodes.OC_MEMBERS) {
+					var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+					Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class214.ItemDefinition_get(var3).isMembersOnly ? 1 : 0;
+					return 1;
+				} else if (var0 == ScriptOpcodes.OC_PLACEHOLDER) {
+					var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+					var4 = class214.ItemDefinition_get(var3);
+					if (var4.placeholderTemplate == -1 && var4.placeholder >= 0) {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var4.placeholder;
+					} else {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var3;
+					}
 
-            var3.open(var3.capacity);
-            if (WorldMapCacheName.field3010 > 0 && class266.soundSystem == null) {
-               class266.soundSystem = new SoundSystem();
-               PcmPlayer.soundSystemExecutor = Executors.newScheduledThreadPool(1);
-               PcmPlayer.soundSystemExecutor.scheduleAtFixedRate(class266.soundSystem, 0L, 10L, TimeUnit.MILLISECONDS);
-            }
+					return 1;
+				} else if (var0 == ScriptOpcodes.OC_UNPLACEHOLDER) {
+					var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+					var4 = class214.ItemDefinition_get(var3);
+					if (var4.placeholderTemplate >= 0 && var4.placeholder >= 0) {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var4.placeholder;
+					} else {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var3;
+					}
 
-            if (class266.soundSystem != null) {
-               if (class266.soundSystem.players[var1] != null) {
-                  throw new IllegalArgumentException();
-               }
+					return 1;
+				} else if (var0 == ScriptOpcodes.OC_FIND) {
+					String var7 = Interpreter.Interpreter_stringStack[--class127.Interpreter_stringStackSize];
+					var6 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+					UrlRequest.findItemDefinitions(var7, var6 == 1);
+					Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = BuddyRankComparator.foundItemIdCount;
+					return 1;
+				} else if (var0 != ScriptOpcodes.OC_FINDNEXT) {
+					if (var0 == ScriptOpcodes.OC_FINDRESET) {
+						ApproximateRouteStrategy.foundItemIndex = 0;
+						return 1;
+					} else if (var0 == 4213) {
+						var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+						var6 = class214.ItemDefinition_get(var3).getShiftClickIndex();
+						if (var6 == -1) {
+							Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var6;
+						} else {
+							Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var6 + 1;
+						}
 
-               class266.soundSystem.players[var1] = var3;
-            }
+						return 1;
+					} else if (var0 == 4214) {
+						var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class214.ItemDefinition_get(var3).maleModel;
+						return 1;
+					} else if (var0 == 4215) {
+						var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class214.ItemDefinition_get(var3).maleModel1;
+						return 1;
+					} else if (var0 == 4216) {
+						var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = class214.ItemDefinition_get(var3).maleModel2;
+						return 1;
+					} else if (var0 == 4217) {
+						var3 = Interpreter.Interpreter_intStack[--DbTableType.Interpreter_intStackSize];
+						var4 = class214.ItemDefinition_get(var3);
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = var4.field2181;
+						return 1;
+					} else {
+						return 2;
+					}
+				} else {
+					if (MusicPatchNode.foundItemIds != null && ApproximateRouteStrategy.foundItemIndex < BuddyRankComparator.foundItemIdCount) {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = MusicPatchNode.foundItemIds[++ApproximateRouteStrategy.foundItemIndex - 1] & '\uffff';
+					} else {
+						Interpreter.Interpreter_intStack[++DbTableType.Interpreter_intStackSize - 1] = -1;
+					}
 
-            return var3;
-         } catch (Throwable var4) {
-            return new PcmPlayer();
-         }
-      } else {
-         throw new IllegalArgumentException();
-      }
-   }
+					return 1;
+				}
+			}
+		}
+	}
+
+	@ObfuscatedName("hv")
+	@ObfuscatedSignature(
+		descriptor = "(S)V",
+		garbageValue = "-16844"
+	)
+	static final void method1980() {
+		class72.method2136();
+		class184.field2023.clear();
+		InvDefinition.method3530();
+		KitDefinition.method3631();
+		DbTableType.DBTableType_cache.clear();
+		EnumComposition.EnumDefinition_cached.clear();
+		class138.method3158();
+		class172.method3534();
+		AttackOption.method2751();
+		Client.method1848();
+		class145.method3247();
+		HitSplatDefinition.method3858();
+		InvDefinition.InvDefinition_cached.clear();
+		class267.method5275();
+		WorldMapElement.HitSplatDefinition_cached.clear();
+		class185.field2026.clear();
+		InterfaceParent.method2352();
+		ItemComposition.ItemDefinition_cached.clear();
+		ItemComposition.ItemDefinition_cachedModels.clear();
+		ItemComposition.ItemDefinition_cachedSprites.clear();
+		ModeWhere.method7211();
+		SequenceDefinition.SequenceDefinition_cached.clear();
+		SequenceDefinition.SequenceDefinition_cachedFrames.clear();
+		SequenceDefinition.SequenceDefinition_cachedModel.clear();
+		SpotAnimationDefinition.SpotAnimationDefinition_cached.clear();
+		SpotAnimationDefinition.SpotAnimationDefinition_cachedModels.clear();
+		WorldMapElement.method3589();
+		class252.method4944();
+		class399.Widget_cachedModels.method9078();
+		Players.Widget_cachedFonts.method9078();
+		class189.Widget_cachedSpriteMasks.clear();
+		class191.field2100.clear();
+		VarcInt.VarcInt_cached.clear();
+		VarcInt.method3601();
+		class171.field1909.clear();
+		class208.method4152();
+		class197.archive4.clear();
+		LoginPacket.method5936();
+		class195.field2136.clear();
+		Client.DBTableIndex_cache.clear();
+		Client.archive11.clear();
+		RouteStrategy.method4389();
+		HealthBarDefinition.widgetDefinition.method6288();
+		((TextureProvider)Rasterizer3D.clips.Rasterizer3D_textureLoader).clear();
+		Canvas.method329();
+		Client.field779.clearFiles();
+		UserComparator7.field1441.clearFiles();
+		class145.field1643.clearFiles();
+		WorldMapDecorationType.archive10.clearFiles();
+		class47.archive12.clearFiles();
+		class344.archive2.clearFiles();
+		class267.field2778.clearFiles();
+		SoundSystem.field298.clearFiles();
+		VarbitComposition.archive13.clearFiles();
+		class313.archive4.clearFiles();
+		WorldMapAreaData.field2641.clearFiles();
+		Language.field4412.clearFiles();
+		PcmPlayer.field281.clearFiles();
+		WorldMapSection0.archive9.clearFiles();
+		class514.archive6.clearFiles();
+		class19.field92.clearFiles();
+		class7.field25.clearFiles();
+		GrandExchangeOfferOwnWorldComparator.archive8.clearFiles();
+		Canvas.field114.clearFiles();
+		StructComposition.field2041.clearFiles();
+		WorldMapData_0.field2426.clearFiles();
+		BuddyRankComparator.field1460.clearFiles();
+		SpotAnimationDefinition.field2007.clearFiles();
+	}
 }

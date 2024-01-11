@@ -28,9 +28,12 @@ import com.google.common.collect.ImmutableSet;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.Set;
 import net.runelite.api.Actor;
+import net.runelite.api.ActorSpotAnim;
 import net.runelite.api.Hitsplat;
+import net.runelite.api.IterableHashTable;
 import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
 import net.runelite.api.NpcID;
@@ -76,6 +79,13 @@ public abstract class RSActorMixin implements RSActor
 
 	@Inject
 	@Override
+	public boolean isInteracting()
+	{
+		return getRSInteracting() != -1;
+	}
+
+	@Inject
+	@Override
 	public Actor getInteracting()
 	{
 		try
@@ -86,7 +96,7 @@ public abstract class RSActorMixin implements RSActor
 				return null;
 			}
 
-			int var2 = client.isLargePlayerInfo() ? 65536 : '耀';
+			int var2 = 65536;
 			if (index < var2)
 			{
 				NPC[] npcs = client.getCachedNPCs();
@@ -205,28 +215,105 @@ public abstract class RSActorMixin implements RSActor
 	@Inject
 	public void animationChanged(int idx)
 	{
-		if (this instanceof RSNPC)
+		/*if (this instanceof RSNPC)
 		{
 			int id = ((RSNPC) this).getId();
-
-			if (id == NpcID.CORPOREAL_BEAST && this.getAnimation() == 1676)
+			switch (id)
 			{
-				setDead(true);
+				case 8615:
+				case 8616:
+				case 8617:
+				case 8618:
+				case 8619:
+				case 8620:
+				case 8621:
+				case 8622:
+					return;
 			}
-		}
+		}*/
 
-		AnimationChanged animationChange = new AnimationChanged();
-		animationChange.setActor(this);
-		client.getCallbacks().post(animationChange);
+		AnimationChanged animationChanged = new AnimationChanged();
+		animationChanged.setActor(this);
+		client.getCallbacks().post(animationChanged);
 	}
 
-	@FieldHook("spotAnimation")
+	@MethodHook(value = "clearSpotAnimations", end = true)
 	@Inject
-	public void spotAnimationChanged(int idx)
+	public void onGraphicCleared()
 	{
 		GraphicChanged graphicChanged = new GraphicChanged();
 		graphicChanged.setActor(this);
 		client.getCallbacks().post(graphicChanged);
+	}
+
+	@MethodHook(value = "updateSpotAnimation", end = true)
+	@Inject
+	public void onGraphicChanged(int idx, int graphicID, int graphicHeight, int graphicStartCycle)
+	{
+		GraphicChanged graphicChanged = new GraphicChanged();
+		graphicChanged.setActor(this);
+		client.getCallbacks().post(graphicChanged);
+	}
+
+	@Inject
+	@Override
+	public void createSpotAnim(int id, int spotAnimId, int height, int delay)
+	{
+		IterableHashTable<ActorSpotAnim> spotAnims = this.getSpotAnims();
+		ActorSpotAnim actorSpotAnim = (ActorSpotAnim) spotAnims.get((long) id);
+		if (actorSpotAnim != null)
+		{
+			actorSpotAnim.unlink();
+			this.setGraphicsCount(getGraphicsCount() - 1);
+		}
+
+		if (spotAnimId != -1)
+		{
+			byte frame = 0;
+			if (delay > 0)
+			{
+				frame = -1;
+			}
+
+			spotAnims.put(newActorSpotAnim(spotAnimId, height, client.getGameCycle() + delay, frame), (long) id);
+			this.setGraphicsCount(getGraphicsCount() + 1);
+		}
+	}
+
+	@Inject
+	@Override
+	public boolean hasSpotAnim(int spotAnimId)
+	{
+		Iterator<ActorSpotAnim> iter = this.getSpotAnims().iterator();
+		while (iter.hasNext())
+		{
+			ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+			if (actorSpotAnim.getId() == spotAnimId)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Inject
+	@Override
+	public void removeSpotAnim(int id)
+	{
+		ActorSpotAnim actorSpotAnim = (ActorSpotAnim) this.getSpotAnims().get(id);
+		if (actorSpotAnim != null)
+		{
+			actorSpotAnim.unlink();
+			this.setGraphicsCount(getGraphicsCount() - 1);
+		}
+	}
+
+	@Inject
+	@Override
+	public void clearSpotAnims()
+	{
+		this.getSpotAnims().clear();
+		this.setGraphicsCount(0);
 	}
 
 	@FieldHook("targetIndex")
@@ -347,5 +434,165 @@ public abstract class RSActorMixin implements RSActor
 	public boolean isMoving()
 	{
 		return getPathLength() > 0;
+	}
+
+	@Inject
+	@Override
+	public int getGraphic()
+	{
+		Iterator iter = this.getSpotAnims().iterator();
+		if (iter.hasNext())
+		{
+			ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+			return actorSpotAnim.getId();
+		}
+		else
+		{
+			return -1;
+		}
+	}
+
+	@Inject
+	@Override
+	public void setGraphic(int id)
+	{
+		if (id == -1)
+		{
+			this.getSpotAnims().clear();
+			this.setGraphicsCount(0);
+		}
+		else
+		{
+			Iterator iter = this.getSpotAnims().iterator();
+			if (iter.hasNext())
+			{
+				ActorSpotAnim var3 = (ActorSpotAnim) iter.next();
+				var3.setId(id);
+			}
+			else
+			{
+				ActorSpotAnim actorSpotAnim = this.newActorSpotAnim(id, 0, 0, 0);
+				this.getSpotAnims().put(actorSpotAnim, 0L);
+				this.setGraphicsCount(getGraphicsCount() + 1);
+			}
+		}
+	}
+
+	@Inject
+	@Override
+	public int getGraphicHeight()
+	{
+		Iterator iter = this.getSpotAnims().iterator();
+		if (iter.hasNext())
+		{
+			ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+			return actorSpotAnim.getHeight();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	@Inject
+	@Override
+	public void setGraphicHeight(int height)
+	{
+		Iterator iter = this.getSpotAnims().iterator();
+		if (iter.hasNext())
+		{
+			ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+			actorSpotAnim.setHeight(height);
+		}
+	}
+
+	@Inject
+	@Override
+	public int getSpotAnimFrame()
+	{
+		Iterator iter = this.getSpotAnims().iterator();
+		if (iter.hasNext())
+		{
+			ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+			return actorSpotAnim.getFrame();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	@Inject
+	@Override
+	public void setSpotAnimFrame(int id)
+	{
+		Iterator iter = this.getSpotAnims().iterator();
+		if (iter.hasNext())
+		{
+			ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+			actorSpotAnim.setFrame(id);
+		}
+	}
+
+	@Inject
+	@Override
+	public int getSpotAnimationFrameCycle()
+	{
+		Iterator iter = this.getSpotAnims().iterator();
+		if (iter.hasNext())
+		{
+			ActorSpotAnim actorSpotAnim = (ActorSpotAnim) iter.next();
+			return actorSpotAnim.getCycle();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	@Inject
+	@Override
+	public int getAnimation()
+	{
+		int animation = getRSAnimation();
+		switch (animation)
+		{
+			/*case 7592:
+			case 7593:
+			case 7949:
+			case 7950:
+			case 7951:
+			case 7952:
+			case 7957:
+			case 7960:
+			case 8059:
+			case 8123:
+			case 8124:
+			case 8125:
+			case 8126:
+			case 8127:
+			case 8234:
+			case 8235:
+			case 8236:
+			case 8237:
+			case 8238:
+			case 8241:
+			case 8242:
+			case 8243:
+			case 8244:
+			case 8245:
+			case 8248:
+			case 8249:
+			case 8250:
+			case 8251:
+			case 8252:
+			case 8255:
+			case 8256:
+			case 8257:
+			case 8258:
+				return -1;*/
+			default:
+				return animation;
+		}
 	}
 }

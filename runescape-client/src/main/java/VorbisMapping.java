@@ -1,43 +1,39 @@
-import net.runelite.mapping.Export;
 import net.runelite.mapping.Implements;
 import net.runelite.mapping.ObfuscatedName;
 
-@ObfuscatedName("am")
+@ObfuscatedName("br")
 @Implements("VorbisMapping")
 public class VorbisMapping {
-   @ObfuscatedName("f")
-   @Export("submaps")
-   int submaps;
-   @ObfuscatedName("w")
-   @Export("mappingMux")
-   int mappingMux;
-   @ObfuscatedName("v")
-   @Export("submapFloor")
-   int[] submapFloor;
-   @ObfuscatedName("s")
-   @Export("submapResidue")
-   int[] submapResidue;
+	@ObfuscatedName("at")
+	int field340;
+	@ObfuscatedName("ah")
+	int field341;
+	@ObfuscatedName("ar")
+	int[] field343;
+	@ObfuscatedName("ao")
+	int[] field342;
 
-   VorbisMapping() {
-      VorbisSample.readBits(16);
-      this.submaps = VorbisSample.readBit() != 0 ? VorbisSample.readBits(4) + 1 : 1;
-      if (VorbisSample.readBit() != 0) {
-         VorbisSample.readBits(8);
-      }
+	VorbisMapping() {
+		class60 var1 = VorbisSample.field359;
+		var1.method1187(16);
+		this.field340 = var1.method1188() != 0 ? var1.method1187(4) + 1 : 1;
+		if (var1.method1188() != 0) {
+			var1.method1187(8);
+		}
 
-      VorbisSample.readBits(2);
-      if (this.submaps > 1) {
-         this.mappingMux = VorbisSample.readBits(4);
-      }
+		var1.method1187(2);
+		if (this.field340 > 1) {
+			this.field341 = var1.method1187(4);
+		}
 
-      this.submapFloor = new int[this.submaps];
-      this.submapResidue = new int[this.submaps];
+		this.field343 = new int[this.field340];
+		this.field342 = new int[this.field340];
 
-      for(int var1 = 0; var1 < this.submaps; ++var1) {
-         VorbisSample.readBits(8);
-         this.submapFloor[var1] = VorbisSample.readBits(8);
-         this.submapResidue[var1] = VorbisSample.readBits(8);
-      }
+		for (int var2 = 0; var2 < this.field340; ++var2) {
+			var1.method1187(8);
+			this.field343[var2] = var1.method1187(8);
+			this.field342[var2] = var1.method1187(8);
+		}
 
-   }
+	}
 }

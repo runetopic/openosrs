@@ -1,32 +1,58 @@
+import net.runelite.mapping.Export;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("qx")
-final class class460 implements class459 {
-   @ObfuscatedName("f")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/lang/Object;Lrd;B)V",
-      garbageValue = "10"
-   )
-   public void vmethod8518(Object var1, Buffer var2) {
-      this.method8481((Integer)var1, var2);
-   }
+@ObfuscatedName("rb")
+public class class460 {
+	@ObfuscatedName("at")
+	float field4758;
+	@ObfuscatedName("ah")
+	float field4759;
+	@ObfuscatedName("ar")
+	float field4760;
 
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lrd;B)Ljava/lang/Object;",
-      garbageValue = "4"
-   )
-   public Object vmethod8517(Buffer var1) {
-      return var1.readInt();
-   }
+	static {
+		new class460(0.0F, 0.0F, 0.0F);
+		new class460(1.0F, 1.0F, 1.0F);
+		new class460(1.0F, 0.0F, 0.0F);
+		new class460(0.0F, 1.0F, 0.0F);
+		new class460(0.0F, 0.0F, 1.0F);
+	}
 
-   @ObfuscatedName("i")
-   @ObfuscatedSignature(
-      descriptor = "(Ljava/lang/Integer;Lrd;I)V",
-      garbageValue = "-1712633556"
-   )
-   void method8481(Integer var1, Buffer var2) {
-      var2.writeInt(var1);
-   }
+	class460(float var1, float var2, float var3) {
+		this.field4758 = var1;
+		this.field4759 = var2;
+		this.field4760 = var3;
+	}
+
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(B)F",
+		garbageValue = "56"
+	)
+	final float method8402() {
+		return (float)Math.sqrt((double)(this.field4760 * this.field4760 + this.field4759 * this.field4759 + this.field4758 * this.field4758));
+	}
+
+	public String toString() {
+		return this.field4758 + ", " + this.field4759 + ", " + this.field4760;
+	}
+
+	@ObfuscatedName("ih")
+	@ObfuscatedSignature(
+		descriptor = "(IIII)V",
+		garbageValue = "-986184126"
+	)
+	@Export("queueSoundEffect")
+	static void queueSoundEffect(int var0, int var1, int var2) {
+		if (WorldMapIcon_1.clientPreferences.getSoundEffectsVolume() != 0 && var1 != 0 && Client.soundEffectCount < 50) {
+			Client.soundEffectIds[Client.soundEffectCount] = var0;
+			Client.queuedSoundEffectLoops[Client.soundEffectCount] = var1;
+			Client.queuedSoundEffectDelays[Client.soundEffectCount] = var2;
+			Client.soundEffects[Client.soundEffectCount] = null;
+			Client.soundLocations[Client.soundEffectCount] = 0;
+			++Client.soundEffectCount;
+		}
+
+	}
 }

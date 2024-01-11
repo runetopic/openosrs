@@ -1,87 +1,131 @@
-import java.io.IOException;
+import net.runelite.mapping.Export;
+import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("dq")
-public class class129 implements class119 {
-   @ObfuscatedName("w")
-   @ObfuscatedSignature(
-      descriptor = "(Lln;Lln;ZIS)V",
-      garbageValue = "222"
-   )
-   static void method3086(AbstractArchive var0, AbstractArchive var1, boolean var2, int var3) {
-      if (Login.clearLoginScreen) {
-         if (var3 == 4) {
-            ReflectionCheck.method696(4);
-         }
+@ObfuscatedName("ep")
+public enum class129 implements Enum {
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "Lep;"
+	)
+	field1513(0, 0),
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "Lep;"
+	)
+	field1514(1, 1),
+	@ObfuscatedName("ar")
+	@ObfuscatedSignature(
+		descriptor = "Lep;"
+	)
+	field1512(2, 2),
+	@ObfuscatedName("ao")
+	@ObfuscatedSignature(
+		descriptor = "Lep;"
+	)
+	field1518(3, 3),
+	@ObfuscatedName("ab")
+	@ObfuscatedSignature(
+		descriptor = "Lep;"
+	)
+	field1510(4, 4);
 
-      } else {
-         if (var3 == 0) {
-            GrandExchangeOfferNameComparator.method6672(var2);
-         } else {
-            ReflectionCheck.method696(var3);
-         }
+	@ObfuscatedName("ac")
+	@Export("ItemDefinition_inMembersWorld")
+	public static boolean ItemDefinition_inMembersWorld;
+	@ObfuscatedName("au")
+	@ObfuscatedGetter(
+		intValue = -1830305403
+	)
+	final int field1515;
+	@ObfuscatedName("aa")
+	@ObfuscatedGetter(
+		intValue = 1827207297
+	)
+	final int field1516;
 
-         Rasterizer2D.Rasterizer2D_clear();
-         byte[] var4 = var0.takeFileByNames("title.jpg", "");
-         Login.leftTitleSprite = class266.method5471(var4);
-         class275.rightTitleSprite = Login.leftTitleSprite.mirrorHorizontally();
-         ObjectComposition.method3948(var1, Client.worldProperties);
-         class147.titleboxSprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebox", "");
-         Login.titlebuttonSprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebutton", "");
-         class19.field109 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebutton_large", "");
-         Canvas.field140 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "play_now_text", "");
-         VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "titlebutton_wide42,1", "");
-         Login.runesSprite = class125.method3066(var1, "runes", "");
-         Login.title_muteSprite = class125.method3066(var1, "title_mute", "");
-         Login.options_buttons_0Sprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,0", "");
-         ChatChannel.field1005 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,4", "");
-         Login.options_buttons_2Sprite = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,2", "");
-         class100.field1335 = VarcInt.SpriteBuffer_getIndexedSpriteByName(var1, "options_radio_buttons,6", "");
-         WorldMapRectangle.field2963 = Login.options_buttons_0Sprite.subWidth;
-         class134.field1613 = Login.options_buttons_0Sprite.subHeight;
-         class305.loginScreenRunesAnimation = new LoginScreenAnimation(Login.runesSprite);
-         if (var2) {
-            Login.Login_username = "";
-            Login.Login_password = "";
-            Login.field926 = new String[8];
-            Login.field925 = 0;
-         }
+	class129(int var3, int var4) {
+		this.field1515 = var3;
+		this.field1516 = var4;
+	}
 
-         UserComparator4.field1429 = 0;
-         InvDefinition.otp = "";
-         Login.field930 = true;
-         Login.worldSelectOpen = false;
-         if (!PacketWriter.clientPreferences.method2570()) {
-            WorldMapScaleHandler.method5467(2, class153.archive6, "scape main", "", 255, false);
-         } else {
-            class28.method430(2);
-         }
+	@ObfuscatedName("ah")
+	@ObfuscatedSignature(
+		descriptor = "(B)I",
+		garbageValue = "-11"
+	)
+	@Export("rsOrdinal")
+	public int rsOrdinal() {
+		return this.field1516;
+	}
 
-         if (NetCache.NetCache_socket != null) {
-            try {
-               Buffer var5 = new Buffer(4);
-               var5.writeByte(3);
-               var5.writeMedium(0);
-               NetCache.NetCache_socket.write(var5.array, 0, 4);
-            } catch (IOException var8) {
-               try {
-                  NetCache.NetCache_socket.close();
-               } catch (Exception var7) {
-               }
+	@ObfuscatedName("at")
+	@ObfuscatedSignature(
+		descriptor = "(B)[Lru;",
+		garbageValue = "94"
+	)
+	static class465[] method3090() {
+		return new class465[]{class465.field4789, class465.field4792, class465.field4788, class465.field4790};
+	}
 
-               ++NetCache.NetCache_ioExceptions;
-               NetCache.NetCache_socket = null;
-            }
-         }
+	@ObfuscatedName("ab")
+	@ObfuscatedSignature(
+		descriptor = "(IIIZIZI)V",
+		garbageValue = "-1979044926"
+	)
+	@Export("doWorldSorting")
+	static void doWorldSorting(int var0, int var1, int var2, boolean var3, int var4, boolean var5) {
+		if (var0 < var1) {
+			int var6 = (var0 + var1) / 2;
+			int var7 = var0;
+			World var8 = class361.World_worlds[var6];
+			class361.World_worlds[var6] = class361.World_worlds[var1];
+			class361.World_worlds[var1] = var8;
 
-         Login.clearLoginScreen = true;
-         Login.xPadding = (GameEngine.canvasWidth - 765) / 2;
-         Login.loginBoxX = Login.xPadding + 202;
-         class143.loginBoxCenter = Login.loginBoxX + 180;
-         Login.leftTitleSprite.drawAt(Login.xPadding, 0);
-         class275.rightTitleSprite.drawAt(Login.xPadding + 382, 0);
-         class33.logoSprite.drawAt(Login.xPadding + 382 - class33.logoSprite.subWidth / 2, 18);
-      }
-   }
+			for (int var9 = var0; var9 < var1; ++var9) {
+				World var11 = class361.World_worlds[var9];
+				int var12 = class89.compareWorlds(var11, var8, var2, var3);
+				int var10;
+				if (var12 != 0) {
+					if (var3) {
+						var10 = -var12;
+					} else {
+						var10 = var12;
+					}
+				} else if (var4 == -1) {
+					var10 = 0;
+				} else {
+					int var13 = class89.compareWorlds(var11, var8, var4, var5);
+					if (var5) {
+						var10 = -var13;
+					} else {
+						var10 = var13;
+					}
+				}
+
+				if (var10 <= 0) {
+					World var14 = class361.World_worlds[var9];
+					class361.World_worlds[var9] = class361.World_worlds[var7];
+					class361.World_worlds[var7++] = var14;
+				}
+			}
+
+			class361.World_worlds[var1] = class361.World_worlds[var7];
+			class361.World_worlds[var7] = var8;
+			doWorldSorting(var0, var7 - 1, var2, var3, var4, var5);
+			doWorldSorting(var7 + 1, var1, var2, var3, var4, var5);
+		}
+
+	}
+
+	@ObfuscatedName("aw")
+	@ObfuscatedSignature(
+		descriptor = "(II)V",
+		garbageValue = "394738351"
+	)
+	static void method3086(int var0) {
+		UserComparator7.method2966(14);
+		Login.Login_banType = var0;
+	}
 }
