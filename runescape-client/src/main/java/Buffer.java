@@ -1194,7 +1194,10 @@ public class Buffer extends Node {
 	@Export("readUnsignedIntME")
 	public int readUnsignedIntME() {
 		this.offset += 4;
-		return ((this.array[this.offset - 1] & 255) << 8) + ((this.array[this.offset - 4] & 255) << 16) + (this.array[this.offset - 2] & 255) + ((this.array[this.offset - 3] & 255) << 24);
+		return ((this.array[this.offset - 1] & 255) << 8) +
+				((this.array[this.offset - 4] & 255) << 16) +
+				(this.array[this.offset - 2] & 255) +
+				((this.array[this.offset - 3] & 255) << 24);
 	}
 
 	@ObfuscatedName("es")

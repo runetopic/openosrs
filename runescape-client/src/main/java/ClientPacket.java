@@ -4,6 +4,11 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @ObfuscatedName("lo")
 @Implements("ClientPacket")
 public class ClientPacket implements class307 {
@@ -11,12 +16,12 @@ public class ClientPacket implements class307 {
 	@ObfuscatedSignature(
 		descriptor = "Llo;"
 	)
-	public static final ClientPacket field3206;
+	public static final ClientPacket PING_PACKET;
 	@ObfuscatedName("ap")
 	@ObfuscatedSignature(
 		descriptor = "Llo;"
 	)
-	public static final ClientPacket field3250;
+	public static final ClientPacket IF_DRAG_PACKET;
 	@ObfuscatedName("af")
 	@ObfuscatedSignature(
 		descriptor = "Llo;"
@@ -146,7 +151,7 @@ public class ClientPacket implements class307 {
 	@ObfuscatedSignature(
 		descriptor = "Llo;"
 	)
-	public static final ClientPacket field3185;
+	public static final ClientPacket WINDOW_STATUS_PACKET;
 	@ObfuscatedName("bg")
 	@ObfuscatedSignature(
 		descriptor = "Llo;"
@@ -511,8 +516,8 @@ public class ClientPacket implements class307 {
 	final int length;
 
 	static {
-		field3206 = new ClientPacket(0, 0);
-		field3250 = new ClientPacket(1, 16);
+		PING_PACKET = new ClientPacket(0, 0);
+		IF_DRAG_PACKET = new ClientPacket(1, 16);
 		field3165 = new ClientPacket(2, 15);
 		field3166 = new ClientPacket(3, -1);
 		field3167 = new ClientPacket(4, 22);
@@ -538,7 +543,7 @@ public class ClientPacket implements class307 {
 		field3187 = new ClientPacket(24, -1);
 		field3188 = new ClientPacket(25, 8);
 		field3189 = new ClientPacket(26, -1);
-		field3185 = new ClientPacket(27, 5);
+		WINDOW_STATUS_PACKET = new ClientPacket(27, 5);
 		field3211 = new ClientPacket(28, 7);
 		field3239 = new ClientPacket(29, 4);
 		field3182 = new ClientPacket(30, -1);
@@ -610,10 +615,50 @@ public class ClientPacket implements class307 {
 		field3259 = new ClientPacket(96, 4);
 		field3260 = new ClientPacket(97, 1);
 	}
+	public static void main(String...args) {
+		new ClientPacket(-1, -1);
+	}
 
 	ClientPacket(int var1, int var2) {
 		this.id = var1;
 		this.length = var2;
+
+		final StringBuilder builder = new StringBuilder();
+
+
+		builder.append("@GameUpstream");
+		builder.append("\n");
+
+		if (this.length == -1) {
+			builder.append("class ClientPacket").append(this.id).append("Codec : VariableBytePacketCodec<GamePacket>(");
+			builder.append("\t type = GamePacket::class.java,");
+			builder.append("\t opcode = ").append(this.id).append(",");
+			builder.append(") {");
+		} else if (this.length == -2) {
+			builder.append("class ClientPacket").append(this.id).append("Codec : VariableShortPacketCodec<GamePacket>(");
+			builder.append("\t type = GamePacket::class.java,");
+			builder.append("\t opcode = ").append(this.id).append(",");
+			builder.append(") {");
+		} else {
+			builder.append("class ClientPacket").append(this.id).append("Codec : FixedPacketCodec<GamePacket>(");
+			builder.append("\t type = GamePacket::class.java,");
+			builder.append("\t opcode = ").append(this.id).append(",");
+			builder.append("\t length = ").append(this.length);
+			builder.append(") {");
+		}
+
+
+		builder.append("\t override fun decode(input: ByteBuf, cipher: StreamCipher): GamePacket {");
+		builder.append("\t \t TODO(\"Not yet implemented\")");
+		builder.append("\t }");
+
+		builder.append("\t override fun encode(input: GamePacket, output: ByteBuf, cipher: StreamCipher) {");
+		builder.append("\t \t TODO(\"Not yet implemented\")");
+		builder.append("\t }");
+
+		builder.append("}");
+
+		System.out.println(builder);
 	}
 
 	@ObfuscatedName("am")

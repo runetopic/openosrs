@@ -152,7 +152,7 @@ public interface RSModel extends RSRenderable, Model
 	@Import("bottomY")
 	@Override
 	int getBottomY();;
-	
+
 	@Import("drawFace")
 	void drawFace(int face);
 

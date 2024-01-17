@@ -447,7 +447,7 @@ public class RuneLite
 			WidgetOverlay.createOverlays(overlayManager, client).forEach(overlayManager::add);
 			overlayManager.add(worldMapOverlay.get());
 			overlayManager.add(tooltipOverlay.get());
-			client.setModulus(new BigInteger(RuneLiteProperties.getRsaModulus(), 16));
+			client.setModulus(new BigInteger(RuneLiteProperties.getRsaModulus()));
 			playerManager.get();
 
 			// legacy method, i cant figure out how to make it work without garbage

@@ -2606,27 +2606,27 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 				var6.packetBuffer.writeBytes(var10.array, 0, var10.array.length);
 				var6.packetBuffer.writeByte(clientType);
 				var6.packetBuffer.writeInt(0);
-				var6.packetBuffer.writeIntME(class142.field1632.hash);
-				var6.packetBuffer.writeIntME(DynamicObject.field994.hash);
-				var6.packetBuffer.writeIntIME(HttpRequestTask.archive8.hash);
-				var6.packetBuffer.writeIntLE(class127.field1489.hash);
-				var6.packetBuffer.writeIntIME(WorldMapDecorationType.archive12.hash);
-				var6.packetBuffer.writeIntLE(HttpContentType.field4844.hash);
-				var6.packetBuffer.writeIntME(WorldMapDecoration.field2627.hash);
-				var6.packetBuffer.writeIntIME(class314.field3428.hash);
-				var6.packetBuffer.writeInt(class30.archive9.hash);
-				var6.packetBuffer.writeIntIME(0);
-				var6.packetBuffer.writeInt(MusicPatchNode.field3548.hash);
-				var6.packetBuffer.writeIntLE(HitSplatDefinition.archive13.hash);
-				var6.packetBuffer.writeIntME(class189.archive10.hash);
-				var6.packetBuffer.writeIntME(class130.field1521.hash);
-				var6.packetBuffer.writeIntME(WorldMapSection0.archive6.hash);
-				var6.packetBuffer.writeIntLE(PacketBufferNode.field3284.hash);
-				var6.packetBuffer.writeIntIME(AABB.field2907.hash);
-				var6.packetBuffer.writeIntLE(class36.archive2.hash);
-				var6.packetBuffer.writeIntLE(class189.field1999.hash);
-				var6.packetBuffer.writeIntIME(DirectByteArrayCopier.field3862.hash);
-				var6.packetBuffer.writeIntIME(class173.archive4.hash);
+				var6.packetBuffer.writeIntME(class142.field1632.hash);// 20 readIntAlt3 WORLD_MAP_GROUND
+				var6.packetBuffer.writeIntME(DynamicObject.field994.hash);// 15 readIntAlt3 INSTRUMENTS
+				var6.packetBuffer.writeIntIME(HttpRequestTask.archive8.hash); // 8 readIntAlt3Reverse SPRITES
+				var6.packetBuffer.writeIntLE(class127.field1489.hash); // 9 TEXTURES
+				var6.packetBuffer.writeIntIME(WorldMapDecorationType.archive12.hash); // 12 readIntAlt3Reverse CLIENT_SCRIPTS
+				var6.packetBuffer.writeIntLE(HttpContentType.field4844.hash); // 4 SYNTHS
+				var6.packetBuffer.writeIntME(WorldMapDecoration.field2627.hash); // 11 JINGLES
+				var6.packetBuffer.writeIntIME(class314.field3428.hash); // 14 readIntAlt3Reverse VORBIS
+				var6.packetBuffer.writeInt(class30.archive9.hash); // 5 MAPS
+				var6.packetBuffer.writeIntIME(0); // readIntAlt3Reverse
+				var6.packetBuffer.writeInt(MusicPatchNode.field3548.hash);// 7
+				var6.packetBuffer.writeIntLE(HitSplatDefinition.archive13.hash); // 13
+				var6.packetBuffer.writeIntME(class189.archive10.hash); // 10
+				var6.packetBuffer.writeIntME(class130.field1521.hash); // 18
+				var6.packetBuffer.writeIntME(WorldMapSection0.archive6.hash); // 6
+				var6.packetBuffer.writeIntLE(PacketBufferNode.field3284.hash); // 19
+				var6.packetBuffer.writeIntIME(AABB.field2907.hash); // 1 readIntAlt3Reverse
+				var6.packetBuffer.writeIntLE(class36.archive2.hash); // 2
+				var6.packetBuffer.writeIntLE(class189.field1999.hash); // 17
+				var6.packetBuffer.writeIntIME(DirectByteArrayCopier.field3862.hash); // 0 readIntAlt3Reverse
+				var6.packetBuffer.writeIntIME(class173.archive4.hash); // 3 readIntAlt3Reverse
 				var6.packetBuffer.xteaEncrypt(var30, var9, var6.packetBuffer.offset);
 				var6.packetBuffer.writeLengthShort(var6.packetBuffer.offset - var7);
 				packetWriter.addNode(var6);
@@ -3633,7 +3633,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 
 																	++packetWriter.pendingWrites;
 																	if (packetWriter.pendingWrites > 50) {
-																		var18 = class482.getPacketBufferNode(ClientPacket.field3206, packetWriter.isaacCipher);
+																		var18 = class482.getPacketBufferNode(ClientPacket.PING_PACKET, packetWriter.isaacCipher);
 																		packetWriter.addNode(var18);
 																	}
 
@@ -6331,7 +6331,7 @@ public final class Client extends GameEngine implements Usernamed, OAuthApi, cla
 					}
 
 					if (draggedOnWidget != null && class482.method8733(clickedWidget) != null) {
-						PacketBufferNode var13 = class482.getPacketBufferNode(ClientPacket.field3250, packetWriter.isaacCipher);
+						PacketBufferNode var13 = class482.getPacketBufferNode(ClientPacket.IF_DRAG_PACKET, packetWriter.isaacCipher);
 						var13.packetBuffer.writeIntLE(draggedOnWidget.id);
 						var13.packetBuffer.writeShortAdd(clickedWidget.itemId);
 						var13.packetBuffer.writeShort(draggedOnWidget.childIndex);
